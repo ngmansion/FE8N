@@ -139,7 +139,7 @@ DrumFix
 *見切り
 神盾の効果を軽減
 
-▼使用空き領域
+▼使用空き領域マッピング
 
 5BA470～
 midiデータ
@@ -157,5 +157,3 @@ F04330
 NativeInstrumentMap
 あと色々
 
-昔の
-https://dl.dropboxusercontent.com/u/65840711/HomePage/FE8t.ips
