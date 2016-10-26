@@ -96,6 +96,7 @@ A一人だけ、それ以外なら6人と結べます
 * sound_mixer
 * Native instrument 
 * DrumFix
+* 16 tracks/12 sounds patch
 
 ###アニメ
 * パラディン杖男女
