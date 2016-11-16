@@ -2,7 +2,7 @@
 @org	$0802aae4
 	push	{r4, lr}
 	mov	r4, r0
-	mov	r1, #72
+	mov	r1, #74
 	ldrh	r0, [r1, r4]
 	bl	$080173b4	;r0に武器の重さ
 	
@@ -20,7 +20,7 @@ none
 	lsr	r2, r2, #2
 	add	r1, r1, r2
 	sub	r0, r0, r1
-	bge	make
+	bhi	make
 	mov	r0, #0
 make
 	ldrb	r1, [r4, #22]
