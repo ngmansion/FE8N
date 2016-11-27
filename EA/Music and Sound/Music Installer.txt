@@ -1,0 +1,23 @@
+
+
+  #define SongTableOffset  0x214120	//0x224470
+  #define SongTable(index,SongPointer,Group) "ORG SongTableOffset+(8*index); POIN SongPointer; SHORT Group Group"
+//
+voicegroup000:
+#include "Instruments/EA.txt"
+
+//
+#include "endlessbattle4.event"
+PUSH
+SongTable(9,endlessbattle4,1)
+POP
+
+//
+//#include "my_song.event"
+//PUSH
+//SongTable(1,my_song,0)
+//POP
+//
+
+
+ALINE 4

@@ -1,0 +1,28 @@
+//air1
+
+air1v:
+#incbin"air1v.bin"
+ALINE	4
+air1t:
+#incbin"air1t.bin"
+ALINE	4
+air1h:
+BYTE	$01 $00 $14 $00
+WORD	$08202214
+POIN	air1t
+
+PUSH
+
+SongTable(264,air1h,6)
+
+ORG	$0202310
+WORD	$3C00
+POIN	air1v
+BYTE	$FF $00 $FF $00
+
+POP
+
+
+//air2
+
+
