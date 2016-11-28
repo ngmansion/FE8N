@@ -11,11 +11,11 @@
 #include "assasine Installer.event"
 #include "Axe Installer.event"
 #include "Axes Installer.event"
-#include "Falcoknight Staff Installer.event"
+#include "FalcoknightStaff Installer.event"
 #include "FemalePaladinStaves Installer.event"
-#include "Hand Axes Installer.event"
+#include "HandAxes Installer.event"
 #include "handaxe Installer.event"
-#include "Hawkeye Generic Berserker (Generic Palettes Fixed) Installer.event"
+#include "HawkeyeGenericBerserker Installer.event"
 #include "rag_bow Installer.event"
 #include "rag_sword Installer.event"
 #include "rog_staff Installer.event"
@@ -24,4 +24,4 @@
 #include "unarmed Installer.event"
 
 //////////////
-ALINE 4
+ALIGN 4

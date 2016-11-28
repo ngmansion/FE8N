@@ -5,11 +5,12 @@
 //
 voicegroup000:
 #include "Instruments/EA.txt"
+#include "Sound/EA.txt"
 
 //
-#include "endlessbattle4.event"
+#include "FIELDE.event"
 PUSH
-SongTable(9,endlessbattle4,1)
+SongTable(100,FIELDE,1)
 POP
 
 //
@@ -20,4 +21,4 @@ POP
 //
 
 
-ALINE 4
+ALIGN 4

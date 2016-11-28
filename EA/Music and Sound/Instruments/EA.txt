@@ -1,4 +1,4 @@
-//Native Instrument
+//Native Instrument Map
 
 WORD	0x00003C00	0x08502768	0xCC00FAFF	//00
 WORD	0x00003C00	0x08297D18	0xCC00FAFF	//01
