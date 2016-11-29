@@ -137,12 +137,12 @@ WORD	0x00000080	0x08212C60	0x00000000	//127
 
 //Import Sample
 
-Sample012:
-#incbin "FE7_Marimba.bin"
-Sample055:
-#incbin "FE6_Orchestral.bin"
 Sample058:
 #incbin "FE7_Tuba.bin"
+Sample055:
+#incbin "FE6_Orchestral.bin"
+Sample012:
+#incbin "FE7_Marimba.bin"
 
 //DrumFix
 PUSH

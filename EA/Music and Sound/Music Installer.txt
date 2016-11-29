@@ -5,7 +5,7 @@
 //
 voicegroup000:
 #include "Instruments/EA.txt"
-#include "Sound/EA.txt"
+#include "Sounds/EA.txt"
 
 //
 #include "FIELDE.event"
