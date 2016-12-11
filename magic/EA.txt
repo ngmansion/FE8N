@@ -1,0 +1,18 @@
+ORG	0x1000000
+
+#include	"atk/EA.txt"	//done!
+#include	"butai/EA.txt"	//done!
+#include	"levelup/EA.txt"	//
+#include	"status/EA.txt"	//
+
+
+//#26から兵種個人体格値除外＝魔力化
+ORG	0x2a542
+#incbin	"magic.gba"
+ORG	0x2a602
+SHORT	$7EA0
+
+//自分でやる仕事
+//攻速計算の変更
+//「鳴動」の計算
+//
