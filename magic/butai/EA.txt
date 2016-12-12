@@ -53,13 +53,13 @@ ORG	$96009
 BYTE	$DA
 
 ORG	$95f6e
-BL(0x18ed0)
+BL(0x18ecc)
 ORG	$95f7e
-BL(0x18ed0)
+BL(0x18ecc)
 ORG	$95ff2
-BL(0x18ed0)
+BL(0x18ecc)
 ORG	$96002
-BL(0x18ed0)
+BL(0x18ecc)
 
 //体格から補正削除
 ORG	0x94c6e

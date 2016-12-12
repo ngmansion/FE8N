@@ -4,7 +4,7 @@ ORG	0x18ec4
 WORD	$468F4900
 POIN	strong
 
-ORG	0x18ed0
+ORG	0x18ecc
 WORD	$468F4900
 POIN	magicn
 

@@ -1,0 +1,21 @@
+PUSH
+//杖範囲AI？
+ORG	0x31b64
+BL(0x3192C)
+ORG	0x31b9c
+BL(0x3192C)
+
+ORG	0x31924
+WORD	$468F4900
+POIN	wakeru
+ORG	0x3192C
+WORD	$468F4900
+POIN	wakaru
+
+POP
+wakeru:
+#incbin "alina.bin"
+ALIGN 4
+wakaru:
+#incbin "wakaru.gba"
+ALIGN 4

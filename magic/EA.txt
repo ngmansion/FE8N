@@ -3,24 +3,25 @@ ORG	0x1000000
 #define BLRange(pointer) "(pointer - CURRENTOFFSET - 4)>>1"
 #define BL(pointer) "SHORT (((BLRange(pointer)>>11)&0x7ff)|0xf000) ((BLRange(pointer)&0x7ff)|0xf800);"
 
-//#include	"AI/EA.txt"不要？
-//#include	"alina/EA.txt"要調査
-#include	"animation/EA.txt"
-#include	"atk/EA.txt"
-#include	"butai/EA.txt"
-#include	"doping/EA.txt"
-#include	"levelup/EA.txt"
-#include	"status/EA.txt"
-#include	"growth/EA.txt"//(wip)
-//#include	"layout/EA.txt"
-//#include	"_patched/EA.txt"
+#include	"AI\EA.txt"//(wip)
+#include	"alina\EA.txt"//(wip)
+#include	"animation\EA.txt"
+#include	"atk\EA.txt"
+#include	"butai\EA.txt"
+#include	"doping\EA.txt"
+#include	"levelup\EA.txt"
+#include	"status\EA.txt"
+#include	"growth\EA.txt"//(wip)
+#include	"_patched\EA.txt"
+//#include	"layout\EA.txt"
 
 
 PUSH
 //#26から兵種個人体格値除外＝魔力化
 ORG	0x2a542
 SHORT	$1C30
-BL(0x18ed0)
+BL(0x18ecc)
+//CC用？
 ORG	0x2a602
 SHORT	$7EA0
 

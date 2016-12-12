@@ -10,7 +10,7 @@
 	bne	non
 	mov	r6, #4
 non
-	bl	$08018ed0	;
+	bl	$08018ecc	;
 	mov	r2, r0
 	mov	r0, r5
 	add	r0, #0x18
