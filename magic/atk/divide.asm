@@ -4,6 +4,8 @@
 ;•Šíí
 	mov	r1, #8
 	ldrb	r1, [r7, r1]
+	cmp	r1, #7	;•Šíí
+	bgt	butu
 	cmp	r1, #4	;•Šíí
 	ble	butu
 	b	magi	;–‚–@

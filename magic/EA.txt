@@ -1,18 +1,39 @@
 ORG	0x1000000
 
-#include	"atk/EA.txt"	//done!
-#include	"butai/EA.txt"	//done!
-#include	"levelup/EA.txt"	//
-#include	"status/EA.txt"	//
+#define BLRange(pointer) "(pointer - CURRENTOFFSET - 4)>>1"
+#define BL(pointer) "SHORT (((BLRange(pointer)>>11)&0x7ff)|0xf000) ((BLRange(pointer)&0x7ff)|0xf800);"
+
+//#include	"AI/EA.txt"不要？
+//#include	"alina/EA.txt"要調査
+#include	"animation/EA.txt"
+#include	"atk/EA.txt"
+#include	"butai/EA.txt"
+#include	"doping/EA.txt"
+#include	"levelup/EA.txt"
+#include	"status/EA.txt"
+#include	"growth/EA.txt"//(wip)
+//#include	"layout/EA.txt"
+//#include	"_patched/EA.txt"
 
 
+PUSH
 //#26から兵種個人体格値除外＝魔力化
 ORG	0x2a542
-#incbin	"magic.gba"
+SHORT	$1C30
+BL(0x18ed0)
 ORG	0x2a602
 SHORT	$7EA0
 
-//自分でやる仕事
 //攻速計算の変更
-//「鳴動」の計算
-//
+ORG	0x2aae4
+WORD	$468F4900
+POIN	kousoku
+
+//「鳴動」の計算？
+POP
+
+kousoku:
+ #incbin "kousoku.gba"
+ALIGN 4
+
+

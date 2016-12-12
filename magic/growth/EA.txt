@@ -1,0 +1,36 @@
+PUSH
+
+//自軍成長
+//自軍成長処理追加
+ORG	0x2ba8c
+WORD	$46874800
+POIN	grow
+//判定後能力加算追加
+ORG	0x2c1b0
+WORD	$46874800
+POIN	result
+
+//初期ステ
+
+//クラスチェンジ？
+
+//上限チェック1
+ORG	0x2beb6
+SHORT	$46C0
+WORD	$46874800
+POIN	maxa
+//上限チェック2
+ORG	0x17f82
+#incbin "max.gba"
+
+POP
+
+maxa:
+ #incbin "maxa.gba"
+ALIGN 4
+grow:
+ #incbin "grow.gba"
+ALIGN 4
+result:
+ #incbin "result.gba"
+ALIGN 4

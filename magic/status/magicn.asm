@@ -24,7 +24,7 @@ non
 	mov	r0, #0
 	b	end
 jump
-	ldrb	r0, [r0, #7]	;7?
+	ldrb	r0, [r0, #8]	;ボデリン補正
 	lsl	r0, r0, #24
 	asr	r0, r0, #24
 end

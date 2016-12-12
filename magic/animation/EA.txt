@@ -1,0 +1,21 @@
+
+PUSH
+ORG	0x18ed8
+WORD	$468F4900
+POIN	butubutu
+
+//ジャンプサブルーチン
+ORG	$59230
+BL(0x18ed8)
+ORG	$59264
+BL(0x18ed8)
+ORG	$59286
+BL(0x18ed8)
+ORG	$592e6
+BL(0x18ed8)
+
+POP
+
+butubutu:
+ #incbin	"butuma.gba"
+ALIGN	4

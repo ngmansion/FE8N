@@ -1,0 +1,24 @@
+
+PUSH
+//武器レベル表示
+
+
+//杖回復
+ORG	0x16dba
+BL(0x18ed0)
+
+//杖命中
+ORG	0x2cc1a
+BL(0x18ed0)
+
+//杖範囲
+ORG	0x1874e
+SHORT	$46C0
+WORD	$468F4900
+POIN tuehani
+
+
+POP
+tuehani:
+#incbin "tuehani.gba"
+ALIGN 4
