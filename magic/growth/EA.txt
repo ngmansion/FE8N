@@ -1,18 +1,28 @@
 PUSH
 
 //自軍成長
-//自軍成長処理追加
-ORG	0x2ba8c
+ORG	0x2ba8c	//自軍成長処理追加
 WORD	$46874800
 POIN	grow
-//判定後能力加算追加
-ORG	0x2c1b0
+
+ORG	0x2c1b0	//判定後能力加算追加
 WORD	$46874800
 POIN	result
 
-//初期ステ
+//初期ステ（ユニット成長読みなぞ無い）
+ORG	0x17b90
+WORD	$469F4B00
+POIN	shokichi
 
-//クラスチェンジ？
+ORG	0x17d7c	//クラス成長読み
+WORD	$46874800
+POIN	clazon
+
+//クラスチェンジ
+
+ORG	0x2bd44
+WORD	$46874800
+POIN	clanchan
 
 //上限チェック1
 ORG	0x2beb6
@@ -33,4 +43,13 @@ grow:
 ALIGN 4
 result:
  #incbin "result.gba"
+ALIGN 4
+shokichi:
+ #incbin "shokichi.gba"
+ALIGN 4
+clanchan:
+ #incbin "clanchan.gba"
+ALIGN 4
+clazon:
+ #incbin "clazon.gba"
 ALIGN 4

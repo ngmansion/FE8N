@@ -79,6 +79,9 @@ SHORT	$6866 $04E0	//魔防＞守備
 ORG	0xA72C50//経験値右方向
 POIN sitahelp
 
+ORG	0x1F550A	//武器レベルヘルプ上書き
+SHORT	$800 $800 $800 $800 $800 $800 $800 $800
+
 POP
 sitahelp:
 WORD	$08A72D08 $0 $08A72C44 $08A72DB0
