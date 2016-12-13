@@ -16,7 +16,7 @@
 	ldrb	r2, [r2, #19]	;ƒ†ƒjƒbƒg‘ÌŠi
 	lsl	r2, r2, #24
 	asr	r2, r2, #24
-	add	r0, r0, r2	;r0‚Éd‚³Œ¸Z’l(‘ÌŠi)
+	add	r0, r0, r2	;r0‚É‡Œv‘ÌŠi
 	
 	sub	r1, r1, r0
 	cmp	r1, #0

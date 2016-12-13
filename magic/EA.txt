@@ -34,7 +34,7 @@ POIN	kousoku
 POP
 
 kousoku:
- #incbin "kousoku.gba"
+ #incbin "Atk_Spd.gba"
 ALIGN 4
 
 
