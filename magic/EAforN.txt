@@ -3,16 +3,17 @@ ORG	0x1000000
 #define BLRange(pointer) "(pointer - CURRENTOFFSET - 4)>>1"
 #define BL(pointer) "SHORT (((BLRange(pointer)>>11)&0x7ff)|0xf000) ((BLRange(pointer)&0x7ff)|0xf800);"
 
-#include	"AI\EA.txt"//(wip?)
-#include	"alina\EA.txt"//(wip?)
+#include	"AI\EA.txt"
+#include	"alina\EA.txt"
 #include	"animation\EA.txt"
 #include	"atk\EA.txt"
 #include	"butai\EA.txt"
 #include	"doping\EA.txt"
 #include	"levelup\EA.txt"
 #include	"status\EA.txt"
-#include	"growth\EA.txt"//(wip?)
-#include	"_patched\EA.txt"
+#include	"growth\EA.txt"
+#include	"layout\EA.txt"
+//#include	"_patched\EA.txt"
 
 
 PUSH
@@ -28,6 +29,9 @@ SHORT	$7EA0
 ORG	0x2aae4
 WORD	$468F4900
 POIN	kousoku
+
+//「鳴動」の計算
+
 
 POP
 
