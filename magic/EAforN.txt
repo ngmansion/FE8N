@@ -1,4 +1,4 @@
-ORG	0x
+ORG	0x1000000
 
 #define BLRange(pointer) "(pointer - CURRENTOFFSET - 4)>>1"
 #define BL(pointer) "SHORT (((BLRange(pointer)>>11)&0x7ff)|0xf000) ((BLRange(pointer)&0x7ff)|0xf800);"
@@ -31,12 +31,13 @@ WORD	$468F4900
 POIN	kousoku
 
 //「鳴動」の計算
-
+ORG	0xe4b3c0
+ #incbin "meido_plus.gba"
 
 POP
 
 kousoku:
- #incbin "Atk_Spd.gba"
+ #incbin "Atk_Spd2.gba"
 ALIGN 4
 
 
