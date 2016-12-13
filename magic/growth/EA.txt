@@ -14,8 +14,8 @@ ORG	0x17b90
 WORD	$469F4B00
 POIN	shokichi
 
-ORG	0x17d7c	//クラス成長読み
-WORD	$46874800
+ORG	0x17d74	//クラス成長読み
+WORD	$46974A00
 POIN	clazon
 
 //クラスチェンジ

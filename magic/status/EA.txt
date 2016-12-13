@@ -19,6 +19,8 @@ SHORT	$2000
 ORG	0x18720
 SHORT	$2000
 
+ORG	0x34992	//救出前表示
+SHORT	$2000
 
 POP
 strong:
