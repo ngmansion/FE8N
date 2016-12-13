@@ -33,7 +33,7 @@
 	bne	jump
 	mov	r2, #255
 jump
-	ldr	r0, =$020040B6
+	ldr	r0, =$020040C6
 	ldr	r1, =$08004a9c
 	mov	lr, r1
 	mov	r1, #2

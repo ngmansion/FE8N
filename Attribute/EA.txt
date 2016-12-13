@@ -1,0 +1,16 @@
+//Newステ3
+
+ORG	0x899fc	//支援相手下げ
+WORD	$02003dB4 
+
+ORG	0x899f0	//文字追加
+WORD	$46874800
+POIN	clear
+
+ORG	0xE4A810
+clear:
+#incbin "get.gba"
+POIN	mojimo
+mojimo:
+WORD $02003C7C $02003EAE $3 $080DD3E0 0 0
+ALIGN	4
