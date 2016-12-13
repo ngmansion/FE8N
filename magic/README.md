@@ -3,14 +3,14 @@
 ##ユニット設定
 ![demo](http://i.imgur.com/PM3TYoD.png)  
 この部分です。  
-![demo](http://i.imgur.com/E5ZowzC.png)
-
+![demo](http://i.imgur.com/E5ZowzC.png)  
+言うまでもないかもしれませんが「16進数」です。
 
 ##クラス設定
 ![demo](http://i.imgur.com/BhJxLsC.png)  
 この部分です。
 
-![demo](http://i.imgur.com/7VtiQGq.png)  
+![demo](http://i.imgur.com/KZsEaa0.png)  
 左から順に、「CCボーナス」「成長率」「初期値」となっております。  
 バーサーカー等の一部クラスはこの部分が最初から設定されていますが、未だに何に利用されているか分からない没データの可能性が高い欄なので使います。
 
