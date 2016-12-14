@@ -5,7 +5,7 @@
 #define AnimTableEntry(index) "ORG ClassAnimTable + (index * 0x20)"
 #include "Extensions\animationpatchesJP.event"
 
-//////////////Installed animations go here:
+//////////////ここからアニメデータ
 
 #include "aaxe Installer.event"
 #include "assasine Installer.event"
@@ -23,5 +23,5 @@
 #include "sword Installer.event"
 #include "unarmed Installer.event"
 
-//////////////
+//////////////ここまでアニメデータ
 ALIGN 4
