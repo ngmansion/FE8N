@@ -3,8 +3,9 @@ ORG 0xF04330
 
 MESSAGE Used free space starts at CURRENTOFFSET
 	
-	#include "Music and Sound/Music Installer.txt"
-	#include "Animations/Master Animation Installer.txt"
+	#include "Music and Sound\Music Installer.txt"
+	#include "Animations\Master Animation Installer.txt"
+	#include "Mugs and Graphics\Install Graphics Data.txt"
 
 
   MESSAGE Used free space ends at currentOffset

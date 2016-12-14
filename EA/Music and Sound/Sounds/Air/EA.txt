@@ -11,15 +11,12 @@ BYTE	$01 $00 $14 $00
 WORD	$08202214
 POIN	air1t
 
-PUSH
-
 SongTable(264,air1h,6)
-
+PUSH
 ORG	$0202310
 WORD	$3C00
 POIN	air1v
 BYTE	$FF $00 $FF $00
-
 POP
 
 
@@ -36,13 +33,12 @@ BYTE	$01 $00 $14 $00
 WORD	$08202214
 POIN	air2t
 
-PUSH
+
 
 SongTable(265,air2h,6)
-
+PUSH
 ORG	$0202334
 WORD	$3C00
 POIN	air2v
 BYTE	$FF $00 $FF $00
-
 POP

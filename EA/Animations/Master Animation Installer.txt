@@ -3,7 +3,7 @@
 
 
 #define AnimTableEntry(index) "ORG ClassAnimTable + (index * 0x20)"
-#include "Extensions/animationpatchesJP.event"
+#include "Extensions\animationpatchesJP.event"
 
 //////////////Installed animations go here:
 
