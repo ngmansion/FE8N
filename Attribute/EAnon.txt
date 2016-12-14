@@ -48,3 +48,13 @@ SHORT	$b014 $bcf0 $bc01 $4700
 //中指揮
 ORG	0x896ac
 #incbin "nakashiki.gba"
+
+//支援関連
+ORG	0x2821a	//支援数数え復活？
+SHORT	$1C30
+ORG	0x28406	//支援溜める
+SHORT	$46C0 $2000
+ORG	0x28498	//支援溜める
+SHORT	$46C0 $2000
+ORG	0x89924	//光らせない
+SHORT	$46C0 $2000
