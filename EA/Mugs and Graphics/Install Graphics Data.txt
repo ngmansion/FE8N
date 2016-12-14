@@ -1,3 +1,3 @@
 
 
-#include "Map_Sprites\Map Sprite Installer.txt"
+#include "Map Sprites\Map Sprite Installer.txt"
