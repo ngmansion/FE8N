@@ -1,6 +1,24 @@
 @thumb
 @org	$08089598
-
+;魔力
+	ldr	r0, [r5, #12]
+	bl	$08018ec4
+	ldr	r0, [r5, #12]
+	ldrb	r0, [r0, #26]
+	str	r0, [sp, #0]
+	ldr	r1, [r5, #12]
+	ldrb	r3, [r1, #26]	;体格読み込み
+	ldr	r0, [r1, #4]
+	ldrb	r0, [r0, #25]	;体格上限読み込み
+;	lsl	r0, r0, #24
+;	asr	r0, r0, #24
+	str	r0, [sp, #4]
+	mov	r0, #7
+	mov	r1, #5	;x軸
+	mov	r2, #3	;y軸
+	bl	$08089354
+;移動
+	ldr	r6, [$08089678]	;=$02003FB6
 	ldr	r1, [r5, #12]
 	ldr	r0, [r1, #4]
 	mov	r2, #18
@@ -13,19 +31,18 @@
 	bne	hikaru
 	mov	r1, #2
 hikaru
-	ldr	r0, =$02003FB6
+	mov	r0, r6
 	bl	$08004a9c
 ;体格
 	ldr	r1, [r5, #12]
-	ldr	r0, [r1, #4]
-	mov	r2, #17
-	ldsb	r2, [r0, r2]
-	ldr	r0, [r1, #0]
-	ldrb	r0, [r0, #19]
-	lsl	r0, r0, #24
-	asr	r0, r0, #24
+	ldr	r0, [r1]
+	mov	r2, #19
+	ldsb	r0, [r0, r2]	;ユニット
+	ldr	r2, [r1, #4]
+	ldrb	r2, [r2, #17]
 	add	r2, r2, r0
-	ldr	r0, =$02004036
+	add	r6, #0x80
+	mov	r0, r6
 	mov	r1, #2
 	bl	$08004a9c
 ;騎馬アイコン
@@ -39,11 +56,9 @@ hikaru
 	mov	r1, r0
 	mov	r2, #160
 	lsl	r2, r2, #7
-	ldr	r0, =$02004036
-	add	r0, #2
+	add	r0, r6, #2
 	bl	$08003608	;馬or天馬or飛竜アイコン
 ;救出中相手
-	ldr	r6, =$02003ec6;($02003e86)
 	mov	r4, r5
 	add	r4, #120
 	ldr	r0, [r5, #12]
@@ -53,7 +68,8 @@ hikaru
 	mov	r2, #2
 	mov	r0, r4
 	bl	$080043b8	;=文字描写
-	b	$0808962a
+	ldr	r6, =$02003ec6;(旧$02003e86)
+	b	$0808962a	;状態へ
 	
 ;@org	$080895b6
 ;	ldr	r1, [r5, #12]

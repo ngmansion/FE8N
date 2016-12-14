@@ -38,7 +38,8 @@ ORG	0xE498D0
 #incbin "iconMG.gba"
 
 //文字追加
-ORG	0xE4A810
+//ORG	0xE4A810
+ORG	0x1F531C
 WORD	$02003C34 $02003E6E $403 $08A73224//技
 WORD	$02003C3C $02003D7E $3 $08A73228//速さ
 WORD	$02003C44 $02003DFE $3 $08A73234//幸運
@@ -62,31 +63,26 @@ WORD	0 0
 //$3FEE	$3FFE
 //$406E	$407E
 
+ORG	0x89598
+#incbin "taikaku_number.gba"
+
+
+ORG	0x89678
+WORD	$02003FB6
+
+ORG	0x896ac
+#incbin "nakashikiV.gba"
 
 //属性半ズレ
 //ORG	0x896e4
 //WORD	$02003FC4
 //属性消滅
-ORG	0x896ba
-SHORT	$46C0
-SHORT	$46C0
-ORG	0x896d4
-SHORT	$46C0
-SHORT	$46C0
-
-ORG	0x896DC
-WORD	$469F4B00
-POIN	hack1
-
-ORG	0x89598
-#incbin "taikaku_number.gba"
-
-
-
+//ORG	0x896ba
+//SHORT	$46C0
+//SHORT	$46C0
+//ORG	0x896d4
+//SHORT	$46C0
+//SHORT	$46C0
 
 POP
-
-hack1:
-#incbin "plus_bar_plus_shiki.gba"
-ALIGN	4
 
