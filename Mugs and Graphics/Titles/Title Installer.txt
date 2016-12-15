@@ -3,7 +3,7 @@
 
 ////////////////////////////ここから章タイトル画像
 TitleTable($0, title_one)
-title_one
+title_one:
   #incbin "title_one.dmp"
 
 
