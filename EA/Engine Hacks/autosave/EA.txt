@@ -1,0 +1,11 @@
+PUSH
+
+ORG	0x15518
+#incbin "autosave2.gba"
+
+ORG	0x15534
+SHORT	$481C	//ldr	r0, [$080155a8]
+
+ORG	0x15560
+WORD	$0203A954
+POP

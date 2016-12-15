@@ -1,2 +1,11 @@
 //#include "my_hack\EA.txt"
 
+#include "calc\EA.txt"
+#include "autosave\EA.txt"
+#include "LeadershipFix\EA.txt"		//外部でもいい
+#include "AnimationSwitchG\EA.txt"
+#include "EquipmentPopup\EA.txt"		//外部でもいい
+#include "Inside_Leadership\EAnon.txt"
+#include "Attribute\EA.txt"		//外部でもいい
+
+

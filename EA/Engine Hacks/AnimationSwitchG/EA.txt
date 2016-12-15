@@ -1,0 +1,4 @@
+PUSH
+ORG 0x2c9a8
+#incbin "AnimeSwitchG.gba"
+POP

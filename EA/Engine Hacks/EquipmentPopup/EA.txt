@@ -1,0 +1,15 @@
+PUSH
+
+ORG	0x8eae8
+WORD	$469F4B00
+POIN	drop_green
+
+ORG	0x8EAB4
+#incbin "SOUBI_FUKIDASHI.gba"
+
+
+ORG	0xE49680///////////////外部でもいい
+drop_green:
+#incbin "drop_green.gba"
+
+POP

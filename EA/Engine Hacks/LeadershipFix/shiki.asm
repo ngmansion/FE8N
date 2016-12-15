@@ -45,18 +45,18 @@ ruikei
 	ldrh	r0, [r5, #0]
 	add	r0, r0, r1
 	strh	r0, [r5, #0]
-	mov	r0, #3
+	mov	r0, #3	;効果量
 	mul	r3, r0
 	add	r5, #4
 	ldrb	r1, [r4, #3]
 	ldrh	r0, [r5, #0]
-	add	r1, r3, r1
+	add	r1, r3, r1	;加算
 	add	r0, r0, r1
 	strh	r0, [r5, #0]
 	add	r5, #2
 	ldrh	r0, [r5, #0]
 	ldrb	r1, [r4, #4]
-	add	r1, r3, r1
+	add	r1, r3, r1	;加算
 	add	r0, r0, r1
 	strh	r0, [r5, #0]
 	add	r5, #4
@@ -70,9 +70,7 @@ ruikei
 	ldrb	r4, [r4, #6]
 	add	r0, r0, r4
 	strh	r0, [r1, #0]
-
-	ldr	r0, =$0802a9a0
-	mov	pc, r0
+	b	return
 	
 yugun2
 	ldr	r2, =$0202ddc8
@@ -114,19 +112,19 @@ finale
 	ldrh	r0, [r2, #0]
 	add	r0, r0, r1
 	strh	r0, [r2, #0]
-	mov	r0, #5
+	mov	r0, #5	;効果量
 	mul	r3, r0
 	add	r2, #4
 	ldrb	r1, [r4, #3]
 	ldrh	r0, [r2, #0]
-	add	r1, r3, r1
+	add	r1, r3, r1	;加算
 	add	r0, r0, r1
 	strh	r0, [r2, #0]
 	mov	r1, r5
 	add	r1, #98
 	ldrh	r0, [r1, #0]
 	ldrb	r2, [r4, #4]
-	add	r2, r3, r2
+	add	r2, r3, r2	;加算
 	add	r0, r0, r2
 	strh	r0, [r1, #0]
 	add	r1, #4
@@ -139,5 +137,8 @@ finale
 	ldrb	r4, [r4, #6]
 	add	r0, r0, r4
 	strh	r0, [r1, #0]
-	ldr	r0, =$0802a9a0
-	mov	pc, r0
+return
+	@dcw	$B002	//add	sp, #8
+	pop	{r4, r5}
+	pop	{r0}
+	bx	r0

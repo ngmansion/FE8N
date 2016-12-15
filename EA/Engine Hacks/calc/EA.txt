@@ -1,0 +1,9 @@
+PUSH
+
+ORG	0x2aae4	//攻速計算
+#incbin "kousoku.gba"
+
+ORG	0x2a9c6	//魔法剣攻撃時の守備・魔防判定を武器種で切り換える
+#incbin "mahoken.gba"
+
+POP
