@@ -1,3 +1,5 @@
 
 
 #include "Map Sprites\Map Sprite Installer.txt"
+#include "Mugs\Mug Installer.txt"
+//#include "Tileset\EA.txt"

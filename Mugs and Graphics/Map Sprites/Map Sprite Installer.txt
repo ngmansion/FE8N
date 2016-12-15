@@ -5,13 +5,18 @@
   #define SpriteMov(MapSpriteMovIndex,MapSpriteMovPointer,MapSpriteMovAdr) "PUSH; ORG MapSpriteMovTableOffset+(8*MapSpriteMovIndex); POIN MapSpriteMovPointer; WORD MapSpriteMovAdr; POP"
 
 ////////////////////ここからアイコンデータ
-SpriteStd($1A,2,1,DarkPeg1)
-SpriteMov($24,DarkPeg2,$81D9F94)
 
+SpriteStd($1A, 2, 1, DarkPeg1)
+SpriteMov($24, DarkPeg2, $81D9F94)
 DarkPeg1:
 #incbin "DarkPeg1.dmp"
 DarkPeg2:
 #incbin "DarkPeg2.dmp"
+
+
+
+
+
 
 
 
