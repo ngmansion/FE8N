@@ -1,5 +1,9 @@
 
-
+#include "Item Icon\Icon Installer.txt"
 #include "Map Sprites\Map Sprite Installer.txt"
 #include "Mugs\Mug Installer.txt"
+
+
+
 //#include "Tileset\EA.txt"
+//#include "Titles\Title Installer.txt"

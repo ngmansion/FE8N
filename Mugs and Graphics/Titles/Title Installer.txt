@@ -1,0 +1,16 @@
+#define TitlePointerTable 0xA732C0
+#define TitleTable(TitlePointerTableEntry, TitlePointerTableLocation) "PUSH; ORG TitlePointerTable+TitlePointerTableEntry*0xC; POIN TitlePointerTableLocation; WORD 0 0; POP"
+
+////////////////////////////ここから章タイトル画像
+TitleTable($0, title_one)
+title_one
+  #incbin "title_one.dmp"
+
+
+
+
+
+
+
+
+////////////////////////////ここまで章タイトル画像
