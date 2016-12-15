@@ -1,4 +1,5 @@
 
+#incbin "Item_Icon.gba"
 #include "Item Icon\Icon Installer.txt"
 #include "Map Sprites\Map Sprite Installer.txt"
 #include "Mugs\Mug Installer.txt"

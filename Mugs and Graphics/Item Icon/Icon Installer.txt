@@ -1,9 +1,0 @@
-PUSH
-ORG	0x3600
-POIN	Icon_Item
-ORG	0x36D4
-POIN	Icon_Item
-POP
-
-Icon_Item:
-#incbin "Icon.gba"

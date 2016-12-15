@@ -2,7 +2,7 @@
 #define setMugEntry(mugEntry, mugLocation, mouthX, mouthY, eyeX, eyeY, eyeControl) "PUSH; ORG MugTable+mugEntry*0x1C; POIN mugLocation; POIN mugLocation+0x1624; POIN mugLocation+0x1604; POIN mugLocation+0x1004; WORD 0x00000000; BYTE mouthX mouthY eyeX eyeY; WORD eyeControl; POP"
 
 //////////////////////////ここから顔画像
-
+//setMugEntry(顔ID, mug_名前, 口のX座標, 口のY座標, 目のX座標, 目のY座標, 1=通常6=常に目閉じ)
 
 
 
