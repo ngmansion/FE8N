@@ -1,15 +1,21 @@
-#define MapPointerTableJP 0x907BC8
-#define MapTable(MapPointerTableEntry, MapPointerTableLocation) "PUSH; ORG MapPointerTableJP+MapPointerTableEntry*0x4; POIN MapPointerTableLocation; POP"
 
 
 ///////////////////////
-MapTable($1, SnowObject_LZ)
-MapTable($2, SnowPalette_FE8)
-MapTable($3, SnowTileConfig_LZ)
+EventPointerTable($1, SnowObject_LZ)
+EventPointerTable($2, SnowPalette_FE8)
+EventPointerTable($3, SnowTileConfig_LZ)
 SnowObject_LZ:
   #incbin "SnowObject_LZ.bin"
 SnowPalette_FE8:
   #incbin "SnowPalette_FE8.bin"
 SnowTileConfig_LZ:
   #incbin "SnowTileConfig_LZ.bin"
+
+
+
+
+
+
+
+
 ////////////////////

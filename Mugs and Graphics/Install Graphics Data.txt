@@ -1,7 +1,14 @@
-
+Icon_Item:
 #incbin "Item_Icon.gba"
 #include "Map Sprites\Map Sprite Installer.txt"
 #include "Mugs\Mug Installer.txt"
 
 
 //#include "Titles\Title Installer.txt"
+
+PUSH
+ORG	0x3600
+POIN	Icon_Item
+ORG	0x36D4
+POIN	Icon_Item
+POP
