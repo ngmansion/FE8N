@@ -5,7 +5,7 @@
 #include "autosave\EA.txt"
 #include "LeadershipFix\EA.txt"		//外部でもいい
 #include "AnimationSwitchG\EA.txt"
-#include "item\EA.txt"
+#include "popitem\EA.txt"
 #include "EquipmentPopup\EA.txt"		//外部でもいい
 #include "Inside_Leadership\EAnon.txt"
 #include "Attribute\EA.txt"		//外部でもいい
