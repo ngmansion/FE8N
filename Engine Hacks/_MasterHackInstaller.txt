@@ -9,6 +9,9 @@
 #include "EquipmentPopup\EA.txt"		//外部でもいい
 #include "Inside_Leadership\EAnon.txt"
 #include "Attribute\EA.txt"		//外部でもいい
-
-
+	#include "Join\EA.txt"
+	#include "KingFix\EA.txt"
+	#include "TalkList\EA.txt"
+	
+	
 //	#include "magic\MAGICforN.txt"

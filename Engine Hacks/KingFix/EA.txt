@@ -1,0 +1,4 @@
+PUSH
+ORG	0x2b2fc
+#incbin "King_Shunsatsu_fix.gba"
+POP
