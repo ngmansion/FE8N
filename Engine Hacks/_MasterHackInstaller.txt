@@ -11,4 +11,4 @@
 #include "Attribute\EA.txt"		//外部でもいい
 
 
-//	#include "magic\MAGICforEA.txt"
+//	#include "magic\MAGICforN.txt"
