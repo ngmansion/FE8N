@@ -2,8 +2,8 @@ ORG 0xEFC330
 
 
 MESSAGE starts at CURRENTOFFSET
-#include "Hack Installation.txt"
 
+	#include "Extensions\Hack Installation.txt"
 	#include "Music and Sound\Music Installer.txt"
 	#include "Animations\Master Animation Installer.txt"
 	#include "Mugs and Graphics\Install Graphics Data.txt"

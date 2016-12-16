@@ -2,7 +2,7 @@
 
 
 #define AnimTableEntry(index) "ORG ClassAnimTable + (index * 0x20)"
-#include "Extensions\animationpatchesJP.event"
+#include "Animation Hacks\animationpatchesJP.event"
 
 //////////////ここからアニメデータ
 
