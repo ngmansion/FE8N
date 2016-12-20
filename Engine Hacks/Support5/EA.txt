@@ -1,0 +1,11 @@
+PUSH
+
+ORG	0x282CC
+WORD	$46874800
+POIN	Support5
+
+//////////////////
+POP
+Support5:
+#incbin "Sien_Kaisu.gba"
+ALIGN 4

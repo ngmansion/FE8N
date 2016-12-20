@@ -1,0 +1,11 @@
+PUSH
+
+ORG	0x17680
+WORD	$46974A00
+POIN	FlexibleTurn
+POP
+
+////////////////////
+FlexibleTurn:
+#incbin "FlexibleTurn3.gba"
+ALIGN 4

@@ -1,0 +1,21 @@
+
+PUSH
+
+ORG		0x951a8
+WORD	0x46874800
+POIN	SortUnitsByLvFix
+
+ORG		0x9522e
+BYTE	$C0 $46
+WORD	0x46874800
+POIN	SortUnitsByLvFix2
+
+POP
+
+
+SortUnitsByLvFix:
+	#incbin "SortUnitsByLvFix.gba"
+ALIGN	4
+SortUnitsByLvFix2:
+	#incbin "SortUnitsByLvFix2.gba"
+ALIGN	4

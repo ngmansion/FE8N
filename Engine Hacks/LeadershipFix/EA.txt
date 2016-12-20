@@ -2,10 +2,10 @@ PUSH
 ORG	0x2A960
 WORD	$468F4900
 POIN	leadershipfix
+POP
 
-ORG	0xE4A700	//////////////外部でもいい
+////////////////
+
 leadershipfix:
 #incbin "shiki.gba"
 ALIGN 4
-
-POP

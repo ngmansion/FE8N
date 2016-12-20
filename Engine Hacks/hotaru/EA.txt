@@ -1,0 +1,43 @@
+PUSH
+
+ORG	0x59e80
+#incbin "59e80.gba"
+ORG	0x59e6a
+SHORT	$46C0
+ORG	0x59eb0
+SHORT	$46C0
+ORG	0x70b72
+SHORT	$4687
+ORG	0x70bc4
+POIN	hotaru_main
+
+POP
+hotaru_main:
+#incbin "hotaru.gba"
+ALIGN 4
+
+///////////////遠距離バグ
+PUSH
+
+ORG	0x70c30
+WORD	$468F4900
+POIN	hotaru_semi
+
+POP
+hotaru_semi:
+#incbin "semibreak.gba"
+ALIGN 4
+
+////////////////音
+PUSH
+
+ORG	0x70A26
+SHORT	$4687
+ORG	0x70a48
+POIN	hotaru_oto
+
+POP
+
+hotaru_oto:
+#incbin "kyuin2.gba"
+ALIGN 4

@@ -38,7 +38,7 @@ ORG	0x899f0	//文字追加
 WORD	$46874800
 POIN	clear
 
-ORG	0xE4A810	////////////////////////////////外部でもいい
+POP
 clear:
 #incbin "get.gba"
 POIN	mojimo
@@ -46,4 +46,3 @@ mojimo:
 WORD $02003C7C $02003EAE $3 $080DD3E0 0 0
 ALIGN	4
 
-POP

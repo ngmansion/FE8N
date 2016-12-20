@@ -7,9 +7,7 @@ POIN	have_two
 ORG	0x8EAB4
 #incbin "SOUBI_FUKIDASHI.gba"
 
-
-ORG	0xE49680///////////////外部でもいい
+POP
 have_two:
 #incbin "have_two.gba"
 
-POP

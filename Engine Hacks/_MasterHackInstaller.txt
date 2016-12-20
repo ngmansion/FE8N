@@ -3,15 +3,24 @@
 
 #include "calc\EA.txt"
 #include "autosave\EA.txt"
-#include "LeadershipFix\EA.txt"		//外部でもいい
+#include "LeadershipFix\EA.txt"
 #include "AnimationSwitchG\EA.txt"
 #include "popitem\EA.txt"
-#include "EquipmentPopup\EA.txt"		//外部でもいい
+#include "EquipmentPopup\EA.txt"
 #include "Inside_Leadership\EAnon.txt"
-#include "Attribute\EA.txt"		//外部でもいい
+#include "Attribute\EA.txt"
 	#include "Join\EA.txt"
 	#include "KingFix\EA.txt"
 	#include "TalkList\EA.txt"
+	#include "tougou\EA.txt"
+	#include "koma\EA.txt"
+	#include "hotaru\EA.txt"
+	#include "SortFix\EA.txt"
+	#include "Support5\EA.txt"
+	#include "SleepTurn\EA.txt"
+	#include "LeaderAIFix\EA.txt"
+	#include "OriginSkill\EA.txt"
+	
 	
 	
 //	#include "magic\MAGICforN.txt"

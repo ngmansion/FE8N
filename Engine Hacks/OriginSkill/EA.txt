@@ -1,0 +1,19 @@
+
+
+
+
+//////////貫通系発生
+
+//////////貫通系効果
+PUSH
+
+ORG	0x2B3D8
+WORD	$469F4B00
+POIN	origin_third
+
+POP
+
+origin_third:
+#incbin "Third.gba"
+ALIGN 4
+

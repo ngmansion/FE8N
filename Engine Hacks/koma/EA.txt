@@ -1,0 +1,19 @@
+PUSH
+
+ORG	0x7D648
+WORD	$46974A00
+POIN	koma_bbb
+
+
+
+POP
+
+koma_bbb:
+#incbin "bbb.gba"
+POIN	koma_teki
+ALIGN 4
+
+koma_teki:
+#incbin "teki.bin"
+ALIGN 4
+

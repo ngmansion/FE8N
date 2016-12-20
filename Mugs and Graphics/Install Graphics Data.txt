@@ -2,7 +2,7 @@ Icon_Item:
 #incbin "Item_Icon.gba"
 #include "Map Sprites\Map Sprite Installer.txt"
 #include "Mugs\Mug Installer.txt"
-
+#include "Character\Character Installer.txt"
 
 /////////////////////////////////
 PUSH
