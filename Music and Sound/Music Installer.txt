@@ -3,9 +3,8 @@
 voicegroup000:
 #include "Instruments\EA.txt"
 #include "Sounds\EA.txt"
-
-
-/////////////////ここから音楽データ
+#include "SoundRoom\EA.txt"
+//////////////////////////ここから音楽データ
 #include "FIELDE.event"
 SongTable(100,FIELDE,1)
 
@@ -15,7 +14,7 @@ SongTable(100,FIELDE,1)
 
 
 
-////////////////ここまで音楽データ
+/////////////////////////ここまで音楽データ
 ALIGN 4
 //##Makes a GBA pointer pointing to offset without requiring word alignment.
 //POIN2, 0, 4, -game:FE6:FE7:FE8 -repeatable -priority:pointer -indexMode:8 -offsetMod:1

@@ -1,0 +1,38 @@
+#define SRTable(SRNumber,SRTime,SRName) "WORD SRNumber SRTime 0 SRName"
+SoundRoomMenu:
+#incbin "SoundRoom.dmp"
+////////////////////ここから追加
+
+SRTable($64,$1914,$11)	//////(曲ID、演奏時間、曲名ID)
+
+
+
+
+////////////////////ここまで追加
+WORD	$FFFFFFFF
+
+PUSH
+ORG	0x1B8E0
+POIN	SoundRoomMenu
+ORG	0x1B990
+POIN	SoundRoomMenu
+ORG	0xB38C8
+POIN	SoundRoomMenu
+ORG	0xB38F0
+POIN	SoundRoomMenu
+ORG	0xB394C
+POIN	SoundRoomMenu
+ORG	0xB3ADC
+POIN	SoundRoomMenu
+ORG	0xB4058
+POIN	SoundRoomMenu
+ORG	0xB4450
+POIN	SoundRoomMenu
+ORG	0xB4A48
+POIN	SoundRoomMenu
+ORG	0xB4C98
+POIN	SoundRoomMenu
+ORG	0xB5044
+POIN	SoundRoomMenu
+
+POP
