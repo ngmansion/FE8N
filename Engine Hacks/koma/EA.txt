@@ -1,10 +1,17 @@
 PUSH
 
+/////////////////無限呼魔
+
+ORG	0x4119c
+#incbin "maou1.gba"
+ORG	0x41398
+#incbin "maou2.gba"
+
+/////////////////分離呼魔
+
 ORG	0x7D648
 WORD	$46974A00
 POIN	koma_bbb
-
-
 
 POP
 
