@@ -21,6 +21,8 @@
 	#include "LeaderAIFix\EA.txt"
 	#include "OriginSkill\EA.txt"
 	
+	#include "TalkFix\EA.txt"
+	#include "Bow2Decrease\EA.txt"
 	
 	
 //	#include "magic\MAGICforN.txt"

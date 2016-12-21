@@ -1,0 +1,14 @@
+////////////////話す修正
+PUSH
+
+ORG	0x32308
+WORD	$468F4900
+POIN	TalkFix
+
+POP
+
+TalkFix:
+#incbin "TalkFixFE8J.gba"
+ALIGN 4
+
+///////////////支援修正
