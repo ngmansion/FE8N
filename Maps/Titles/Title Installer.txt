@@ -2,9 +2,9 @@
 #define TitleTable(TitlePointerTableEntry, TitlePointerTableLocation) "PUSH; ORG TitlePointerTable+TitlePointerTableEntry*0xC; POIN TitlePointerTableLocation; WORD 0 0; POP"
 
 ////////////////////////////ここから章タイトル画像
-TitleTable($0, title_one)
-title_one:
-  #incbin "title_one.dmp"
+TitleTable($0, title_pro)
+title_pro:
+  #incbin "title_pro.dmp"
 
 
 
