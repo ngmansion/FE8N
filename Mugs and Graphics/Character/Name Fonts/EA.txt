@@ -3,9 +3,9 @@ ORG	0x593854
 POIN	charN_iron
 POP
 ///////////////////////鉄フォント
-charN_per:
+charN_iron:
 WORD	0			/////POIN	charN_next
-#incbin "BCD89C(0x48).dmp"
+#incbin "BCD89C.dmp"
 
 
 ///////////////////////charN_next:
