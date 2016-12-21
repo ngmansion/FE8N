@@ -1,0 +1,12 @@
+PUSH
+ORG	0x5B537C
+POIN	charW_per
+POP
+/////////////////////パーセント
+charW_per:
+WORD	0	////////POIN	charW_next
+#incbin "percent.bin"
+
+
+////////////////////次の文字
+//charW_next:

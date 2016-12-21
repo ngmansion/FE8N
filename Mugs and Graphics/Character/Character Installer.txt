@@ -1,9 +1,2 @@
-PUSH
-ORG	0x5B537C
-POIN	char_per
-
-
-POP
-char_per:
-#incbin "percent.bin"
-ALIGN 4
+#include "Word Fonts\EA.txt"
+#include "Name Fonts\EA.txt"

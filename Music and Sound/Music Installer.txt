@@ -3,7 +3,7 @@
 voicegroup000:
 #include "Instruments\EA.txt"
 #include "Sounds\EA.txt"
-#include "SoundRoom\EA.txt"
+#include "Sound Room\EA.txt"
 //////////////////////////ここから音楽データ
 #include "FIELDE.event"
 SongTable(100,FIELDE,1)
@@ -11,6 +11,11 @@ SongTable(100,FIELDE,1)
 
 //#include "my_song.event"
 //SongTable(1,my_song,0)
+
+
+
+
+
 
 
 

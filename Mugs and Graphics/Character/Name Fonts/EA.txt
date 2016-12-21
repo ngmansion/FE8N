@@ -1,0 +1,11 @@
+PUSH
+ORG	0x593854
+POIN	charN_iron
+POP
+///////////////////////鉄フォント
+charN_per:
+WORD	0			/////POIN	charN_next
+#incbin "BCD89C(0x48).dmp"
+
+
+///////////////////////charN_next:

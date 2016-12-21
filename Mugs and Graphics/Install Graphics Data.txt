@@ -3,6 +3,9 @@ Icon_Item:
 #include "Map Sprites\Map Sprite Installer.txt"
 #include "Mugs\Mug Installer.txt"
 #include "Character\Character Installer.txt"
+#include "Anime Palette\Palette Installer.txt"
+
+
 
 /////////////////////////////////
 PUSH
