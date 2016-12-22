@@ -30,7 +30,7 @@
 		ldr	r0, =$080043b8
 		mov	lr, r0
 	mov	r0, r5
-	mov	r1, #0x30	文字の横位置右いっぱい
+	mov	r1, #0x2E	文字の横位置右いっぱい
 	mov	r2, #2
 	@dcw	$F800
 	
