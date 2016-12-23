@@ -1,0 +1,4 @@
+PUSH
+ORG	0x2c354
+#incbin "Elitenon.gba"
+POP

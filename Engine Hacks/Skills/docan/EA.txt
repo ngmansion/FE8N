@@ -1,0 +1,8 @@
+PUSH
+ORG	0x2B3A4
+BYTE	$00 $49 $8F $46
+POIN	docan
+POP
+docan:
+#incbin "SecondSkill.gba"
+ALIGN 4

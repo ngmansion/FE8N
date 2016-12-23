@@ -1,6 +1,8 @@
 #include "KingFix\EA.txt"
 #include "SolTenku\EA.txt"
 #include "Kantsuu\EA.txt"
+#include "docan\EA.txt"
+#include "astraether\EA.txt"
+#include "Elite\EA.txt"
 
-
-
+//#include "NihilKing\EA.txt"(wip)

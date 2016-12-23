@@ -23,13 +23,13 @@ half
 	mov	pc, r1
 	
 sleep
-	mov	r0, #0x22
+	mov	r0, #0x32
 	b	end
 confu
-	mov	r0, #0x24
+	mov	r0, #0x34
 	b	end
 silent
-	mov	r0, #0x23
+	mov	r0, #0x33
 end
 	strb	r0, [r4, r1]
 	ldr	r1, =$0802B59E	;;=$0802b5b2
