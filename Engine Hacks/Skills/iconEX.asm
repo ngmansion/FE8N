@@ -30,6 +30,7 @@ loopE
 	str	r5, [r7]
 	str	r5, [r7, #4]
 	str	r5, [r7, #8]
+	
 	ldr	r5, [adr1+4]
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
@@ -53,6 +54,7 @@ loopE
 end
 	pop	{r4, r5, r6, r7, pc}
 
+
 SKILL
 	push	{lr}
 	cmp	r5, #0
@@ -67,7 +69,7 @@ loop
 	beq	skiller
 	add	r2, #1
 	cmp	r2, #0x20
-	beq	jump ;limit
+	beq	jump ;LISTlimit
 	cmp	r1,	#0
 	bne	loop
 	b	jump
@@ -84,8 +86,8 @@ nonitem
 	lsl	r2, r2, #7
 	mov	r0, r6
 	bl	icon
-	add	r6, #6
-	add	r7, #2
+	add	r6, #6	;アイコンの間隔
+	add	r7, #2	;HELP memory increment
 	
 jump
 	add	r5, #0x20

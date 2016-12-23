@@ -1,0 +1,37 @@
+////フレキシブルターンは、他のパッチに吸収された
+PUSH
+
+ORG	0x02b824
+#incbin "sleepEND.gba"
+
+
+ORG	0x02b58c
+WORD	$468F4900
+POIN	SSaki
+POP
+SSaki:
+#incbin "aki.gba"
+ALIGN 4
+
+
+
+/////////////エフェクト
+PUSH
+ORG	0x562E8
+BYTE	$00 $49 $8F $46
+POIN	SSeffect
+POP
+
+SSeffect:
+#incbin "effect.gba"
+ALIGN 4
+/////////////エフェクト2
+PUSH
+ORG	0x7CCDA
+BYTE	$C0 $46 $00 $48 $87 $46
+POIN	SSeffect_non
+POP
+SSeffect_non:
+#incbin "effect_noanime.gba"
+ALIGN 4
+
