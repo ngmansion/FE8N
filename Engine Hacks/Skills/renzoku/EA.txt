@@ -1,0 +1,23 @@
+PUSH
+ORG	0x2b004
+BYTE	$00 $4B $9F $46
+POIN	renzokua
+POP
+renzokua:
+#incbin "Adept_v01.gba"
+////////////////必的の後処理
+PUSH
+ORG	0x2b1be
+#incbin "Hitteki.gba"
+
+ORG	0x2B360
+BYTE	$00 $48 $87 $46
+POIN	hitteiki
+POP
+
+hitteiki:
+#incbin "nokori.gba"
+ALIGN 4
+
+
+

@@ -1,5 +1,5 @@
 @thumb
-@org	$08089268
+;@org	$08089268
 	
 	push	{r4, r5, r6, r7, lr}
 ;画像
@@ -30,22 +30,22 @@ loopE
 	str	r5, [r7]
 	str	r5, [r7, #4]
 	str	r5, [r7, #8]
-	
-	ldr	r5, [adr1+4]
+@align 4
+	ldr	r5, [adr]
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
 	ldr	r4, [r4]
 	ldrb	r4, [r4, #4]
 	bl	SKILL
-	
-	ldr	r5, [adr2]
+@align 4
+	ldr	r5, [adr+4]
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
 	ldr	r4, [r4, #4]
 	ldrb	r4, [r4, #4]
 	bl	SKILL
-
-	ldr r5, [adr3]
+@align 4
+	ldr r5, [adr+8]
 	ldr	r4, =$0203a530
 	ldrb	r4, [r4]
 	cmp r4, #0
@@ -122,9 +122,4 @@ icon
 	mov	pc, r3
 
 @ltorg
-adr1
-	@DCD	$00000000
-adr2
-	@DCD	$00000000
-adr3
-	@DCD	$00000000
+adr:

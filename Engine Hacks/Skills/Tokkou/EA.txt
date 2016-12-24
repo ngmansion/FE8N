@@ -1,0 +1,8 @@
+PUSH
+ORG	0x16A4C
+POIN	tokkoujun
+POP
+
+tokkoujun:
+BYTE	$25 $26 $27 $28 $29 $2A $2B $2C $2D $2E $2F $30 $31 $32 $44 $45 $4A $4B $4C $4F $5F $60 $61 $62 $38 $3E $7F $00
+ALIGN 4

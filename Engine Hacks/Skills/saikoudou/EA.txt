@@ -1,0 +1,11 @@
+PUSH
+ORG	0x1ceac
+BYTE	$3D
+ORG	0x1cefc
+BYTE	$00 $4A $97 $46
+POIN	odorero
+
+POP
+odorero:
+#incbin "saikoudou.dmp"
+ALIGN 4

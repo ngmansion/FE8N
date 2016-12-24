@@ -1,0 +1,22 @@
+VantageList:
+ BYTE	$33 $34 $00 $00
+ ALIGN 4
+
+
+/////////////BGM問題
+PUSH
+ ORG	0x74ba6
+ #incbin "74ba6.gba"
+
+/////////////
+ ORG	0x17bdc
+ BYTE	$70 $47
+
+ ORG	0x2aeec
+ BYTE	$00 $4A $97 $46
+ POIN	ski_vantage
+
+POP
+ski_vantage:
+ #incbin "vantageBE8J.gba"
+ POIN	VantageList

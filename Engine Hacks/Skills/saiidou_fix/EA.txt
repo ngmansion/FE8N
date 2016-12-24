@@ -1,0 +1,9 @@
+PUSH
+ORG	0x1CED4
+BYTE	$00 $48 $87 $46
+POIN	jinraiidou
+
+POP
+jinraiidou:
+#incbin "jinrai_fix_ijou.gba"
+ALIGN 4

@@ -1,6 +1,15 @@
 //////////貫通系発生条件
-
-
+PUSH
+ORG	0x2B21C
+BYTE	$00 $4B $9F $46
+POIN	geckojump
+POP
+geckojump:
+#incbin "Gecko.gba"
+POIN	GeckoClass
+GeckoClass:
+BYTE	$43 $40 $21 $0C $49 $35 $36 $04 $00 $00 $00
+ALIGN 4
 
 //////////貫通系効果分岐
 PUSH

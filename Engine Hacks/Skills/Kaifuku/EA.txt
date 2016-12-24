@@ -1,0 +1,8 @@
+PUSH
+ORG	0x19f28
+BYTE	$00 $4B $9F $46
+POIN	ski_kaifuku
+POP
+ski_kaifuku:
+#incbin "KAIFUKU.gba"
+ALIGN 4

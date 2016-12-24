@@ -1,0 +1,21 @@
+BigShieldList:
+ BYTE	$0B $00 $00 $00
+ ALIGN	4
+
+
+///////////////
+PUSH
+ ORG	0x2B490
+ BYTE	$00 $4A $97 $46
+ POIN	shikkokunori
+
+ ORG	0x2b3b4	//元の大盾削除
+ SHORT	$46C0 $46C0
+
+
+POP
+
+
+shikkokunori:
+ #incbin "inori.gba"
+ POIN	BigShieldList

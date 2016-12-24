@@ -148,8 +148,10 @@ Sample012:
 PUSH
 
 ORG	$212564
-
-#incbin "Drum_Fix.bin"
+#incbin "neoDrumFix1.dmp"
+ORG	$212E64
+#incbin "neoDrumFix2.dmp"
+//#incbin "Drum_Fix.bin"
 
 POP
 

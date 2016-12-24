@@ -1,0 +1,18 @@
+KingClassList:
+ BYTE	$0 $0 $0 $0
+ ALIGN 4
+
+//////////////////見切りと王の器
+PUSH
+ ORG	0x2A490
+ BYTE	$00 $4A $97 $46
+ POIN	mirikiri
+POP
+mirikiri:
+ #incbin "mikiri.gba"
+ POIN	KingClassList
+////////////////////KingFix
+PUSH
+ ORG	0x2b2fc
+ #incbin "King_Shunsatsu_fix.gba"
+POP

@@ -1,8 +1,37 @@
-#include "KingFix\EA.txt"
 #include "SolTenku\EA.txt"
 #include "Kantsuu\EA.txt"
 #include "docan\EA.txt"
 #include "astraether\EA.txt"
 #include "Elite\EA.txt"
+#include "charisma\EA.txt"
+#include "renzoku\EA.txt"
+#include "Tokkou\EA.txt"
+#include "Kaifuku\EA.txt"
+#include "pass\EA.txt"
+#include "saiidou_fix\EA.txt"
+#include "saikoudou\EA.txt"
+#include "BOW\EA.txt"
+#include "NihilKing\EA.txt"
+#include "DEF\EA.txt"
+#include "Vantage\EA.txt"
 
-//#include "NihilKing\EA.txt"(wip)
+//#include "my_skill\EA.txt"
+PUSH
+ORG	0xA741A8
+#incbin "Equipment7.bin"
+
+ORG	0x89268
+BYTE	$00 $4B $9F $46
+POIN Skills_Icon
+POP
+
+Skills_Icon:
+#incbin "iconEX.gba"
+POIN	SIcon_U SIcon_C SIcon_W
+
+SIcon_U:
+#incbin "UNIT.bin"
+SIcon_C:
+#incbin "CLASS.bin"
+SIcon_W:
+#incbin "WEAPON.bin"

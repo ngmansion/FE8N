@@ -79,9 +79,8 @@ nonTATE
 	lsl	r1, r1, #25
 	bmi	gotK
 ;クラスチェック
-	ldr	r3, =$000000CC
-	cmp	r3, #0xCC
-	beq	end
+@align 4
+	ldr	r3, [adr]
 	ldr	r1, [r2, #4]
 	ldrb	r1, [r1, #4]	;;クラスID
 classloop
@@ -108,9 +107,8 @@ non
 	pop	{r3}
 	mov	r0, #0
 	bx	lr
-;
-
 ;0x8反撃
 ;0x4追撃
-;
 
+@ltorg
+adr:
