@@ -14,8 +14,12 @@
 #include "NihilKing\EA.txt"
 #include "DEF\EA.txt"
 #include "Vantage\EA.txt"
+#include "_help\EA.txt"
 
 //#include "my_skill\EA.txt"
+
+
+
 PUSH
 ORG	0xA741A8
 #incbin "Equipment7.bin"

@@ -44,6 +44,8 @@ check
 	asr	r1, r1, #24
 	add	r0, r0, r1
 	ldrb	r1, [r2, #16]	;既に移動した分
+	cmp	r0, r1
+	ble	false
 	sub	r1, r0, r1
 	cmp	r1, #2
 	ble	jump

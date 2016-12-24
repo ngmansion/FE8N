@@ -1,0 +1,15 @@
+PUSH
+@ORG	0x89284
+POIN	helpnon+1
+@ORG	0x892A0
+POIN	helpnon+5
+@ORG	0x892BC
+POIN	helpnon+9
+@ORG	0x892D8
+POIN	helpnon+13
+@ORG	0x892F4
+POIN	helpnon+17
+POP
+helpnon:
+#incbin "helpnon.gba"
+ALIGN 4
