@@ -39,8 +39,8 @@ mov	lr, r1
 	beq	tenku
 	cmp	r0, #$4C		;ヴァル
 	beq	tenku
-
-	ldr	r3, =$08E49C30	;太陽リスト
+@align 4
+	ldr	r3, [adr]
 loop
 	ldrb	r1, [r3]
 	cmp	r1, #0
@@ -95,3 +95,6 @@ tenku
 	and	r0, r1
 	bne	rizaia
 	b	buki
+@ltorg
+adr:
+	

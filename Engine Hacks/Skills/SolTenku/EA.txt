@@ -1,3 +1,6 @@
+SolList:
+BYTE	$03 $07 $08 $22 $00 $00
+ALIGN 4
 
 //ORG 0xE487D0
 
@@ -50,5 +53,5 @@ taiyo3:
 	#incbin "taiyo3.gba"
 ALIGN	4
 taiyo4:
-	#incbin "taiyo4.gba"
-ALIGN	4
+	#incbin "taiyo44.gba"
+POIN	SolList

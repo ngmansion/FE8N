@@ -78,7 +78,6 @@ charisma_fear			;; 恐怖
 	mov r1, #0x66		;必殺
 	ldrb r0,[r5, r1]
 	sub r0, #0x0A
-	cmp r0, #0x00
 	bge str_hit
 	mov r0, #0x00
 str_hit
@@ -86,7 +85,6 @@ str_hit
 	mov r1, #0x62		;回避
 	ldrb r0,[r5, r1]
 	sub r0, #0x0A
-	cmp r0, #0x00
 	bge str_avo
 	mov r0, #0x00
 str_avo
