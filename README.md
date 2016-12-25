@@ -1,5 +1,5 @@
+https://github.com/ngmansion/FE8N/releases/download/20161224/FE8N.ips
 # 変更メモ
-
 ##ステータス
 HPの上限は、クラスHP上限を参照します  
 ただし敵将はクラスHP上限が80未満でも80まで引き上げられます
