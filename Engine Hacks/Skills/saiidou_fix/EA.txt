@@ -3,6 +3,9 @@ ORG	0x1CED4
 BYTE	$00 $48 $87 $46
 POIN	jinraiidou
 
+ORG	0x1cef0
+SHORT	$DD04
+
 POP
 jinraiidou:
 #incbin "jinrai_fix_ijou.gba"
