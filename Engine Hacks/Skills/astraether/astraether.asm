@@ -3,6 +3,10 @@
 ;武器レベルチェック
 	mov	r0, #72
 	ldrh	r0, [r7, r0]
+	lsl	r1, r0, #24
+	lsr	r1, r1, #24
+	cmp	r1, #0x11
+	beq	end
 ldr	r2, =$080172f0	;武器の種類ID
 mov	lr r2
 @dcw	$F800
@@ -15,7 +19,11 @@ mov	lr r2
 	ldrb	r0, [r0]
 	cmp	r0, #250
 	bls	end
-;流星チェックユニット
+;;;;流星チェック
+;剣チェック
+	cmp	r1, #0
+	bne	skill2
+;ユニットチェック
 	ldr	r0, [r7]
 	ldrh	r0, [r0, #0x26]
 	lsl	r0, r0, #17
@@ -29,16 +37,15 @@ astra
 ;クラスチェック
 	ldr	r0, [r7, #4]
 	ldrb	r0, [r0, #4]
-	cmp	r0, #0x15
-	beq	sodomasu
-	cmp	r0, #0x16
-	bne	skill2
-sodomasu
+	cmp	r0, #0x17	;アサシン
+	beq	skill2
+	cmp	r0, #0x18	;アサシン
+	beq	skill2
 	ldr	r0,	=$0203a4d2
 	ldrb	r0, [r0]	;距離
 	cmp	r0, #1
 	bne	skill2
-	ldrb	r0, [r7, #8]
+	ldrb	r0, [r7, #8]	;レベル
 	mov	r1, #0
 bl	random
 	cmp	r0, #1
@@ -96,7 +103,7 @@ tenku
 	cmp	r0, #1
 	bne	end
 	mov	r0, r7
-	add	r0, #74
+	add	r0, #72
 	ldrh	r0, [r0, #0]
 ldr	r3, =$08017448	;武器の射程
 mov	lr,r3

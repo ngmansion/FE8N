@@ -5,5 +5,5 @@ POIN	astron
 POP
 
 astron:
-#incbin "astraether3rd.gba"
+#incbin "astraether.gba"
 ALIGN 4
