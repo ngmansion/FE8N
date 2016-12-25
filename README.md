@@ -90,6 +90,7 @@ HPの上限は、クラスHP上限を参照します
 * Native instrument 
 * DrumFix(修正版)
 * 16 tracks/12 sounds patch
+* FE8 Free Range
 
 ###アニメ
 * パラディン杖男女
