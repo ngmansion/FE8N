@@ -1,0 +1,34 @@
+//80B3B54 02021388
+PUSH
+
+ORG	0xB3A00
+SHORT	$46C0
+
+ORG	0xb3be6
+#incbin "aaa.gba"
+
+ORG	0xb3b6f
+BYTE	$DB
+
+
+ORG	0xB3B62
+SHORT	$7801	//ldrb	r1, [r0, #0]
+ORG	0xB3B1A
+SHORT	$7801	//ldrb	r1, [r0, #0]
+
+ORG	0xB3B2C
+SHORT	$0E00	//lsr	r0, r0, #24
+ORG	0xb4a18
+#incbin "bbb.gba"
+ORG	0xB4FB8
+SHORT	$0e09	//lsr	r1, r1, #24
+
+POP
+
+
+
+
+
+
+
+

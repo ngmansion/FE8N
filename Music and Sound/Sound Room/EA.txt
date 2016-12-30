@@ -11,6 +11,8 @@ SRTable($64,$1914,$11)	//////(曲ID、演奏時間、曲名ID)
 ////////////////////ここまで追加
 WORD	$FFFFFFFF
 
+#include "soundbreak.txt"
+
 PUSH
 ORG	0x1B8E0
 POIN	SoundRoomMenu
