@@ -12,10 +12,14 @@
 	ldrh	r1, [r2, #4]
 	lsl	r1, r1, #31
 	bpl	delete	;押してなければ消す
-	
+;チェンジ判定
 	ldrh	r1, [r2, #8]
-	lsl	r2, r1, #30
-	bpl	maru
+	lsl	r2, r1, #22	;L押しはチェンジ
+	bmi	change
+	b	maru	
+;	ldrh	r1, [r2, #8]
+;	lsl	r2, r1, #30
+;	bpl	maru
 change
 	ldr	r0, =$0801c99c
 	mov	pc, r0

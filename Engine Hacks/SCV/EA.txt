@@ -42,7 +42,7 @@ WORD	0x46874800
 POIN	GreenReset
 
 ORG		0x1c9e2	//常に杖切り換え
-BYTE	$C0 $46
+SHORT	$46C0
 
 ORG		0x1c95c
 	#incbin "0123GREEN.gba"
@@ -67,8 +67,15 @@ ORG		0x8f090
 WORD	0x468F4900
 POIN	Kiken80Select
 
+////Lで危険状態チェンジ
+
+ORG	0x1c994
+SHORT	$2080
+SHORT	$0080
+SHORT	$4008
+
 POP
-//
+//////////////////////
 
 PushDanger2:
 	#incbin "PushDanger2.gba"
