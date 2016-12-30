@@ -3,7 +3,7 @@ SoundRoomMenu:
 #incbin "SoundRoom.dmp"
 ////////////////////ここから追加
 
-SRTable($64,$1914,$11)	//////(曲ID、演奏時間、曲名ID)
+SRTable(100,$1914,$11)	//////(曲ID、演奏時間、曲名ID)
 
 
 
