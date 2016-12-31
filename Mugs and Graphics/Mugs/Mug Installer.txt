@@ -9,6 +9,6 @@
 
 //setMugEntry($65, mug_colorz, 3, 6, 3, 4, 1)
 //mug_colorz:
-//  #incbin "mug_colorz.dmp"
+//  #incext PortraitFormatter mug_colorz.png -o
 
 //////////////////////////ここまで顔画像

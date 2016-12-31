@@ -9,9 +9,9 @@
 SpriteStd($1A, 2, 1, DarkPeg1)
 SpriteMov($24, DarkPeg2, $81D9F94)
 DarkPeg1:
-#incbin "DarkPeg1.dmp"
+#incext Png2Dmp Black_Falco_Standing.png --lz77
 DarkPeg2:
-#incbin "DarkPeg2.dmp"
+#incext Png2Dmp Black_Falco_Moving.png --lz77
 
 
 
