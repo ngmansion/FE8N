@@ -1,5 +1,6 @@
 PUSH
 
+//先頭指定
 ORG	0x5C56FC
 WORD	$085C5370
 
@@ -56,46 +57,55 @@ POIN	Hamidashi_Kiken_Jogai
 //A B SELECT
 
 ORG		0x1c740
-	#incbin "PushDanger.gba"
-POIN	PushDanger2
+WORD	$468F4900
+POIN	PushDanger
+SHORT	$d02a $8891 $2004 $4008
 
 ORG		0x1ca04
 WORD	0x46974A00
 POIN	WARS_CANCEL_ALT
 
 ORG		0x8f090
-WORD	0x468F4900
-POIN	Kiken80Select
+SHORT	$1c07 $1c2c $3444 $8820
+//WORD	0x468F4900
+//POIN	Kiken80Select
 
 ////Lで危険状態チェンジ
 
 ORG	0x1c994
-SHORT	$2080
-SHORT	$0080
-SHORT	$4008
+WORD	$46874800
+POIN	kiken_L
 
 POP
+kiken_L:
+#incbin "L_Switch.gba"
+ALIGN	4
 //////////////////////
 
-PushDanger2:
-	#incbin "PushDanger2.gba"
+PushDanger:
+	#incbin "PushDanger.gba"
 ALIGN	4
-Kiken80Select:
-	#incbin "Kiken80Select.gba"
-ALIGN	4
+
 WARS_CANCEL_ALT:
 	#incbin "WARS_CANCEL_ALT.gba"
 ALIGN	4
+
 Hamidashi_Kiken_Jogai:
 	#incbin "Hamidashi_Kiken_Jogai.gba"
-
 ALIGN	4
+
 Kiken1234_80:
 	#incbin "Kiken1234_80.gba"
 ALIGN	4
+
 GreenReset:
 	#incbin "GreenReset.gba"
 ALIGN	4
+
 JPdmp:
 	#incbin "JP.dmp"
 ALIGN	4
+
+//Kiken80Select:
+//	#incbin "Kiken80Select.gba"
+//ALIGN	4

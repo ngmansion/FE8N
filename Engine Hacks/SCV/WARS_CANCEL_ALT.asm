@@ -9,23 +9,35 @@
 	ldrb	r1, [r0, #11]	;所属ID
 	lsr	r1, r1, #6
 	beq	normal	;自軍はジャンプ
-	ldrh	r1, [r2, #4]
-	lsl	r1, r1, #31
-	bpl	delete	;押してなければ消す
+	
+	ldrh	r1, [r2, #8]
+	lsl	r1, r1, #30
+	bmi	cancel
+	lsl	r1, r1, #1
+	bpl	next	;
+;Aで矢印
+	ldrb	r1, [r0 #28]
+	mov	r2, #0x80
+	orr	r1, r2
+	strb	r1, [r0 #28]
+	b	delete
+cancel:
+	ldrb	r1, [r0 #28]
+	lsl	r1, r1, #25
+	lsr	r1, r1, #25
+	strb	r1, [r0 #28]
+	b	delete
+next
 ;チェンジ判定
 	ldrh	r1, [r2, #8]
-	lsl	r2, r1, #22	;L押しはチェンジ
-	bmi	change
-	b	maru	
-;	ldrh	r1, [r2, #8]
-;	lsl	r2, r1, #30
-;	bpl	maru
+	lsl	r1, r1, #22	;L押しはチェンジ
+	bpl	maru
 change
 	ldr	r0, =$0801c99c
 	mov	pc, r0
 danger
 	ldrh	r1, [r2, #4]
-	lsl	r2, r1, #30
+	lsl	r1, r1, #30
 	bmi	maru	;押しっぱなしは消さない
 	b	delete
 normal
