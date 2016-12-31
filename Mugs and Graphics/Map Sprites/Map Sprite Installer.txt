@@ -1,6 +1,5 @@
   #define MapSpriteStdTableOffset 0x903E0C
   #define SpriteStd(MapSpriteStdIndex,MapSpriteStdPattern1,MapSpriteStdPattern2,MapSpriteStdPointer) "PUSH; ORG MapSpriteStdTableOffset+(8*MapSpriteStdIndex); SHORT MapSpriteStdPattern1 MapSpriteStdPattern2; POIN MapSpriteStdPointer; POP"
-
   #define MapSpriteMovTableOffset 0xA13480
   #define SpriteMov(MapSpriteMovIndex,MapSpriteMovPointer,MapSpriteMovAdr) "PUSH; ORG MapSpriteMovTableOffset+(8*MapSpriteMovIndex); POIN MapSpriteMovPointer; WORD MapSpriteMovAdr; POP"
 

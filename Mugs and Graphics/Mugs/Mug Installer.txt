@@ -9,6 +9,6 @@
 
 //setMugEntry($65, mug_colorz, 3, 6, 3, 4, 1)
 //mug_colorz:
-//  #incext PortraitFormatter mug_colorz.png -o
+//  #incext PortraitFormatter mug_colorz.png
 
 //////////////////////////ここまで顔画像
