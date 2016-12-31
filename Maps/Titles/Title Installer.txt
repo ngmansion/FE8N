@@ -4,7 +4,7 @@
 ////////////////////////////ここから章タイトル画像
 TitleTable($0, title_pro)
 title_pro:
-  #incbin "title_pro.dmp"
+  #incext Png2Dmp title_pro.png --lz77
 
 
 
