@@ -26,7 +26,7 @@
 	ldrb r0,[r0]
 	lsl r0,r0,#30
 	bmi delete
-	mov r0,#0x69
+	mov r0,#0x6A
 	ldr r2,=$080d4ef4	;効果音を鳴らす
 	mov lr, r2
 	@dcw	$F800
