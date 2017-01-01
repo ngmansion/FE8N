@@ -29,12 +29,19 @@ pop_warp:
 WORD	$469F4B00	//r3
 POIN power_view
 
+ORG	0x8f3a8
+POIN menu_gazou
+
+
+
+
 ORG	0xA92514
 power_view:
 #incbin "power_view.gba"
-
-ORG	0x8f3a8
-POIN menu_gazou
+ALIGN 4
+have_two:
+#incbin "have_two.gba"
+ALIGN 4
 
 POP
 
@@ -42,6 +49,3 @@ menu_gazou:
 #incext Png2Dmp menu.png --lz77
 ALIGN 4
 
-have_two:
-#incbin "have_two.gba"
-ALIGN 4

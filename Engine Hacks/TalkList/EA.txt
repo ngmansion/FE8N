@@ -15,7 +15,7 @@ ORG	0xA93984
 POIN	Talksekkei
 
 ORG	0xA9985C
-#incbin "butai23.dmp"
+#incext Png2Dmp butai23.png --lz77
 ALIGN 4
 TalkChance:
 #incbin "TalkChance2.gba"
