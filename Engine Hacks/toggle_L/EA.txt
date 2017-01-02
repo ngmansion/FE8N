@@ -1,0 +1,10 @@
+PUSH
+ORG	0x1c5bc
+#incbin "toggle_jump.gba"
+ORG	0x1c5e8
+POIN	toggle_L
+POP
+
+toggle_L:
+#incbin "toggle_L.gba"
+ALIGN 4

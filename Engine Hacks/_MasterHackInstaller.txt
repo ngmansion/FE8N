@@ -24,6 +24,7 @@
 	#include "status2\EA.txt"
 	#include "steal\EA.txt"
 	#include "BadEffectWeapon\EA.txt"
+	#include "toggle_L\EA.txt"
 	
 	#include "SCV\EA.txt"	
 	
