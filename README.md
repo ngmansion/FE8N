@@ -191,13 +191,13 @@ A9DDDC～(元サウンドルーム)
 ちょっと使ってる
 
 E47180～  
-空けた
+NativeInstrumentMap  
+その他諸々　メインの使用領域
 
 EFB330～  
 まほーパッチ
 
 EFC330～  
-NativeInstrumentMap  
-その他諸々のデータ
+（空き）
 ```
 
