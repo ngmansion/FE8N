@@ -5,17 +5,24 @@
 
 ////////////////////ここからアイコンデータ
 
-SpriteStd($1A, 2, 1, DarkPeg1)
-SpriteMov($24, DarkPeg2, $81D9F94)
-DarkPeg1:
-#incext Png2Dmp Black_Falco_Standing.png --lz77
-DarkPeg2:
-#incext Png2Dmp Black_Falco_Moving.png --lz77
+SpriteStd($1A, 2, 1, icon_DarkPeg1)
+SpriteMov($24, icon_DarkPeg2, $81D9F94)
+ icon_DarkPeg1:
+  #incext Png2Dmp Black_Falco_Standing.png --lz77
+ icon_DarkPeg2:
+  #incext Png2Dmp Black_Falco_Moving.png --lz77
 
 
+  #incext Png2Dmp st_shaman_f.png --lz77
+SpriteMov($2E, icon_shaman_mv, $081CD240)
+ icon_shaman_mv:
+  #incext Png2Dmp mv_shaman_f.png --lz77
+  
 
-
-
+  #incext Png2Dmp st_druid_f.png --lz77
+SpriteMov($30, icon_druid_mv, $081CDC7C)
+ icon_druid_mv:
+  #incext Png2Dmp mv_druid_f.png --lz77
 
 
 
