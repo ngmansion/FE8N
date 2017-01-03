@@ -1,4 +1,4 @@
-#define Free_Space 0x1000000
+PUSH
 
 //WORD	$46874800
 //WORD	$468F4900
@@ -109,31 +109,17 @@ WORD	0x08E47A10	//
 //
 //
 //
+POP
 
 
-
-ORG		0x00000000
-WORD	0x46874800
-POIN	hack1
-
-//
-//
-//
-
-
-ORG		Free_Space
-
-
-
-ALIGN	4
 StrClsAndWe:		//E477FC
 	#incbin "hack1.gba"
-	
 ALIGN	4
+
 TransRefProgram:	//E47880
 	#incbin "TransRefProgram.bin"
-
 ALIGN	4
+
 TransFormList:
 WORD $4	//総数
 WORD 0 0 0
@@ -143,7 +129,7 @@ BYTE $3F $FF $CE $23 $CE $19 $00 $F0 $00 $F0 0 0 0 0 0 0
 	
 ORG	TransRefProgram+$58
 POIN	TransFormList
-	
+
 	
 //E47D7E:06
 //E47DDE:06

@@ -1,4 +1,8 @@
 
+
+//0x668バイト+リスト分の容量を使用
+
+
 PUSH
 
 ORG		0x72EA8
@@ -104,19 +108,10 @@ BYTE	$0A
 ORG		0x73208
 POIN	TransRefProgram+$190
 
+
 POP
 
-//E47D7E:06
-//E47DDE:06
-
-//E47CB6:07
-//E47D20:07
-	
-//E47E2E:08
-//E47E8E:08
-
-
-
+ALIGN	4
 TransRefProgram:	//E47880
 	#incbin "TransRefProgram1.bin"
 POIN	TransformList
@@ -127,6 +122,7 @@ StrClsAndWe:		//E477FC
 	#incbin "StrClsAndWe.gba"
 POIN	TransRefProgram+$80
 	
+
 ALIGN	4
 TransformList:
 
