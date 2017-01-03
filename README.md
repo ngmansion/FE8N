@@ -90,7 +90,7 @@ HPの上限は、クラスHP上限を参照します
 ###パッチ系(一部)
 * 16 tracks/12 sounds patch
 * Native Instrument Map
-* DrumFix(修正版)
+* Drum Fix(修正版)
 * sound_mixer
 * コマンド01ハック(未利用)
 * コマンド48ハック(未利用)
