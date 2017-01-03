@@ -44,7 +44,7 @@ POIN	TransRefProgram+$480
 ORG		0x72F5E
 SHORT	$4804 $4687
 ORG		0x72F6E
-SHORT	$E00E
+SHORT	$BD00
 POIN	TransRefProgram+$290
 
 /////
