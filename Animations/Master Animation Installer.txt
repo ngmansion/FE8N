@@ -14,7 +14,7 @@
 #include "FemalePaladinStaves Installer.event"	//0xCB
 #include "HandAxes Installer.event"	//0xCF
 #include "handaxe Installer.event"	//0xD1
-#include "HawkeyeGenericBerserker Installer.event"	//0x23
+#include "Hawkzerker Installer.event"	//0x23
 #include "rag_bow Installer.event"	//0xD2
 #include "rag_sword Installer.event"	//0x8D
 #include "rog_staff Installer.event"	//0xD4
@@ -24,3 +24,4 @@
 
 //////////////ここまでアニメデータ
 ALIGN 4
+
