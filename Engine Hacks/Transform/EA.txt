@@ -19,4 +19,4 @@ SHORT	0
 
 
 ///////////////リスト終了
-SHORT $FFFF
+WORD $FFFFFFFF
