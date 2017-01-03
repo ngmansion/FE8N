@@ -25,7 +25,7 @@
 	#include "steal\EA.txt"
 	#include "BadEffectWeapon\EA.txt"
 	#include "toggle_L\EA.txt"
-	
+	#include "Transform\EA.txt"
 	#include "SCV\EA.txt"	
 	
 //	#include "magic\MAGICforN.txt"
