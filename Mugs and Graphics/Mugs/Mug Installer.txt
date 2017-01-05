@@ -6,11 +6,12 @@
 //setMugEntry(顔ID, mug_名前, 口のX座標, 口のY座標, 目のX座標, 目のY座標, 1=通常6=常に目閉じ)
 
 
-0, 2, 5, 2
 
 //setMugEntry($65, mug_colorz, 3, 6, 3, 4, 1)
 //setMugExtra($65, 0, 2, 5, 2)
 //mug_colorz:
 //  #incext PortraitFormatter mug_colorz.png
+
+
 
 //////////////////////////ここまで顔画像
