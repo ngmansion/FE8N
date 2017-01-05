@@ -3,10 +3,6 @@
 ;武器レベルチェック
 	mov	r0, #72
 	ldrh	r0, [r7, r0]
-	lsl	r1, r0, #24
-	lsr	r1, r1, #24
-	cmp	r1, #0x11
-	beq	end
 ldr	r2, =$080172f0	;武器の種類ID
 mov	lr r2
 @dcw	$F800
@@ -20,7 +16,7 @@ mov	lr r2
 	cmp	r0, #250
 	bls	end
 ;;;;流星チェック
-;剣チェック
+;剣以外では発動しない
 	cmp	r1, #0
 	bne	skill2
 ;ユニットチェック
@@ -29,7 +25,7 @@ mov	lr r2
 	lsl	r0, r0, #17
 	bpl	skill2
 astra
-;ダメージ量
+;ダメージがゼロなら発動しない
 	mov	r0, #4
 	ldsh	r0, [r5, r0]
 	cmp	r0, #0
@@ -41,10 +37,16 @@ astra
 	beq	skill2
 	cmp	r0, #0x18	;アサシン
 	beq	skill2
+;近距離しか発動しない
 	ldr	r0,	=$0203a4d2
-	ldrb	r0, [r0]	;距離
+	ldrb	r0, [r0]
 	cmp	r0, #1
 	bne	skill2
+;必殺率がゼロなら発動しない
+	ldrh	r0, [r5, #12]	;必殺
+	cmp	r0, #0
+	beq	skill2
+;発動乱数
 	ldrb	r0, [r7, #8]	;レベル
 	mov	r1, #0
 bl	random
@@ -79,25 +81,34 @@ bl	RYUSEI
 	b	effect
 ;天空・陽光
 skill2
-;必殺発動チェック
+;必殺と重複しない
 	ldr	r0, [r6, #0]
 	ldr	r0, [r0, #0]
 	lsl r0, r0, #31
 	bmi	end
+;HP吸収武器では発動しない
+	mov	r0, #72
+	ldrh	r0, [r7, r0]
+ldr	r1,	=$080174cc
+mov	lr, r1
+@dcw	$F800
+	cmp	r0, #2
+	beq	end
+;クラスチェック
 	ldr	r0, [r7, #4]
 	ldrb	r0, [r0, #4]
 	cmp	r0, #0x11	;勇者
-	beq	tenku
+	beq	TENKU
 	cmp	r0, #0x12	;勇者
-	beq	tenku
+	beq	TENKU
 	cmp	r0, #0x28	;賢者
-	beq	youko
+	beq	YOUKOU
 	cmp	r0, #0x27	;賢者
-	beq	youko
+	beq	YOUKOU
 	cmp	r0, #0x4C	;ヴァル
-	beq	youko
+	beq	YOUKOU
 	b	end
-tenku
+TENKU:
 	ldr	r0,	=$0203a4d2
 	ldrb	r0, [r0]	;距離
 	cmp	r0, #1
@@ -127,7 +138,7 @@ jump
 	add	r0, r0, r1
 	strh	r0, [r5, #4]
 	b	effect
-youko
+YOUKOU:
 	ldrb	r0, [r7, #21]	;技
 	mov	r1, #0
 		bl	random
