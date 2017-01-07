@@ -1,5 +1,5 @@
 @thumb
-@org	$08025b44
+;@org	$08025b44
 	push	{r4, r5, r6, lr}
 	mov	r5, r0
 	ldrb	r0, [r5, #11]
