@@ -1,0 +1,27 @@
+#define SongTableOffset  0x214120	//0x224470
+#define SongTable(index,SongPointer,Group) "PUSH; ORG SongTableOffset+(8*index); POIN SongPointer; SHORT Group Group; POP"
+voicegroup000:
+#include "Instruments\EA.txt"
+#include "Sounds\EA.txt"
+#include "Sound Room\Sound Room Installer.txt"
+//////////////////////////ここから音楽データ
+#include "FIELDE.event"
+SongTable(100,FIELDE,1)
+
+
+//#include "my_song.event"
+//SongTable(1,my_song,0)
+
+
+
+
+
+
+
+
+/////////////////////////ここまで音楽データ
+ALIGN 4
+//##Makes a GBA pointer pointing to offset without requiring word alignment.
+//POIN2, 0, 4, -game:FE6:FE7:FE8 -repeatable -priority:pointer -indexMode:8 -offsetMod:1
+//##Offset to point to.
+//  Offset, 0, 4, -pointer:unknown
