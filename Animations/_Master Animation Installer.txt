@@ -1,0 +1,27 @@
+#define ClassAnimTable (0xc00008-0x20)
+
+
+#define AnimTableEntry(index) "ORG ClassAnimTable + (index * 0x20)"
+#include "Animation Hacks\animationpatchesJP.event"
+
+//////////////ここからアニメデータ
+
+#include "aaxe Installer.event"	//0xCE
+#include "assasine Installer.event"	//0xD3
+#include "Axe Installer.event"	//0x46
+#include "Axes Installer.event"	//0xD0
+#include "FalcoknightStaff Installer.event"	//0xCC
+#include "FemalePaladinStaves Installer.event"	//0xCB
+#include "HandAxes Installer.event"	//0xCF
+#include "handaxe Installer.event"	//0xD1
+#include "Hawkzerker Installer.event"	//0x23
+#include "rag_bow Installer.event"	//0xD2
+#include "rag_sword Installer.event"	//0x8D
+#include "rog_staff Installer.event"	//0xD4
+#include "Staff Installer.event"	//0xCA
+#include "sword Installer.event"	//0xCD
+#include "unarmed Installer.event"	//0x8E
+
+//////////////ここまでアニメデータ
+ALIGN 4
+
