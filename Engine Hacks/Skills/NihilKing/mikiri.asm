@@ -72,7 +72,12 @@ nonTATE
 	orr	r0, r3
 	lsl	r0, r0, #8
 	lsr	r0, r0, #31
-	bne	non
+	beq	toking
+	mov	r0, #0
+	str	r0, [sp]
+	b	toace
+	
+toking:
 ;王の器チェック
 	ldr	r1, [r2]
 	ldrh	r1, [r1, #0x26]	;;ユニット0x40王の器
@@ -86,7 +91,7 @@ nonTATE
 classloop
 	ldrb	r0, [r3]
 	cmp	r0, #0
-	beq	end
+	beq	toace
 	cmp	r1, r0
 	beq	gotK
 	add	r3, #1
@@ -95,7 +100,20 @@ gotK
 	ldr	r0, [sp]
 	add	r0, #10
 	str	r0, [sp]
-;器終了
+toace:
+;勇将チェック
+	ldr	r1, [r2]
+	ldrh	r1, [r1, #0x26]	;;ユニット0x2000
+	lsl	r1, r1, #18
+	bpl	end
+	ldrb	r0, [r2, #0x13]	;NOW
+	ldrb	r1, [r2, #0x12]	;MAX
+	lsl	r0, r0, #1
+	cmp	r0, r1
+	bgt	end
+	ldr	r0, [sp]
+	add	r0, #30
+	str	r0, [sp]
 end
 	mov	r2, #0
 	pop	{r3}
@@ -103,10 +121,10 @@ return
 	push	{lr}
 	ldr	r0, =$0802a4a6
 	mov	pc, r0
-non
-	pop	{r3}
-	mov	r0, #0
-	bx	lr
+;non
+;	pop	{r3}
+;	mov	r0, #0
+;	bx	lr
 ;0x8反撃
 ;0x4追撃
 
