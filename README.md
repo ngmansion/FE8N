@@ -1,4 +1,4 @@
-https://github.com/ngmansion/FE8N/releases/download/20170104/FE8N.ips
+https://github.com/ngmansion/FE8N/releases/download/20170113/FE8N.ips
 # 変更メモ
 ##ステータス
 HPの上限は、クラスHP上限を参照します  
