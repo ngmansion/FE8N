@@ -16,19 +16,16 @@ WORD $84540B0	//$8464400
 ORG $4540B0		//$464400
 WORD 0x3D046A3D 0x022D682D 0xA5020C28 0x46AE3501 0x47284D01 0x47004801 0x08073E75 0x0805A475
 
-//Animation compressorJP
+//Animation compressorJP Revert
 ORG $5A8AC	//59b08
-BL(AnimCompressPatch)
+BYTE $7B $F0 $72 $FD
 ORG $5A7CA	//59a26
-BL(AnimCompressPatch)
+BYTE $7B $F0 $E3 $FD
 ORG $5B3EE	//5a64a
-BL(AnimCompressPatch)
-//ORG $5A8AC	//59b08
-//BL(AnimCompressPatch)
+BYTE $7A $F0 $D1 $FF
+ORG $1B2C38
+BYTE $0A $00 $00 $00 $54 $61 $6B $65 $68 $69 $72 $6F $20 $49 $7A $75 $73 $68 $69 $00 $50 $52 $4F $44 $55 $43 $45 $52 $0A $00 $00 $00 $48 $69 $72 $6F $73 $68 $69 $20 $59 $61 $6D $61 $75 $63 $68 $69 $00 $00 $00 $00 $45 $58 $45 $43 $55 $54 $49 $56 $45 $20 $50 $52 $4F $44 $55 $43 $45 $52 $0A $00 $4C $30 $30 $00 $4C $30 $31 $00
 
-ORG $1B2C38	//1c3280
-AnimCompressPatch:
-#incbin "AnimCompressPatchJP.dmp"
 
 
 ORG	0x5A97C

@@ -1,26 +1,25 @@
 #define ClassAnimTable (0xc00008-0x20)
-
-
 #define AnimTableEntry(index) "ORG ClassAnimTable + (index * 0x20)"
-#include "Animation Hacks\animationpatchesJP.event"
+#include "animationpatchesJP.event"
 
 //////////////ここからアニメデータ
 
-#include "aaxe Installer.event"	//0xCE
-#include "assasine Installer.event"	//0xD3
-#include "Axe Installer.event"	//0x46
-#include "Axes Installer.event"	//0xD0
-#include "FalcoknightStaff Installer.event"	//0xCC
-#include "FemalePaladinStaves Installer.event"	//0xCB
-#include "HandAxes Installer.event"	//0xCF
-#include "handaxe Installer.event"	//0xD1
-#include "Hawkzerker Installer.event"	//0x23
-#include "rag_bow Installer.event"	//0xD2
-#include "rag_sword Installer.event"	//0x8D
-#include "rog_staff Installer.event"	//0xD4
-#include "Staff Installer.event"	//0xCA
-#include "sword Installer.event"	//0xCD
-#include "unarmed Installer.event"	//0x8E
+#include "Hawkzerker Installer.event"	//0x23新バーサーカー - The Blind Archer
+#include "Axe_General Installer.event"	//0x46新斧ジェネラル - The Blind Archer
+#include "Legaultassassinpaledit_swd Installer.event"	//0x8Dラガルトアサシン - Feaw
+#include "Legaultassassinpaledit_no Installer.event"	//0x8Eラガルトアサシン - Feaw
+#include "Paladin_Staff_M Installer.event"	//0xCA杖パラディン - Primefusion
+#include "FemalePaladinStaves Installer.event"	//0xCB杖パラディンF - Whitewolf8
+#include "Falcoknight_Staff Installer.event"	//0xCC杖ファルコンナイト - shadowofchaos
+#include "armor_sword Installer.event"	//0xCDソードアーマー - The Blind Archer
+#include "armor_axe Installer.event"	//0xCEアクスアーマー - The Blind Archer
+#include "armor_haxe Installer.event"	//0xCF手斧アーマー - The Blind Archer
+#include "Wyvernlordpaledit_axe Installer.event"	//0xD0斧ドラマス - The Blind Archer, Feaw
+#include "Wyvernlordpaledit_haxe Installer.event"	//0xD1手斧ドラマス - The Blind Archer, Feaw
+#include "rag_bow Installer.event"	//0xD2弓ラガルト - ケンプフ
+#include "assassin_bow Installer.event"	//0xD3弓アサシン - ケンプフ
+#include "StaffRogue Installer.event"	//0xD4杖ローグ - ukulelej
+
 
 //////////////ここまでアニメデータ
 ALIGN 4
