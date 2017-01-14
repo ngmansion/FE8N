@@ -79,7 +79,16 @@ waranai
 nononon
 bl	RYUSEI
 	b	effect
-;天空・陽光
+end:
+	mov	r1, #4
+	ldsh	r0, [r4, r1]
+	cmp	r0, #127
+	ble	nonmax
+	mov	r0, #127
+	strh	r0, [r4, #4]
+nonmax
+	ldr	r0, =$0802b48e
+	mov	pc, r0
 skill2
 ;必殺と重複しない
 	ldr	r0, [r6, #0]
@@ -156,16 +165,6 @@ YOUKOU:
 	lsl	r1, r2, #13
 	lsr	r1, r1, #13
 	b	gekko
-end
-	mov	r1, #4
-	ldsh	r0, [r4, r1]
-	cmp	r0, #127
-	ble	nonmax
-	mov	r0, #127
-	strh	r0, [r4, #4]
-nonmax
-	ldr	r0, =$0802b48e
-	mov	pc, r0
 	
 effect
 	ldr	r3, [r6, #0]
