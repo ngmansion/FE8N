@@ -1,4 +1,7 @@
 https://github.com/ngmansion/FE8N/releases/download/20170114/FE8N.ips
+
+##改造法の解説
+http://wp.me/p5MjVV-Z8
 # 変更メモ
 ##ステータス
 HPの上限は、クラスHP上限を参照します  
