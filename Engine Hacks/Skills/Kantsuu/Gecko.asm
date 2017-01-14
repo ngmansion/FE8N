@@ -15,6 +15,9 @@
 	ldrh	r0, [r0, #0x26]
 	lsl	r0, r0, #16
 	bmi	random
+	
+	ldr	r0, [r2, #4]
+	ldrb	r0, [r0, #4]
 @align 4
 	ldr	r3, [adr]
 loop
