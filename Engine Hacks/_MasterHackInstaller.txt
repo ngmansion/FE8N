@@ -23,8 +23,9 @@
 	#include "status2\EA.txt"
 	#include "toggle_L\EA.txt"
 	#include "Transform\EA.txt"
-	#include "SCV\EA.txt"	
-
+	#include "SCV\EA.txt"
+	#include "mug_exceed\EA.txt"
+	
 
 //#include "my_hack\EA.txt"
 //#include "magic\MAGICforN.txt"
