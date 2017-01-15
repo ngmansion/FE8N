@@ -12,7 +12,12 @@
 //  #incext PortraitFormatter mug_colorz.png
 
 
+//setMugEntry($02, mug_aho, 2, 6, 3, 4, 1)
+//setMugExtra($02, 0, 0, 0, 2)
+//mug_aho:
+//  #incext PortraitFormatter mug_aho.png
+
 
 //////////////////////////ここまで顔画像
 
-///////setMugExtra($65, 0, 2, 5, 2)
+///////setMugExtra($02, 0, 2, 5, 2)
