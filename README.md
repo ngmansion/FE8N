@@ -1,4 +1,4 @@
-https://github.com/ngmansion/FE8N/releases/download/20170115/FE8N.ips
+https://github.com/ngmansion/FE8N/releases/download/20170117/FE8N.ips
 
 ##改造法の解説
 http://wp.me/p5MjVV-Z8
