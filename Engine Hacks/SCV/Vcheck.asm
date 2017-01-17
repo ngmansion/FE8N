@@ -81,6 +81,9 @@ mov     r14,r3
 end
 	
 ;追加矢印処理
+	ldrb	r0, [r4, #11]
+	lsr	r0, r0, #6
+	beq	noncheck
 	mov	r0, #0x3A
 	ldrb	r0, [r4, r0]
 	lsl	r0, r0, #24
