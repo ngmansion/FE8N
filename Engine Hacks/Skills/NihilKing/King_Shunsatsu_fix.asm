@@ -14,11 +14,11 @@
 	lsl	r0, r0, #24
 	asr	r0, r0, #24
 	cmp	r0, #1
-	beq	go
+	beq	goto
 non
 	mov	r0, #0
 	b	end
-go
+goto
 	mov	r0, #1
 end
 	pop	{pc}
