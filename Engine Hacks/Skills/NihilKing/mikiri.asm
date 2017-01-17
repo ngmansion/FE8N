@@ -134,6 +134,7 @@ gotAC:
 end
 	mov	r2, #0
 	pop	{r3}
+	b	return
 
 ;non
 ;	pop	{r3}
