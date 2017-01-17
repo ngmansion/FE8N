@@ -1,8 +1,11 @@
 KingClassList:
- BYTE	$0 $0 $0 $0
+ BYTE	$0
+ ALIGN 4
+AceClassList:
+ BYTE	$0
  ALIGN 4
 
-//////////////////見切りと王の器
+//////////////////見切りと王の器と勇将
 PUSH
  ORG	0x2A490
  BYTE	$00 $4A $97 $46
@@ -11,6 +14,7 @@ POP
 mirikiri:
  #incbin "mikiri.gba"
  POIN	KingClassList
+ POIN	AceClassList
 ////////////////////KingFix
 PUSH
  ORG	0x2b2fc
