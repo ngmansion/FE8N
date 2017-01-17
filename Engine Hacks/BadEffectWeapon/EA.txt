@@ -1,5 +1,8 @@
-////フレキシブルターンは、他のパッチに吸収された
+////フレキシブルターンは、他のパッチに吸収される
 PUSH
+
+ORG	0x17680
+#incbin "FlexibleTurn.gba"
 
 ORG	0x02b824
 #incbin "sleepEND.gba"
