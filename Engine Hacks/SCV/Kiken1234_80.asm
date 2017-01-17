@@ -25,7 +25,8 @@ non
 	ldr	r0, =$0801b5ea
 	mov	pc, r0
 CHECK
-	ldr	r0, [r4, #28]
+	mov	r0, #0x3A
+	ldrb	r0, [r4, r0]
 	lsl	r0, r0, #24
 	bpl	non
 DRW

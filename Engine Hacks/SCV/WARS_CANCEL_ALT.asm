@@ -16,10 +16,12 @@
 	lsl	r1, r1, #1
 	bpl	next	;
 ;Aで矢印
-	ldrb	r1, [r0 #28]
+	add	r0, #0x3A
+	ldrb	r1, [r0]
 	mov	r2, #0x80
 	orr	r1, r2
-	strb	r1, [r0 #28]
+	strb	r1, [r0]
+	sub	r0, #0x3A
 ;音
 	ldr r0,=$0202bcec
 	add r0,#0x41
@@ -32,10 +34,12 @@
 	@dcw	$F800
 	b	delete
 cancel:
-	ldrb	r1, [r0 #28]
+	add	r0, #0x3A
+	ldrb	r1, [r0]
 	lsl	r1, r1, #25
 	lsr	r1, r1, #25
-	strb	r1, [r0 #28]
+	strb	r1, [r0]
+	sub	r0, #0x3A
 	b	delete
 next
 ;チェンジ判定
