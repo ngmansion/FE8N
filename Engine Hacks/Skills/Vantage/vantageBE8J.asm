@@ -24,14 +24,18 @@ jump2
 	
 routine1
 	push	{r4, lr}
-;受け側チェック
+;;;;;;;;;;;;受け側チェック
 	mov	r4, r0
 	add	r4, #72
 	ldrh	r2, [r4, #0]
 	mov	r4, #0
 	cmp	r2, r4
 	beq	end100
-	ldr	r2, [r0, #76]	;武器チェック
+;反撃不可武器チェック
+	ldr	r2, [r0, #76]
+	lsl	r3, r2, #24
+	bmi	end100
+;待ち伏せ武器チェック
 	lsl	r2, r2, #7
 	bmi	jump100
 	bl	routine3
@@ -39,11 +43,15 @@ routine1
 	beq	end100
 jump100
 	bl	routine2
-;攻め側チェック
+;;;;;;;;;;;;攻め側チェック
 	bl	Nihil
 	cmp	r2, #0
 	bne	end100
-	ldr	r2, [r0, #76]	;武器チェック
+;反撃不可武器チェック
+	ldr	r2, [r0, #76]
+	lsl	r3, r2, #24
+	bmi	end100
+;待ち伏せ武器チェック
 	lsl	r2, r2, #7
 	bmi	end100
 	bl	routine3
