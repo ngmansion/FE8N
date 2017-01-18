@@ -1,6 +1,5 @@
 KingClassList:
  BYTE	$0
- ALIGN 4
 AceClassList:
  BYTE	$0
  ALIGN 4
