@@ -1,5 +1,6 @@
   #define AnimePalTableOffset (0xEF8008-0x10)
   #define PalTable(PalTableIndex,PalTablePointer) "PUSH; ORG AnimePalTableOffset+(16*PalTableIndex); WORD 0 0 0; POIN PalTablePointer; POP"
+  #include "pal_table.event"
 
 ////////////////////空き領域1番目(0x6D)
 
@@ -11,4 +12,20 @@
 
 
 
+
+
+
+
 ////////////////////ここまで
+
+PalTable($4B, pal_moulder_k)
+pal_moulder_k:
+#incbin "pal_moulder.dmp"
+
+PalTable($66, pal_tana_b)
+pal_tana_b:
+#incbin "pal_tana.dmp"
+
+PalTable($67, pal_vane_b)
+pal_vane_b:
+#incbin "pal_vane.dmp"
