@@ -1,6 +1,6 @@
   #define AnimePalTableOffset (0xEF8008-0x10)
   #define PalTable(PalTableIndex,PalTablePointer) "PUSH; ORG AnimePalTableOffset+(16*PalTableIndex); WORD 0 0 0; POIN PalTablePointer; POP"
-  #include "pal_table.event"
+//  #include "pal_table.event"
 
 ////////////////////空き領域1番目(0x6D)
 
