@@ -16,30 +16,32 @@
 	lsl	r1, r1, #1
 	bpl	next	;
 ;Aで矢印
-	add	r0, #0x3A
+	add	r0, #0x3B
 	ldrb	r1, [r0]
 	mov	r2, #0x80
 	orr	r1, r2
 	strb	r1, [r0]
-	sub	r0, #0x3A
 ;音
 	ldr r0,=$0202bcec
 	add r0,#0x41
 	ldrb r0,[r0]
 	lsl r0,r0,#30
-	bmi delete
+	bmi revert
 	mov r0,#0x6A
-	ldr r2,=$080d4ef4	;効果音を鳴らす
-	mov lr, r2
-	@dcw	$F800
+		ldr r2,=$080d4ef4	;効果音を鳴らす
+		mov lr, r2
+		@dcw	$F800
+revert:
+	ldr	r0, =$03004DF0
+	ldr	r0, [r0]
 	b	delete
 cancel:
-	add	r0, #0x3A
+	add	r0, #0x3B
 	ldrb	r1, [r0]
 	lsl	r1, r1, #25
 	lsr	r1, r1, #25
 	strb	r1, [r0]
-	sub	r0, #0x3A
+	sub	r0, #0x3B
 	b	delete
 next
 ;チェンジ判定
