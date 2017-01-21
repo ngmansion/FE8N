@@ -142,8 +142,7 @@ loop2
 	cmp	r1,	#0
 	beq	jump2
 	and r1, r0
-	cmp	r0, r1
-	beq	skiller2
+	bne	skiller2
 	add	r2, #1
 	cmp	r2, #0x20
 	beq	jump2 ;LISTlimit
