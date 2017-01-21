@@ -22,7 +22,7 @@
 
 PUSH
 ORG	0xA741A8
-#incbin "Equipment7.bin"
+ #incext Png2Dmp Equipment7.png --lz77
 
 ORG	0x89268
 BYTE	$00 $4B $9F $46
@@ -31,7 +31,7 @@ POP
 
 Skills_Icon:
 #incbin "iconEX.gba"
-POIN	SIcon_U SIcon_C SIcon_W
+POIN	SIcon_U SIcon_C SIcon_W SIcon_S
 
 SIcon_U:
 #incbin "UNIT.bin"
@@ -39,3 +39,5 @@ SIcon_C:
 #incbin "CLASS.bin"
 SIcon_W:
 #incbin "WEAPON.bin"
+SIcon_S:
+#incbin "SCROLL.bin"
