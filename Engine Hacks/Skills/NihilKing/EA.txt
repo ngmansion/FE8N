@@ -1,5 +1,5 @@
 KingClassList:
- BYTE	$0
+ BYTE	$03 $04 $0
 AceClassList:
  BYTE	$0
  ALIGN 4
