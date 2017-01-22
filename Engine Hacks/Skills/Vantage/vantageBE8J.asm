@@ -121,7 +121,11 @@ Nihil
 	lsl r1, r1, #29	;見切りの書
 	lsr	r1, r1, #31
 	orr r2, r1
-	
+	ldr	r1, [r0]
+	ldrh	r1, [r1, #0x26]
+	lsl r1, r1, #29
+	lsr	r1, r1, #31
+	orr r2, r1
 	bx	lr
 @ltorg
 adr:

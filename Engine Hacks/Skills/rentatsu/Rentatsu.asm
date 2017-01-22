@@ -7,6 +7,11 @@
 	ldr	r1, =$0203a4e8
 nonchange
 ;見切りチェック
+
+	ldr	r0, [r1]
+	ldrh	r0, [r0, #0x26]
+	lsl r0, r0, #29
+	bmi	NIHIL
 	ldrh	r0, [r1, #0x3A]
 	lsl r0, r0, #29	;見切りの書
 	bmi	NIHIL
