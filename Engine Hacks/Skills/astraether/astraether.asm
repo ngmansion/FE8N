@@ -21,9 +21,10 @@ mov	lr r2
 	bne	skill2
 ;ユニットチェック
 	ldr	r0, [r7]
-	ldrh	r0, [r0, #0x26]
-	lsl	r0, r0, #17
-	bpl	skill2
+	add	r0, #0x31
+	ldrb	r0, [r0]
+	cmp r0, #1
+	bne	skill2
 astra
 ;ダメージがゼロなら発動しない
 	mov	r0, #4

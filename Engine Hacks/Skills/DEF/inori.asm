@@ -29,6 +29,8 @@ loop
 skill1_check
 	ldr	r1, [r3]
 	ldrh	r1, [r1, #0x26]	;;ユニット0x1
+	ldrh	r0, [r3, #0x3A]
+	orr r1, r0
 	lsl	r1, r1, #31
 	bpl	skill2
 ootate
@@ -58,6 +60,8 @@ skill2
 	
 	ldr	r0, [r3]
 	ldrh	r0, [r0, #0x26]
+	ldrh	r1, [r3, #0x3A]
+	orr r0, r1
 	lsl	r0, r0, #30
 	bpl	skill3
 	ldrb	r0, [r3, #25]	;幸運

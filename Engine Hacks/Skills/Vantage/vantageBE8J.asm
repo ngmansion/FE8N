@@ -82,6 +82,8 @@ routine3
 ;ユニットチェック
 	ldr	r1, [r0]
 	ldrh	r1, [r1, #0x26]	;;ユニット0x80待ち伏せ
+	ldrh	r2, [r0, #0x3A]
+	orr	r1, r2
 	lsl	r1, r1, #24
 	bmi	got
 ;クラスチェック
@@ -114,6 +116,12 @@ Nihil
 	orr	r2, r1
 	lsl	r2, r2, #8
 	lsr	r2, r2, #31
+	
+	ldrh	r1, [r0, #0x3A]
+	lsl r1, r1, #29	;見切りの書
+	lsr	r1, r1, #31
+	orr r2, r1
+	
 	bx	lr
 @ltorg
 adr:

@@ -37,7 +37,7 @@ entry
 ;ユニット
 	ldr r0,[r6]
 	ldrh	r0, [r0, #0x26]
-	lsl	r0, r0, #28
+	lsl	r0, r0, #16
         bmi Xdistance
 class
 	ldr r0,[r6, #0x04]

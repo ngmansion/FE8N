@@ -1,0 +1,14 @@
+Rentatsu_List:
+BYTE $0 $0
+ALIGN 4
+
+
+PUSH
+ORG 0x169a4
+BYTE $00 $48 $87 $46
+POIN Rentatsu_Pro
+POP
+
+Rentatsu_Pro:
+ #incbin "Rentatsu.gba"
+POIN Rentatsu_List

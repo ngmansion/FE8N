@@ -8,6 +8,8 @@ cmp	r0, #1
 beq	endwo
 	ldr	r0, [r7]
 	ldrh	r0, [r0, #0x26]
+	ldrh	r1, [r7, #0x3A]
+	orr	r0, r1
 	lsl	r0, r0, #27
 	bpl	skill2
 cancel
@@ -56,11 +58,16 @@ skill2
 	ldr	r2, [r2, #40]
 	orr	r2, r1
 	lsl	r2, r2, #8
-	lsr	r2, r2, #31
-	bne	endwo	
+	bmi	endwo
+	ldrh	r0, [r0, #0x3A]
+	lsl r0, r0, #29	;見切りの書
+	bmi endwo
+	
 ;見切りチェック終了
 	ldr	r0, [r7]
 	ldrh	r0, [r0, #0x26]
+	ldrh	r1, [r7, #0x3A]
+	orr	r0, r1
 	lsl	r0, r0, #26
 	bmi	ikari
 ;終わり

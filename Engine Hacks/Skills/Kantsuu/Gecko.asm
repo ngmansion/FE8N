@@ -12,9 +12,10 @@
 	bls	end
 ;ヴァルター様専用
 	ldr	r0, [r2]
-	ldrh	r0, [r0, #0x26]
-	lsl	r0, r0, #16
-	bmi	random
+	add r0, #0x31
+	ldrb	r0, [r0]
+	cmp r0, #2
+	beq	random
 	
 	ldr	r0, [r2, #4]
 	ldrb	r0, [r0, #4]

@@ -30,7 +30,7 @@ class
 
 	ldr r0,[r3]
 	ldrh	r0, [r0, #0x26]
-	lsl	r0, r0, #29
+	lsl	r0, r0, #17
         bmi Xdistance
 next
 	add r3, #0x48

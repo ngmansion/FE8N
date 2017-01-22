@@ -24,6 +24,8 @@
 skill
 	ldr	r0, [r6]
 	ldrh	r0, [r0, #0x26]	;ユニット
+	ldrh	r1, [r6, #0x3A]	;ユニット
+	orr	r0, r1
 	lsl	r0, r0, #23
 	bmi	got
 ;クラス

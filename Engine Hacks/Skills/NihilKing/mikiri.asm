@@ -77,6 +77,9 @@ nonTATE
 	lsl	r0, r0, #8
 	lsr	r0, r0, #31
 	beq	toking
+	ldrh	r0, [r2, #0x3A]
+	lsl r0, r0, #29	;見切りの書
+	bmi toking
 	mov	r0, #0
 	str	r0, [sp]
 	b	toace
@@ -84,8 +87,8 @@ nonTATE
 toking:
 ;王の器チェック
 	ldr	r1, [r2]
-	ldrh	r1, [r1, #0x26]	;;ユニット0x40王の器
-	lsl	r1, r1, #25
+	ldrh	r1, [r1, #0x26]	;;ユニット0x2000王の器
+	lsl	r1, r1, #18
 	bmi	gotK
 ;クラスチェック
 @align 4
@@ -106,9 +109,11 @@ gotK
 	str	r0, [sp]
 toace:
 ;勇将チェック
+	ldrh	r0, [r2, #0x3A]
 	ldr	r1, [r2]
-	ldrh	r1, [r1, #0x26]	;;ユニット0x2000
-	lsl	r1, r1, #18
+	ldrh	r1, [r1, #0x26]
+	orr r1, r0
+	lsl	r1, r1, #25	;;ユニット0x40
 	bmi	gotAC
 @align 4
 	ldr	r3, [adr+4]
