@@ -106,6 +106,9 @@ nihil_check
 	orr	r0, r1
 	lsl	r0, r0, #8
 	bmi	Nihil
+	ldrh	r0, [r2, #0x3A]
+	lsl r0, r0, #29	;見切りの書
+	bmi	Nihil
 	ldrh	r0, [r4, #4]
 	asr	r0, r0, #1
 	strh	r0, [r4, #4]
