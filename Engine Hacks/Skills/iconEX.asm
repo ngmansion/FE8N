@@ -34,8 +34,7 @@ loopE
 	ldr	r5, [adr+12]
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
-	add	r4, #0x3B
-	ldrb	r4, [r4]
+	ldrh	r4, [r4, #0x3A]
 	bl	SKILL2
 @align 4
 	ldr	r5, [adr]
@@ -138,12 +137,12 @@ restart2
 	mov	r0, r4
 	mov	r2, #0x10
 loop2
-	ldrb	r1, [r5, r2]
+	ldrh	r1, [r5, r2]
 	cmp	r1,	#0
 	beq	jump2
 	and r1, r0
 	bne	skiller2
-	add	r2, #1
+	add	r2, #2
 	cmp	r2, #0x20
 	beq	jump2 ;LISTlimit
 	b	loop2
