@@ -1,4 +1,4 @@
-https://github.com/ngmansion/FE8N/releases/download/20170123/FE8N.ips
+https://github.com/ngmansion/FE8N/releases/download/20170124/FE8N.ips
 
 ##改造法の解説
 http://wp.me/p5MjVV-Z8
@@ -146,6 +146,12 @@ PFEで幸運成長から右へ4番目の2Bytes
 連続|エリート|再行動|すり抜け
 回復|王の器|カリスマ|恐怖
 
+会話グループの右隣の項目
+
+1|2|3|4
+---|---|---|---
+流星|月光|太陽|天空
+
 ####アイコン設定
 "Engine Hacks\Skills\UNIT.bin"を編集する
 
@@ -162,6 +168,7 @@ PFEで幸運成長から右へ4番目の2Bytes
 * 天空
  * 必殺と重複しない
  * 間接攻撃では発動しない
+ * 手斧系では発動しない
  * HP吸収武器では発動しない
 
 * 流星
