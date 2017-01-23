@@ -27,6 +27,14 @@ mov	lr, r1
 	ldrb	r0, [r5, r0]
 	cmp	r0, #250
 	bls	buki
+	
+	ldr	r0, [r5]
+	add	r0, #0x31
+	ldrb	r0, [r0]
+	cmp r0, #3
+	beq	taiyo
+	cmp r0, #4
+	beq	tenku
 	ldr	r0, [r5, #4]
 	ldrb	r0, [r0, #4]
 	cmp	r0, #$11		;勇者

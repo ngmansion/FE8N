@@ -75,13 +75,14 @@ nonTATE
 	ldr	r1, [r1, #40]
 	orr	r0, r1
 	lsl	r0, r0, #8
-	bmi	toking
+	bmi	nothing
 	ldr	r1, [r3]
 	ldrh	r1, [r1, #0x26]
 	ldrh	r0, [r3, #0x3A]
 	orr	r0, r1
 	lsl r0, r0, #29	;見切りの書
-	bmi toking
+	bpl toking
+nothing:
 	mov	r0, #0
 	str	r0, [sp]
 	b	toace

@@ -104,6 +104,12 @@ mov	lr, r1
 @dcw	$F800
 	cmp	r0, #2
 	beq	end
+;ユニットチェック
+	ldr	r0, [r7]
+	add	r0, #0x31
+	ldrb	r0, [r0]
+	cmp r0, #4
+	beq	TENKU
 ;クラスチェック
 	ldr	r0, [r7, #4]
 	ldrb	r0, [r0, #4]
