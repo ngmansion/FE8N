@@ -6,7 +6,8 @@
 	mov	r0, #0
 	strh	r0, [r6, #46]	;????
 	mov	r3, #0
-	ldr	r5, =$0203A818
+	ldr	r5, =$08031500		;;;;
+	ldr	r5, [r5]
 loopstart
 	ldrh	r0, [r5]
 	cmp	r0, #0

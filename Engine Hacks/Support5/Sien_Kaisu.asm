@@ -1,7 +1,8 @@
 @thumb
 ;	0002821a > 00 20
 ;	@org	$080282CC > 00 48 87 46 XX XX XX XX
-	ldr	r4, =$085c3e88
+	ldr	r4, =$0802830C
+	ldr	r4, [r4]
 	mov	r0, #50
 	add	r0, r0, r6
 	ldrb	r7, [r5, r0]	;対象の支援値ロード
