@@ -16,10 +16,8 @@ cancel
 	ldr	r0, =$0203A604
 	ldr	r0, [r0]
 	ldr	r0, [r0]
-	lsl	r0, r0, #28
-	lsr	r0, r0, #30
-	cmp	r0, #3
-	beq	skill2	;追撃チェック
+	lsl	r0, r0, #29
+	bmi	skill2	;追撃チェック
 
 	mov	r0, #0x15
 	ldsb	r0, [r7, r0]	;技％
