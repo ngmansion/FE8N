@@ -33,8 +33,11 @@ loopE
 @align 4
 	ldr	r5, [adr+12]
 	ldr	r4, =$02003BFC
-	ldr	r4, [r4, #12]
-	ldrh	r4, [r4, #0x3A]
+	ldr	r0, [r4, #12]
+	ldrh	r4, [r0, #0x3A]
+	ldr	r0, [r0]
+	ldrh	r0, [r0, #0x26]
+	orr	r4, r0
 	bl	SKILL2
 @align 4
 	ldr	r5, [adr]
