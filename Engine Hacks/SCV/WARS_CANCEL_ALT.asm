@@ -36,12 +36,10 @@ revert:
 	ldr	r0, [r0]
 	b	delete
 cancel:
-	add	r0, #0x3B
-	ldrb	r1, [r0]
-	lsl	r1, r1, #25
-	lsr	r1, r1, #25
-	strb	r1, [r0]
-	sub	r0, #0x3B
+	ldr	r1, [r0, #56]
+	lsl	r1, r1, #1
+	lsr	r1, r1, #1
+	str	r1, [r0, #56]
 	b	delete
 next
 ;チェンジ判定
