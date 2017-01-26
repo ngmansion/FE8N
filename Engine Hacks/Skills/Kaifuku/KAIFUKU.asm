@@ -13,6 +13,7 @@
 	lsl	r1, r1, #19
 	bpl	non
 	add	r0, #20
+	bx	lr
 non:
 	ldr	r1, [r5, #4]
 	ldrb	r1, [r1, #4]
