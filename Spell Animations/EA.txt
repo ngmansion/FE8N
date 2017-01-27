@@ -19,7 +19,7 @@ BYTE $03 $17 $6C $00
 
 
   #define SpellTable $5FF090	//$5d4e60
-  #define CSATable $EF2F18	//CHANGE THIS TO A LOCATION WHERE YOU KNOW THERE ARE 0x13EC BYTES OF FREE SPACE
+  #define CSATable $EFB2E0	//CHANGE THIS TO A LOCATION WHERE YOU KNOW THERE ARE 0x13EC BYTES OF FREE SPACE
   #define CSABlank $9cd3bc	//$95d780
   #define CSAEngine_Dim CSABlank+$6C	//$95d7ec
   #define CSAEngine_NoDim CSABlank+$118	//$95d898
