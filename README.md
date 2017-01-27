@@ -97,12 +97,12 @@ HPの上限は、クラスHP上限を参照します
 * sound_mixer
 * コマンド01ハック(未利用)
 * コマンド48ハック(未利用)
-* まほーぱっち(未利用)
 * FE8 Free Range(未利用)
 * 状態異常剣パッチ(未利用)
 * FE8変身拡張パッチEA(未利用)
 * 3分岐CCパッチ
 * Exceed the Portrait Hackbox
+* Circles` Spell Animation Engine
 
 ###アニメ
 * パラディン杖男女
@@ -224,10 +224,10 @@ E47180～
 NativeInstrumentMap  
 その他諸々　メインの使用領域
 
-EFB330～  
-まほーパッチ
+EFB2E0～  
+自作魔法リスト
 
-EFC330～  
+EFC6CC～  
 （空き）
 ```
 
