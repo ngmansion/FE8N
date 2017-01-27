@@ -1,3 +1,4 @@
+PUSH
 ORG 0x5C19C
 BYTE $90 $F0 $5F $08
 ORG 0x9041D8
@@ -10,6 +11,7 @@ ORG 0x904958
 BYTE $35
 ORG 0x9081A8
 BYTE $03 $17 $6C $00
+POP
 
 //Master Animation Installer
 //Macros
@@ -19,7 +21,7 @@ BYTE $03 $17 $6C $00
 
 
   #define SpellTable $5FF090	//$5d4e60
-  #define CSATable $EFB2E0	//CHANGE THIS TO A LOCATION WHERE YOU KNOW THERE ARE 0x13EC BYTES OF FREE SPACE
+  #define CSATable $EFB2E0	// 0x13ECバイト分の空き領域を確保してください
   #define CSABlank $9cd3bc	//$95d780
   #define CSAEngine_Dim CSABlank+$6C	//$95d7ec
   #define CSAEngine_NoDim CSABlank+$118	//$95d898
