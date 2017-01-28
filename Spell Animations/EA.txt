@@ -21,7 +21,7 @@ POP
 
 
   #define SpellTable $5FF090	//$5d4e60
-  #define CSATable $EFB2E0	// 0x13ECバイト分の空き領域を確保してください
+  #define CSATable $5BA470	// 0x13ECバイト分の空き領域を確保してください
   #define CSABlank $9cd3bc	//$95d780
   #define CSAEngine_Dim CSABlank+$6C	//$95d7ec
   #define CSAEngine_NoDim CSABlank+$118	//$95d898
