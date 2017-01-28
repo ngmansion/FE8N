@@ -1,6 +1,6 @@
 PUSH
 ORG 0x5C19C
-BYTE $90 $F0 $5F $08
+WORD	$085FF090
 POP
 
 //Master Animation Installer
