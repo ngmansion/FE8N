@@ -9,6 +9,6 @@ MESSAGE starts at CURRENTOFFSET
 	#include "Mugs and Graphics\Install Graphics Data.txt"
 	#include "Engine Hacks\_MasterHackInstaller.txt"
 	#include "Maps\Master Map Installer.txt"
-//	#include "Spell Animations\EA.txt"
+	#include "Spell Animations\EA.txt"
 
 MESSAGE ends at CURRENTOFFSET
