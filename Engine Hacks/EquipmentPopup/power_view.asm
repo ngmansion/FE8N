@@ -10,10 +10,10 @@
 	mov	r1, #0
 	ldsh	r6, [r0, r1]
 	
-;	mov	r0, #63
-;	and	r0, r6
-;	cmp	r0, #0
-;	bne	check
+	mov	r0, #63
+	and	r0, r6
+	cmp	r0, #0
+	bne	check
 	mov	r0, #64
 	and	r0, r6
 	cmp	r0, #0
