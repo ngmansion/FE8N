@@ -8,7 +8,7 @@
 //***
 // MML (without running status)
 //******************************************************//
-
+#ifndef W00
 	#define	W00 	0x80		// WAIT
 	#define	W01 	W00+1		//
 	#define	W02 	W00+2		//
@@ -463,3 +463,4 @@
 	#define	reverb_set 0x80		// SOUND_MODE_REVERB_SET
 	#define	PAM  PAN		// 
 
+#endif
