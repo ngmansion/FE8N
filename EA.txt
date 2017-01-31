@@ -1,3 +1,5 @@
+#ifdef _FE8_
+
 	#define Free_Space 0xE47180
 	ORG Free_Space
 
@@ -12,3 +14,7 @@ MESSAGE starts at CURRENTOFFSET
 	#include "Spell Animations\EA.txt"
 
 MESSAGE ends at CURRENTOFFSET
+
+#else
+    ERROR You are not assembling FE8 events!
+#endif
