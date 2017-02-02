@@ -102,7 +102,7 @@ HPの上限は、クラスHP上限を参照します
 * FE8変身拡張パッチEA(未利用)
 * 3分岐CCパッチ
 * Exceed the Portrait Hackbox
-* Circles` Spell Animation Engine
+* Circles Spell Animation Engine
 
 ###アニメ
 * パラディン杖男女
@@ -227,19 +227,20 @@ EFB2E0～
 
 [Credit]  
 
-circleseverywhere – HP Bar, NIMap(FE8), Pair up, Talk Fix, and more  
-Agro – 16 tracks/12 sounds patch  
-icecube – Free Range patch  
-Nintenlord – NoEasyMode  
-The Blind Archer – Hawkzerker, Wyvern Lord with Axe, General with Axe, Knight w/ Swords, Knight w/ Axes, Black Beauty Falcoknight  
-shadowofchaos – Falcoknight w/ Staves  
-Feaw – Wyvernlordpaledit, Wyvernknpaledit, Rogue Recolor, Legault Recolor
-Primefusion – Paladin Staff  
-Tordo45 – Female Paladin  
-Brendor – Vantage Patch  
-Onmi – Skill Icon  
-stein – 太陽パッチ、カリスマ等  
-ケンプフ – 弓アサシン、スキルアイコン  
-緑パッチ – スキルアイコン、指揮パッチ  
+* circleseverywhere – HP Bar, NIMap(FE8), Pair up, Talk Fix, and more  
+* Agro – 16 tracks/12 sounds patch  
+* icecube – Free Range patch  
+* Nintenlord – NoEasyMode  
+* laqieer - Exceed the Portrait Hackbox
+* The Blind Archer – Hawkzerker, Wyvern Lord with Axe, General with Axe, Knight w/ Swords, Knight w/ Axes, Black Beauty Falcoknight  
+* shadowofchaos – Falcoknight w/ Staves  
+* Feaw – Wyvernlordpaledit, Wyvernknpaledit, Rogue Recolor, Legault Recolor
+* Primefusion – Paladin Staff  
+* Tordo45 – Female Paladin  
+* Brendor – Vantage Patch  
+* Onmi – Skill Icon  
+* stein – 太陽パッチ、カリスマ等
+* ケンプフ – 弓アサシン、スキルアイコン  
+* 緑パッチ – スキルアイコン、指揮パッチ  
 
 
