@@ -237,6 +237,7 @@ EFB2E0～
 * Feaw – Wyvernlordpaledit, Wyvernknpaledit, Rogue Recolor, Legault Recolor
 * Primefusion – Paladin Staff  
 * Tordo45 – Female Paladin  
+* ukulelej - Rouge with Staves
 * Brendor – Vantage Patch  
 * Onmi – Skill Icon  
 * stein – 太陽パッチ、カリスマ等
