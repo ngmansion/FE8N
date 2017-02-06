@@ -1,0 +1,7 @@
+asm_ridatu:
+ #incbin "ridatu.gba"
+ALIGN 4
+
+asm_alone:
+ #incbin "alone.gba"
+ALIGN 4

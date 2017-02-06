@@ -3,3 +3,5 @@
 //	#include "Map Installer\Master Map Installer.event"
 //	#include "Tileset\Tileset Installer.txt"
 //	#include "Titles\Title Installer.txt"
+//	#include "Chapter Event\_Chapter Events Installer.txt"
+//	#include "WM Event\_World Map Events Installer.txt"
