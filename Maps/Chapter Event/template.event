@@ -1,0 +1,78 @@
+//Made by CrazyColorz5 of Fire Emblem Universe
+//Based off of Camtech75's Skeleton
+#include EAstdlib.event
+
+
+PUSH
+ORG $
+
+POIN TurnBasedEvents
+POIN CharacterBasedEvents
+POIN LocationBasedEvents
+POIN MiscBasedEvents
+POIN Dunno Dunno Dunno
+POIN Tutorial
+POIN TrapData TrapData
+POIN Units Units
+POIN $0 $0 $0 $0 $0 $0
+POIN BeginningScene EndingScene
+POP
+
+TurnBasedEvents:	//////////////////////////ターン条件
+
+END_MAIN
+
+
+
+
+CharacterBasedEvents:	///////////////////////会話条件
+
+END_MAIN
+
+
+
+LocationBasedEvents:	/////////////////////オブジェクト指定
+
+END_MAIN
+
+
+
+MiscBasedEvents:	//////////////範囲・常時条件
+AFEV 0 $085B9EE8 $65 //ゲームオーバー
+
+END_MAIN
+
+
+
+BeginningScene:	////////////////章開始イベント
+
+ENDA
+
+
+
+EndingScene:	//////////////////章終了イベント
+
+ENDA
+
+
+
+Units:	///////自軍ユニット初期配置
+
+WORD 0 0 0 0 0
+
+
+UNITS00: ////////敵軍ユニット初期配置
+
+WORD 0 0 0 0 0
+
+TrapData:	//////////
+
+ENDTRAP
+ALIGN 4
+
+Dunno:
+//DO NOT TOUCH
+WORD 0
+Tutorial:
+//DO NOT TOUCH
+WORD 0
