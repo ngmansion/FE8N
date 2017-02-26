@@ -26,6 +26,8 @@
 	#include "SCV\EA.txt"
 	#include "mug_exceed\EA.txt"
 	
+	
+	#include "hokaku\EA.txt"
 
 //#include "my_hack\EA.txt"
 //#include "magic\MAGICforN.txt"
