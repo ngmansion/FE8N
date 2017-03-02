@@ -6,6 +6,17 @@ BYTE	$00 $4A $97 $46
 POIN	odorero
 
 POP
+
+#ifdef Debug_Mode
+
+odorero:
+#incbin "debug.dmp"
+ALIGN 4
+
+#else
+
 odorero:
 #incbin "saikoudou.dmp"
 ALIGN 4
+
+#endif
