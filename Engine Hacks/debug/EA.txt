@@ -8,3 +8,26 @@ ORG	0x5B9E9C
  #endif
 POP
 
+
+
+////////////カジュアル
+
+PUSH
+ #ifdef Debug_Mode
+  ORG	0xbae26
+   SHORT $E00C
+  ORG	0x1719c
+   SHORT $46C0
+  ORG	0x31244
+   WORD $0631E000
+ 
+ #else
+  ORG	0xbae26
+   SHORT $D10C
+  ORG	0x1719c
+   SHORT $D124
+  ORG	0x31244
+   WORD $0631E004
+   
+ #endif
+POP
