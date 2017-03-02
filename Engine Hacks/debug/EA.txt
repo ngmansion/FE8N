@@ -1,0 +1,10 @@
+////////////中断機能
+PUSH
+ORG	0x5B9E9C
+ #ifdef Debug_Mode
+  #incbin "debug.dmp"
+ #else
+  #incbin "normal.dmp"
+ #endif
+POP
+
