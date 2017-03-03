@@ -48,7 +48,8 @@ loopE
 	ldr	r0, [r4, #4]
 	ldr	r0, [r0, #40]
 	lsl	r0, r0, #23
-	bmi nomi
+	bpl nomi
+	ldr	r4, [r4]
 	add	r4, #0x31
 	ldrb	r4, [r4]
 	cmp	r4, #0
