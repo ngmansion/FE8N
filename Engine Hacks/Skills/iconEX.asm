@@ -71,7 +71,8 @@ nomi:
 	ldr	r4, [r4, #40]
 	mov	r2, #0x80
 	lsl	r2, r2, #17	;兵種EXP0
-	eor	r4, r2
+	mvn	r2, r2
+	and	r4, r2
 	ldr	r0, [r0]	;個人
 	ldr	r0, [r0, #40]
 	orr	r4, r0
