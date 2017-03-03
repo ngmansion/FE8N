@@ -45,7 +45,10 @@ loopE
 	ldr	r5, [adr+20]	;MASTERY
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
-	ldr	r4, [r4]
+	ldr	r0, [r4, #4]
+	ldr	r0, [r0, #40]
+	lsl	r0, r0, #23
+	bmi nomi
 	add	r4, #0x31
 	ldrb	r4, [r4]
 	cmp	r4, #0
