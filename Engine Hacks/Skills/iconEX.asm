@@ -31,7 +31,7 @@ loopE
 	str	r5, [r7, #4]
 	str	r5, [r7, #8]
 @align 4
-	ldr	r5, [adr+12]
+	ldr	r5, [adr+12]	;SCROLL
 	ldr	r4, =$02003BFC
 	ldr	r0, [r4, #12]
 	ldrh	r4, [r0, #0x3A]
@@ -42,21 +42,43 @@ loopE
 	orr	r4, r0
 	bl	SKILL2
 @align 4
-	ldr	r5, [adr]
+	ldr	r5, [adr+20]	;MASTERY
+	ldr	r4, =$02003BFC
+	ldr	r4, [r4, #12]
+	ldr	r4, [r4]
+	add	r4, #0x31
+	ldrb	r4, [r4]
+	bl	SKILL
+	
+@align 4
+	ldr	r5, [adr]	;UNIT
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
 	ldr	r4, [r4]
 	ldrb	r4, [r4, #4]
 	bl	SKILL
 @align 4
-	ldr	r5, [adr+4]
+	ldr	r5, [adr+16]	;ABILITY
+	ldr	r4, =$02003BFC
+	ldr	r0, [r4, #12]
+	ldr	r4, [r0, #4]	;兵種
+	ldr	r4, [r4, #40]
+	mov	r2, #0x80
+	lsl	r2, r2, #17	;兵種EXP0
+	eor	r4, r2
+	ldr	r0, [r0]	;個人
+	ldr	r0, [r0, #40]
+	orr	r4, r0
+	bl	SKILL2
+@align 4
+	ldr	r5, [adr+4]	;CLASS
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
 	ldr	r4, [r4, #4]
 	ldrb	r4, [r4, #4]
 	bl	SKILL
 @align 4
-	ldr r5, [adr+8]
+	ldr r5, [adr+8]	;WEAPON
 	ldr	r4, =$0203a530
 	ldrb	r4, [r4]
 	cmp r4, #0
@@ -142,12 +164,12 @@ restart2
 	mov	r0, r4
 	mov	r2, #0x10
 loop2
-	ldrh	r1, [r5, r2]
+	ldr	r1, [r5, r2]
 	cmp	r1,	#0
 	beq	jump2
 	and r1, r0
 	bne	skiller2
-	add	r2, #2
+	add	r2, #4
 	cmp	r2, #0x20
 	beq	jump2 ;LISTlimit
 	b	loop2
