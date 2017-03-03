@@ -32,7 +32,7 @@ POP
 
 Skills_Icon:
 #incbin "iconEX.gba"
-POIN	SIcon_U SIcon_C SIcon_W SIcon_S
+POIN	SIcon_U SIcon_C SIcon_W SIcon_S SIcon_A SIcon_M
 
 SIcon_U:
 #incbin "UNIT.bin"
@@ -42,3 +42,7 @@ SIcon_W:
 #incbin "WEAPON.bin"
 SIcon_S:
 #incbin "SCROLL.bin"
+SIcon_A:
+#incbin "ABILITY.bin"
+SIcon_M:
+#incbin "MASTERY.bin"
