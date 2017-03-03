@@ -48,8 +48,10 @@ loopE
 	ldr	r4, [r4]
 	add	r4, #0x31
 	ldrb	r4, [r4]
+	cmp	r4, #0
+	beq	nomi
 	bl	SKILL
-	
+nomi:
 @align 4
 	ldr	r5, [adr]	;UNIT
 	ldr	r4, =$02003BFC
