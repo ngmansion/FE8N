@@ -7,16 +7,18 @@
 //setMugExtra(顔ID, 左ブロックのX座標, 左ブロックのY座標, 右ブロックのX座標, 右ブロックのY座標)
 
 
-//setMugEntry($65, mug_colorz, 3, 6, 3, 4, 1)
-//mug_colorz:
+{
+//setMugEntry($65, mug, 3, 6, 3, 4, 1)
+//mug:
 //  #incext PortraitFormatter mug_colorz.png
+}
 
-
-//setMugEntry($02, mug_aho, 2, 6, 3, 4, 1)
+{
+//setMugEntry($02, mug, 2, 6, 3, 4, 1)
 //setMugExtra($02, 0, 0, 0, 2)
-//mug_aho:
+//mug:
 //  #incext PortraitFormatter mug_aho.png
-
+}
 
 //////////////////////////ここまで顔画像
 

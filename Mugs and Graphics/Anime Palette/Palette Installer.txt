@@ -4,9 +4,11 @@
 
 ////////////////////空き領域1番目(0x6D)
 
-//PalTable($6D, pal_original)
-//pal_original:
+{
+//PalTable($6D, pal_anime)
+//pal_anime:
 //#incbin "pal_original.dmp"
+}
 
 ////////////////////空き領域2番目(0x6E)
 
@@ -18,14 +20,20 @@
 
 ////////////////////ここまで
 
-PalTable($4B, pal_moulder_k)
-pal_moulder_k:
+{
+PalTable($4B, pal_anime)
+pal_anime:
 #incbin "pal_moulder.dmp"
+}
 
-PalTable($66, pal_tana_b)
-pal_tana_b:
+{
+PalTable($66, pal_anime)
+pal_anime:
 #incbin "pal_tana.dmp"
+}
 
-PalTable($67, pal_vane_b)
-pal_vane_b:
+{
+PalTable($67, pal_anime)
+pal_anime:
 #incbin "pal_vane.dmp"
+}
