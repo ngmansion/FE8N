@@ -15,6 +15,7 @@
 #include "DEF\EA.txt"
 #include "Vantage\EA.txt"
 #include "rentatsu\EA.txt"
+#include "koun\EA.txt"
 #include "_help\EA.txt"
 
 //#include "my_skill\EA.txt"

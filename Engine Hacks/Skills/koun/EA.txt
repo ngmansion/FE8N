@@ -1,0 +1,9 @@
+PUSH
+ORG 0x2ac60
+WORD	$46874800
+POIN sli_koun
+POP
+
+sli_koun:
+#incbin "koun.gba"
+ALIGN 4
