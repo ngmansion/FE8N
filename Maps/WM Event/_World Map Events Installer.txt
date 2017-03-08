@@ -1,3 +1,8 @@
+#define WMEvent1PointerTable 0x907F74
+#define WMEvent2PointerTable 0x908060
+#define WMEventTable(WMeventEntry) "PUSH; ORG WMEvent1PointerTable+WMeventEntry*0x4; POIN WMEvent1; POP"
+//#define WMEventTable(WMeventEntry) "PUSH; ORG WMEvent1PointerTable+WMeventEntry*0x4; POIN WMEvent1; ORG WMEvent12ointerTable+WMeventEntry*0x4; POIN WMEvent2; POP"
+
 {
 
 }
