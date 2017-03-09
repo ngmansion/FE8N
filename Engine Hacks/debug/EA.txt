@@ -1,3 +1,14 @@
+///////////CC可能レベル
+
+PUSH
+ORG 0x2919E
+ #ifdef Debug_Mode
+  BYTE 00
+ #else
+  BYTE 09
+ #endif
+POP
+
 ////////////中断機能
 PUSH
 ORG	0x5B9E9C
