@@ -14,20 +14,18 @@
 
 
 /*
-//通常顔グラ挿入
+//////通常顔グラ挿入
+setMugEntry(顔ID, 口のX座標, 口のY座標, 目のX座標, 目のY座標, 1=通常6=常に目閉じ)
 
-//setMugEntry(顔ID, 口のX座標, 口のY座標, 目のX座標, 目のY座標, 1=通常6=常に目閉じ)
-
+{
 setMugEntry($65, 3, 6, 3, 4, 1)
 mugLocation:
-  #incbin "mug_colorz.dmp"
-*/
+ #incext PortraitFormatter mug_colorz.png
+}
 
 
-/*
-//拡張顔グラ挿入
-
-//setMugExtra(顔ID, 左ブロックのX座標, 左ブロックのY座標, 右ブロックのX座標, 右ブロックのY座標)
+//////拡張顔グラ挿入
+setMugExtra(顔ID, 左ブロックのX座標, 左ブロックのY座標, 右ブロックのX座標, 右ブロックのY座標)
 
 {
 setMugEntry($02, 2, 6, 3, 4, 1)
@@ -36,14 +34,12 @@ mugLocation:
  #incext PortraitFormatter mug_aho.png
 }
 
-///両肩拡張例
+//両肩拡張例
 setMugExtra($02, 0, 4, 10, 4)
 
-*/
 
-/*
-//クラス画像挿入
-//setcMugEntry(顔ID)
+//////クラス画像挿入
+setcMugEntry(顔ID)
 
 {
 setcMugEntry($48)
