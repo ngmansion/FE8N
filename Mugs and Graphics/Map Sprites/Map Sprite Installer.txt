@@ -1,40 +1,39 @@
   #define MapSpriteStdTableOffset 0x903E0C
-  #define SpriteStd(MapSpriteStdIndex,MapSpriteStdPattern1,MapSpriteStdPattern2,MapSpriteStdPointer) "PUSH; ORG MapSpriteStdTableOffset+(8*MapSpriteStdIndex); SHORT MapSpriteStdPattern1 MapSpriteStdPattern2; POIN MapSpriteStdPointer; POP"
+  #define SpriteStd(MapSpriteStdIndex,MapSpriteStdPattern1,MapSpriteStdPattern2) "PUSH; ORG MapSpriteStdTableOffset+(8*MapSpriteStdIndex); SHORT MapSpriteStdPattern1 MapSpriteStdPattern2; POIN MapSpriteStdPointer; POP"
   #define MapSpriteMovTableOffset 0xA13480
-  #define SpriteMov(MapSpriteMovIndex,MapSpriteMovPointer,MapSpriteMovAdr) "PUSH; ORG MapSpriteMovTableOffset+(8*MapSpriteMovIndex); POIN MapSpriteMovPointer; WORD MapSpriteMovAdr; POP"
+  #define SpriteMov(MapSpriteMovIndex,MapSpriteMovAdr) "PUSH; ORG MapSpriteMovTableOffset+(8*MapSpriteMovIndex); POIN MapSpriteMovPointer; WORD MapSpriteMovAdr; POP"
 
 ////////////////////ここからアイコンデータ
 
 {
-SpriteStd($1A, 2, 1, icon_st)
-SpriteMov($24, icon_mv, $81D9F94)
- icon_st:
+SpriteStd($1A, 2, 1)
+SpriteMov($24, $81D9F94)
+ MapSpriteStdPointer:
   #incext Png2Dmp Black_Falco_Standing.png --lz77
- icon_mv:
+ MapSpriteMovPointer:
   #incext Png2Dmp Black_Falco_Moving.png --lz77
 }
 
 /////////////////////////////
 
 {
-//SpriteStd($0, 2, 0, icon_st)
-SpriteMov($2E, icon_mv, $081CD240)
-// icon_st:
-//  #incext Png2Dmp st_shaman_f.png --lz77
-SpriteMov($2E, icon_mv, $081CD240)
- icon_mv:
-  #incext Png2Dmp mv_shaman_f.png --lz77
+//SpriteStd($0, 2, 0)
+MapSpriteStdPointer:
+ #incext Png2Dmp st_shaman_f.png --lz77
+SpriteMov($2E, $081CD240)
+MapSpriteMovPointer:
+ #incext Png2Dmp mv_shaman_f.png --lz77
 }
 
 ////////////////////////////////
 
 {
-//SpriteStd($0, 2, 0, icon_st)
-SpriteMov($30, icon_mv, $081CDC7C)
-// icon_st:
-//  #incext Png2Dmp st_druid_f.png --lz77
- icon_mv:
-  #incext Png2Dmp mv_druid_f.png --lz77
+//SpriteStd($0, 2, 0)
+SpriteMov($30, $081CDC7C)
+MapSpriteStdPointer:
+ #incext Png2Dmp st_druid_f.png --lz77
+MapSpriteMovPointer:
+ #incext Png2Dmp mv_druid_f.png --lz77
 }
 
 
