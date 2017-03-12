@@ -3,10 +3,11 @@
 
 ////////////////////////////ここから章タイトル画像
 
+{
 TitleTable($0)
 TitlePointerTableLocation:
  #incext Png2Dmp title_pro.png --lz77
-
+}
 
 
 
