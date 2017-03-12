@@ -1,14 +1,11 @@
   #define AnimePalTableOffset (0xEF8008-0x10)
-  #define PalTable(PalTableIndex,PalTablePointer) "PUSH; ORG AnimePalTableOffset+(16*PalTableIndex); WORD 0 0 0; POIN PalTablePointer; POP"
+  #define PalTable(PalTableIndex) "PUSH; ORG AnimePalTableOffset+(16*PalTableIndex); WORD 0 0 0; POIN PalTablePointer; POP"
 //  #include "pal_table.event"
 
 ////////////////////空き領域1番目(0x6D)
 
-{
-//PalTable($6D, pal_anime)
-//pal_anime:
-//#incbin "pal_original.dmp"
-}
+
+
 
 ////////////////////空き領域2番目(0x6E)
 
@@ -21,19 +18,19 @@
 ////////////////////ここまで
 
 {
-PalTable($4B, pal_anime)
-pal_anime:
+PalTable($4B)
+PalTablePointer:
 #incbin "pal_moulder.dmp"
 }
 
 {
-PalTable($66, pal_anime)
-pal_anime:
+PalTable($66)
+PalTablePointer:
 #incbin "pal_tana.dmp"
 }
 
 {
-PalTable($67, pal_anime)
-pal_anime:
+PalTable($67)
+PalTablePointer:
 #incbin "pal_vane.dmp"
 }
