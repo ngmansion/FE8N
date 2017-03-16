@@ -103,7 +103,7 @@ HPの上限は、クラスHP上限を参照します
 * FE8変身拡張パッチEA(未利用)
 * 3分岐CCパッチ
 * Exceed the Portrait Hackbox
-* Circles Spell Animation Engine
+* [Circles Spell Animation Engine](https://github.com/ngmansion/FE8/tree/master/Spell%20Animations)
 
 ### アニメ
 * パラディン杖男女
