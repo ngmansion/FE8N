@@ -1,12 +1,11 @@
 #define TitlePointerTable 0xA732C0
-#define TitleTable(TitlePointerTableEntry) "PUSH; ORG TitlePointerTable+TitlePointerTableEntry*0xC; POIN TitlePointerTableLocation; WORD 0 0; POP; TitlePointerTableLocation:"
+#define TitleTable(TitlePointerTableEntry) "{; PUSH; ORG TitlePointerTable+TitlePointerTableEntry*0xC; POIN TitlePointerTableLocation; WORD 0 0; POP; TitlePointerTableLocation:; }"
+
 
 ////////////////////////////ここから章タイトル画像
 
-{
 TitleTable($0)
  #incext Png2Dmp title_pro.png --lz77
-}
 
 
 

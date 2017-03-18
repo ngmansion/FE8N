@@ -1,34 +1,29 @@
   #define MapSpriteStdTableOffset 0x903E0C
-  #define SpriteStd(MapSpriteStdIndex,MapSpriteStdPattern1,MapSpriteStdPattern2) "PUSH; ORG MapSpriteStdTableOffset+(8*MapSpriteStdIndex); SHORT MapSpriteStdPattern1 MapSpriteStdPattern2; POIN MapSpriteStdPointer; POP; MapSpriteStdPointer:"
+  #define SpriteStd(MapSpriteStdIndex,MapSpriteStdPattern1,MapSpriteStdPattern2) "{; PUSH; ORG MapSpriteStdTableOffset+(8*MapSpriteStdIndex); SHORT MapSpriteStdPattern1 MapSpriteStdPattern2; POIN MapSpriteStdPointer; POP; MapSpriteStdPointer:; }"
   #define MapSpriteMovTableOffset 0xA13480
-  #define SpriteMov(MapSpriteMovIndex,MapSpriteMovAdr) "PUSH; ORG MapSpriteMovTableOffset+(8*MapSpriteMovIndex); POIN MapSpriteMovPointer; WORD MapSpriteMovAdr; POP; MapSpriteMovPointer:"
+  #define SpriteMov(MapSpriteMovIndex,MapSpriteMovAdr) "{; PUSH; ORG MapSpriteMovTableOffset+(8*MapSpriteMovIndex); POIN MapSpriteMovPointer; WORD MapSpriteMovAdr; POP; MapSpriteMovPointer:; }"
 
 ////////////////////ここからアイコンデータ
 
-{
 SpriteStd($1A, 2, 1)
  #incext Png2Dmp Black_Falco_Standing.png --lz77
 SpriteMov($24, $81D9F94)
  #incext Png2Dmp Black_Falco_Moving.png --lz77
-}
 
 /////////////////////////////
 
-{
 //SpriteStd($0, 2, 0)
  #incext Png2Dmp st_shaman_f.png --lz77
 SpriteMov($2E, $081CD240)
  #incext Png2Dmp mv_shaman_f.png --lz77
-}
 
 ////////////////////////////////
 
-{
+
 //SpriteStd($0, 2, 0)
  #incext Png2Dmp st_druid_f.png --lz77
 SpriteMov($30, $081CDC7C)
  #incext Png2Dmp mv_druid_f.png --lz77
-}
 
 
 //////////////////ここまでアイコンデータ
