@@ -1,7 +1,7 @@
 #define MugTable 0x90111C
-#define setMugEntry(mugEntry, mouthX, mouthY, eyeX, eyeY, eyeControl) "PUSH; ORG MugTable+mugEntry*0x1C; POIN mugLocation; POIN mugLocation+0x1624; POIN mugLocation+0x1604; POIN mugLocation+0x1004; WORD 0x00000000; BYTE mouthX mouthY eyeX eyeY; WORD eyeControl; POP; mugLocation:"
+#define setMugEntry(mugEntry, mouthX, mouthY, eyeX, eyeY, eyeControl) "{; PUSH; ORG MugTable+mugEntry*0x1C; POIN mugLocation; POIN mugLocation+0x1624; POIN mugLocation+0x1604; POIN mugLocation+0x1004; WORD 0x00000000; BYTE mouthX mouthY eyeX eyeY; WORD eyeControl; POP; mugLocation:; }"
 #define setMugExtra(mugEntry, mug_extra_Left_X, mug_extra_Left_Y, mug_extra_Right_X, mug_extra_Right_Y) "PUSH; ORG MugTable+mugEntry*0x1C+16; BYTE mug_extra_Left_X mug_extra_Left_Y mug_extra_Right_X mug_extra_Right_Y; ORG MugTable+mugEntry*0x1C+26; BYTE 1; POP"
-#define setcMugEntry(cmugEntry) "PUSH; ORG MugTable+cmugEntry*0x1C; WORD 0 0; POIN cmugLocation;WORD 0; POIN cmugLocation+0x20; WORD 0 1; POP; cmugLocation:"
+#define setcMugEntry(cmugEntry) "{; PUSH; ORG MugTable+cmugEntry*0x1C; WORD 0 0; POIN cmugLocation;WORD 0; POIN cmugLocation+0x20; WORD 0 1; POP; cmugLocation:; }"
 
 //////////////////////////ここから顔画像
 
@@ -17,20 +17,20 @@
 //////通常顔グラ挿入
 setMugEntry(顔ID, 口のX座標, 口のY座標, 目のX座標, 目のY座標, 1=通常6=常に目閉じ)
 
-{
+
 setMugEntry($65, 3, 6, 3, 4, 1)
  #incext PortraitFormatter mug_colorz.png
-}
+
 
 
 //////拡張顔グラ挿入
 setMugExtra(顔ID, 左ブロックのX座標, 左ブロックのY座標, 右ブロックのX座標, 右ブロックのY座標)
 
-{
+
 setMugEntry($02, 2, 6, 3, 4, 1)
 setMugExtra($02, 0, 0, 0, 2)
  #incext PortraitFormatter mug_aho.png
-}
+
 
 //両肩拡張例
 setMugExtra($02, 0, 4, 10, 4)
@@ -39,11 +39,10 @@ setMugExtra($02, 0, 4, 10, 4)
 //////クラス画像挿入
 setcMugEntry(顔ID)
 
-{
+
 setcMugEntry($48)
  #incext Png2Dmp DE.png --palette-only
  #incext Png2Dmp DE.png --lz77
-}
 
 
 */
