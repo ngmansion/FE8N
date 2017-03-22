@@ -1,14 +1,16 @@
 
-PUSH
+
 ////0x478バイト使用
 
 
 ////////////
 
+PUSH
 ORG	0x5C51E4	//本来の闘技場
 
 POIN	join_moji
-BYTE $1A $06 $46 $06 $00 $63 $00 $00
+SHORT	$061A $0646		//右がヘルプ指定
+SHORT	$6300 0
 POIN	Join+1
 WORD	0
 POIN	Join4+1
