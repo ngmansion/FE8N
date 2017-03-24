@@ -14,7 +14,8 @@ MESSAGE starts at CURRENTOFFSET
 	#include "Engine Hacks\_MasterHackInstaller.txt"
 	#include "Maps\Master Map Installer.txt"
 	#include "Spell Animations\EA.txt"
-
+//	#include "Tables\Table Installer.event"
+	
 MESSAGE ends at CURRENTOFFSET
 
 #else
