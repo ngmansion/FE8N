@@ -352,24 +352,24 @@ ENDA
 
 
 
-KNOOOOL:
+KNOOOOL:	//イベント1
 UNIT $1F $01 0 Level(1,0,0) [14,22] 0 0 1 label01 NoItems NoAI
 UNIT
 
 
-NEWOTO:
+NEWOTO:	//イベント1
 UNIT $01 $02 0 Level(5,0,1) [18,17] 0 0 0 0 [$9, $3, $6C] NoAI		//エイリーク
 UNIT $02 $07 0 Level(1,0,0) [16,17] 0 0 0 0 [$3, $17] NoAI		//ゼト
 UNIT $6D $07 0 Level(5,2,0) [13,17] 0 0 0 0 [$4] [3,3,0,$20]
 UNIT
 
-LIOSTON:
+LIOSTON:	//イベント1
 UNIT $40 $4F $00 Level(30,2,1) [14,9] 0 0 0 0 [$B5] [3,3,0,$20]
 UNIT
 
 
 
-NEWTO:
+NEWTO: //イベント2
 UNIT $01 $02 0 Level(5,0,1) [16,17] 0 0 0 0 [$9, $3, $6C] NoAI		//ノンリーク
 UNIT $02 $07 0 Level(1,0,0) [18,17] 0 0 0 0 [$3, $17] NoAI		//ゼト
 UNIT $40 $4F $00 Level(30,2,1) [14,14] 0 0 0 0 [$8F] [3,3,0,$20]
@@ -378,7 +378,7 @@ UNIT
 
 
 
-OSOI:
+OSOI: //イベント1と2
 UNIT $0F $01 0 Level(1,0,0) [14,22] 0 0 1 label01 NoItems NoAI
 UNIT
 label01:
