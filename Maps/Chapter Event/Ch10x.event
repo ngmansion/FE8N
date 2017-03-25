@@ -1,0 +1,462 @@
+//Made by CrazyColorz5 of Fire Emblem Universe
+//Based off of Camtech75's Skeleton
+#include EAstdlib.event
+
+
+PUSH
+ORG $A5C2E4
+
+POIN TurnBasedEvents
+POIN CharacterBasedEvents
+POIN LocationBasedEvents
+POIN MiscBasedEvents
+POIN Dunno Dunno Dunno
+POIN Tutorial
+POIN TrapData TrapData
+POIN Units Units
+POIN $0 $0 $0 $0 $0 $0
+POIN BeginningScene EndingScene
+POP
+
+TurnBasedEvents:	//////////////////////////ターン条件
+TURN $0 TBE01 [3,0] 0
+TURN $A TBE02 [1,255] 8 //左背後増援
+TURN $C TBE03 [1,255] 8 //右背後増援
+TURN $E TBE04 [1,255] 8 //下増援
+
+TURN $0 TBE02 [10,10] 8 //左背後増援
+TURN $0 TBE03 [10,10] 8 //右背後増援
+TURN $E TBE04 [5,5] 8 //下増援
+END_MAIN
+
+TBE04:
+CHECK_EVENTID $F //フラグ条件
+BNE $0 0xC 0 //オンの場合LABEL $XXまでジャンプ
+CALL $08A6030C //条件フラグをオフのままにして終了
+LABEL $0 //ジャンプ先XX
+WORD $20540; POIN UNITS4t; CALL $08A603AC //通常増援
+WORD $70228 $120 //イベント終了命令
+
+UNITS4t:
+UNIT $80 $25 $00 Level(11,2,1) [0,19] 0 0 0 0 [$3A] [0,0,4,0]
+UNIT $80 $25 $00 Level(11,2,1) [0,25] 0 0 0 0 [$3A] [0,0,4,0]
+UNIT $80 $2D $00 Level(11,2,1) [27,22] 0 0 0 0 [$46] [0,0,4,0]
+UNIT
+
+TBE01:
+WORD $20540; POIN UNITS1t; CALL $08A603AC
+FlashCursor($53,60)
+MUSS 46
+Text($A01)
+MURE $4
+WORD $70228 $120 //イベント終了命令
+
+UNITS1t: //ケセルダ
+UNIT $53 $0 $00 Level(22,2,0) [27,22] 2 0 1 label1t [$21,$7C] [0,$B,0,0]
+UNIT
+label1t:
+REDA [24,22] 0 0 0 0
+
+TBE02: //背後増援左
+CHECK_EVENTID $B //フラグ条件
+BNE $0 0xC 0 //オンの場合LABEL $XXまでジャンプ
+CALL $08A6030C //条件フラグをオフのままにして終了
+LABEL $0 //ジャンプ先XX
+WORD $20540; POIN UNITS2t; CALL $08A603AC //通常増援
+WORD $70228 $120 //イベント終了命令
+
+UNITS2t:
+UNIT $80 $F $00 Level(11,2,1) [9,0] 0 0 1 label2t [$06] [0,0,4,0]
+UNIT $80 $F $00 Level(11,2,1) [9,0] 0 0 1 label2t [$06] [0,0,4,0]
+UNIT $80 $19 $00 Level(11,2,1) [9,0] 0 0 1 label2t [$84] [0,0,4,0]
+UNIT $80 $2D $00 Level(11,2,1) [9,0] 0 0 1 label2t [$45] [0,0,4,0]
+UNIT
+label2t:
+REDA [9,1] 0 0 0 0
+
+
+TBE03: //背後増援右
+CHECK_EVENTID $D //フラグ条件
+BNE $0 0xC 0 //オンの場合LABEL $XXまでジャンプ
+CALL $08A6030C //条件フラグをオフのままにして終了
+LABEL $0 //ジャンプ先XX
+WORD $20540; POIN UNITS3t; CALL $08A603AC //通常増援
+WORD $70228 $120 //イベント終了命令
+
+UNITS3t: //背後増援２
+UNIT $80 $F $00 Level(11,2,1) [19,0] 0 0 1 label3t [$06] [0,0,4,0]
+UNIT $80 $F $00 Level(11,2,1) [19,0] 0 0 1 label3t [$06] [0,0,4,0]
+UNIT $80 $19 $00 Level(11,2,1) [19,0] 0 0 1 label3t [$84] [0,0,4,0]
+UNIT $80 $2D $00 Level(11,2,1) [19,0] 0 0 1 label3t [$45] [0,0,4,0]
+UNIT
+label3t:
+REDA [19,1] 0 0 0 0
+
+CharacterBasedEvents:	///////////////////////会話条件
+
+END_MAIN
+
+
+
+LocationBasedEvents:	/////////////////////オブジェクト指定
+Chest($42,14,35) //パージ
+Chest($8A,16,35) //連続Ｍ
+Chest($B6,8,35) //宝箱エイル
+END_MAIN
+
+MiscBasedEvents:	//////////////範囲・常時条件
+AFEV 0 $085B9EE8 $65 //ゲームオーバー
+AREA $0 MBE01 [2,1] [2,1]
+AREA $0 MBE01 [27,1] [27,1]
+AREA $0 MBE01 [2,33] [2,33]
+AREA $0 MBE01 [27,35] [27,35]
+AREA $0 MBE02 [13,24] [15,24]
+AREA $B MBE00 [0,19] [12,36]
+AREA $D MBE00 [16,19] [28,36]
+AREA $F MBE00 [0,31] [28,36]
+
+END_MAIN
+
+MBE00:
+SVAL 2 0; CALL $08A602F0 //自軍進入で
+WORD $70228 $120 //イベント終了
+
+MBE01:	//ここか
+SVAL 2 0; CALL $08A602F0 //自軍が進入したら
+ASMC asm_woman+1
+BNE 1 0xC 0 //女の場合LABEL 1までジャンプ
+Text($9FF)
+GOTO 0
+LABEL 1
+Text($A00)
+LABEL 0
+WORD $70228 $120 //イベント終了命令
+
+
+MBE02:	//4つの柱に立つもの
+SVAL 2 $0F; CALL $08A602D4 //0Fが進入したら
+
+SVAL 2 0
+
+SHORT $0540 $0B 2 1	//座標(STVAL B)
+SHORT $3322 $FFFE	//「死亡確認」
+BEQ 0 0xC 0 //死亡(非存在)でジャンプ
+SHORT $3325 $FFFE	//所属確認
+BNE $0 0xC 2
+
+SHORT $0540 $0B 27 1	//座標
+SHORT $3322 $FFFE	//「死亡確認」
+BEQ 0 0xC 0 //死亡(非存在)でジャンプ
+SHORT $3325 $FFFE	//所属確認
+BNE $0 0xC 2
+
+SHORT $0540 $0B 2 33	//座標
+SHORT $3322 $FFFE	//「死亡確認」
+BEQ 0 0xC 0 //死亡(非存在)でジャンプ
+SHORT $3325 $FFFE	//所属確認
+BNE $0 0xC 2
+
+SHORT $0540 $0B 27 35	//座標
+SHORT $3322 $FFFE	//「死亡確認」
+BEQ 0 0xC 0 //死亡(非存在)でジャンプ
+SHORT $3325 $FFFE	//所属確認
+BNE $0 0xC 2
+
+ENUT $3
+EVBIT_T 0x7; ENDA //イベント終了命令
+
+LABEL $0
+Text($A08)
+EVBIT_T 0x7; ENDA //イベント終了命令
+
+
+
+
+BeginningScene:	////////////////章開始イベント
+ASMC asm_TheTurn+1
+BNE 3 0xC 0 //評価D以上の場合LABEL 3までジャンプ
+ENUF $70
+LABEL 3
+
+CAM1 [14,17]
+LOAD2 1 $0890D2AC; ENUN //ユニット読み込み2
+FADU $02 //[XX]の速さで暗転解除
+STAL 60 //1秒=60f待機
+TEXTSHOW $9DC; TEXTEND //会話実行
+STAL 32
+MUSC $28; TEXTCONT; TEXTEND
+REMA
+CLEA 0x0 //自軍全消去
+CLEE 0x0 //敵軍全消去
+TILECHANGE $1 //[XX]部分マップ変化を実行
+
+LOAD3 0 $0890D48C; ENUN
+LOAD1 1 UNITS00; ENUN
+CAM1 [14,5]
+MUSC $3E0
+FlashCursor($F,60) //エフ
+Text($A03)
+WORD $70228 $120 //イベント終了命令
+
+
+
+EndingScene:	//////////////////章終了イベント
+CAM1 [14,27]
+MUSCMID $7FFF
+TILECHANGE $3 //[XX]部分マップ変化を実行
+SOUN $B1 //[XX]効果音を鳴らす 
+FlashCursor($F,60)
+Text($9FA)
+MOVE 0 $0F [14,22]; ENUN //ユニット移動先[XX YY]指定
+MOVE_1STEP 0 $F MoveUp; ENUN //[ZZ]速さ(通常00)[XX]が[YY]方向(00:← 01:→ 02:↓ 03↑)で1ﾏｽ移動
+FADI $02 //[XX]の速さで暗転
+CAM1 [14,17]
+TILECHANGE $2 //[XX]部分マップ変化を実行
+CLEA 0x0 //自軍全消去
+CLEE 0x0 //敵軍全消去
+CLEN 0x0 //友軍全消去
+STAL 60 //1秒=60f待機
+CHECK_EVENTID $F1 //オルソン撤退
+BNE 3 0xC 0 //オンの場合LABEL $XXまでジャンプ
+CHECK_EVENTID $F2 //マーレイ撃破
+BEQ 3 0xC 0 //オフの場合LABEL $XXまでジャンプ
+CHECK_ALIVE 0x1F //ノール生存条件
+BEQ 3 0xC 0 //死亡の場合LABEL Xまでジャンプ
+////////////////////////真エンド
+SOUN 756
+STAL 40
+SOUN 756
+STAL 60
+SOUN 210
+WORD $4320
+
+LOAD1 1 NEWOTO; ENUN //
+FADU $02 //[XX]の速さで暗転解除
+STAL 60 //1秒=60f待機
+MUSC $28
+TEXTSHOW $9FB; TEXTEND
+MUSCMID $7FFF
+TEXTCONT; TEXTEND
+MOVE_1STEP 0 $6D MoveRight; ENUN //seto
+TEXTCONT; TEXTEND
+MOVE_1STEP 0 $2 MoveDown; ENUN //seto
+MOVE 0 $1 [16,17]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+TEXTCONT; TEXTEND
+MUSC $29
+TEXTCONT; TEXTEND
+MUSCMID $7FFF
+TEXTCONT; TEXTEND
+REMA
+
+
+LOAD2 1 OSOI; ENUN
+FlashCursor($F,60) //
+MUSC $27
+TEXTSHOW $9FC; TEXTEND
+MOVE 0 $1 [15,19]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+TEXTCONT; TEXTEND
+REMA
+
+
+MUSCMID $7FFF
+LOAD2 1 LIOSTON; ENUN
+WORD $00020540 $40 $FFFF2F48; SHORT $FFFD; BYTE 14 14; WORD $0A40 $08A60630
+FlashCursor($40,60) //
+TEXTSHOW $A04; TEXTEND
+MOVE 0 $F [12,19]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+MOVE 0 $F [12,14]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+TEXTCONT; TEXTEND
+MUSC $17
+TEXTCONT; TEXTEND
+MUSCMID $7FFF
+REMA
+MOVE 0 $6D [13,14]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+StartBattle
+  CriticalHit(0,0)
+EndAttack
+FIG1 $40 $6D 0 //戦闘画面有ｲﾍﾞﾝﾄ戦闘[XX]が[YY]に攻撃[ZZ]
+
+BYTE $26 $34 $6D $00	//待機にする
+MUSC $2D
+STAL 60
+
+TEXTSHOW $A05; TEXTEND; REMA
+WORD $20540 $40 $0A40 $08A60654 $40342F	//ワープアウト$40
+MOVE 0 $F [13,15]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+MUSCMID $7FFF
+STAL 60
+LOAD2 1 KNOOOOL; ENUN
+FlashCursor($1F,60) //ノール
+
+TEXTSHOW $A06; TEXTEND
+MOVE 0 $1 [14,14] //[00]の速さで[ZZ]が[XX,YY]へ移動
+MOVE 0 $2 [15,15]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+MUSC $44
+TEXTCONT; TEXTEND
+MOVE 0 $1F [12,18]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+MOVE 0 $1F [12,14]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+TEXTCONT; TEXTEND
+REMA
+MUSCMID $7FFF
+STAL 60
+MOVE_1STEP 0 $1F MoveLeft; ENUN //ノール
+STAL 20
+MOVE_1STEP 0 $1F MoveLeft; ENUN //
+FlashCursor($1F,60) //ノール
+Text($A07)
+
+FADI $02 //[XX]の速さで暗転
+MNCH $2E
+ENDA
+
+
+LABEL 3	/////////////////////残ネンド
+ENUF $F2
+LOAD1 1 NEWTO; ENUN
+FADU $02 //[XX]の速さで暗転解除
+STAL 60 //1秒=60f待機
+LOAD2 1 OSOI; ENUN
+Text($9F7)
+MOVE 0 $40 [16,15]
+MOVE 0 $6D [16,16]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+
+StartBattle
+ CriticalHit(0,0)
+EndAttack
+FIG1 $40 $6D 0 //戦闘画面有ｲﾍﾞﾝﾄ戦闘[XX]が[YY]に攻撃[ZZ]
+SET_SOMETHING $6D; DISA_IF $6D //ユニットID死亡消滅
+
+TEXTSHOW $9F8; TEXTEND
+MOVE 0 $0F [16,16]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+TEXTCONT; TEXTEND
+REMA
+
+WORD $20540 $40 $0A40 $08A60654 $40342F	//ワープアウト$40
+MOVE_1STEP 0 $F MoveUp; ENUN
+
+TEXTSHOW $9F9; TEXTEND
+MOVE_1STEP 0 $0F MoveDown; ENUN
+TEXTCONT; TEXTEND
+REMA
+MOVE_1STEP 0 $01 MoveUp; ENUN
+DISA $01
+
+MOVE 0 $0F [14,23]
+MOVE 0 $02 [15,23]; ENUN //[00]の速さで[ZZ]が[XX,YY]へ移動
+
+
+FADI $02 //[XX]の速さで暗転
+MNCH $0B
+ENDA
+
+
+
+
+KNOOOOL:
+UNIT $1F $01 0 Level(1,0,0) [14,22] 0 0 1 label01 NoItems NoAI
+UNIT
+
+
+NEWOTO:
+UNIT $01 $02 0 Level(5,0,1) [18,17] 0 0 0 0 [$9, $3, $6C] NoAI		//エイリーク
+UNIT $02 $07 0 Level(1,0,0) [16,17] 0 0 0 0 [$3, $17] NoAI		//ゼト
+UNIT $6D $07 0 Level(5,2,0) [13,17] 0 0 0 0 [$4] [3,3,0,$20]
+UNIT
+
+LIOSTON:
+UNIT $40 $4F $00 Level(30,2,1) [14,9] 0 0 0 0 [$B5] [3,3,0,$20]
+UNIT
+
+
+
+NEWTO:
+UNIT $01 $02 0 Level(5,0,1) [16,17] 0 0 0 0 [$9, $3, $6C] NoAI		//ノンリーク
+UNIT $02 $07 0 Level(1,0,0) [18,17] 0 0 0 0 [$3, $17] NoAI		//ゼト
+UNIT $40 $4F $00 Level(30,2,1) [14,14] 0 0 0 0 [$8F] [3,3,0,$20]
+UNIT $6D $07 $00 Level(5,2,0) [14,17] 0 0 0 0 [$4] [3,3,0,$20]
+UNIT
+
+
+
+OSOI:
+UNIT $0F $01 0 Level(1,0,0) [14,22] 0 0 1 label01 NoItems NoAI
+UNIT
+label01:
+REDA [14,20] 0 0 0 0
+
+Units:	///////自軍ユニット初期配置
+UNIT
+
+
+UNITS00: ////////敵軍ユニット初期配置
+UNIT $81 $B $00 Level(1,2,1) [2,1] 0 0 0 0 [$21] [3,3,$C,$20]
+UNIT $81 $C $00 Level(1,2,1) [27,1] 0 0 0 0 [$17] [3,3,$C,$20]
+UNIT $81 $11 $00 Level(1,2,1) [2,33] 0 0 0 0 [$B] [3,3,$C,$20]
+UNIT $81 $15 $00 Level(1,2,1) [27,35] 0 0 0 0 [$10] [3,3,$C,$20]
+UNIT $80 $25 $00 Level(10,2,1) [7,23] 0 0 0 0 [$42] [0,0,0,0]
+//まさか
+UNIT $80 $43 $00 Level(1,2,1) [14,9] 0 0 0 0 [$83] [0,0,4,0]
+UNIT $80 $43 $00 Level(1,2,1) [14,25] 0 0 0 0 [$83] [0,3,4,0]
+//ナイト
+UNIT $80 $9 $00 Level(11,2,1) [16,9] 0 0 0 0 [$82] [0,0,4,0]
+UNIT $80 $9 $00 Level(11,2,1) [12,9] 0 0 0 0 [$82] [0,0,4,0]
+UNIT $80 $9 $00 Level(11,2,1) [25,19] 0 0 0 0 [$82] [0,3,4,0]
+UNIT $80 $9 $00 Level(11,2,1) [25,25] 0 0 0 0 [$82] [0,3,4,0]
+UNIT $80 $9 $00 Level(11,2,1) [3,21] 0 0 0 0 [$82] [0,3,4,0]
+UNIT $80 $9 $00 Level(11,2,1) [3,23] 0 0 0 0 [$82] [0,3,4,0]
+UNIT $80 $9 $00 Level(11,2,1) [18,27] 0 0 0 0 [$82] [0,3,4,0]
+UNIT $80 $9 $00 Level(11,2,1) [21,27] 0 0 0 0 [$82] [0,3,4,0]
+UNIT $80 $9 $00 Level(11,2,1) [15,32] 0 0 0 0 [$1A] [0,3,4,0]
+//せんし
+UNIT $80 $3F $00 Level(11,2,1) [3,15] 0 0 0 0 [$83] [0,0,4,0]
+UNIT $80 $3F $00 Level(11,2,1) [26,5] 0 0 0 0 [$83] [0,0,4,0]
+UNIT $80 $3F $00 Level(11,2,1) [5,18] 0 0 0 0 [$83] [0,3,4,0]
+UNIT $80 $3F $00 Level(11,2,1) [4,13] 0 0 0 0 [$83] [0,3,4,0]
+UNIT $80 $3F $00 Level(11,2,1) [12,29] 0 0 0 0 [$83] [0,3,4,0]
+UNIT $80 $3F $00 Level(11,2,1) [2,35] 0 0 0 0 [$83] [0,3,4,0]
+UNIT $80 $3F $00 Level(11,2,1) [3,35] 0 0 0 0 [$83] [0,3,4,0]
+UNIT $80 $3F $00 Level(11,2,1) [26,15] 0 0 0 0 [$83] [0,3,4,0]
+
+//ようへい
+UNIT $80 $F $00 Level(11,2,1) [1,6] 0 0 0 0 [$06] [0,3,4,0]
+UNIT $80 $F $00 Level(11,2,1) [2,6] 0 0 0 0 [$06] [0,3,4,0]
+UNIT $80 $F $00 Level(11,2,1) [26,4] 0 0 0 0 [$06] [0,3,4,0]
+UNIT $80 $F $00 Level(11,2,1) [27,4] 0 0 0 0 [$06] [0,3,4,0]
+UNIT $80 $F $00 Level(11,2,1) [26,32] 0 0 0 0 [$06] [0,3,4,0]
+UNIT $80 $F $00 Level(11,2,1) [27,32] 0 0 0 0 [$06] [0,3,4,0]
+
+//アーチャー
+UNIT $80 $19 $00 Level(11,2,1) [7,27] 0 0 0 0 [$84] [0,3,4,0]
+UNIT $80 $19 $00 Level(11,2,1) [24,15] 0 0 0 0 [$84] [0,3,4,0]
+UNIT $80 $19 $00 Level(11,2,1) [5,7] 0 0 0 0 [$84] [0,3,4,0]
+UNIT $80 $19 $00 Level(11,2,1) [28,28] 0 0 0 0 [$84] [0,3,4,0]
+
+//魔道士
+UNIT $80 $25 $00 Level(11,2,1) [5,34] 0 0 0 0 [$3A] [0,3,4,0]
+UNIT $80 $25 $00 Level(11,2,1) [11,34] 0 0 0 0 [$3A] [0,3,4,0]
+UNIT $80 $25 $00 Level(11,2,1) [13,34] 0 0 0 0 [$3A] [0,3,4,0]
+UNIT $80 $25 $00 Level(11,2,1) [17,34] 0 0 0 0 [$3A] [0,3,4,0]
+
+//ダマジ
+UNIT $80 $2D $00 Level(11,2,1) [18,30] 0 0 0 0 [$45] [0,3,4,0]
+UNIT $80 $2D $00 Level(11,2,1) [21,30] 0 0 0 0 [$45] [0,3,4,0]
+UNIT $80 $2D $00 Level(11,2,1) [1,10] 0 0 0 0 [$46] [0,3,4,0]
+UNIT $80 $2D $00 Level(11,2,1) [27,10] 0 0 0 0 [$46] [0,3,4,0]
+
+//杖マン
+UNIT $80 $45 $00 Level(11,2,1) [25,29] 0 0 0 0 [$40,$4C] [0,3,4,0]
+UNIT $80 $45 $00 Level(11,2,1) [8,30] 0 0 0 0 [$40,$4C] [0,3,4,0]
+
+UNIT
+
+TrapData:	//////////
+
+ENDTRAP
+ALIGN 4
+
+Dunno:
+//DO NOT TOUCH
+WORD 0
+Tutorial:
+//DO NOT TOUCH
+WORD 0

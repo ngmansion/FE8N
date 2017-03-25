@@ -1,0 +1,15 @@
+asm_TheTurn:
+ #incbin "TheTurn2.gba"
+ALIGN 4
+
+//////編分岐修正？？
+
+PUSH
+
+ORG	0xa8eee
+SHORT	$2001
+
+ORG	0xba93e
+SHORT	$2001
+
+POP

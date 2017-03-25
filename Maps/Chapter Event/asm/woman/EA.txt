@@ -1,0 +1,4 @@
+asm_woman:
+ #incbin "woman.gba"
+ALIGN 4
+

@@ -4,5 +4,5 @@
 //#define WMEventTable(WMeventEntry) "PUSH; ORG WMEvent1PointerTable+WMeventEntry*0x4; POIN WMEvent1; ORG WMEvent12ointerTable+WMeventEntry*0x4; POIN WMEvent2; POP"
 
 {
-
+ #include "Ch11.event" //0xC
 }

@@ -5,7 +5,7 @@
 ////////////////////////////ここから章タイトル画像
 
 TitleTable($0)
- #incext Png2Dmp title_pro.png --lz77
+ #incext Png2Dmp chapter0.png --lz77
 
 
 
