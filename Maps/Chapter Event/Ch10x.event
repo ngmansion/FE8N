@@ -175,7 +175,7 @@ EVBIT_T 0x7; ENDA //イベント終了命令
 BeginningScene:	////////////////章開始イベント
 ASMC asm_TheTurn+1
 BNE 3 0xC 0 //評価D以上の場合LABEL 3までジャンプ
-ENUF $70
+ENUF $F2
 LABEL 3
 
 CAM1 [14,17]
