@@ -1,6 +1,0 @@
-PUSH
-
-ORG		0x22f04
-	#incbin "Trade_Jouken.gba"
-
-POP
