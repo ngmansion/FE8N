@@ -2,7 +2,7 @@ https://github.com/ngmansion/FE8N/releases/download/20170315/FE8N.ips
 
  [改造法の解説](http://wp.me/p5MjVV-Z8)  
  
- [ユーザーフォーラム](http://ngmansion.webcrow.jp/wp/forums/forum/fe8n%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A9%E3%83%A0/)
+ [ユーザーフォーラム](http://ngmansion.webcrow.jp/wp/forums/forum/fe8n_userforum/)
 
 # 変更メモ
 ## ステータス
