@@ -45,4 +45,10 @@ setcMugEntry($48)
  #incext Png2Dmp DE.png --lz77
 
 
+#define setNewMug(mugEntry, mouthX, mouthY, eyeX, eyeY, eyeControl, positionX, positionY) "{; PUSH; ORG MugTable+mugEntry*0x1C; POIN mugLocation+0x200 mugLocation+0x1824 mugLocation+0x1804 mugLocation+0x1204 mugLocation; BYTE mouthX mouthY eyeX eyeY; BYTE eyeControl 1; BYTE positionX positionY ; POP; mugLocation:; }"
+
+setNewMug(顔ID, 口のX座標, 口のY座標, 目のX座標, 目のY座標, 1=通常6=常に目閉じ, X座標, Y座標)
+ #incext Png2Dmp mug_gonbuto_f.png
+ #incext PortraitFormatter mug_gonbuto.png
+
 */
