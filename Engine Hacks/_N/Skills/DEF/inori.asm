@@ -34,7 +34,14 @@ skill1_check
 	lsl	r1, r1, #31
 	bpl	skill2
 ootate
-	ldrb	r0, [r3, #8]	;レベル
+	mov	r0, #0x50
+	ldrb	r0, [r7, r0]	;魔法判定
+	cmp	r0, #4
+	ble	skill2
+	cmp	r0, #8
+	bge	skill2
+	
+	ldrb	r0, [r3, #21]	;技
 	mov	r1, #0
 	bl	random
 	cmp	r0, #0
