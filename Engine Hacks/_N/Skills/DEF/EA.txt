@@ -1,7 +1,10 @@
 BigShieldList:
- BYTE	$0B $00 $00 $00
+ BYTE	$0B $00
  ALIGN	4
-
+ 
+HolyShieldList:
+ BYTE	$00 $00
+ ALIGN	4
 
 ///////////////
 PUSH
@@ -19,3 +22,4 @@ POP
 shikkokunori:
  #incbin "inori.gba"
  POIN	BigShieldList
+ POIN	HolyShieldList
