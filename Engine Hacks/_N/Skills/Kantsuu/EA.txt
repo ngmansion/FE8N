@@ -1,25 +1,49 @@
-GeckoClass:
+GeckoClass:	//
 BYTE	$43 $40 $21 $0C $49 $35 $36 $04 0
-ALIGN 4
+
 //////////貫通系発生条件
 PUSH
 ORG	0x2B21C
 BYTE	$00 $4B $9F $46
 POIN	geckojump
 POP
+
+ALIGN 4
 geckojump:
 #incbin "Gecko.gba"
 POIN	GeckoClass
 
 //////////貫通系効果分岐
-PUSH
 
+
+//各奥義2職まで
+listDragon:
+ BYTE	$00 $00
+listMeido:
+ BYTE	$40 $00
+listRevenge:
+ BYTE	$43 $00
+listStan:
+ BYTE	$21 $00
+listStone:
+ BYTE	$49 $00
+listFlower:
+ BYTE	$00 $00
+
+PUSH
 ORG	0x2B3D8
 WORD	$469F4B00
 POIN	origin_third
 
 POP
 
+ALIGN 4
 origin_third:
 #incbin "Third.gba"
 ALIGN 4
+POIN	listDragon
+POIN	listMeido
+POIN	listRevenge
+POIN	listStan
+POIN	listStone
+POIN	listFlower
