@@ -122,13 +122,13 @@ Holy
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;物理判定
 	cmp	r0, #7
-	beq	onHoly
+	beq	ouiHoly
 	cmp	r0, #6
-	beq	onHoly
+	beq	ouiHoly
 	cmp	r0, #5
-	beq	onHoly
+	beq	ouiHoly
 	b endHoly
-onHoly:
+ouiHoly:
 	ldrb	r0, [r3, #21]	;技
 	mov	r1, #0
 	bl	random
