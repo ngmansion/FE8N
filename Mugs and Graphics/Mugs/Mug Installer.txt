@@ -13,7 +13,8 @@
 
 
 
-/*
+/*以下挿入例(コメントアウト済み)
+
 //////通常顔グラ挿入
 setMugEntry(顔ID, 口のX座標, 口のY座標, 目のX座標, 目のY座標, 1=通常6=常に目閉じ)
 
@@ -33,7 +34,9 @@ setMugExtra($02, 0, 0, 0, 2)
 
 
 //両肩拡張例
-setMugExtra($02, 0, 4, 10, 4)
+setMugEntry($04, 3, 5, 3, 4, 1)
+setMugExtra($04, 0, 4, 10, 4)
+ #incext PortraitFormatter noidi.png
 
 
 //////クラス画像挿入
