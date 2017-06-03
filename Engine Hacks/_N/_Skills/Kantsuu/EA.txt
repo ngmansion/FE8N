@@ -36,7 +36,7 @@ POIN	GeckoClass
 
 PUSH
 ORG	0x2B3D8
-WORD	$469F4B00
+WORD	$46874800 //r0
 POIN	origin_third
 POP
 

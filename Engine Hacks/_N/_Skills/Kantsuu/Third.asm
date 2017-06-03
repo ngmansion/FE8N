@@ -18,38 +18,50 @@ start:
 @align 4
 	ldr	r2, [adr]
 	ldrb	r1, [r2]
+	cmp	r0, r1
 	beq	Dragon
 	ldrb	r1, [r2, #1]
+	cmp	r0, r1
 	beq	Dragon
 @align 4
 	ldr	r2, [adr+4]
 	ldrb	r1, [r2]
+	cmp	r0, r1
 	beq	Meido
 	ldrb	r1, [r2, #1]
+	cmp	r0, r1
 	beq	Meido
 @align 4
 	ldr	r2, [adr+8]
 	ldrb	r1, [r2]
+	cmp	r0, r1
 	beq	Revenge
 	ldrb	r1, [r2, #1]
+	cmp	r0, r1
 	beq	Revenge
 @align 4
 	ldr	r2, [adr+12]
 	ldrb	r1, [r2]
+	cmp	r0, r1
 	beq	Stan
 	ldrb	r1, [r2, #1]
+	cmp	r0, r1
 	beq	Stan
 @align 4
 	ldr	r2, [adr+16]
 	ldrb	r1, [r2]
+	cmp	r0, r1
 	beq	Stone
 	ldrb	r1, [r2, #1]
+	cmp	r0, r1
 	beq	Stone
 @align 4
 	ldr	r2, [adr+20]
 	ldrb	r1, [r2]
+	cmp	r0, r1
 	beq	Flower
 	ldrb	r1, [r2, #1]
+	cmp	r0, r1
 	beq	Flower
 Gecko:
 	asr	r4, r4, #1
