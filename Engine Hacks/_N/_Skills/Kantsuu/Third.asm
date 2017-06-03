@@ -185,6 +185,16 @@ end
 	
 Gecko:
 	push	{lr}
+	mov	r0, #72
+	ldrh	r0, [r7, r0]
+		bl	WEAPON
+	cmp	r0, #7
+	bgt	return
+	add	r0, #40
+	ldrb	r0, [r7, r0]
+	cmp	r0, #250
+	bls	return
+	
 	ldrb	r0, [r7, #0x15]	;;‰œ‹`”­“®—¦
 	mov	r1, #0
 	ldr	r2, =$0802a490 ;;r0=Šm—¦, r1=#0 —”
@@ -193,6 +203,7 @@ Gecko:
 	
 	cmp	r0, #1
 	beq	ouiGecko
+return:
 	pop	{r0}
 	b	end
 
@@ -209,7 +220,9 @@ ouiGecko:
 	orr	r0, r1
 	str	r0, [r3, #0]
 	pop	{pc}
-	
+WEAPON
+	ldr	r3, =$080172f0
+	mov	pc, r3
 @ltorg
 adr:
 
