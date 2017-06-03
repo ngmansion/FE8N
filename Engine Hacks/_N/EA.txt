@@ -1,5 +1,5 @@
-#include "calc\EA.txt"
-#include "Skills\Skill Installer.txt"
+#include "_calc\EA.txt"
+#include "_Skills\Skill Installer.txt"
 	#include "BadEffectWeapon\EA.txt"
 	#include "steal\EA.txt"
 	#include "autosave\EA.txt"

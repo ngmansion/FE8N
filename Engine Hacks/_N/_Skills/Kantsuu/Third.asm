@@ -51,10 +51,48 @@ start:
 	beq	Flower
 	ldrb	r1, [r2, #1]
 	beq	Flower
-
 Gecko:
 	asr	r4, r4, #1
 	b	end
+Revenge:
+	ldrb r1, [r7, #18]
+	ldrb r0, [r7, #19]
+	sub r0, r1, r0
+	asr	r0, r0, #1
+	b	jump
+Dragon:
+	mov	r0, r9
+	asr	r0, r0, #1
+	b	jump
+Meido:
+	cmp	r3, #0xAA
+	beq	magicMeido
+	ldrb	r0, [r7, #26]
+	b	jump
+magicMeido:
+	ldr	r0, [r7]
+	ldrb	r0, [r0, #19]
+	ldr	r1, [r7, #4]
+	ldrb	r1, [r1, #17]
+	add	r0, r0, r1
+	b	jump
+	
+Flower:
+	mov	r0, #0x50
+	ldrb	r0, [r7, r0]	;ï®óùîªíË
+	cmp	r0, #7
+	beq	AddStrength
+	cmp	r0, #6
+	beq	AddStrength
+	cmp	r0, #5
+	beq	AddStrength
+	ldrb r0, [r7, #0x1A]
+	asr	r0, r0, #1
+	b	jump
+AddStrength:
+	ldrb r0, [r7, #0x14]
+	asr	r0, r0, #1
+	b	jump
 Stan:
 	mov	r2, r8
 	ldr	r1, [r2, #4]
@@ -117,36 +155,6 @@ ouiStone:
 	and	r0, r1
 	str	r0, [r3, #12]
 	b	end
-Revenge:
-	ldrb r1, [r7, #18]
-	ldrb r0, [r7, #19]
-	sub r0, r1, r0
-	asr	r0, r0, #1
-	b	jump
-Dragon:
-	mov	r0, r9
-	asr	r0, r0, #1
-	b	jump
-Meido:
-	ldrb	r0, [r7, #26]
-	b	jump
-Flower:
-	mov	r0, #0x50
-	ldrb	r0, [r7, r0]	;ï®óùîªíË
-	cmp	r0, #7
-	beq	AddStrength
-	cmp	r0, #6
-	beq	AddStrength
-	cmp	r0, #5
-	beq	AddStrength
-	ldrb r0, [r7, #0x1A]
-	asr	r0, r0, #1
-	b	jump
-AddStrength:
-	ldrb r0, [r7, #0x14]
-	asr	r0, r0, #1
-	b	jump
-
 jump
 	add	r9, r0
 end
