@@ -1,23 +1,23 @@
-GeckoClass:	//月光+下記奥義の職をいれる
-BYTE	$43 $40 $21 $0C $49 $35 $36 $04 0
+GeckoClass:		//兵種奥義月光
+BYTE	$0C $35 $36 $04 0
 
 ALIGN 4
-//各奥義2職まで
-listDragon:
+//各奥義2職まで(これらの奥義は重複設定不可)
+listDragon:		//竜穿
  BYTE	$00 $00
-listMeido:
+listMeido:		//鳴動
  BYTE	$40 $00
-listRevenge:
+listRevenge:	//復讐
  BYTE	$43 $00
-listStan:
+listStan:		//衝撃
  BYTE	$21 $00
-listStone:
+listStone:		//叫喚
  BYTE	$49 $00
-listFlower:
+listFlower:		//華炎
  BYTE	$00 $00
 
 
-//////////貫通系発生条件
+//////////月光発生条件
 PUSH
 ORG	0x2B21C
 BYTE	$00 $4B $9F $46
@@ -29,7 +29,7 @@ geckojump:
 #incbin "Gecko.gba"
 POIN	GeckoClass
 
-//////////貫通系効果分岐
+//////////貫通系奥義分岐
 
 
 

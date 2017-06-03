@@ -31,9 +31,30 @@ loop
 	b	loop
 	
 random
-	ldrb	r0, [r2, #0x15]	;;貫通発動率
-	ldr	r3, =$0802b226
-	mov	pc, r3
+	ldrb	r0, [r2, #0x15]	;;月光発動率
+
+	mov	r1, #0
+	ldr	r3, =$0802a490 ;;r0=確率, r1=#0 乱数
+	mov	lr, r3
+	@dcw	$F800
+	cmp	r0, #1
+	bne	end
+	
+	ldr	r3, [r5, #0]
+	ldr	r2, [r3, #0]
+	lsl	r1, r2, #13
+	lsr	r1, r1, #13
+	orr	r1, r4
+	ldr	r0, =0xFFF80000
+	and	r0, r2
+	orr	r0, r1
+	str	r0, [r3, #0]
+	
+	pop	{r4, r5}
+	asr	r4, r4, #1
+	pop	{r0}
+	bx	r0
+	
 end
 	ldr	r3, =$0802b24a
 	mov	pc, r3
