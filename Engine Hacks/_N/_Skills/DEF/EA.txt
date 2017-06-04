@@ -1,11 +1,14 @@
 BigShieldList:
- BYTE	$0B $00
- ALIGN	4
+ BYTE	$0B 0
  
 HolyShieldList:
- BYTE	$00 $00
- ALIGN	4
+ BYTE	$00 0
 
+GodShieldList:
+ BYTE	$66 0
+
+
+ ALIGN	4
 ///////////////
 PUSH
  ORG	0x2B490

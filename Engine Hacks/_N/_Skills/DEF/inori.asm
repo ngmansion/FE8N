@@ -186,14 +186,20 @@ endPray:
 
 Oracle:
 	push	{lr}
+	
+@align 4
+	ldr	r2, [adr+8]	;神盾クラスアドレス
 	ldr	r1, [r3, #4]
 	ldrb	r1, [r1, #4]
-	cmp	r1, #0x00		;無指定
+loopOracle
+	ldrb	r0, [r2]
+	cmp	r0, #0
+	beq	endOracle
+	cmp	r0, r1
 	beq	nihil_check
-	cmp	r1, #0x66		;魔王
-	beq	nihil_check
-	b	endOracle
-nihil_check
+	add	r2, #1
+	b	loopOracle
+nihil_check:
 	ldr	r1, [r7]
 	ldr	r0, [r7, #4]
 	ldr	r1, [r1, #40]
