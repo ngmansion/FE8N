@@ -46,7 +46,8 @@
 	add     r1,#0xFB
 	mov     r2,#0xFF
 	and     r1,r2
-	ldr     r3,=$85C6E78
+@align 4
+	ldr     r3, [adr]	;5C6E78
 	push    {r0 r1 r2 r3}
 	mov     r0,#0x12
 	ldrb    r0,[r4,r0]
@@ -132,7 +133,7 @@ mov     r14,r4
 noncheck
 	pop     {r4 r5 r6 r7}
 	
-;ここからオリジナルの処理
+;ここから元版の処理
 	mov     r0,r4
 	add     r0,#0x30
 	ldrb    r0,[r0]
@@ -143,3 +144,5 @@ noncheck
 
 @dcd	$00030001
 @dcd	$086F0004
+@ltorg
+adr:

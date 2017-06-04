@@ -14,20 +14,38 @@ ORG		0x1b52a
 
 ///////HP Bar
 ORG		0x156AC
-BYTE	$20
-
+SHORT		$2220
 ORG		0x156c8
-POIN	JPdmp
+POIN	HPBarGraphic
 
 ORG		0x27658
 WORD	0x46874800
 POIN	Vcheck
 
-ORG		0x5C6E08
-	#incbin "data.bin"
-ALIGN	4
+ORG		0x5C6E08	//(元、画像の領域)
+
+HPFrames:
+#incbin HPFrames.bin
+
+HPFramePointers:
+POIN HPFrames
+POIN HPFrames+8
+POIN HPFrames+16
+POIN HPFrames+24
+POIN HPFrames+32
+POIN HPFrames+40
+POIN HPFrames+48
+POIN HPFrames+56
+POIN HPFrames+64
+POIN HPFrames+72
+POIN HPFrames+80
+POIN HPFrames+88
+POIN HPFrames+96
+POIN HPFrames+104
+
 Vcheck:
 	#incbin "Vcheck.gba"
+	POIN HPFramePointers
 
 /////////危険スイッチ
 
@@ -102,9 +120,10 @@ GreenReset:
 	#incbin "GreenReset.gba"
 ALIGN	4
 
-JPdmp:
-	#incbin "JP.dmp"
-ALIGN	4
+HPBarGraphic:
+#incext Png2Dmp "HPGraphic.png" --lz77
+
+
 
 //Kiken80Select:
 //	#incbin "Kiken80Select.gba"

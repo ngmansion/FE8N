@@ -26,3 +26,4 @@ shikkokunori:
  #incbin "inori.gba"
  POIN	BigShieldList
  POIN	HolyShieldList
+ POIN	GodShieldList

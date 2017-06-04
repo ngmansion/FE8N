@@ -2,13 +2,14 @@ listHeal:
 BYTE	$66 $29 $2A 0
 
 
-ALIGN 4
 
 PUSH
 ORG	0x19f28
 BYTE	$00 $4B $9F $46
 POIN	ski_kaifuku
 POP
+
+ALIGN 4
 ski_kaifuku:
 #incbin "KAIFUKU.gba"
 POIN	listHeal
