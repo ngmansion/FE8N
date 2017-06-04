@@ -194,11 +194,19 @@ Oracle:
 loopOracle
 	ldrb	r0, [r2]
 	cmp	r0, #0
-	beq	endOracle
+	beq	unitOracle
 	cmp	r0, r1
 	beq	nihil_check
 	add	r2, #1
 	b	loopOracle
+	
+unitOracle
+	ldr	r1, [r3]
+	add	r1, #0x31
+	ldrb	r0, [r1]
+	cmp r0, #7
+	bne	endOracle
+	
 nihil_check:
 	ldr	r1, [r7]
 	ldr	r0, [r7, #4]
