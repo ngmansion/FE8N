@@ -8,6 +8,7 @@
 tugi
 	lsl	r0, r1, #16
 	bmi	san
+off:
 	mov	r0, #1
 	b	end
 san
@@ -19,7 +20,6 @@ end
 	bpl	nonpress
 	cmp	r0, #1
 	beq	jump
-zero
 	mov	r0, #1
 	bx	lr
 jump
@@ -36,7 +36,7 @@ nonpress
 	ldrh	r1, [r1, #4]
 	lsl	r1, r1, #31
 	bpl	non
-	b	zero
+	b	off		;Aおしっぱでジャンプ
 non
 	ldr	r0, [adr1+4]	;$0202bcec
 	add	r0, #66
