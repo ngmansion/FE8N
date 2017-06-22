@@ -46,14 +46,9 @@ WORD	$08A72DB0
 ORG	0x896dc
 SHORT	$b014 $bcf0 $bc01 $4700
 
-//中★指揮
+//中指揮
 ORG	0x896ac
-WORD	$46874800
-POIN	nakashiki
-
-ORG	$A72890
-BYTE	8	//文字数増加
-
+#incbin "nakashiki.gba"
 
 //支援関連
 ORG	0x2821a	//支援数数え復活？
@@ -66,10 +61,3 @@ ORG	0x89924	//光らせない
 SHORT	$46C0 $2000
 
 POP
-
-ALIGN 4
-
-nakashiki:
-#incbin "hoshiki.gba"
-
-ALIGN 4
