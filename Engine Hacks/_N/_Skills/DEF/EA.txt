@@ -6,6 +6,8 @@ HolyShieldList:
 
 GodShieldList:
  BYTE	$66 0
+PrayList:
+ BYTE	0 0
 
 
  ALIGN	4
@@ -27,3 +29,4 @@ shikkokunori:
  POIN	BigShieldList
  POIN	HolyShieldList
  POIN	GodShieldList
+ POIN	PrayList

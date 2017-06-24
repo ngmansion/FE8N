@@ -12,6 +12,9 @@
 	beq	end
 	mov	r1, #0xDF		;防御用
 	mov	r10, r1
+bl Amulet
+	cmp	r0, #1
+	beq	effect
 	
 bl BigShield
 	cmp	r0, #1
@@ -147,7 +150,27 @@ endHoly:
 	
 Pray:
 	push {lr}
-	mov	r3, r8
+	
+@align 4
+	ldr	r2, [adr+12]	;祈りクラスアドレス
+	ldr	r1, [r3, #4]
+	ldrb	r1, [r1, #4]
+loopPray
+	ldrb	r0, [r2]
+	cmp	r0, #0
+	beq	unitPray
+	cmp	r0, r1
+	beq	ouiPray
+	add	r2, #1
+	b	loopPray
+unitPray:
+	ldr	r0, [r3]
+	ldrh	r0, [r0, #0x26]
+	ldrh	r1, [r3, #0x3A]
+	orr r0, r1
+	lsl	r0, r0, #30
+	bpl	endPray
+ouiPray:
 	ldrb	r1, [r3, #19]
 	cmp	r1, #1
 	beq	endPray
@@ -159,13 +182,6 @@ Pray:
 ;	ldrb	r1, [r3, #25]
 ;	cmp	r0, r1
 ;	bgt	endPray
-	
-	ldr	r0, [r3]
-	ldrh	r0, [r0, #0x26]
-	ldrh	r1, [r3, #0x3A]
-	orr r0, r1
-	lsl	r0, r0, #30
-	bpl	endPray
 	ldrb	r0, [r3, #25]	;幸運
 	lsl	r1, r0, #1
 	add	r0, r0, r1
@@ -237,7 +253,49 @@ division
 	strh	r1, [r4, #4]
 endOracle:
 	pop	{pc}
+	
+	
+Amulet:
+	push {lr, r5}
+	mov	r5, #0x1C
 
+loopAmulet:
+	add	r5, #2
+	cmp	r5, #40
+	beq	endAmulet
+	
+	ldrh	r0, [r3, r5]
+	cmp	r0, #0
+	beq	loopAmulet
+	ldr	r1, =$08017314
+	mov	lr, r1
+	@dcw $F800
+	mov	r2, r1
+	mov	r1, r0
+	lsl	r0, r1, #5	;盾パッチの下の下
+	bmi	ouiAmulet
+	b	loopAmulet
+	
+ouiAmulet:
+	ldrb	r1, [r3, #19]
+;一撃で死ぬか
+	ldrh	r0, [r4, #4]
+	cmp	r0, r1
+	blt	endAmulet
+	
+	ldrh	r0, [r3, r5]
+	mov		r2, #0xFF
+	and	r0, r2
+	strh	r0, [r3, r5]	;破損処理
+	
+	ldrb	r0, [r3, #19]
+	sub	r0, #1
+	strh	r0, [r4, #4]
+	mov	r0, #1
+	pop	{pc, r5}
+endAmulet:
+	mov	r0, #0
+	pop	{pc, r5}
 	
 random:
 	ldr	r2, =$0802a490
