@@ -285,6 +285,10 @@ ouiAmulet:
 	
 	ldrh	r0, [r3, r5]
 	mov		r2, #0xFF
+	lsl	r2, r2, #8
+	tst	r0, r2
+	beq	endAmulet	;破損チェック
+	mov		r2, #0xFF
 	and	r0, r2
 	strh	r0, [r3, r5]	;破損処理
 	
