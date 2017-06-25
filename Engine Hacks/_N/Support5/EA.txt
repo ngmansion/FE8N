@@ -1,5 +1,10 @@
 PUSH
 
+//////残り会話数
+
+ORG	0x000a4d18
+#incbin "kaiwa.gba"
+
 ORG	0x282CC
 WORD	$46874800
 POIN	Support5
