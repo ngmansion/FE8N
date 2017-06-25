@@ -87,6 +87,8 @@ mov     r14,r3
 
 NoBar:
 EffectivenessWarning:
+	b	MarkingCheck		;動作が重いのでとりまスキップ
+
 align 4
 ldr r0, [ActiveUnit]
 ldr r6,[r0] ;@r6 contains active units data
