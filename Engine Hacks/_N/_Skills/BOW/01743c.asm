@@ -15,22 +15,30 @@
 	cmp	r5, r0
 	blt	zero
 five
-	ldr	r0, [r5, #4]
+	mov	r0, r5
 	b	kit
 six
-	ldr	r0, [r6, #4]
+	mov	r0, r6
 	b	kit
 zero
 	ldr	r0, =$03004df0
 	ldr	r0, [r0]
+kit:
 	cmp	r0, #0
 	beq	end
+	push {r3}
+ldr	r3, [r0, #12]	;捕獲
+mov		r2,#0x80
+lsl		r2, r2,#0x17
+tst	r3, r2
+	pop {r3}
+bne	one
+	
 	ldr	r0, [r0, #4]
-kit
 	ldrb	r0, [r0, #4]
-	cmp	r0, #0x1B
+	cmp	r0, #0x1B	;スナイポ
 	beq	sagi
-	cmp	r0, #0x1C
+	cmp	r0, #0x1C	;スナイポ
 	bne	end
 sagi
 	lsl	r0, r1, #24
@@ -39,6 +47,11 @@ sagi
 	bne	end
 	add	r1, #1
 end
-	mov	r0, #15
+	mov	r0, #0xF
 	and	r0, r1
 	bx	lr
+one:
+	mov	r1, #0x11
+	b	end
+	
+	

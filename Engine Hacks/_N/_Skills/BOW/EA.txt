@@ -4,7 +4,7 @@ ORG	0x16934
 BYTE	$00 $B5 $0B $1C $01 $B4 $00 $F0 $77 $FD $02 $BC $01 $B4 $08 $1C $00 $F0 $66 $FD $01 $1C $04 $BC $C0 $46
 
 POP
-//////////////myturn
+//////////////myturn（射程表示）
 PUSH
 ORG	0x16e7c
 BYTE	$00 $4B $9F $46
@@ -28,7 +28,7 @@ POP
 yumi_new1:
 #incbin "017420.gba"
 ALIGN 4
-yumi_new2:
+yumi_new2:	//射程の上限
 #incbin "01743c.gba"
 ALIGN 4
 

@@ -10,6 +10,13 @@
 	ldr r0, [r0]
 	add	r1, r1, r0
 	ldrb	r0, [r1, #25]
+	
+ldr	r1, [r6, #12]	;•ßŠl
+mov		r3,#0x80
+lsl		r3, r3,#0x17
+tst	r1, r3
+bne	one
+	
 	ldr	r1, [r6, #4]
 	ldrb	r1, [r1, #4]
 	cmp	r1, #0x1B
@@ -23,6 +30,10 @@
 end
 	ldr	r3, =$08016e8e
 	mov	pc, r3
+one:
+	mov	r0, #0x11
+	b	end
+	
 magi
 	lsl	r1, r0, #28
 	lsr	r1, r1, #28
