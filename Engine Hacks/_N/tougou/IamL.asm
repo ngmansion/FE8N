@@ -78,7 +78,7 @@ zoushoku
 loop
 	add	r5, #2
 	add	r3, #1
-	cmp	r3, #99
+	cmp	r3, #99		;！！輸送隊アイテム上限！！
 	ble	loopstart
 non
 	strh	r4, [r6, #46]	;????
