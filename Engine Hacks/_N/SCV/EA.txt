@@ -1,8 +1,25 @@
 PUSH
 
-//先頭指定
-//ORG	0x5C56FC
-//WORD	$085C5370
+先頭指定
+ORG	0x5C56FC
+WORD	$085C534C
+
+ORG $5C534C
+
+WORD	$080DCC00
+SHORT $0000 $0661 $7400 0
+WORD	$080501BD 0
+POIN	OutKiken|1
+WORD 0 0 0
+POP
+
+OutKiken:
+ #incbin KikenOut_80.gba
+ALIGN 4
+
+PUSH
+
+
 
 //危険バグ
 ORG		0x1CB69
@@ -73,7 +90,8 @@ ORG		0x1c9e2	//常に杖切り換え
 SHORT	$46C0
 
 ORG		0x1c95c
-	#incbin "0123GREEN.gba"
+SHORT $1c30 $4008 $2800 $d009 $2005 $f000 $fec9 $e008
+//	#incbin "0123GREEN.gba"
 
 ///////////////修正(patched)
 

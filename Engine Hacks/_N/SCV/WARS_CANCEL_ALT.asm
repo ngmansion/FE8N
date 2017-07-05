@@ -49,12 +49,20 @@ next
 change
 	ldr	r0, =$0801c99c
 	mov	pc, r0
-danger
+	
+danger:
+	
+	ldr	r1, =$0202bcac
+	add	r1, #62
+	ldrb	r1, [r1]
+	lsr	r1, r1, #7
+	bne	normal
+;UnitType:
 	ldrh	r1, [r2, #4]
 	lsl	r1, r1, #30
 	bmi	maru	;押しっぱなしは消さない
 	b	delete
-normal
+normal:
 	ldrh	r1, [r2, #8]
 	lsl	r2, r1, #30
 	bpl	maru	;B押してないならジャンプ

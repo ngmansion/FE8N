@@ -5,13 +5,12 @@
 	ldr	r0, =$0202bcac
 	add	r0, #62
 	ldrb	r0, [r0]
-	lsl	r0, r0, #30
-	lsr	r0, r0, #30
+	lsl	r0, r0, #24
+	bmi	AllType
+;UnitType:
+	lsl	r0, r0, #7
+	lsr	r0, r0, #31
 	beq	DrawCheck
-	cmp	r0, #1
-	beq	Draw:
-	cmp	r0, #3
-	beq	StaffDraw
 StaffDrawChaeck:
 	mov	r0, #0x3B
 	ldrb	r0, [r4, r0]
@@ -25,6 +24,12 @@ StaffDraw:
 non
 	ldr	r0, =$0801b5ea
 	mov	pc, r0
+AllType:
+	lsl	r0, r0, #7
+	lsr	r0, r0, #31
+	beq	Draw:
+	b	StaffDraw
+	
 DrawCheck:
 	mov	r0, #0x3B
 	ldrb	r0, [r4, r0]
