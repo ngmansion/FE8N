@@ -7,16 +7,17 @@
 	ldrb	r0, [r0]
 	lsl	r0, r0, #30
 	lsr	r0, r0, #30
-	beq	CHECK
+	beq	DrawCheck
 	cmp	r0, #1
-	beq	DRW
+	beq	Draw:
 	cmp	r0, #3
-	beq	STDRW
-;2
-	ldr	r0, [r4, #28]
+	beq	StaffDraw
+StaffDrawChaeck:
+	mov	r0, #0x3B
+	ldrb	r0, [r4, r0]
 	lsl	r0, r0, #24
 	bpl	non
-STDRW
+StaffDraw:
 	ldr	r0, =$0801b2f4
 	mov	lr, r0
 	mov	r0, r4
@@ -24,12 +25,12 @@ STDRW
 non
 	ldr	r0, =$0801b5ea
 	mov	pc, r0
-CHECK
+DrawCheck:
 	mov	r0, #0x3B
 	ldrb	r0, [r4, r0]
 	lsl	r0, r0, #24
 	bpl	non
-DRW
+Draw:
 	ldr	r0, =$0801b5e4
 	mov	pc, r0
 
