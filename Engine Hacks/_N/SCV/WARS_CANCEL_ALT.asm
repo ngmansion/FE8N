@@ -1,11 +1,14 @@
-@thumb
-;@org	$0801ca04 > 00 4A 97 46 XX XX XX XX
 
+;@org	$0801ca04 > 00 4A 97 46 XX XX XX XX
+@thumb
 	mov	r2, r0
 	ldr	r0, =$03004DF0
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	danger	;危険状態はジャンプ(何も無い)
+	beq	danger	;「危険」範囲モードへ
+;
+;特定ユニットの攻撃範囲表示モード
+;
 	ldrb	r1, [r0, #11]	;所属ID
 	lsr	r1, r1, #6
 	beq	normal	;自軍はジャンプ
@@ -49,9 +52,10 @@ next
 change
 	ldr	r0, =$0801c99c
 	mov	pc, r0
-	
+;
+;危険範囲表示モード
+;
 danger:
-	
 	ldr	r1, =$0202bcac
 	add	r1, #62
 	ldrb	r1, [r1]
@@ -62,9 +66,12 @@ danger:
 	lsl	r1, r1, #30
 	bmi	maru	;押しっぱなしは消さない
 	b	delete
+;
+;カウンタが0x80時の処理
+;
 normal:
 	ldrh	r1, [r2, #8]
-	lsl	r2, r1, #30
+	lsl	r2, r1, #31
 	bpl	maru	;B押してないならジャンプ
 delete
 	mov	r4, #2
