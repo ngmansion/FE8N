@@ -76,9 +76,9 @@ danger:
 ;カウンタが0x80時の処理
 ;
 AllUnit:
-	ldrh	r1, [r2, #8]
-	lsl	r2, r1, #31
-	bpl	maru	;B押してないならジャンプ
+	ldrh	r1, [r2, #14]
+	lsl	r2, r1, #30
+	bpl	maru	;B離してなければジャンプ
 delete
 	mov	r4, #2
 	ldr	r0, [r0, #12]
