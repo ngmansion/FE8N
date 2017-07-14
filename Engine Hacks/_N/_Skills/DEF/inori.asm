@@ -6,7 +6,6 @@
 	ldsh	r0, [r4, r1]
 	cmp	r0, #0
 	ble	zero
-	mov	r3, r8
 	mov	r1, r10
 	cmp	r1, #0xDE	;必的チェック
 	beq	end
@@ -51,6 +50,7 @@ end:
 
 BigShield:
 	push {lr}
+	mov	r3, r8
 @align 4
 	ldr	r2, [adr]	;大盾クラスアドレス
 	ldr	r1, [r3, #4]
@@ -256,7 +256,7 @@ endOracle:
 Amulet:
 	push {lr, r5}
 	mov	r5, #0x1C
-
+	mov	r3, r8
 loopAmulet:
 	add	r5, #2
 	cmp	r5, #40
