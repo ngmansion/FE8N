@@ -1,6 +1,6 @@
 @thumb
 ;@org	0002b490 > 00 4A 97 46 XX XX XX 08
-
+;
 ;
 	mov	r1, #4
 	ldsh	r0, [r4, r1]
@@ -15,7 +15,6 @@
 bl Amulet
 	cmp	r0, #1
 	beq	effect
-	
 bl BigShield
 	cmp	r0, #1
 	beq	effect
@@ -42,7 +41,6 @@ effect:
 	orr	r0, r1
 	str	r0, [r3]
 	b	end
-	
 zero:
 	mov	r0, #0
 	strh	r0, [r4, #4]
@@ -57,23 +55,23 @@ BigShield:
 	ldr	r2, [adr]	;大盾クラスアドレス
 	ldr	r1, [r3, #4]
 	ldrb	r1, [r1, #4]
-loop
+loopShield
 	ldrb	r0, [r2]
 	cmp	r0, #0
-	beq	skill1_check
+	beq	unitShield:
 	cmp	r0, r1
-	beq	ootate
+	beq	ouiShield
 	add	r2, #1
-	b	loop
+	b	loopShield
 ;ユニットチェック
-skill1_check
+unitShield:
 	ldr	r1, [r3]
 	ldrh	r1, [r1, #0x26]	;;ユニット0x1
 	ldrh	r0, [r3, #0x3A]
 	orr r1, r0
 	lsl	r1, r1, #31
 	bpl	endShield
-ootate
+ouiShield:
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;魔法判定
 	cmp	r0, #7
@@ -82,7 +80,6 @@ ootate
 	beq	endShield
 	cmp	r0, #5
 	beq	endShield
-
 	
 	ldrb	r0, [r3, #21]	;技
 	mov	r1, #0
@@ -102,11 +99,12 @@ endShield:
 	
 HolyShield:
 	push {lr}
+	mov	r3, r8
 @align 4
 	ldr	r2, [adr+4]	;聖盾クラスアドレス
 	ldr	r1, [r3, #4]
 	ldrb	r1, [r1, #4]
-loopHoly
+loopHoly:
 	ldrb	r0, [r2]
 	cmp	r0, #0
 	beq	unitHoly
@@ -115,13 +113,13 @@ loopHoly
 	add	r2, #1
 	b	loopHoly
 ;ユニットチェック
-unitHoly
+unitHoly:
 	ldr	r1, [r3]
 	add	r1, #0x31
 	ldrb	r0, [r1]
 	cmp r0, #6
 	bne	endHoly
-Holy
+Holy:
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;物理判定
 	cmp	r0, #7
@@ -150,7 +148,7 @@ endHoly:
 	
 Pray:
 	push {lr}
-	
+	mov	r3, r8
 @align 4
 	ldr	r2, [adr+12]	;祈りクラスアドレス
 	ldr	r1, [r3, #4]
@@ -202,7 +200,7 @@ endPray:
 
 Oracle:
 	push	{lr}
-	
+	mov	r3, r8
 @align 4
 	ldr	r2, [adr+8]	;神盾クラスアドレス
 	ldr	r1, [r3, #4]
@@ -277,9 +275,9 @@ loopAmulet:
 	b	loopAmulet
 	
 ouiAmulet:
-	ldrb	r1, [r3, #19]
+	ldrb	r1, [r3, #19]	;現在HP
 ;一撃で死ぬか
-	ldrh	r0, [r4, #4]
+	ldrh	r0, [r4, #4]	;ダメージ
 	cmp	r0, r1
 	blt	endAmulet
 	
