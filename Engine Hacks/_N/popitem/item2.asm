@@ -59,7 +59,8 @@ start
 ldr	r3, =$08002b08
 mov	lr, r3
 	ldr	r2, =$085b8cdc
-	ldr	r3, =$804	;アイコン指定
+;	ldr	r3, =$804	;下三角アイコン指定
+	ldr	r3, =$877	;右下アイコン指定
 @dcw	$F800
 end
 	ldr	r0, =$08027994
