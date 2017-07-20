@@ -6,33 +6,37 @@
 	strb	r3, [r6, #8]
 	ldr	r0, =$0801a1ea
 	mov	pc, r0
+;
+;ç´¢æ•µãƒžãƒƒãƒ—ç„¡åŠ¹
+;
 Start:
-;
-;õ“Gƒ}ƒbƒv‚È‚ç–³Œø
-;
+	ldrb	r0, [r4, #11]
+	lsr	r0, r0, #6
+	bne	Jump
 	ldr	r0, =$0202BCF9
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	bne	nonPass
 ;
-;“ä‚ÌƒoƒO–hŽ~
+;è¬Žã®ãƒã‚°é˜²æ­¢
 ;
+Jump:
 	mov	r0, r13
 	ldr	r1, =$03007d18
 	cmp	r0, r1
 	beq	nonPass
 ;
-;ŒÂlƒXƒLƒ‹ƒ`ƒFƒbƒN
+;å€‹äººã‚¹ã‚­ãƒ«ãƒã‚§ãƒƒã‚¯
 ;
 	ldr	r0, [r4, #0]
 	ldrh	r0, [r0, #38]
 	lsl	r0, r0, #20
 	bmi	ouiPass
 ;
-;•ºŽíƒXƒLƒ‹ƒ`ƒFƒbƒN
+;å…µç¨®ã‚¹ã‚­ãƒ«ãƒã‚§ãƒƒã‚¯
 ;
 @align 4
-	ldr	r2, [adr]	;‚·‚è”²‚¯•ºŽíƒhƒŒƒX
+	ldr	r2, [adr]	;ã™ã‚ŠæŠœã‘å…µç¨®ãƒ‰ãƒ¬ã‚¹
 	ldr	r1, [r4, #4]
 	ldrb	r1, [r1, #4]
 loopPass:
