@@ -1,8 +1,12 @@
+PassList:
+ BYTE	$17 $18 0
+
+ALIGN 4
 PUSH
 ORG	0x1A1D0
 BYTE	$00 $48 $87 $46
 POIN	passem
 POP
 passem:
-#incbin "pass.dmp"
-ALIGN 4
+#incbin "pass.gba"
+POIN	PassList
