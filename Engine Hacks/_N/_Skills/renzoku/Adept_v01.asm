@@ -31,11 +31,12 @@ skill
 ;クラス
 	ldr	r0, [r6, #4]
 	ldrb	r0, [r0, #4]
-	cmp	r0, #0x15			;ソドマス男
-	blt	end
-	cmp	r0, #0x16			;ソドマス女
-	bgt	end
-got
+	cmp	r0, #0x00			;
+	beq	got
+	cmp	r0, #0x00			;
+	beq	got
+	b	end
+got:
 	mov	r0, #0x15
 	ldsb	r0, [r6, r0]
 	lsl	r0, r0, #16

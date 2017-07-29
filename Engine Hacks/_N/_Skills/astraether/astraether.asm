@@ -24,20 +24,21 @@ mov	lr r2
 	add	r0, #0x31
 	ldrb	r0, [r0]
 	cmp r0, #1
-	bne	skill2
-astra
+	beq	ouiAstra
+;クラスチェック
+	ldr	r0, [r7, #4]
+	ldrb	r0, [r0, #4]
+	cmp	r0, #0x15	;ソドマス
+	beq	ouiAstra
+	cmp	r0, #0x16	;ソドマス
+	beq	ouiAstra
+	b	skill2
+ouiAstra:
 ;ダメージがゼロなら発動しない
 	mov	r0, #4
 	ldsh	r0, [r5, r0]
 	cmp	r0, #0
 	ble	skill2
-;クラスチェック
-	ldr	r0, [r7, #4]
-	ldrb	r0, [r0, #4]
-	cmp	r0, #0x17	;アサシン
-	beq	skill2
-	cmp	r0, #0x18	;アサシン
-	beq	skill2
 ;近距離しか発動しない
 	ldr	r0,	=$0203a4d2
 	ldrb	r0, [r0]
