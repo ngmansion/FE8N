@@ -1,0 +1,47 @@
+
+/*
+
+PUSH
+
+ORG 0xa9dfa
+#incbin "break_save_n.gba"
+
+ORG 0xaa142
+SHORT $46C0
+ORG 0xaa148
+SHORT $46C0
+
+
+ORG 0xaa200
+WORD	$46874800
+POIN break_load_n
+
+ORG 0xaa38e
+SHORT $46C0
+ORG 0xaa394
+SHORT $46C0
+
+POP
+
+
+break_load_n:
+#incbin "break_load_n.gba"
+ALIGN 4
+*/
+
+///////////////中断
+PUSH
+
+ORG 0xaa8a6
+#incbin "break_save_c.gba"
+
+
+ORG 0xaaa90
+SHORT $46C0
+ORG 0xaaa96
+SHORT $46C0
+
+ORG 0xaab5e
+#incbin "break_load_c.gba"
+
+POP
