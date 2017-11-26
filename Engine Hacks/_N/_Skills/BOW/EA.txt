@@ -56,5 +56,5 @@ BYTE	$00 $4B $9F $46
 POIN	yumi_range
 POP
 yumi_range:
-#incbin "penaulty.gba"
+#incbin "penalty.gba"
 ALIGN 4
