@@ -19,7 +19,8 @@ unit:
 	ldrb	r0, [r1]
 @align 4
 	ldr	r1, [adr+4]
-	ldrb	r1, [r1]
+	lsl	r1, r1, #24
+	lsr	r1, r1, #24
 	cmp r0, r1
 	bne	non
 oui:
