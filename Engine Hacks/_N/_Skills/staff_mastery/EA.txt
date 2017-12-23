@@ -1,0 +1,42 @@
+//config
+
+staff_mastery_list:
+ BYTE	$00 0
+
+#define SKILL_ID_STAFF_MASTERY 8
+
+//code
+ALIGN 4
+	PUSH
+	ORG 0x017014
+	jumpToHack(staff_mastery_print1)
+	ORG 0x01704c
+	jumpToHack(staff_mastery_print2)
+	ORG 0x028a38
+	jumpToHack(staff_mastery_usability)
+	ORG 0x028f40
+	jumpToHack(staff_mastery_effect)
+	POP
+	
+staff_mastery_print1:
+	#incbin print1.gba
+	POIN staff_mastery_hasSkill
+	
+staff_mastery_print2:
+	#incbin print2.gba
+	POIN staff_mastery_hasSkill
+	
+staff_mastery_usability:
+	#incbin usability.gba
+	POIN staff_mastery_hasSkill
+	
+staff_mastery_effect:
+	#incbin effect.gba
+	POIN staff_mastery_hasSkill
+	
+staff_mastery_hasSkill:
+	#incbin hasSkill.gba
+	POIN staff_mastery_list
+	WORD SKILL_ID_STAFF_MASTERY
+ALIGN 4
+	
