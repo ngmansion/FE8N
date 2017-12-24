@@ -1,9 +1,0 @@
-PUSH
-ORG	0x2B484
-BYTE	$00 $49 $8F $46
-POIN	astron
-POP
-
-astron:
-#incbin "astraether.gba"
-ALIGN 4
