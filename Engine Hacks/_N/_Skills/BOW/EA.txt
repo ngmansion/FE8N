@@ -1,18 +1,5 @@
-//////Revert対応
-PUSH
-ORG		0x17414
-SHORT	$21ff
-SHORT	$4008
-SHORT	$00c1
-SHORT	$1809
 
-ORG		0x1741e
-SHORT	$4802
-ORG		0x17428
-WORD	$0885E068
-POP
 //////
-
 
 PUSH
 //上限と下限

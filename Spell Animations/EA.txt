@@ -1,7 +1,4 @@
-//PUSH
-//ORG 0x5C19C
-//WORD	$085FF090
-//POP
+
 
 //Master Animation Installer
 //Macros

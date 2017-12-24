@@ -1,5 +1,8 @@
 	#include "Extensions\Hack Installation.txt"
 	#include "_N\EA.txt"
+//revertは各自の判断で適宜コメントアウトしましょう
+//	#include _revert.txt
+	
 //////////////////////////////////////////
 
 
