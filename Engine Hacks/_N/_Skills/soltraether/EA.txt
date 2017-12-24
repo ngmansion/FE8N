@@ -1,0 +1,80 @@
+//config
+
+SolList:
+BYTE	$03 $07 $08 $22 0
+TenkuList:
+BYTE	$11 $12 0
+YoukohList:
+BYTE	$27 $28 0
+RyuseiList:
+BYTE	$15 $16 0
+//code
+ALIGN 4
+PUSH
+ORG	0x2B484
+BYTE	$00 $49 $8F $46
+POIN	astron
+POP
+
+astron:
+#incbin "astraether.gba"
+POIN	TenkuList
+POIN	YoukohList
+POIN	RyuseiList
+ALIGN 4
+
+//ORG 0xE487D0
+
+PUSH
+
+ORG		0x2B666
+	BYTE	$C0 $46
+WORD	0x46874800
+POIN	taiyo4
+
+ORG		0x531D8
+WORD	0x468F4900
+POIN	taiyo1
+
+ORG		0x59456
+	BYTE	$1B $48 $87 $46 $00 $00
+ORG		0x594C4
+POIN	taiyo3
+
+ORG		0x594bc
+	WORD	0x46874800
+	POIN	taiyo2
+
+/////////////////////////
+
+ORG		0x59423
+	BYTE	$4E
+ORG		0x5942a
+	BYTE	$80
+ORG		0x5948b
+	BYTE	$4E
+ORG		0x5948e
+	BYTE	$80
+
+//
+POP
+
+taiyo1:
+	#incbin "taiyo1.gba"
+POIN	taiyo11+1
+
+ALIGN	4
+taiyo11:
+	#incbin "taiyo11.gba"
+ALIGN	4
+taiyo2:
+	#incbin "taiyo2.gba"
+ALIGN	4
+taiyo3:
+	#incbin "taiyo3.gba"
+ALIGN	4
+taiyo4:
+	#incbin "taiyo44.gba"
+POIN	SolList
+POIN	TenkuList
+POIN	YoukohList

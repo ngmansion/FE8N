@@ -1,7 +1,7 @@
 //config
 
 staff_mastery_list:
- BYTE	$00 0
+ BYTE	$4C 0
 
 #define SKILL_ID_STAFF_MASTERY 8
 

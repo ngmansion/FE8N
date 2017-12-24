@@ -8,7 +8,7 @@
 	mov		r0, r5
 	@dcw	$F800
 	cmp		r0, #0
-	beq		normal
+	beq		non
 	mov		r0, #255
 	pop		{r1}
 	and		r0, r1

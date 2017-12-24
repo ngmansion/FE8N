@@ -1,7 +1,6 @@
-#include "SolTenku\EA.txt"
+#include "soltraether\EA.txt"
 #include "Kantsuu\EA.txt"
 #include "docan\EA.txt"
-#include "astraether\EA.txt"
 #include "Elite\EA.txt"
 #include "charisma\EA.txt"
 #include "renzoku\EA.txt"
