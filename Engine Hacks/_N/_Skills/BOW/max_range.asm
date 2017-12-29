@@ -21,7 +21,7 @@ six:
 	mov		r0, r6
 	b		kit
 zero:
-	ldr		r0, =$03004D0
+	ldr		r0, =$03004DF0
 	ldr		r0, [r0]
 kit:
 	cmp		r0, #0
