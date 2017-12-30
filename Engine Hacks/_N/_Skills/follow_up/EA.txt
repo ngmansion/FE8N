@@ -1,24 +1,52 @@
 //config
 
-Swordbreaker:
+Swordbreaker: //剣殺し
     BYTE $00 0
     #define SKILL_ID_SWORDBREAKER $D
-Lancebreaker:
+Swordbreaker_w:
+    BYTE $00 0
+    
+Lancebreaker: //槍殺し
     BYTE $00 0
     #define SKILL_ID_LANCEBREAKER $E
-Axebreaker:
+Lancebreaker_w:
+    BYTE $00 0
+    
+Axebreaker: //斧殺し
     BYTE $00 0
     #define SKILL_ID_AXEBREAKER $F
-Bowbreaker:
+Axebreaker_w:
+    BYTE $00 0
+    
+Bowbreaker: //弓殺し
     BYTE $00 0
     #define SKILL_ID_BOWBREAKER $10
-Tomebreaker:
+Bowbreaker_w:
+    BYTE $00 0
+    
+Tomebreaker: //魔殺し
     BYTE $00 0
     #define SKILL_ID_TOMEBREAKER $11
+Tomebreaker_w:
+    BYTE $00 0
 
-waryFighterList:
+waryFighterList: //守備隊形
     BYTE $00 0
     #define SKILL_ID_WARY $12
+waryFighterList_w:
+    BYTE $00 0
+    
+boldFighterList: //攻撃隊形
+    BYTE $09 0
+    #define SKILL_ID_BOLD $13
+boldFighterList_w:
+    BYTE $1C 0
+    
+vengefulFighterList: //迎撃隊形
+    BYTE $00 0
+    #define SKILL_ID_VENGERFUL $14
+vengefulFighterList_w:
+    BYTE $00 0
     
 ///////////////////////////////
 PUSH
@@ -37,30 +65,58 @@ breaker_main:
     POIN breaker_hasSkill5
     POIN b_hasNihill
     POIN waryFighter_hasSkill
+    POIN boldFighter_hasSkill
+    POIN vengefulFighter_hasSkill
     
 breaker_hasSkill1:
-    #incbin hasSkill.gba
+    #incbin hasSkill_w.gba
     POIN Swordbreaker
     WORD SKILL_ID_SWORDBREAKER
+    POIN Swordbreaker_w
+    
 breaker_hasSkill2:
-    #incbin hasSkill.gba
+    #incbin hasSkill_w.gba
     POIN Lancebreaker
     WORD SKILL_ID_LANCEBREAKER
+    POIN Lancebreaker_w
+    
 breaker_hasSkill3:
-    #incbin hasSkill.gba
+    #incbin hasSkill_w.gba
     POIN Axebreaker
     WORD SKILL_ID_AXEBREAKER
+    POIN Axebreaker_w
+    
 breaker_hasSkill4:
-    #incbin hasSkill.gba
+    #incbin hasSkill_w.gba
     POIN Bowbreaker
     WORD SKILL_ID_BOWBREAKER
+    POIN Bowbreaker_w
+    
 breaker_hasSkill5:
-    #incbin hasSkill.gba
+    #incbin hasSkill_w.gba
     POIN Tomebreaker
     WORD SKILL_ID_TOMEBREAKER
+    POIN Tomebreaker_w
+    
 b_hasNihill:
     #incbin hasNihill.gba
+    
 waryFighter_hasSkill:
-    #incbin hasSkill.gba
+    #incbin hasSkill_w.gba
     POIN waryFighterList
     WORD SKILL_ID_WARY
+    POIN waryFighterList_w
+    
+boldFighter_hasSkill:
+    #incbin hasSkill_w.gba
+    POIN boldFighterList
+    WORD SKILL_ID_BOLD
+    POIN boldFighterList_w
+    
+vengefulFighter_hasSkill:
+    #incbin hasSkill_w.gba
+    POIN vengefulFighterList
+    WORD SKILL_ID_VENGERFUL
+    POIN vengefulFighterList_w
+    
+    
