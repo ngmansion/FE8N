@@ -1,6 +1,11 @@
 @thumb
 ;@org 0002af18
     mov r5, r0
+    ldr r0, =$0203a4d0
+    ldrh r0, [r0]
+    mov r1, #0x20
+    and r0, r1
+    bne normal
     
     bl waryFighter_judgeActivate
     push {r0}

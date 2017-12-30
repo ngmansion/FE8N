@@ -37,10 +37,10 @@ waryFighterList_w:
     BYTE $00 0
     
 boldFighterList: //攻撃隊形
-    BYTE $09 0
+    BYTE $00 0
     #define SKILL_ID_BOLD $13
 boldFighterList_w:
-    BYTE $1C 0
+    BYTE $00 0
     
 vengefulFighterList: //迎撃隊形
     BYTE $00 0
