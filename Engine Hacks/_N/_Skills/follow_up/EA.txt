@@ -2,17 +2,23 @@
 
 Swordbreaker:
     BYTE $00 0
+    #define SKILL_ID_SWORDBREAKER $D
 Lancebreaker:
     BYTE $00 0
+    #define SKILL_ID_LANCEBREAKER $E
 Axebreaker:
     BYTE $00 0
+    #define SKILL_ID_AXEBREAKER $F
 Bowbreaker:
     BYTE $00 0
+    #define SKILL_ID_BOWBREAKER $10
 Tomebreaker:
     BYTE $00 0
-    
+    #define SKILL_ID_TOMEBREAKER $11
+
 waryFighterList:
-    BYTE $09 0
+    BYTE $00 0
+    #define SKILL_ID_WARY $12
     
 ///////////////////////////////
 PUSH
@@ -35,26 +41,26 @@ breaker_main:
 breaker_hasSkill1:
     #incbin hasSkill.gba
     POIN Swordbreaker
-    WORD $D
+    WORD SKILL_ID_SWORDBREAKER
 breaker_hasSkill2:
     #incbin hasSkill.gba
     POIN Lancebreaker
-    WORD $E
+    WORD SKILL_ID_LANCEBREAKER
 breaker_hasSkill3:
     #incbin hasSkill.gba
     POIN Axebreaker
-    WORD $F
+    WORD SKILL_ID_AXEBREAKER
 breaker_hasSkill4:
     #incbin hasSkill.gba
     POIN Bowbreaker
-    WORD $10
+    WORD SKILL_ID_BOWBREAKER
 breaker_hasSkill5:
     #incbin hasSkill.gba
     POIN Tomebreaker
-    WORD $11
+    WORD SKILL_ID_TOMEBREAKER
 b_hasNihill:
     #incbin hasNihill.gba
 waryFighter_hasSkill:
     #incbin hasSkill.gba
     POIN waryFighterList
-    WORD $12
+    WORD SKILL_ID_WARY
