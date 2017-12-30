@@ -1,11 +1,11 @@
 @thumb
 	ldr	r5, =$0203a4d0
 ;闘技場チェック
-ldr	r0, =$0805bdcc
-mov	lr, r0
-@dcw	$F800
-cmp	r0, #1
-beq	endwo
+    ldr r0, =$0203a4d0
+    ldrh r0, [r0]
+    mov r1, #0x20
+    and r0, r1
+    bne endwo
 	ldr	r0, [r7]
 	ldrh	r0, [r0, #0x26]
 	ldrh	r1, [r7, #0x3A]
