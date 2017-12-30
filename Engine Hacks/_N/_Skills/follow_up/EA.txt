@@ -1,0 +1,60 @@
+//config
+
+Swordbreaker:
+    BYTE $00 0
+Lancebreaker:
+    BYTE $00 0
+Axebreaker:
+    BYTE $00 0
+Bowbreaker:
+    BYTE $00 0
+Tomebreaker:
+    BYTE $00 0
+    
+waryFighterList:
+    BYTE $09 0
+    
+///////////////////////////////
+PUSH
+    ORG 0x02af18
+    jumpToHack(breaker_main)
+POP
+
+ALIGN 4
+
+breaker_main:
+    #incbin main.gba
+    POIN breaker_hasSkill1
+    POIN breaker_hasSkill2
+    POIN breaker_hasSkill3
+    POIN breaker_hasSkill4
+    POIN breaker_hasSkill5
+    POIN b_hasNihill
+    POIN waryFighter_hasSkill
+    
+breaker_hasSkill1:
+    #incbin hasSkill.gba
+    POIN Swordbreaker
+    WORD $D
+breaker_hasSkill2:
+    #incbin hasSkill.gba
+    POIN Lancebreaker
+    WORD $E
+breaker_hasSkill3:
+    #incbin hasSkill.gba
+    POIN Axebreaker
+    WORD $F
+breaker_hasSkill4:
+    #incbin hasSkill.gba
+    POIN Bowbreaker
+    WORD $10
+breaker_hasSkill5:
+    #incbin hasSkill.gba
+    POIN Tomebreaker
+    WORD $11
+b_hasNihill:
+    #incbin hasNihill.gba
+waryFighter_hasSkill:
+    #incbin hasSkill.gba
+    POIN waryFighterList
+    WORD $12
