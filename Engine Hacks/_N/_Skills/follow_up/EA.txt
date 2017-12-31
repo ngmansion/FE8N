@@ -44,7 +44,7 @@ boldFighterList_w:
     
 vengefulFighterList: //迎撃隊形
     BYTE $00 0
-    #define SKILL_ID_VENGERFUL $14
+    #define SKILL_ID_VENGEFUL $14
 vengefulFighterList_w:
     BYTE $00 0
     
@@ -116,7 +116,7 @@ boldFighter_hasSkill:
 vengefulFighter_hasSkill:
     #incbin hasSkill_w.gba
     POIN vengefulFighterList
-    WORD SKILL_ID_VENGERFUL
+    WORD SKILL_ID_VENGEFUL
     POIN vengefulFighterList_w
     
     

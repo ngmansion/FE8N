@@ -5,7 +5,7 @@
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
-    bne normal
+    bne normal ;闘技場なら終了
     
     bl waryFighter_judgeActivate
     push {r0}
@@ -16,9 +16,9 @@
     beq	no_active
     cmp r0, #0x11
     beq	no_active
-;active
+;絶対追撃発動
     cmp r1, #0
-    bne normal
+    bne normal ;1なら守備隊形発動
     cmp r0, #0x01
     beq active1
     cmp r0, #0x10
@@ -37,7 +37,7 @@ no_active:
     ldr r0, =$0802af80 ;追撃無し
     mov pc, r0
     
-normal:
+normal: ;通常追撃判定
     mov r0, r5
     mov r1, #94
     ldsh r2, [r6, r1]
@@ -89,9 +89,9 @@ normal:
 
     followup_skill:
     push {r7, lr}
-        bl formation_judgeActivate
+        bl formation_judgeActivate ;隊形スキル
         mov r7, r0
-        bl breaker_judgeActivate
+        bl breaker_judgeActivate ;殺しスキル
         orr r0, r7
     pop {r7, pc}
 
@@ -110,7 +110,7 @@ normal:
         pop {r7, pc}
 
 
-            boldFighter:
+            boldFighter: ;攻撃隊形
             push {r4, r5, lr}
                 mov r4, r0
                 mov r5, r1
@@ -136,7 +136,7 @@ normal:
                 mov r0, #0
             pop {r4, r5, pc}
 
-            vengefulFighter:
+            vengefulFighter: ;迎撃隊形
             push {r4, r5, lr}
                 mov r4, r0
                 mov r5, r1
@@ -170,12 +170,12 @@ normal:
 
             mov r0, r5
             mov r1, r6
-            bl breaker_impl
+            bl breaker_impl ;殺しスキル攻め側判定
             orr r7, r0
             
             mov r0, r6
             mov r1, r5
-            bl breaker_impl
+            bl breaker_impl ;殺しスキル受け側判定
             lsl r0, r0, #4
             orr r0, r7
         pop {r7,pc}
