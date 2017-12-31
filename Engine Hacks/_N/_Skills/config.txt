@@ -1,0 +1,54 @@
+
+//重複して設定できるスキル指定
+
+#define SKILL_BIT01 //大盾
+#define SKILL_BIT02 //祈り
+#define SKILL_BIT03 //見切り
+#define SKILL_BIT04 //練達
+#define SKILL_BIT05 //キャンセル
+#define SKILL_BIT06 //怒り
+#define SKILL_BIT07 //勇将
+#define SKILL_BIT08 //待ち伏せ
+#define SKILL_BIT09 //連続
+#define SKILL_BIT10 //エリート
+#define SKILL_BIT11 //再行動
+#define SKILL_BIT12 SKILL_ID_WARY//すり抜け
+#define SKILL_BIT13 //連続
+#define SKILL_BIT14 //エリート
+#define SKILL_BIT15 //再行動
+#define SKILL_BIT16 SKILL_ID_WARY//すり抜け
+
+
+#define SKILL_ID_01 SKILL_SOL
+#define SKILL_ID_02 SKILL_ASTRA
+#define SKILL_ID_03 SKILL_AETHER
+#define SKILL_ID_04 SKILL_LUNA
+#define SKILL_ID_05
+#define SKILL_ID_06
+#define SKILL_ID_07
+#define SKILL_ID_08
+#define SKILL_ID_09
+#define SKILL_ID_0A
+#define SKILL_ID_0B
+#define SKILL_ID_0C
+#define SKILL_ID_0D
+#define SKILL_ID_0E
+#define SKILL_ID_0F
+#define SKILL_ID_10
+#define SKILL_ID_11
+#define SKILL_ID_12
+#define SKILL_ID_13
+#define SKILL_ID_14
+#define SKILL_ID_15
+#define SKILL_ID_16
+#define SKILL_ID_17
+#define SKILL_ID_18
+#define SKILL_ID_19
+#define SKILL_ID_1A
+#define SKILL_ID_1B
+
+
+
+
+
+
