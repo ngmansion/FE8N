@@ -16,7 +16,8 @@ loop:
 ;ユニットチェック
 unit:
     ldr r0, [r3]
-    ldrb r0, [r0, #0x26]
+    add r0, #0x26
+    ldrb r0, [r0]
     
 @align 4
     ldr r2, [adr+4]
@@ -32,7 +33,8 @@ unit:
     and r0, r1
     beq manual
     ldr r0, [r3]
-    ldrb r0, [r0, #0x27]
+    add r0, #0x27
+    ldrb r0, [r0]
     cmp r0, r2
     beq oui
 ;書チェック
