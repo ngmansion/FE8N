@@ -27,7 +27,7 @@ loopE
 	cmp	r4, #7
 	ble	loopE
 ;アイコン
-	ldr	r6, =$020040F0	;icon position($02004130)
+	ldr	r6, =$020040ee	;icon position($02004130)
 	ldr	r7, =$02003B00	;help memory
 	mov	r5, #0
 	str	r5, [r7]
@@ -50,7 +50,7 @@ loopE
     mov r0, %111111
     and r4, r0
 	bl	SKILL ;スキル書2
-	
+@align 4
 	ldr	r5, [adr+12]	;SCROLL
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
@@ -58,11 +58,11 @@ loopE
 	add	r4, #0x26
 	ldrb	r4, [r4]
 	bl	SKILL ;下級スキル
-	
-	ldr	r5, [adr+12]	;MASTERY
+@align 4
+	ldr	r5, [adr+12]	;SCROLL
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
-	ldr	r0, [r4, #4]
+	ldr	r0, [r4, #4] ;class
 	ldr	r0, [r0, #40]
 	lsl	r0, r0, #23
 	bpl nomi ;上級職のみ
@@ -151,8 +151,7 @@ test
 	bne	doublecount
 	pop	{pc}
 
-doublecount
-
+doublecount: ;二重表示防止
 	ldrh r0, [r5, #2]
 	ldr r2 =$02003B00
 loopyloopy
@@ -160,14 +159,14 @@ loopyloopy
 	beq limitter
 	ldrh r1, [r2]
 	cmp r0, r1
-	beq jump
+	beq jump ;被っていたら無視
 	add r2, #2
 	b loopyloopy
 
 limitter
 	lsl r0, r7, #24
 	lsr r0, r0, #24
-	cmp r0, #10
+	cmp r0, #12 ;アイコン上限
 	bne restart
 	pop {pc}
 
@@ -235,7 +234,7 @@ loopyloopy2
 limitter2
 	lsl r0, r7, #24
 	lsr r0, r0, #24
-	cmp r0, #10
+	cmp r0, #12 ;アイコン上限
 	bne restart2
 	pop {pc}
 	
