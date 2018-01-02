@@ -4,8 +4,10 @@
 	push	{r4, r5, r6, r7, lr}
 ;画像
 	mov	r4, #0
-	@align 4
-	ldr	r0, [adr+20]	;EQUIPMENT_POSITION
+    @align 4
+    ldr r0, [adr+20]	;EQUIPMENT_POSITION
+    ldr r0, [r0]
+    
 	ldr	r6, =$00007060
 	mov	r5, r6	
 	ldr	r1, =$000002c2
