@@ -1,14 +1,5 @@
-BigShieldList:
- BYTE	$0B 0
- 
-HolyShieldList:
- BYTE	$00 0
 
-GodShieldList:
- BYTE	$66 0
-PrayList:
- BYTE	0 0
-
+#include config.txt
 
  ALIGN	4
 ///////////////
@@ -26,7 +17,29 @@ POP
 
 shikkokunori:
  #incbin "inori.gba"
+ POIN BigShield_hasSkill
+ POIN HolyShield_hasSkill
+ POIN GodShield_hasSkill
+ POIN Pray_hasSkill
+ POIN hasNihil
+ 
+BigShield_hasSkill:
+ HAS_SKILL
  POIN	BigShieldList
+ WORD PaviseID
+ 
+HolyShield_hasSkill:
+ HAS_SKILL
  POIN	HolyShieldList
+ WORD AegisID
+ 
+GodShield_hasSkill:
+ HAS_SKILL
  POIN	GodShieldList
+ WORD DivineShieldID
+ 
+Pray_hasSkill:
+ HAS_SKILL
  POIN	PrayList
+ WORD MiracleID
+ 

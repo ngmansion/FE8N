@@ -28,51 +28,30 @@ mov	lr, r1
 	cmp	r0, #250
 	bls	buki
 	
-	ldr	r0, [r5]
-	add	r0, #0x31
-	ldrb	r0, [r0]
-	cmp r0, #3
-	beq	taiyo
-	cmp r0, #4
-	beq	tenku
-	ldr	r0, [r5, #4]
-	ldrb	r0, [r0, #4]
-	
-@align 4
-	ldr	r3, [adr+4]
-loop_tenku:
-	ldrb	r1, [r3]
-	cmp	r1, #0
-	beq	next_judge
-	cmp	r0, r1
-	beq	tenku
-	add	r3, #1
-	b	loop_tenku
-next_judge:
-
-@align 4
-	ldr	r3, [adr+8]
-loop_youkoh:
-	ldrb	r1, [r3]
-	cmp	r1, #0
-	beq	final_judge
-	cmp	r0, r1
-	beq	tenku
-	add	r3, #1
-	b	loop_youkoh
-final_judge:
-@align 4
-	ldr	r3, [adr]
-loop
-	ldrb	r1, [r3]
-	cmp	r1, #0
-	beq	buki
-	cmp	r0, r1
-	beq	taiyo
-	add	r3, #1
-	b	loop
-
-buki
+    mov r0, r5
+        @align 4
+        ldr r1, [adr+4] ;天空
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne tenku
+        
+    mov r0, r5
+        @align 4
+        ldr r1, [adr+8] ;陽光
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne tenku
+        
+    mov r0, r5
+        @align 4
+        ldr r1, [adr] ;太陽
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne taiyo
+buki:
 	ldrh	r0, [r7, #0]
 ldr	r1,	=$080174cc
 mov	lr, r1

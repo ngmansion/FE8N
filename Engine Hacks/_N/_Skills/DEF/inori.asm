@@ -51,26 +51,14 @@ end:
 BigShield:
 	push {lr}
 	mov	r3, r8
-@align 4
-	ldr	r2, [adr]	;大盾クラスアドレス
-	ldr	r1, [r3, #4]
-	ldrb	r1, [r1, #4]
-loopShield
-	ldrb	r0, [r2]
-	cmp	r0, #0
-	beq	unitShield:
-	cmp	r0, r1
-	beq	ouiShield
-	add	r2, #1
-	b	loopShield
-;ユニットチェック
-unitShield:
-	ldr	r1, [r3]
-	ldrh	r1, [r1, #0x26]	;;ユニット0x1
-	ldrh	r0, [r3, #0x3A]
-	orr r1, r0
-	lsl	r1, r1, #31
-	bpl	endShield
+	
+	@align 4
+	ldr r1, [adr] ;大盾
+	mov lr, r1
+	mov r0, r8
+	@dcw $F800
+	cmp r0, #0
+	beq endShield
 ouiShield:
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;魔法判定
@@ -90,8 +78,7 @@ ouiShield:
 	lsr	r0, r0, #1
 	strh	r0, [r4, #4]
 	mov	r0, #1
-	pop	{pc}
-
+	@dcw $E000
 endShield:
 	mov	r0, #0
 	pop	{pc}
@@ -100,25 +87,14 @@ endShield:
 HolyShield:
 	push {lr}
 	mov	r3, r8
-@align 4
-	ldr	r2, [adr+4]	;聖盾クラスアドレス
-	ldr	r1, [r3, #4]
-	ldrb	r1, [r1, #4]
-loopHoly:
-	ldrb	r0, [r2]
-	cmp	r0, #0
-	beq	unitHoly
-	cmp	r0, r1
-	beq	Holy
-	add	r2, #1
-	b	loopHoly
-;ユニットチェック
-unitHoly:
-	ldr	r1, [r3]
-	add	r1, #0x31
-	ldrb	r0, [r1]
-	cmp r0, #6
-	bne	endHoly
+	
+	@align 4
+	ldr r1, [adr+4] ;聖盾
+	mov lr, r1
+	mov r0, r8
+	@dcw $F800
+	cmp r0, #0
+	beq endHoly
 Holy:
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;物理判定
@@ -136,7 +112,7 @@ ouiHoly:
 	cmp	r0, #0
 	beq	endHoly
 	ldrh	r0, [r4, #4]
-	lsr	r0, r0, #1
+	mov r0, #0
 	strh	r0, [r4, #4]
 	mov	r0, #1
 	pop	{pc}
@@ -149,25 +125,13 @@ endHoly:
 Pray:
 	push {lr}
 	mov	r3, r8
-@align 4
-	ldr	r2, [adr+12]	;祈りクラスアドレス
-	ldr	r1, [r3, #4]
-	ldrb	r1, [r1, #4]
-loopPray
-	ldrb	r0, [r2]
-	cmp	r0, #0
-	beq	unitPray
-	cmp	r0, r1
-	beq	ouiPray
-	add	r2, #1
-	b	loopPray
-unitPray:
-	ldr	r0, [r3]
-	ldrh	r0, [r0, #0x26]
-	ldrh	r1, [r3, #0x3A]
-	orr r0, r1
-	lsl	r0, r0, #30
-	bpl	endPray
+	@align 4
+	ldr r1, [adr+12] ;祈り
+	mov lr, r1
+	mov r0, r8
+	@dcw $F800
+	cmp r0, #0
+	beq	endPray
 ouiPray:
 	ldrb	r1, [r3, #19]
 	cmp	r1, #1
@@ -201,40 +165,22 @@ endPray:
 Oracle:
 	push	{lr}
 	mov	r3, r8
-@align 4
-	ldr	r2, [adr+8]	;神盾クラスアドレス
-	ldr	r1, [r3, #4]
-	ldrb	r1, [r1, #4]
-loopOracle
-	ldrb	r0, [r2]
-	cmp	r0, #0
-	beq	unitOracle
-	cmp	r0, r1
-	beq	nihil_check
-	add	r2, #1
-	b	loopOracle
-	
-unitOracle
-	ldr	r1, [r3]
-	add	r1, #0x31
-	ldrb	r0, [r1]
-	cmp r0, #7
-	bne	endOracle
+	@align 4
+	ldr r1, [adr+8] ;聖盾
+	mov lr, r1
+	mov r0, r8
+	@dcw $F800
+	cmp r0, #0
+	beq	endOracle
 	
 nihil_check:
-	ldr	r1, [r7]
-	ldr	r0, [r7, #4]
-	ldr	r1, [r1, #40]
-	ldr	r0, [r0, #40]
-	orr	r0, r1
-	lsl	r0, r0, #8
-	bmi	Nihil
-	ldr	r1, [r7]
-	ldrh	r1, [r1, #0x26]
-	ldrh	r0, [r7, #0x3A]
-	orr	r0, r1
-	lsl r0, r0, #29	;見切りの書
-	bmi	Nihil
+	@align 4
+	ldr r1, [adr+16] ;見切り
+	mov lr, r1
+	mov r0, r7
+	@dcw $F800
+	cmp r0, #0
+	bne	Nihil
 	ldrh	r0, [r4, #4]
 	asr	r0, r0, #1
 	strh	r0, [r4, #4]

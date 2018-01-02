@@ -1,7 +1,5 @@
-KingClassList:
- BYTE	$03 $04 $0
-AceClassList:
- BYTE	$0
+#include config.txt
+
  ALIGN 4
 
 //////////////////見切りと王の器と勇将
@@ -12,8 +10,19 @@ PUSH
 POP
 mirikiri:
  #incbin "mikiri.gba"
- POIN	KingClassList
- POIN	AceClassList
+ POIN hasNihil
+ POIN hasRightfulKing
+ POIN hasResolve
+ 
+hasRightfulKing:
+ HAS_SKILL
+ POIN RightfulKingClassList
+ WORD RightfulKingID
+hasResolve:
+ HAS_SKILL
+ POIN ResolveClassList
+ WORD ResolveID
+ 
 ////////////////////KingFix
 PUSH
  ORG	0x2b2fc

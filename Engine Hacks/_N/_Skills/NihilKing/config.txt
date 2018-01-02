@@ -1,0 +1,6 @@
+//config
+
+RightfulKingClassList:
+ BYTE	$03 $04 $0
+ResolveClassList:
+ BYTE	$00 0

@@ -1,7 +1,6 @@
-Rentatsu_List:
-BYTE $0 $0
-ALIGN 4
+#include config.txt
 
+ALIGN 4
 
 PUSH
 ORG 0x169a4
@@ -11,4 +10,12 @@ POP
 
 Rentatsu_Pro:
  #incbin "Rentatsu.gba"
-POIN Rentatsu_List
+POIN hasRentatsu
+POIN hasNihil
+
+hasRentatsu:
+    HAS_SKILL_W
+    POIN Rentatsu_List
+    WORD NullifyID
+    POIN Rentatsu_List_w
+    

@@ -7,7 +7,7 @@
 	ldr	r0, =$0801a1ea
 	mov	pc, r0
 ;
-;索敵マップ無効
+;自軍は索敵マップだと無効
 ;
 Start:
 	ldrb	r0, [r4, #11]
@@ -26,27 +26,16 @@ Jump:
 	cmp	r0, r1
 	beq	nonPass
 ;
-;個人スキルチェック
+;スキルチェック
 ;
-	ldr	r0, [r4, #0]
-	ldrh	r0, [r0, #38]
-	lsl	r0, r0, #20
-	bmi	ouiPass
-;
-;兵種スキルチェック
-;
-@align 4
-	ldr	r2, [adr]	;すり抜け兵種ドレス
-	ldr	r1, [r4, #4]
-	ldrb	r1, [r1, #4]
-loopPass:
-	ldrb	r0, [r2]
-	cmp	r0, #0
-	beq	nonPass
-	cmp	r0, r1
-	beq	ouiPass
-	add	r2, #1
-	b	loopPass
+    mov r0, r4
+        @align 4
+        ldr r1, [adr] ;hasNihil
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne ouiPass
+    
 nonPass:
 	mov	r0, #1
 	b	Return

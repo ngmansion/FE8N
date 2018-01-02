@@ -69,19 +69,15 @@ Reverse
 	eor r3, r2
 nonTATE
 ;見切りチェック
-	ldr	r0, [r3, #4]
-	ldr	r1, [r3, #0]
-	ldr	r0, [r0, #40]
-	ldr	r1, [r1, #40]
-	orr	r0, r1
-	lsl	r0, r0, #8
-	bmi	nothing
-	ldr	r1, [r3]
-	ldrh	r1, [r1, #0x26]
-	ldrh	r0, [r3, #0x3A]
-	orr	r0, r1
-	lsl r0, r0, #29	;見切りの書
-	bpl toking
+    push {r2}
+        @align 4
+        ldr r0, [adr]
+        ldr lr, r0
+        mov r0, r3
+        @dcw $F800
+    pop {r2}
+	cmp r0, #0
+	beq toking
 nothing:
 	mov	r0, #0
 	str	r0, [sp]
@@ -89,47 +85,30 @@ nothing:
 	
 toking:
 ;王の器チェック
-	ldr	r1, [r2]
-	ldrh	r1, [r1, #0x26]	;;ユニット0x2000王の器
-	lsl	r1, r1, #18
-	bmi	gotK
-;クラスチェック
-@align 4
-	ldr	r3, [adr]
-	ldr	r1, [r2, #4]
-	ldrb	r1, [r1, #4]	;;クラスID
-classloop
-	ldrb	r0, [r3]
+    push {r2}
+        @align 4
+        ldr r0, [adr+4] ;王の器
+        ldr lr, r0
+        mov r0, r2
+        @dcw $F800
+    pop {r2}
 	cmp	r0, #0
 	beq	toace
-	cmp	r1, r0
-	beq	gotK
-	add	r3, #1
-	b	classloop
 gotK
 	ldr	r0, [sp]
 	add	r0, #10
 	str	r0, [sp]
 toace:
 ;勇将チェック
-	ldrh	r0, [r2, #0x3A]
-	ldr	r1, [r2]
-	ldrh	r1, [r1, #0x26]
-	orr r1, r0
-	lsl	r1, r1, #25	;;ユニット0x40
-	bmi	gotAC
-@align 4
-	ldr	r3, [adr+4]
-	ldr	r1, [r2, #4]
-	ldrb	r1, [r1, #4]	;;クラスID
-loopAC:
-	ldrb	r0, [r3]
+    push {r2}
+        @align 4
+        ldr r0, [adr+8] ;勇将
+        ldr lr, r0
+        mov r0, r2
+        @dcw $F800
+    pop {r2}
 	cmp	r0, #0
 	beq	end
-	cmp	r1, r0
-	beq	gotAC
-	add	r3, #1
-	b	loopAC
 gotAC:
 	ldrb	r0, [r2, #0x13]	;NOW
 	ldrb	r1, [r2, #0x12]	;MAX

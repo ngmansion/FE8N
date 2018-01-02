@@ -1,7 +1,4 @@
-listHeal:
-BYTE	$66 $29 $2A 0
-
-
+#include config.txt
 
 PUSH
 ORG	0x19f28
@@ -12,4 +9,9 @@ POP
 ALIGN 4
 ski_kaifuku:
 #incbin "KAIFUKU.gba"
-POIN	listHeal
+POIN hasRenewal
+
+hasRenewal:
+    HAS_SKILL
+    POIN listHeal
+    WORD RenewalID

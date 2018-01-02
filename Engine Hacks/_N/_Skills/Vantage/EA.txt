@@ -1,5 +1,5 @@
-VantageList:
- BYTE	$33 $34 $00 $00
+#include config.txt
+
  ALIGN 4
 
 
@@ -19,4 +19,11 @@ PUSH
 POP
 ski_vantage:
  #incbin "vantageBE8J.gba"
- POIN	VantageList
+ POIN hasVantage
+ POIN hasNihil
+
+hasVantage:
+ HAS_SKILL
+ POIN VantageList
+ WORD VantageID
+ 

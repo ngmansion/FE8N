@@ -1,3 +1,9 @@
+#include config.txt
+
+ALIGN 4
+
+/////////////////////////////
+
 PUSH
 ORG	0x2b004
 BYTE	$00 $4B $9F $46
@@ -5,6 +11,14 @@ POIN	renzokua
 POP
 renzokua:
 #incbin "Adept_v01.gba"
+POIN hasAdept
+
+hasAdept:
+    HAS_SKILL_W
+    POIN adept_list
+    WORD AdeptID
+    POIN adept_list_w
+
 ////////////////必的の後処理
 PUSH
 ORG	0x2b1be

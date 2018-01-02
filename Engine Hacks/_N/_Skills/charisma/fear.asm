@@ -35,19 +35,13 @@ entry
 	cmp r0, #0	;; 戦闘参加中判定
 	bne next
 ;ユニット
-	ldr r0,[r6]
-	ldrh	r0, [r0, #0x26]
-	lsl	r0, r0, #16
-        bmi Xdistance
-class
-	ldr r0,[r6, #0x04]
-	ldrb r0,[r0,#0x04]
-	cmp r0, #0x2F	;ドル
-	beq Xdistance
-	cmp r0, #0x30	;ドル
-	beq Xdistance
-	cmp r0, #0x4F	;ネクロ
-	beq Xdistance
+    mov r0, r6
+        @align 4
+        ldr r1, [adr] ;恐怖
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne Xdistance
 next
 	add r6, #0x48
 	sub r7,#0x01

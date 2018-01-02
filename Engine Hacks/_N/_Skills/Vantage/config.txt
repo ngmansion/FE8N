@@ -1,0 +1,6 @@
+//config
+
+VantageList:
+ BYTE	$33 $34 0
+ 
+

@@ -80,52 +80,28 @@ jump201
 	
 routine3
 ;ユニットチェック
-	ldr	r1, [r0]
-	ldrh	r1, [r1, #0x26]	;;ユニット0x80待ち伏せ
-	ldrh	r2, [r0, #0x3A]
-	orr	r1, r2
-	lsl	r1, r1, #24
-	bmi	got
-;クラスチェック
-@align 4
-	ldr	r3, [adr]
-	ldr	r1, [r0, #4]
-	ldrb	r1, [r1, #4]	;;ID
-classloop
-	ldrb	r2, [r3]
-	cmp	r2, #0
-	beq	end
-	cmp	r1, r2
-	beq	got
-	add	r3, #1
-	b	classloop
-got
-	mov	r2, #1
-	bx	lr
-end
-	mov	r2, #0
-	bx	lr
-	
+    push {r4, lr}
+    mov r4, r0
+        @align 4
+        ldr r1, [adr] ;待ち伏せ
+        mov lr, r1
+        @dcw $F800
+    mov r2, r0
+    mov r0, r4
+    pop {r4, lr}
+
 	
 ;	見切りチェック
 Nihil
-	ldr	r1, [r0, #4]
-	ldr	r2, [r0, #0]
-	ldr	r1, [r1, #40]
-	ldr	r2, [r2, #40]
-	orr	r2, r1
-	lsl	r2, r2, #8
-	lsr	r2, r2, #31
-	
-	ldrh	r1, [r0, #0x3A]
-	lsl r1, r1, #29	;見切りの書
-	lsr	r1, r1, #31
-	orr r2, r1
-	ldr	r1, [r0]
-	ldrh	r1, [r1, #0x26]
-	lsl r1, r1, #29
-	lsr	r1, r1, #31
-	orr r2, r1
-	bx	lr
+    push {r4, lr}
+    mov r4, r0
+        @align 4
+        ldr r1, [adr+4] ;見切り
+        mov lr, r1
+        @dcw $F800
+    mov r2, r0
+    mov r0, r4
+    pop {r4, lr}
+
 @ltorg
 adr:

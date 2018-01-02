@@ -1,20 +1,4 @@
-GeckoClass:		//兵種奥義月光
-BYTE	$0C $35 $36 $04 0
-
-ALIGN 4
-//各奥義2職まで(これらの奥義は重複設定不可)
-listDragon:		//竜穿
- BYTE	$00 $00
-listMeido:		//鳴動
- BYTE	$40 $00
-listRevenge:	//復讐
- BYTE	$43 $00
-listStan:		//衝撃
- BYTE	$21 $00
-listStone:		//叫喚
- BYTE	$49 $00
-listFlower:		//華炎
- BYTE	$00 $00
+#include config.txt
 
 
 //////////月光発生条件
@@ -27,7 +11,14 @@ POP
 ALIGN 4
 geckojump:
 #incbin "Gecko.gba"
-POIN	GeckoClass
+POIN hasGecko
+
+
+hasGecko:
+    HAS_SKILL
+    POIN GeckoClass
+    WORD LunaID
+    
 
 //////////貫通系奥義分岐
 

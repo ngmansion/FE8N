@@ -20,25 +20,14 @@ mov	lr r2
 	cmp	r1, #0
 	bne	skill2
 ;ユニットチェック
-	ldr	r0, [r7]
-	add	r0, #0x31
-	ldrb	r0, [r0]
-	cmp r0, #1
-	beq	ouiAstra
-;クラスチェック
-	ldr	r0, [r7, #4]
-	ldrb	r0, [r0, #4]
-	
-@align 4
-	ldr	r3, [adr+8]
-loopAstra:
-	ldrb	r1, [r3]
-	cmp	r1, #0
-	beq	skill2
-	cmp	r0, r1
-	beq	ouiAstra
-	add	r3, #1
-	b	loopAstra
+    mov r0, r7
+        @align 4
+        ldr r1, [adr+8] ;流星
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq skill2
+
 ouiAstra:
 ;ダメージがゼロなら発動しない
 	mov	r0, #4
@@ -112,36 +101,21 @@ mov	lr, r1
 	cmp	r0, #2
 	beq	end
 ;ユニットチェック
-	ldr	r0, [r7]
-	add	r0, #0x31
-	ldrb	r0, [r0]
-	cmp r0, #4
-	beq	TENKU
-;クラスチェック
-	ldr	r0, [r7, #4]
-	ldrb	r0, [r0, #4]
-@align 4
-	ldr	r3, [adr]
-loop_tenku:
-	ldrb	r1, [r3]
-	cmp	r1, #0
-	beq	next_judge
-	cmp	r0, r1
-	beq	TENKU
-	add	r3, #1
-	b	loop_tenku
-next_judge:
-@align 4
-	ldr	r3, [adr+4]
-loop_youkoh:
-	ldrb	r1, [r3]
-	cmp	r1, #0
-	beq	final_judge
-	cmp	r0, r1
-	beq	YOUKOU
-	add	r3, #1
-	b	loop_youkoh
-final_judge:
+    mov r0, r7
+        @align 4
+        ldr r1, [adr] ;天空
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne TENKU
+;ユニットチェック
+    mov r0, r7
+        @align 4
+        ldr r1, [adr+4] ;陽光
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne YOUKOU
 	b	end
 TENKU:
 	ldr	r0,	=$0203a4d2

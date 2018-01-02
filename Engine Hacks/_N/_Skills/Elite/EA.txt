@@ -1,4 +1,17 @@
+#include config.txt
+
+ALIGN 4
 PUSH
 ORG	0x2c354
-#incbin "Elitenon.gba"
+jumpToHack(Elitenon)
 POP
+
+Elitenon:
+    #incbin NewElite.gba
+    POIN hasElite
+hasElite:
+    HAS_SKILL
+    POIN ParagonList
+    WORD ParagonID
+
+    

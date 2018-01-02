@@ -22,20 +22,13 @@
 	b end
 ;これ以下は新処理
 skill
-	ldr	r0, [r6]
-	ldrh	r0, [r0, #0x26]	;ユニット
-	ldrh	r1, [r6, #0x3A]	;ユニット
-	orr	r0, r1
-	lsl	r0, r0, #23
-	bmi	got
-;クラス
-	ldr	r0, [r6, #4]
-	ldrb	r0, [r0, #4]
-	cmp	r0, #0x00			;
-	beq	got
-	cmp	r0, #0x00			;
-	beq	got
-	b	end
+    mov r0, r6
+        @align 4
+        ldr r1, [adr] ;連続
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq end
 got:
 	mov	r0, #0x15
 	ldsb	r0, [r6, r0]
@@ -66,3 +59,5 @@ end
 	mov	r0, r4
 	pop	{r4}
 	pop	{pc}
+@ltorg
+adr:

@@ -1,8 +1,30 @@
+#include config.txt
+    
+////////////////////
+ALIGN 4
+
 PUSH
 ORG	0x2B3A4
 BYTE	$00 $49 $8F $46
 POIN	docan
 POP
+
 docan:
-#incbin "SecondSkill.gba"
+#incbin SecondSkill.gba
+POIN hasCancel
+POIN hasWrath
+POIN hasNihil
+
+hasCancel:
+    HAS_SKILL_W
+    POIN cancel_list
+    WORD CancelID
+    POIN cancel_list_w
+
+hasWrath:
+    HAS_SKILL_W
+    POIN wrath_list
+    WORD WrathID
+    POIN wrath_list_w
+
 ALIGN 4

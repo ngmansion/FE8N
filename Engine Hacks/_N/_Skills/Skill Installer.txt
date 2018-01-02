@@ -1,31 +1,24 @@
-#include "soltraether\EA.txt"
-#include "Kantsuu\EA.txt"
-#include "docan\EA.txt"
-#include "Elite\EA.txt"
-#include "charisma\EA.txt"
-#include "renzoku\EA.txt"
-#include "Tokkou\EA.txt"
-#include "Kaifuku\EA.txt"
-#include "pass\EA.txt"
-#include "saiidou_fix\EA.txt"
-#include "saikoudou\EA.txt"
-#include "BOW\EA.txt"
-#include "NihilKing\EA.txt"
-#include "DEF\EA.txt"
-#include "Vantage\EA.txt"
-#include "rentatsu\EA.txt"
-#include "koun\EA.txt"
-#include "staff_mastery\EA.txt"
-#include "follow_up\EA.txt"
+//header
+#define SKILL_PATCH
+
+#include "_common\EA.txt"
 #include "_help\EA.txt"
-
-//#include "my_skill\EA.txt"
-
+#include config.txt
 
 
 PUSH
-ORG	0xA741A8
- #incext Png2Dmp Equipment7.png --lz77
+
+#ifndef MAGIC_PATCH //魔力パッチなし、もしくは以降
+    ORG 0xA741A8
+    #incext Png2Dmp Equipment7.png --lz77
+    
+    #define EQUIPMENT_POSITION $02003DAC
+    
+#else //魔力パッチあり
+
+    #define EQUIPMENT_POSITION $02003AAC
+
+#endif
 
 ORG	0x89268
 BYTE	$00 $4B $9F $46
@@ -34,7 +27,8 @@ POP
 
 Skills_Icon:
 #incbin "iconEX.gba"
-POIN	SIcon_U SIcon_C SIcon_W SIcon_S SIcon_A SIcon_M
+POIN	SIcon_U SIcon_C SIcon_W SIcon_S SIcon_A
+WORD EQUIPMENT_POSITION
 
 SIcon_U:
 #incbin "UNIT.bin"
@@ -46,5 +40,3 @@ SIcon_S:
 #incbin "SCROLL.bin"
 SIcon_A:
 #incbin "ABILITY.bin"
-SIcon_M:
-#incbin "MASTERY.bin"

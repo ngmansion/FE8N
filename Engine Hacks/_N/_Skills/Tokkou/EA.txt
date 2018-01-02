@@ -1,29 +1,6 @@
-//config
+#include config.txt
 
-effective_class1:
-    BYTE $2B $2C 0
-effective_against1:
-    BYTE $25 $26 $27 $28 $29 $2A $2B $2C $2D $2E $2F $30 $31 $32 $44 $45 $4A $4B $4C $4F $5F $60 $61 $62 $38 $3E $7F 0
-    #define SKILL_ID_EFFECTIVE1 $9
-    
-effective_class2:
-    BYTE 0
-effective_against2:
-    BYTE $52 $53 $54 $55 $56 $57 $58 $59 $5A $5B $5C $5D $5E $5F $60 $61 $62 $63 $64 $65 $66 $3B $7C $7D $51 0
-    #define SKILL_ID_EFFECTIVE2 $A
-    
-effective_class3:
-    BYTE 0
-effective_against3:
-    BYTE 0
-    #define SKILL_ID_EFFECTIVE3 $B
-    
-effective_class4:
-    BYTE 0
-effective_against4:
-    BYTE 0
-    #define SKILL_ID_EFFECTIVE4 $C
-    
+
 /////////////////////
 PUSH
     ORG 0x16A30
@@ -44,20 +21,20 @@ effective_main:
     POIN effective_against4
     
 effective_hasSkill1:
-    #incbin hasSkill.gba
+    HAS_SKILL
     POIN effective_class1
-    WORD SKILL_ID_EFFECTIVE1
+    WORD Effective1ID
 effective_hasSkill2:
-    #incbin hasSkill.gba
+    HAS_SKILL
     POIN effective_class2
-    WORD SKILL_ID_EFFECTIVE2
+    WORD Effective2ID
 effective_hasSkill3:
-    #incbin hasSkill.gba
+    HAS_SKILL
     POIN effective_class3
-    WORD SKILL_ID_EFFECTIVE3
+    WORD Effective3ID
 effective_hasSkill4:
-    #incbin hasSkill.gba
+    HAS_SKILL
     POIN effective_class4
-    WORD SKILL_ID_EFFECTIVE4
+    WORD Effective4ID
     
     

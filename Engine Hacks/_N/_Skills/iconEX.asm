@@ -4,7 +4,8 @@
 	push	{r4, r5, r6, r7, lr}
 ;画像
 	mov	r4, #0
-	ldr	r0, =$02003DAC ;画像($02003DEC)
+	@align 4
+	ldr	r0, [adr+20]	;EQUIPMENT_POSITION
 	ldr	r6, =$00007060
 	mov	r5, r6	
 	ldr	r1, =$000002c2
@@ -35,26 +36,38 @@ loopE
 	ldr	r4, =$02003BFC
 	ldr	r0, [r4, #12]
 	ldrh	r4, [r0, #0x3A]
-	lsl	r4, r4, #20
-	lsr	r4, r4, #20
-	ldr	r0, [r0]
-	ldrh	r0, [r0, #0x26]
-	orr	r4, r0
-	bl	SKILL2
+    mov r0, %111111
+    and r4, r0
+	bl	SKILL ;スキル書1
 @align 4
-	ldr	r5, [adr+20]	;MASTERY
+	ldr	r5, [adr+12]	;SCROLL
+	ldr	r4, =$02003BFC
+	ldr	r0, [r4, #12]
+	ldrh	r4, [r0, #0x3A]
+	lsr r4, r4, #6
+    mov r0, %111111
+    and r4, r0
+	bl	SKILL ;スキル書2
+	
+	ldr	r5, [adr+12]	;SCROLL
+	ldr	r4, =$02003BFC
+	ldr	r4, [r4, #12]
+	ldr	r4, [r4]
+	add	r4, #0x26
+	ldrb	r4, [r4]
+	bl	SKILL ;下級スキル
+	
+	ldr	r5, [adr+12]	;MASTERY
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
 	ldr	r0, [r4, #4]
 	ldr	r0, [r0, #40]
 	lsl	r0, r0, #23
-	bpl nomi
+	bpl nomi ;上級職のみ
 	ldr	r4, [r4]
-	add	r4, #0x31
+	add	r4, #0x27
 	ldrb	r4, [r4]
-	cmp	r4, #0
-	beq	nomi
-	bl	SKILL
+	bl	SKILL ;上級スキル
 nomi:
 @align 4
 	ldr	r5, [adr]	;UNIT
@@ -103,14 +116,15 @@ restart
 	mov	r2, #0x10
 loop
 	ldrb	r1, [r5, r2]
+	cmp	r1,	#0
+	beq jump
 	cmp	r0, r1
 	beq	skiller
 	add	r2, #1
 	cmp	r2, #0x20
 	beq	jump ;LISTlimit
-	cmp	r1,	#0
-	bne	loop
-	b	jump
+	b loop
+
 skiller
 	ldrh	r1, [r5, #2]
 	strh	r1, [r7]

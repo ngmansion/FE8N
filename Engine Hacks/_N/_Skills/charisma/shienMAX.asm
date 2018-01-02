@@ -27,11 +27,16 @@ entry
 	cmp r0, #0	;; 戦闘参加中判定
 	bne next
 class
-
-	ldr r0,[r3]
-	ldrh	r0, [r0, #0x26]
-	lsl	r0, r0, #17
-        bmi Xdistance
+    push {r3}
+    mov r0, r3
+        @align 4
+        ldr r1, [adr] ;カリスマ
+        mov lr, r1
+        @dcw $F800
+    pop {r3}
+    cmp r0, #0
+    bne Xdistance
+        
 next
 	add r3, #0x48
 	sub r7,#0x01

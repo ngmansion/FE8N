@@ -1,3 +1,7 @@
+#include config.txt
+ALIGN 4
+
+
 PUSH
 ORG	0x2ABC4
 BYTE	$00 $4B $9F $46
@@ -5,6 +9,7 @@ POIN	kyokyokyo
 POP
 kyokyokyo:
 #incbin "fear.gba"
+    POIN hasFear
 ALIGN 4
 
 ///////////////////支援効果制限+カリスマ制限
@@ -15,4 +20,19 @@ POIN	karikari
 POP
 karikari:
 #incbin "shienMAX.gba"
+    POIN hasCharm
 ALIGN 4
+
+
+
+hasFear:
+    HAS_SKILL
+    POIN fearList
+    WORD DauntID
+    
+hasCharm:
+    HAS_SKILL
+    POIN charmList
+    WORD CharmID
+    
+    

@@ -1,0 +1,12 @@
+//config
+
+BigShieldList:
+ BYTE	$0B 0
+ 
+HolyShieldList:
+ BYTE	$00 0
+
+GodShieldList:
+ BYTE	$66 0
+PrayList:
+ BYTE	$00 0

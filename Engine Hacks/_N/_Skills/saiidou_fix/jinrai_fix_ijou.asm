@@ -23,17 +23,14 @@ check
 	beq	false
 	cmp	r0, #13	;ストーン
 	beq	false
-	ldr	r0, [r4]
-	ldr	r0, [r0, #4]
-	ldrb	r0, [r0, #4]
-	cmp	r0, #0x23
-	beq	true
-	cmp	r0, #0x24
-	beq	true
-	cmp	r0, #0x03
-	beq	true
-	cmp	r0, #0x04
-	beq	true
+
+    mov r0, r4
+        @align 4
+        ldr r1, [adr] ;
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne true
 
 	ldr	r1, [r4]
 	mov	r0, #29
@@ -58,3 +55,5 @@ jump
 false
 	ldr	r0, =$0801CEFC
 	mov	pc, r0
+@ltorg
+adr:

@@ -1,3 +1,6 @@
+#include config.txt
+
+ALIGN 4
 PUSH
 ORG	0x1ceac
 BYTE	$3D
@@ -16,7 +19,14 @@ ALIGN 4
 #else
 
 odorero:
-#incbin "saikoudou.dmp"
+#incbin main.gba
+POIN hasRemove
+
+hasRemove:
+    HAS_SKILL
+    POIN RemoveList
+    WORD RemoveID
+
 ALIGN 4
 
 #endif

@@ -1,13 +1,6 @@
-//config
+#include config.txt
 
-SolList:
-BYTE	$03 $07 $08 $22 0
-TenkuList:
-BYTE	$11 $12 0
-YoukohList:
-BYTE	$27 $28 0
-RyuseiList:
-BYTE	$15 $16 0
+
 //code
 ALIGN 4
 PUSH
@@ -18,9 +11,11 @@ POP
 
 astron:
 #incbin "astraether.gba"
-POIN	TenkuList
-POIN	YoukohList
-POIN	RyuseiList
+POIN	hasTenku
+POIN	hasYoukoh
+POIN	hasRyusei
+
+
 ALIGN 4
 
 //ORG 0xE487D0
@@ -75,6 +70,23 @@ taiyo3:
 ALIGN	4
 taiyo4:
 	#incbin "taiyo44.gba"
-POIN	SolList
-POIN	TenkuList
-POIN	YoukohList
+POIN	hasSOL
+POIN	hasTenku
+POIN	hasYoukoh
+
+hasSOL:
+    HAS_SKILL
+    POIN SolList
+    WORD SolID
+hasTenku:
+    HAS_SKILL
+    POIN TenkuList
+    WORD AetherID
+hasYoukoh:
+    HAS_SKILL
+    POIN YoukohList
+    WORD FlareID
+hasRyusei:
+    HAS_SKILL
+    POIN RyuseiList
+    WORD AstraID

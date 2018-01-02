@@ -1,5 +1,4 @@
-PassList:
- BYTE	$17 $18 0
+#include config.txt
 
 ALIGN 4
 PUSH
@@ -8,5 +7,10 @@ BYTE	$00 $48 $87 $46
 POIN	passem
 POP
 passem:
-#incbin "pass.gba"
-POIN	PassList
+    #incbin pass.gba
+    POIN hasPass
+hasPass:
+    HAS_SKILL
+    POIN PassList
+    WORD PassID
+    
