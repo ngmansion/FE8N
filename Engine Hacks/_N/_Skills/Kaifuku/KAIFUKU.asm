@@ -1,25 +1,15 @@
 @thumb
 ;@org	$08019f28
-	mov	r2, r0
-	ldr	r1, [r5]
-	ldrh	r1, [r1, #0x26]	;;ユニット0x1000
-	lsl	r1, r1, #19
-	bpl	classHeal
-	mov	r3, #20
-	b	end
-classHeal:
-@align 4
-	ldr	r3, [adr]	;回復兵種アドレス
-	ldr	r1, [r5, #4]
-	ldrb	r1, [r1, #4]
-loopHeal
-	ldrb	r0, [r3]
-	cmp	r0, #0
-	beq	nonHeal
-	cmp	r0, r1
-	beq	gotHeal
-	add	r3, #1
-	b	loopHeal
+    push {r0}
+    @align 4
+    ldr r1, [adr] ;回復
+    mov lr, r1
+    mov r0, r5
+    @dcw $F800
+    pop {r2}
+    cmp r0, #0
+    beq nonHeal
+    
 gotHeal:
 	mov	r3, #20
 	b	end
