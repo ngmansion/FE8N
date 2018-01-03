@@ -10,21 +10,22 @@
 ;自軍は索敵マップだと無効
 ;
 Start:
-	ldrb	r0, [r4, #11]
-	lsr	r0, r0, #6
-	bne	Jump
-	ldr	r0, =$0202BCF9
-	ldrb	r0, [r0]
-	cmp	r0, #0
-	bne	nonPass
+    push {r3}
+    ldrb r0, [r4, #11]
+    lsr r0, r0, #6
+    bne Jump
+    ldr r0, =$0202BCF9
+    ldrb r0, [r0]
+    cmp r0, #0
+    bne nonPass
 ;
 ;謎のバグ防止
 ;
 Jump:
-	mov	r0, r13
-	ldr	r1, =$03007d18
-	cmp	r0, r1
-	beq	nonPass
+    mov r0, r13
+    ldr r1, =$03007d18
+    cmp r0, r1
+    beq nonPass
 ;
 ;スキルチェック
 ;
@@ -37,12 +38,13 @@ Jump:
     bne ouiPass
     
 nonPass:
-	mov	r0, #1
-	b	Return
+    mov r0, #1
+    b Return
 ouiPass:
-	mov	r0, #0
+    mov r0, #0
 Return:
-	ldr	r1, =$0801a1e6
-	mov	pc, r1
+    pop {r3}
+    ldr r1, =$0801a1e6
+    mov pc, r1
 @ltorg
 adr:
