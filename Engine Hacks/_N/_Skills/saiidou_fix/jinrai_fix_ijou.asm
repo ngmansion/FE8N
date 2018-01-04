@@ -24,11 +24,13 @@ check
 	cmp	r0, #13	;ストーン
 	beq	false
 
-    mov r0, r4
+    ldr r0, [r4]
+        push {r2}
         @align 4
         ldr r1, [adr] ;
         mov lr, r1
         @dcw $F800
+        pop {r2}
     cmp r0, #0
     bne true
 
