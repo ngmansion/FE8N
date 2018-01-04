@@ -132,18 +132,30 @@ Pray:
 	@dcw $F800
 	cmp r0, #0
 	beq	endPray
-ouiPray:
-	ldrb	r1, [r3, #19]
-	cmp	r1, #1
-	beq	endPray
-;一撃で死ぬか
-	ldrh	r0, [r4, #4]
-	cmp	r0, r1
-	blt	endPray
-;ダメージが幸運を上回るか
-;	ldrb	r1, [r3, #25]
-;	cmp	r0, r1
-;	bgt	endPray
+    ldrb r1, [r3, #19]
+    cmp r1, #1
+    beq endPray ;HP1なら終了
+    ldrh r0, [r4, #4]
+    cmp r0, r1
+    blt endPray ;一撃で死なないなら終了
+    
+    ldr r1, [adr+20] ;祈り切り換え
+    cmp r1, #0
+    beq originalPray
+newPray:
+    ldrb r1, [r3, #25]
+    cmp r0, r1
+    bgt endPray ;ダメージが幸運を上回るか
+    mov r0, r7
+        @align 4
+        ldr r1, [adr+16] ;見切り
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne	endPray ;見切り持ちなら終了
+    b effectPray
+
+originalPray:
 	ldrb	r0, [r3, #25]	;幸運
 	lsl	r1, r0, #1
 	add	r0, r0, r1
@@ -151,6 +163,9 @@ ouiPray:
 	bl	random
 	cmp	r0, #0
 	beq	endPray
+	
+	
+effectPray:
 	mov	r0, r8
 	ldrb	r0, [r0, #19]
 	sub	r0, #1
@@ -174,13 +189,13 @@ Oracle:
 	beq	endOracle
 	
 nihil_check:
-	@align 4
-	ldr r1, [adr+16] ;見切り
-	mov lr, r1
-	mov r0, r7
-	@dcw $F800
-	cmp r0, #0
-	bne	Nihil
+    @align 4
+    ldr r1, [adr+16] ;見切り
+    mov lr, r1
+    mov r0, r7
+    @dcw $F800
+    cmp r0, #0
+    bne	Nihil
 	ldrh	r0, [r4, #4]
 	asr	r0, r0, #1
 	strh	r0, [r4, #4]
