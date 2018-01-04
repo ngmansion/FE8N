@@ -1,44 +1,44 @@
 
 
-#define PaviseID 1 //大盾
-#define MiracleID 2 //祈り
-#define NihilID 3 //見切り
-#define NullifyID 4 //練達
-#define CancelID 5 //キャンセル
-#define WrathID 6 //怒り
-#define ResolveID 7 //勇将
-#define VantageID 8 //待ち伏せ
-#define AdeptID 9 // 連続
-#define ParagonID 10 //エリート
-#define RemoveID 11 //再行動
-#define PassID 12 //すり抜け
-#define RenewalID 13 //回復
-#define DauntID 14 //恐怖
-#define FortuneID 15 //強運
-#define GaleforceID 16 //疾風迅雷
-#define AegisID 17 //聖盾
-#define StafffaireID 18 //杖の達人
-#define SwordbreakerID 19 //剣殺し
-#define LancebreakerID 20 //槍殺し
-#define AxebreakerID 21 //斧殺し
-#define BowbreakerID 22 //弓殺し
-#define TomebreakerID 23 //魔殺し
-#define BoldFighterID 24 //攻撃隊形
-#define VengefulFighterID 25 //迎撃隊形
-#define WaryFighterID 26 //守備隊形
-#define Effective1ID 27 //特効1
-#define Effective2ID 28 //特効2
-#define Effective3ID 29 //特効3
-#define Effective4ID 30 //特効4
+#define PaviseID 1 //0x1大盾
+#define MiracleID 2 //0x2祈り
+#define NihilID 3 //0x3見切り
+#define NullifyID 4 //0x4練達
+#define CancelID 5 //0x5キャンセル
+#define WrathID 6 //0x6怒り
+#define ResolveID 7 //0x7勇将
+#define VantageID 8 //0x8待ち伏せ
+#define AdeptID 9 // 0x9連続
+#define ParagonID 10 //0xaエリート
+#define RemoveID 11 //0xb再行動
+#define PassID 12 //0xcすり抜け
+#define RenewalID 13 //0xd回復
+#define DauntID 14 //0xe恐怖
+#define FortuneID 15 //0xf強運
+#define GaleforceID 16 //0x10疾風迅雷
+#define AegisID 17 //0x11聖盾
+#define StafffaireID 18 //0x12杖の達人
+#define SwordbreakerID 19 //0x13剣殺し
+#define LancebreakerID 20 //0x14槍殺し
+#define AxebreakerID 21 //0x15斧殺し
+#define BowbreakerID 22 //0x16弓殺し
+#define TomebreakerID 23 //0x17魔殺し
+#define BoldFighterID 24 //0x18攻撃隊形
+#define VengefulFighterID 25 //0x19迎撃隊形
+#define WaryFighterID 26 //0x1a守備隊形
+#define Effective1ID 27 //0x1b特効1
+#define Effective2ID 28 //0x1c特効2
+#define Effective3ID 29 //0x1d特効3
+#define Effective4ID 30 //0x1e特効4
 
-#define AstraID 64 // 流星
-#define LunaID 65 //月光
-#define SolID 66 //太陽
-#define AetherID 67 //天空
-#define FlareID 68 //陽光
-#define RightfulKingID 69 //王の器
-#define CharmID 70 //カリスマ
-#define DivineShieldID 71 //神盾
+#define AstraID 64 //0x40流星
+#define LunaID 65 //0x41月光
+#define SolID 66 //0x42太陽
+#define AetherID 67 //0x43天空
+#define FlareID 68 //0x44陽光
+#define RightfulKingID 69 //0x45王の器
+#define CharmID 70 //0x46カリスマ
+#define DivineShieldID 71 //0x47神盾
 
 
 
