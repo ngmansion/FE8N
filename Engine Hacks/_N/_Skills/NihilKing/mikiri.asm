@@ -1,5 +1,6 @@
 
 @thumb
+@define RETURN_ADR $0802a4a6
 	lsl	r0, r0, #16
 	lsr	r3, r0, #16
 	lsl	r1, r1, #24
@@ -12,8 +13,6 @@
 	mov	r0, r2
 	bx	lr
 start:
-    mov r0, r14
-    push {lr}
 ;除外判定
 	cmp	r2, #0
 	bne	return
@@ -35,7 +34,8 @@ loop
 	add	r3, #4
 	b	loop
 return:
-    ldr	r0, =$0802a4a6
+    push {lr}
+    ldr	r0, =RETURN_ADR
     mov	pc, r0
 gotA
 	ldr	r2, [r3, #4]
@@ -68,6 +68,7 @@ Reverse
 	eor r2, r3
 	eor r3, r2
 nonTATE
+    push {lr}
 ;見切りチェック
     push {r2}
         @align 4
@@ -119,9 +120,11 @@ gotAC:
 	add	r0, #30
 	str	r0, [sp]
 end
-	mov	r2, #0
-	pop	{r3}
-	b	return
+    mov r2, #0
+    pop {r0}
+    mov lr, r0 ;r14復活
+    pop {r3}
+    b return
 
 ;non
 ;	pop	{r3}
