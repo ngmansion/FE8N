@@ -11,11 +11,12 @@
 	beq	start
 	mov	r0, r2
 	bx	lr
-start
+start:
+    mov r0, r14
+    push {lr}
 ;除外判定
 	cmp	r2, #0
 	bne	return
-	mov	r0, r14
 	ldr	r1, =$0802b40B	;;必殺は除外
 	cmp	r0, r1
 	beq	return
@@ -34,9 +35,8 @@ loop
 	add	r3, #4
 	b	loop
 return:
-	push	{lr}
-	ldr	r0, =$0802a4a6
-	mov	pc, r0
+    ldr	r0, =$0802a4a6
+    mov	pc, r0
 gotA
 	ldr	r2, [r3, #4]
 	ldr	r3, [r3, #8]
@@ -72,7 +72,7 @@ nonTATE
     push {r2}
         @align 4
         ldr r0, [adr]
-        ldr lr, r0
+        mov lr, r0
         mov r0, r3
         @dcw $F800
     pop {r2}
@@ -88,7 +88,7 @@ toking:
     push {r2}
         @align 4
         ldr r0, [adr+4] ;王の器
-        ldr lr, r0
+        mov lr, r0
         mov r0, r2
         @dcw $F800
     pop {r2}
@@ -103,7 +103,7 @@ toace:
     push {r2}
         @align 4
         ldr r0, [adr+8] ;勇将
-        ldr lr, r0
+        mov lr, r0
         mov r0, r2
         @dcw $F800
     pop {r2}
