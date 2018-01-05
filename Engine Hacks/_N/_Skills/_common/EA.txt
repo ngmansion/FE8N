@@ -1,5 +1,5 @@
 #include skill_definitions.event
-
+#include list_definitions.event
 
 NihilList:
 BYTE $00 0

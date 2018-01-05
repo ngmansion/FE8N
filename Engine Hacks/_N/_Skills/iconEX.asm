@@ -5,7 +5,7 @@
 ;画像
 	mov	r4, #0
     @align 4
-    ldr r0, [adr+20]	;EQUIPMENT_POSITION
+    ldr r0, [adr+24]	;EQUIPMENT_POSITION
     ldr r0, [r0]
     
 	ldr	r6, =$00007060
@@ -100,12 +100,26 @@ nomi:
 	ldrb	r4, [r4, #4]
 	bl	SKILL
 @align 4
+	ldr	r5, [adr+20]	;CLASS2
+    ldr r4, =$02003BFC
+    ldr r4, [r4, #12]
+    ldr r4, [r4, #4]
+    ldrb r4, [r4, #4]
+    mov r0, #0;CLASS
+    bl SKILL4
+@align 4
 	ldr r5, [adr+8]	;WEAPON
 	ldr	r4, =$0203a530
 	ldrb	r4, [r4]
 	cmp r4, #0
 	beq end
 	bl	SKILL
+@align 4
+    ldr r5, [adr+20] ;weapon2
+    ldr r4, =$0203a530
+    ldrb r4, [r4]
+    mov r0, #4 ;weapon2
+    bl SKILL4
 end
 	pop	{r4, r5, r6, r7, pc}
 
@@ -287,7 +301,75 @@ nonitem3
     add r6, #6	;アイコンの間隔
     add r7, #2	;HELP memory increment
     pop {pc}
-	
+
+
+SKILL4:
+    push {r4, lr} ;r4=判定ID
+    cmp r4, #0
+    beq end4
+    mov r4, #0
+    add r5, r5, r0
+    b next4
+    
+loopstart4:
+    ldr r0, [r5] ;リストポインタロード
+    cmp r0, #0
+    beq next4
+;ダブりチェック
+    @align 4
+    ldr r3, [adr+16] ;アイコンヘルプテーブル
+    lsl r0, r4, #2
+    add r3, r3, r0
+    ldrh r0, [r3]
+    ldr r2 =$02003B00
+loopyloopy4
+    cmp r2, r7
+    beq list_checker
+    ldrh r1, [r2]
+    cmp r0, r1
+    beq next4
+    add r2, #2
+    b loopyloopy4
+    
+list_checker:
+    ldr r2, [r5] ;リストポインタロード
+    ldr r1, [sp] ;IDをロード
+list_loop:
+    ldrb r0, [r2]
+    cmp r0, #0
+    beq next4
+    cmp r0, r1
+    beq limitter4
+    add r2, #1
+    b list_loop
+
+limitter4: ;上限チェック
+    lsl r1, r7, #24
+    lsr r1, r1, #24
+    cmp r1, #12 ;アイコン上限
+    beq end4
+    ldrh r0, [r3]
+    strh r0, [r7]
+    add r1, r4, #1
+    add r1, #255
+    mov r2, #0xA0
+    ldrb r0, [r3, #2]
+    cmp r0, #0xFF
+    bne nonitem4
+    sub r2, #0x20
+nonitem4
+    lsl r2, r2, #7
+    mov r0, r6
+    bl icon
+    add r6, #6	;アイコンの間隔
+    add r7, #2	;HELP memory increment
+next4:
+    add r5, #8
+    add r4, #1
+    cmp r4, #127 ;スキル最大数
+    ble loopstart4
+end4:
+    pop {r4, pc}
 
 
 

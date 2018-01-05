@@ -1,0 +1,387 @@
+skl_list_table:
+//0
+POIN 0
+ POIN 0
+//1(0x1)
+POIN BigShieldList
+ POIN 0
+//2(0x2)
+POIN PrayList
+ POIN 0
+//3(0x3)
+POIN NihilList
+ POIN 0
+//4(0x4)
+POIN Rentatsu_List
+ POIN Rentatsu_List_w
+//5(0x5)
+POIN cancel_list
+ POIN cancel_list_w
+//6(0x6)
+POIN wrath_list
+ POIN wrath_list_w
+//7(0x7)
+POIN ResolveClassList
+ POIN 0
+//8(0x8)
+POIN VantageList
+ POIN 0
+//9(0x9)
+POIN adept_list
+ POIN adept_list_w
+//10(0xA)
+POIN ParagonList
+ POIN 0
+//11(0xB)
+POIN RemoveList
+ POIN 0
+//12(0xC)
+POIN PassList
+ POIN 0
+//13(0xD)
+POIN listHeal
+ POIN 0
+//14(0xE)
+POIN fearList
+ POIN 0
+//15(0xF)
+POIN FortuneList
+ POIN 0
+//16(0x10)
+POIN GaleforceList
+ POIN 0
+//17(0x11)
+POIN HolyShieldList
+ POIN 0
+//18(0x12)
+POIN staff_mastery_list
+ POIN 0
+//19(0x13)
+POIN Swordbreaker
+ POIN Swordbreaker_w
+//20(0x14)
+POIN Lancebreaker
+ POIN Lancebreaker_w
+//21(0x15)
+POIN Axebreaker
+ POIN Axebreaker_w
+//22(0x16)
+POIN Bowbreaker
+ POIN Bowbreaker_w
+//23(0x17)
+POIN Tomebreaker
+ POIN Tomebreaker_w
+//24(0x18)
+POIN boldFighterList
+ POIN boldFighterList_w
+//25(0x19)
+POIN vengefulFighterList
+ POIN vengefulFighterList_w
+//26(0x1A)
+POIN waryFighterList
+ POIN waryFighterList_w
+//27(0x1B)
+POIN effective_class1
+ POIN 0
+//28(0x1C)
+POIN effective_class2
+ POIN 0
+//29(0x1D)
+POIN effective_class3
+ POIN 0
+//30(0x1E)
+POIN effective_class4
+ POIN 0
+//31(0x1F)
+POIN 0
+ POIN 0
+//32(0x20)
+POIN 0
+ POIN 0
+//33(0x21)
+POIN 0
+ POIN 0
+//34(0x22)
+POIN 0
+ POIN 0
+//35(0x23)
+POIN 0
+ POIN 0
+//36(0x24)
+POIN 0
+ POIN 0
+//37(0x25)
+POIN 0
+ POIN 0
+//38(0x26)
+POIN 0
+ POIN 0
+//39(0x27)
+POIN 0
+ POIN 0
+//40(0x28)
+POIN 0
+ POIN 0
+//41(0x29)
+POIN 0
+ POIN 0
+//42(0x2A)
+POIN 0
+ POIN 0
+//43(0x2B)
+POIN 0
+ POIN 0
+//44(0x2C)
+POIN 0
+ POIN 0
+//45(0x2D)
+POIN 0
+ POIN 0
+//46(0x2E)
+POIN 0
+ POIN 0
+//47(0x2F)
+POIN 0
+ POIN 0
+//48(0x30)
+POIN 0
+ POIN 0
+//49(0x31)
+POIN 0
+ POIN 0
+//50(0x32)
+POIN 0
+ POIN 0
+//51(0x33)
+POIN 0
+ POIN 0
+//52(0x34)
+POIN 0
+ POIN 0
+//53(0x35)
+POIN 0
+ POIN 0
+//54(0x36)
+POIN 0
+ POIN 0
+//55(0x37)
+POIN 0
+ POIN 0
+//56(0x38)
+POIN 0
+ POIN 0
+//57(0x39)
+POIN 0
+ POIN 0
+//58(0x3A)
+POIN 0
+ POIN 0
+//59(0x3B)
+POIN 0
+ POIN 0
+//60(0x3C)
+POIN 0
+ POIN 0
+//61(0x3D)
+POIN 0
+ POIN 0
+//62(0x3E)
+POIN 0
+ POIN 0
+//63(0x3F)
+POIN 0
+ POIN 0
+//64(0x40)
+POIN RyuseiList
+ POIN 0
+//65(0x41)
+POIN GeckoClass
+ POIN 0
+//66(0x42)
+POIN SolList
+ POIN 0
+//67(0x43)
+POIN TenkuList
+ POIN 0
+//68(0x44)
+POIN YoukohList
+ POIN 0
+//69(0x45)
+POIN RightfulKingClassList
+ POIN 0
+//70(0x46)
+POIN charmList
+ POIN 0
+//71(0x47)
+POIN GodShieldList
+ POIN 0
+//72(0x48)
+POIN listMeido
+ POIN 0
+//73(0x49)
+POIN listRevenge
+ POIN 0
+//74(0x4A)
+POIN 0
+ POIN 0
+//75(0x4B)
+POIN 0
+ POIN 0
+//76(0x4C)
+POIN 0
+ POIN 0
+//77(0x4D)
+POIN listStone
+ POIN 0
+//78(0x4E)
+POIN listStan
+ POIN 0
+//79(0x4F)
+POIN listFlower
+ POIN 0
+//80(0x50)
+POIN listDragon
+ POIN 0
+//81(0x51)
+POIN 0
+ POIN 0
+//82(0x52)
+POIN 0
+ POIN 0
+//83(0x53)
+POIN 0
+ POIN 0
+//84(0x54)
+POIN 0
+ POIN 0
+//85(0x55)
+POIN 0
+ POIN 0
+//86(0x56)
+POIN 0
+ POIN 0
+//87(0x57)
+POIN 0
+ POIN 0
+//88(0x58)
+POIN 0
+ POIN 0
+//89(0x59)
+POIN 0
+ POIN 0
+//90(0x5A)
+POIN 0
+ POIN 0
+//91(0x5B)
+POIN 0
+ POIN 0
+//92(0x5C)
+POIN 0
+ POIN 0
+//93(0x5D)
+POIN 0
+ POIN 0
+//94(0x5E)
+POIN 0
+ POIN 0
+//95(0x5F)
+POIN 0
+ POIN 0
+//96(0x60)
+POIN 0
+ POIN 0
+//97(0x61)
+POIN 0
+ POIN 0
+//98(0x62)
+POIN 0
+ POIN 0
+//99(0x63)
+POIN 0
+ POIN 0
+//100(0x64)
+POIN 0
+ POIN 0
+//101(0x65)
+POIN 0
+ POIN 0
+//102(0x66)
+POIN 0
+ POIN 0
+//103(0x67)
+POIN 0
+ POIN 0
+//104(0x68)
+POIN 0
+ POIN 0
+//105(0x69)
+POIN 0
+ POIN 0
+//106(0x6A)
+POIN 0
+ POIN 0
+//107(0x6B)
+POIN 0
+ POIN 0
+//108(0x6C)
+POIN 0
+ POIN 0
+//109(0x6D)
+POIN 0
+ POIN 0
+//110(0x6E)
+POIN 0
+ POIN 0
+//111(0x6F)
+POIN 0
+ POIN 0
+//112(0x70)
+POIN 0
+ POIN 0
+//113(0x71)
+POIN 0
+ POIN 0
+//114(0x72)
+POIN 0
+ POIN 0
+//115(0x73)
+POIN 0
+ POIN 0
+//116(0x74)
+POIN 0
+ POIN 0
+//117(0x75)
+POIN 0
+ POIN 0
+//118(0x76)
+POIN 0
+ POIN 0
+//119(0x77)
+POIN 0
+ POIN 0
+//120(0x78)
+POIN 0
+ POIN 0
+//121(0x79)
+POIN 0
+ POIN 0
+//122(0x7A)
+POIN 0
+ POIN 0
+//123(0x7B)
+POIN 0
+ POIN 0
+//124(0x7C)
+POIN 0
+ POIN 0
+//125(0x7D)
+POIN 0
+ POIN 0
+//126(0x7E)
+POIN 0
+ POIN 0
+//127(0x7F)
+POIN 0
+ POIN 0
+
+WORD $FFFFFFFF $FFFFFFFF
