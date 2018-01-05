@@ -9,8 +9,12 @@ Icon_Item:
 
 /////////////////////////////////
 PUSH
-ORG	0x3600
-POIN	Icon_Item
+ORG 0x35A2
+    SHORT $0061 //$00A1
+ORG 0x365C
+    SHORT $0040 //$0080
+ORG 0x3600
+    POIN Icon_Item
 ORG	0x36D4
-POIN	Icon_Item
+    POIN Icon_Item
 POP

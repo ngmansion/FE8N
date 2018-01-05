@@ -39,6 +39,20 @@
 #define RightfulKingID 69 //0x45王の器
 #define CharmID 70 //0x46カリスマ
 #define DivineShieldID 71 //0x47神盾
-
-
-
+#define ColossusID 72//0x48鳴動(表示のみ)
+#define VengeanceID 73//0x49復讐(表示のみ)
+#define PointBlankID 74//0x4a近接射撃(表示のみ)
+#define SagittaryID 75//0x4b神射手(表示のみ)
+#define SureStrikeID 76//0x4c必的(表示のみ)
+#define ScreamID 77//0x4d叫喚(表示のみ)
+#define StunID 78//0x4e衝撃(表示のみ)
+#define IgnisID 79//0x4f華炎(表示のみ)
+#define DragonFungID 80//0x50竜穿(表示のみ)
+#define StealID 81//0x51盗む(表示のみ)
+#define LocktouchID 82//0x52カギ開け(表示のみ)
+#define CritUpID 83//0x53必殺上昇(表示のみ)
+#define LethalityID 84//0x54瞬殺(表示のみ)
+#define SummonID 85//0x55召喚(表示のみ)
+#define DanceID 86//0x56踊る(表示のみ)
+#define SafeguardID 87//0x57メンテナンス
+#define VoidCurseID 88//0x58虚無の呪い

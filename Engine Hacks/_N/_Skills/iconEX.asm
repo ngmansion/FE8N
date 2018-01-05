@@ -34,32 +34,32 @@ loopE
 	str	r5, [r7, #4]
 	str	r5, [r7, #8]
 @align 4
-	ldr	r5, [adr+12]	;SCROLL
+	ldr	r5, [adr+16]	;skl_icon_table
 	ldr	r4, =$02003BFC
 	ldr	r0, [r4, #12]
 	ldrh	r4, [r0, #0x3A]
     mov r0, %111111
     and r4, r0
-	bl	SKILL ;スキル書1
+	bl	SKILL3 ;スキル書1
 @align 4
-	ldr	r5, [adr+12]	;SCROLL
+	ldr	r5, [adr+16]	;skl_icon_table
 	ldr	r4, =$02003BFC
 	ldr	r0, [r4, #12]
 	ldrh	r4, [r0, #0x3A]
 	lsr r4, r4, #6
     mov r0, %111111
     and r4, r0
-	bl	SKILL ;スキル書2
+	bl	SKILL3 ;スキル書2
 @align 4
-	ldr	r5, [adr+12]	;SCROLL
+	ldr	r5, [adr+16]	;skl_icon_table
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
 	ldr	r4, [r4]
 	add	r4, #0x26
 	ldrb	r4, [r4]
-	bl	SKILL ;下級スキル
+	bl	SKILL3 ;下級スキル
 @align 4
-	ldr	r5, [adr+12]	;SCROLL
+	ldr	r5, [adr+16]	;skl_icon_table
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]
 	ldr	r0, [r4, #4] ;class
@@ -69,7 +69,7 @@ loopE
 	ldr	r4, [r4]
 	add	r4, #0x27
 	ldrb	r4, [r4]
-	bl	SKILL ;上級スキル
+	bl	SKILL3 ;上級スキル
 nomi:
 @align 4
 	ldr	r5, [adr]	;UNIT
@@ -79,7 +79,7 @@ nomi:
 	ldrb	r4, [r4, #4]
 	bl	SKILL
 @align 4
-	ldr	r5, [adr+16]	;ABILITY
+	ldr	r5, [adr+12]	;ABILITY
 	ldr	r4, =$02003BFC
 	ldr	r0, [r4, #12]
 	ldr	r4, [r0, #4]	;兵種
@@ -146,8 +146,9 @@ nonitem
 jump
 	add	r5, #0x20
 test
-	ldrb	r0, [r5]
-	cmp	r0, #0xFF
+	ldr	r0, [r5]
+	ldr r1, =$FFFFFFFF
+	cmp	r0, r1
 	bne	doublecount
 	pop	{pc}
 
@@ -215,8 +216,9 @@ nonitem2
 jump2
 	add	r5, #0x20
 test2
-	ldrb	r0, [r5]
-	cmp	r0, #0xFF
+	ldr	r0, [r5]
+	ldr r1, =$FFFFFFFF
+	cmp	r0, r1
 	bne	doublecount2
 	pop	{pc}
 
@@ -239,7 +241,65 @@ limitter2
 	pop {pc}
 	
 	
+SKILL3:
+    push {lr}
+    cmp r4, #0
+    bne test3
+end3:
+    pop {pc}
+test3
+    cmp r4, #127
+    bge end3
+    lsl r0, r4, #2
+    add r5, r5, r0
+    ldrh r0, [r5]
+    cmp r0, #0
+    beq end3
+
+    ldr r2 =$02003B00
+loopyloopy3
+	cmp r2, r7
+	beq limitter3
+	ldrh r1, [r2]
+	cmp r0, r1
+	beq end3
+	add r2, #2
+	b loopyloopy3
+limitter3
+	lsl r0, r7, #24
+	lsr r0, r0, #24
+	cmp r0, #12 ;アイコン上限
+	beq end3
+
+    ldrh r0, [r5]
+    strh r0, [r7]
+    add r1, r4, #1
+    add r1, #255
+    mov r2, #0xA0
+    ldrb r3, [r5, #2]
+    cmp r3, #0xFF
+    bne nonitem3
+    sub r2, #0x20
+nonitem3
+    lsl r2, r2, #7
+    mov r0, r6
+    bl icon
+    add r6, #6	;アイコンの間隔
+    add r7, #2	;HELP memory increment
+    pop {pc}
 	
+
+
+
+
+
+
+
+
+
+
+
+
 
 @ltorg
 adr:
