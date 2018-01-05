@@ -23,7 +23,7 @@ start:
 	cmp	r0, r1
 	beq	return
 ;除外判定終了
-	push	{r3}
+	push	{r3}    ;;;;;;;;
 	mov	r3, sp
 	ldr	r2, =$0802AE
 loop
@@ -68,7 +68,7 @@ Reverse
 	eor r2, r3
 	eor r3, r2
 nonTATE
-    push {lr}
+    push {lr}    ;;;;;;;;
 ;見切りチェック
     push {r2}
         @align 4
@@ -81,7 +81,7 @@ nonTATE
 	beq toking
 nothing:
 	mov	r0, #0
-	str	r0, [sp]
+	str	r0, [sp+4] ;r3
 	b	toace
 	
 toking:
@@ -96,9 +96,9 @@ toking:
 	cmp	r0, #0
 	beq	toace
 gotK
-	ldr	r0, [sp]
+	ldr	r0, [sp+4] ;r3
 	add	r0, #10
-	str	r0, [sp]
+	str	r0, [sp+4] ;r3
 toace:
 ;勇将チェック
     push {r2}
@@ -116,9 +116,9 @@ gotAC:
 	lsl	r0, r0, #1
 	cmp	r0, r1
 	bgt	end
-	ldr	r0, [sp]
+	ldr	r0, [sp+4] ;r3
 	add	r0, #30
-	str	r0, [sp]
+	str	r0, [sp+4] ;r3
 end
     mov r2, #0
     pop {r0}
