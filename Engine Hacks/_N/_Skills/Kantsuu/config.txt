@@ -1,18 +1,20 @@
 GeckoClass:		//月光(以下すべての奥義は重複設定不可)
-BYTE	$0C $35 $36 $04 0
+   BYTE $0C $35 $36 $04 0
 
 ALIGN 4
 //各奥義2職まで
-listDragon:		//竜穿
- BYTE	$00 $00
-listMeido:		//鳴動
- BYTE	$40 $00
-listRevenge:	//復讐
- BYTE	$43 $00
-listStan:		//衝撃
- BYTE	$21 $00
-listStone:		//叫喚
- BYTE	$49 $00
-listFlower:		//華炎
- BYTE	$00 $00
+listDragon: //竜穿
+    BYTE $00 $00 0
+listMeido: //鳴動
+    BYTE $40 $00 0
+listRevenge: //復讐
+    BYTE $43 $00 0
+listStan: //衝撃
+    BYTE $21 $00 0
+listStone: //叫喚
+    BYTE $49 $00 0
+listFlower: //華炎
+    BYTE $00 $00 0
+
+
 
