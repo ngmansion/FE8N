@@ -1,11 +1,10 @@
 Icon_Item:
-#incbin "Item_Icon.gba"
-#include "Map Sprites\Map Sprite Installer.txt"
-#include "Mugs\Mug Installer.txt"
-#include "Character\Character Installer.txt"
-#include "Anime Palette\Palette Installer.txt"
-
-
+    #incbin Item_Icon.gba
+    #incbin Skill_Icon.gba
+    #include "Map Sprites\Map Sprite Installer.txt"
+    #include "Mugs\Mug Installer.txt"
+    #include "Character\Character Installer.txt"
+    #include "Anime Palette\Palette Installer.txt"
 
 /////////////////////////////////
 PUSH
