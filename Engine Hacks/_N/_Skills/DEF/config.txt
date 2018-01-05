@@ -1,14 +1,21 @@
 //config
 
 BigShieldList:
- BYTE	$0B 0
+ BYTE $0B 0
  
 HolyShieldList:
- BYTE	$00 0
+ BYTE $00 0
 
 GodShieldList:
- BYTE	$66 0
+ BYTE $66 0
+ 
 PrayList:
- BYTE	$00 0
+ BYTE $00 0
+
+DistantDefList: //遠距離防御
+ BYTE $00 0
+
+DistantGuardList: //遠距離無効
+ BYTE $00 0
 
 #define ADVANCED_MIRACLE 0 //0以外にすると「祈り」の効果が変わります

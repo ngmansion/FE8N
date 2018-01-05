@@ -2,25 +2,32 @@
 ;@org	0002b490 > 00 4A 97 46 XX XX XX 08
 ;
 ;
-	mov	r1, #4
-	ldsh	r0, [r4, r1]
-	cmp	r0, #0
-	ble	zero
-	mov	r1, r10
-	cmp	r1, #0xDE	;必的チェック
-	beq	end
-	mov	r1, #0xDF		;防御用
-	mov	r10, r1
-bl Amulet
-	cmp	r0, #1
-	beq	effect
-bl BigShield
-	cmp	r0, #1
-	beq	effect
+    mov r1, #4
+    ldsh r0, [r4, r1]
+    cmp r0, #0
+    ble zero
+bl DistantGuard ;遠距離無効
+    cmp r0, #0
+    bne zero
+    
+    mov r1, r10
+    cmp r1, #0xDE ;必的チェック
+    beq end
+    mov r1, #0xDF		;防御用
+    mov r10, r1
 bl HolyShield
 	cmp	r0, #1
 	beq	effect
 bl Pray
+	cmp	r0, #1
+	beq	effect
+bl Amulet
+	cmp	r0, #1
+	beq	effect
+bl DistantDef
+	cmp	r0, #1
+	beq	effect
+bl BigShield
 	cmp	r0, #1
 	beq	effect
 bl Oracle
@@ -46,11 +53,64 @@ zero:
 end:
 	ldr	r0, =$0802b49a
 	mov	pc, r0
-	
+
+    DistantGuard:
+        push {lr}
+        mov r0, r8
+            @align 4
+            ldr r1, [adr+24] ;遠距離無効
+            mov lr, r1
+            @dcw $F800
+        cmp r0, #0
+        beq endDistantGuard
+        
+        ldr r0, =$0203a4d2
+        ldrb r0, [r0] ;距離
+        cmp r0, #1
+        beq endDistantGuard
+        
+        mov r0, #1
+        @dcw $E000
+    endDistantGuard:
+        mov r0, #0
+        pop {pc}
+        
+    DistantDef:
+        push {lr}
+        mov r0, r8
+            @align 4
+            ldr r1, [adr+28] ;遠距離防御
+            mov lr, r1
+            @dcw $F800
+        cmp r0, #0
+        beq endDistantDef
+        
+        ldr r0, =$0203a4d2
+        ldrb r0, [r0] ;距離
+        cmp r0, #1
+        beq endDistantDef
+        
+        mov r0, r7
+            @align 4
+            ldr r1, [adr+16] ;見切り
+            mov lr, r1
+            @dcw $F800
+        cmp r0, #0
+        bne endDistantDef
+        
+        ldrh r0, [r4, #4]
+        asr r0, r0, #1
+        strh r0, [r4, #4]
+        mov r0, #1
+        @dcw $E000
+    endDistantDef:
+        mov r0, #0
+        pop {pc}
+        
+
 
 BigShield:
 	push {lr}
-	mov	r3, r8
 	
 	@align 4
 	ldr r1, [adr] ;大盾
@@ -60,6 +120,7 @@ BigShield:
 	cmp r0, #0
 	beq endShield
 ouiShield:
+    mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;魔法判定
 	cmp	r0, #7
@@ -86,8 +147,6 @@ endShield:
 	
 HolyShield:
 	push {lr}
-	mov	r3, r8
-	
 	@align 4
 	ldr r1, [adr+4] ;聖盾
 	mov lr, r1
@@ -96,6 +155,7 @@ HolyShield:
 	cmp r0, #0
 	beq endHoly
 Holy:
+    mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;物理判定
 	cmp	r0, #7
@@ -124,7 +184,6 @@ endHoly:
 	
 Pray:
 	push {lr}
-	mov	r3, r8
 	@align 4
 	ldr r1, [adr+12] ;祈り
 	mov lr, r1
@@ -132,13 +191,14 @@ Pray:
 	@dcw $F800
 	cmp r0, #0
 	beq	endPray
+    mov r3, r8
     ldrb r1, [r3, #19]
     cmp r1, #1
     beq endPray ;HP1なら終了
     ldrh r0, [r4, #4]
     cmp r0, r1
     blt endPray ;一撃で死なないなら終了
-    
+    @align 4
     ldr r1, [adr+20] ;祈り切り換え
     cmp r1, #0
     beq originalPray
@@ -179,7 +239,6 @@ endPray:
 
 Oracle:
 	push	{lr}
-	mov	r3, r8
 	@align 4
 	ldr r1, [adr+8] ;聖盾
 	mov lr, r1
@@ -189,11 +248,11 @@ Oracle:
 	beq	endOracle
 	
 nihil_check:
-    @align 4
-    ldr r1, [adr+16] ;見切り
-    mov lr, r1
     mov r0, r7
-    @dcw $F800
+        @align 4
+        ldr r1, [adr+16] ;見切り
+        mov lr, r1
+        @dcw $F800
     cmp r0, #0
     bne	Nihil
 	ldrh	r0, [r4, #4]

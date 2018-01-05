@@ -30,6 +30,7 @@
 #define Effective2ID 28 //0x1c特効2
 #define Effective3ID 29 //0x1d特効3
 #define Effective4ID 30 //0x1e特効4
+#define DistantDefID 31 //0x1f遠距離防御
 
 #define AstraID 64 //0x40流星
 #define LunaID 65 //0x41月光
@@ -56,3 +57,4 @@
 #define DanceID 86//0x56踊る(表示のみ)
 #define SafeguardID 87//0x57メンテナンス
 #define VoidCurseID 88//0x58虚無の呪い
+#define DistantGuardID 89 //0x59遠距離無効

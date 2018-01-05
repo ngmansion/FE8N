@@ -22,6 +22,8 @@ shikkokunori:
  POIN Pray_hasSkill
  POIN hasNihil
  WORD ADVANCED_MIRACLE
+ POIN hasDistantGuard
+ POIN hasDistantDef
  
 BigShield_hasSkill:
  HAS_SKILL
@@ -42,4 +44,14 @@ Pray_hasSkill:
  HAS_SKILL
  POIN	PrayList
  WORD MiracleID
- 
+
+hasDistantGuard:
+ HAS_SKILL
+ POIN DistantGuardList
+ WORD DistantGuardID
+
+hasDistantDef:
+ HAS_SKILL
+ POIN DistantDefList
+ WORD DistantDefID
+

@@ -93,7 +93,7 @@ POIN effective_class3
 POIN effective_class4
  POIN 0
 //31(0x1F)
-POIN 0
+POIN DistantDefList
  POIN 0
 //32(0x20)
 POIN 0
@@ -267,7 +267,7 @@ POIN 0
 POIN 0
  POIN 0
 //89(0x59)
-POIN 0
+POIN DistantGuardID
  POIN 0
 //90(0x5A)
 POIN 0
