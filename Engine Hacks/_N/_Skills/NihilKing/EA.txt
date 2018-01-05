@@ -13,6 +13,7 @@ mirikiri:
  POIN hasNihil
  POIN hasRightfulKing
  POIN hasResolve
+ POIN hasRightfulGod
  
 hasRightfulKing:
  HAS_SKILL
@@ -22,6 +23,12 @@ hasResolve:
  HAS_SKILL
  POIN ResolveClassList
  WORD ResolveID
+hasRightfulGod:
+ HAS_SKILL
+ POIN RightfulGodList
+ WORD RightfulGodID
+ 
+ 
  
 ////////////////////KingFix
 PUSH

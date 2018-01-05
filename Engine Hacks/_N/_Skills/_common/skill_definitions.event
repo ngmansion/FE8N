@@ -58,3 +58,4 @@
 #define SafeguardID 87//0x57メンテナンス
 #define VoidCurseID 88//0x58虚無の呪い
 #define DistantGuardID 89 //0x59遠距離無効
+#define RightfulGodID 90 //0x5a神の器

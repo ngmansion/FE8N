@@ -71,41 +71,51 @@ nonTATE
     push {lr}    ;;;;;;;;
 ;見切りチェック
     push {r2}
+    mov r0, r3
         @align 4
-        ldr r0, [adr]
-        mov lr, r0
-        mov r0, r3
+        ldr r3, [adr]
+        mov lr, r3
         @dcw $F800
     pop {r2}
-	cmp r0, #0
-	beq toking
-nothing:
-	mov	r0, #0
-	str	r0, [sp+4] ;r3
-	b	toace
-	
-toking:
-;王の器チェック
+    cmp r0, #0
+    beq toking
+    mov r0, #0
+    str r0, [sp+4] ;r3
+    
+toking: ;王の器チェック
     push {r2}
+    mov r0, r2
         @align 4
-        ldr r0, [adr+4] ;王の器
-        mov lr, r0
-        mov r0, r2
+        ldr r3, [adr+4] ;王の器
+        mov lr, r3
         @dcw $F800
     pop {r2}
-	cmp	r0, #0
-	beq	toace
-gotK
-	ldr	r0, [sp+4] ;r3
-	add	r0, #10
-	str	r0, [sp+4] ;r3
-toace:
-;勇将チェック
+    cmp r0, #0
+    beq togod
+    ldr r0, [sp+4] ;r3
+    add r0, #10
+    str r0, [sp+4] ;r3
+    
+togod: ;神の器チェック
     push {r2}
+    mov r0, r2
         @align 4
-        ldr r0, [adr+8] ;勇将
-        mov lr, r0
-        mov r0, r2
+        ldr r3, [adr+12] ;神の器
+        mov lr, r3
+        @dcw $F800
+    pop {r2}
+    cmp r0, #0
+    beq toace
+    ldr r0, [sp+4] ;r3
+    add r0, #30
+    str r0, [sp+4] ;r3
+    
+toace: ;勇将チェック
+    push {r2}
+    mov r0, r2
+        @align 4
+        ldr r3, [adr+8] ;勇将
+        mov lr, r3
         @dcw $F800
     pop {r2}
 	cmp	r0, #0
