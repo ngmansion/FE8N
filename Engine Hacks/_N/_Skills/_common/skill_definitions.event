@@ -31,6 +31,7 @@
 #define Effective3ID 29 //0x1d特効3
 #define Effective4ID 30 //0x1e特効4
 #define DistantDefID 31 //0x1f遠距離防御
+#define DeflectID 32  //0x20連撃防御
 
 #define AstraID 64 //0x40流星
 #define LunaID 65 //0x41月光

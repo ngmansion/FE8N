@@ -30,6 +30,9 @@ bl DistantDef
 bl BigShield
 	cmp	r0, #1
 	beq	effect
+bl Deflect
+    cmp r0, #1
+    beq effect
 bl Oracle
 	b	end
 
@@ -53,7 +56,47 @@ zero:
 end:
 	ldr	r0, =$0802b49a
 	mov	pc, r0
-
+    
+    Deflect:
+        push {lr}
+        mov r0, r8
+            @align 4
+            ldr r3, [adr+32] ;連撃防御
+            mov lr, r3
+            @dcw $F800
+        cmp r0, #0
+        beq endDeflect
+        
+        mov r0, r8
+        ldrb r0, [r0, #11]
+            @align 4
+            ldr r3 =$08019108
+            mov lr, r3
+            @dcw $F800
+        ldrb r1, [r0, #0x13] ;戦闘前のHP
+        mov r0, r8
+        ldrb r0, [r0, #0x13] ;今のHP
+        cmp r0, r1
+        bge endDeflect ;HP減少(被攻撃)が無ければ終わり
+        
+        mov r0, r7
+            @align 4
+            ldr r1, [adr+16] ;見切り
+            mov lr, r1
+            @dcw $F800
+        cmp r0, #0
+        bne endDeflect
+        ldrh r0, [r4, #4]
+        asr r0, r0, #1
+        strh r0, [r4, #4]
+        mov r0, #1
+        @dcw $E000
+    endDeflect:
+        mov r0, #0
+        pop {pc}
+    
+    
+    
     DistantGuard:
         push {lr}
         mov r0, r8
