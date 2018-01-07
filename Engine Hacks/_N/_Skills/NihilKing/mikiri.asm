@@ -25,20 +25,28 @@ start:
 ;除外判定終了
 	push	{r3}    ;;;;;;;;
 	mov	r3, sp
-	ldr	r2, =$0802AFD1
+	ldr r2, =$0802AFD1 ;汎用
+	ldr r1, =$0802aff9 ;連続専用
 loop ;加攻撃者アドレス取得ループ
 	ldr	r0, [r3]
 	cmp	r0, r2
-	beq	gotA
+	beq	gotA ;汎用
+	cmp	r0, r1
+	beq	gotR ;連続専用
 	add	r3, #4
 	b	loop
 return:
     push {lr}
     ldr	r0, =RETURN_ADR
     mov	pc, r0
-gotA
+gotR: ;連続用
+    mov r2, r6
+    b hokan
+    
+gotA: ;汎用
     sub r3, #4
     ldr r2, [r3] ;加攻撃者アドレス取得
+hokan:
     ldr r3, =$0203a568 ;被攻撃者アドレス補間
     cmp r2, r3
 	bne check
