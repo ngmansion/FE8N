@@ -2,6 +2,8 @@
     
 ///////////////////////////////
 PUSH
+    ORG 0x02ae88
+    jumpToHack(breaker_semetate)
     ORG 0x02af18
     jumpToHack(breaker_main)
 POP
@@ -19,6 +21,11 @@ breaker_main:
     POIN waryFighter_hasSkill
     POIN boldFighter_hasSkill
     POIN vengefulFighter_hasSkill
+    
+breaker_semetate:
+    #incbin semetate.gba
+    POIN hasDesperation
+    POIN hasNihil
     
 breaker_hasSkill1:
     HAS_SKILL_W
@@ -68,4 +75,8 @@ vengefulFighter_hasSkill:
     WORD VengefulFighterID
     POIN vengefulFighterList_w
     
-    
+hasDesperation:
+    HAS_SKILL_W
+    POIN DesperationList
+    WORD DesperationID
+    POIN DesperationList_w

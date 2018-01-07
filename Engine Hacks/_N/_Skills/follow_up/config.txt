@@ -39,3 +39,8 @@ vengefulFighterList: //迎撃隊形
     BYTE $00 0
 vengefulFighterList_w:
     BYTE $00 0
+    
+DesperationList: //攻め立て
+    BYTE $00 0 
+DesperationList_w:
+    BYTE $00 0

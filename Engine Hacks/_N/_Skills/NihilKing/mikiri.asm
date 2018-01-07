@@ -25,10 +25,9 @@ start:
 ;除外判定終了
 	push	{r3}    ;;;;;;;;
 	mov	r3, sp
-	ldr	r2, =$0802AE
-loop
+	ldr	r2, =$0802AFD1
+loop ;加攻撃者アドレス取得ループ
 	ldr	r0, [r3]
-	lsr	r0, r0, #8
 	cmp	r0, r2
 	beq	gotA
 	add	r3, #4
@@ -38,24 +37,17 @@ return:
     ldr	r0, =RETURN_ADR
     mov	pc, r0
 gotA
-	ldr	r2, [r3, #4]
-	ldr	r3, [r3, #8]
-;反撃チェック
-	ldr	r0, =$0203A604
-	ldr	r0, [r0]
-	ldr	r0, [r0]
-	lsl	r0, r0, #28
-	lsr	r0, r0, #30
-	cmp	r0, #2
-	bne	check
-	eor r3, r2	;反撃なら逆転
-	eor r2, r3
-	eor r3, r2
-check
+    sub r3, #4
+    ldr r2, [r3] ;加攻撃者アドレス取得
+    ldr r3, =$0203a568 ;被攻撃者アドレス補間
+    cmp r2, r3
+	bne check
+	ldr r3, =$0203a4e8 ;被攻撃者アドレス補間
+check:
 ;大盾チェック
 	mov	r0, sp
 	ldr	r0, [r0, #24]
-	ldr	r1, =$0802B3B9	;;大盾は専用
+	ldr	r1, =$0802B3B9	;;(元の)大盾は専用
 	cmp	r0, r1
 	beq	Reverse
 ;独自チェック
