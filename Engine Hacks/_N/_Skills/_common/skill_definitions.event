@@ -1,4 +1,4 @@
-
+//(表示のみ)とあるものは、個人スキルとして設定しても意味が無い物です
 
 #define PaviseID 1 //0x1大盾
 #define MiracleID 2 //0x2祈り
@@ -57,7 +57,7 @@
 #define LethalityID 84//0x54瞬殺(表示のみ)
 #define SummonID 85//0x55召喚(表示のみ)
 #define DanceID 86//0x56踊る(表示のみ)
-#define SafeguardID 87//0x57メンテナンス
-#define VoidCurseID 88//0x58虚無の呪い
+#define SafeguardID 87//0x57メンテナンス(表示のみ)
+#define VoidCurseID 88//0x58虚無の呪い(表示のみ)
 #define DistantGuardID 89 //0x59遠距離無効
 #define RightfulGodID 90 //0x5a神の器
