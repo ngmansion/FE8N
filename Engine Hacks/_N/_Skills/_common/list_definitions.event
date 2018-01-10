@@ -102,8 +102,8 @@ POIN 0
 POIN DesperationList
  POIN DesperationList_w
 //34(0x22)
-POIN 0
- POIN 0
+POIN blitzkrieg_list
+ POIN blitzkrieg_list_w
 //35(0x23)
 POIN 0
  POIN 0
@@ -270,10 +270,10 @@ POIN 0
 POIN DistantGuardID
  POIN 0
 //90(0x5A)
-POIN 0
+POIN RightfulGodList
  POIN 0
 //91(0x5B)
-POIN 0
+POIN CantoPlusList
  POIN 0
 //92(0x5C)
 POIN 0

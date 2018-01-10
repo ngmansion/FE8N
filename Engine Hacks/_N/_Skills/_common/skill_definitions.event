@@ -10,7 +10,7 @@
 #define VantageID 8 //0x8待ち伏せ
 #define AdeptID 9 // 0x9連続
 #define ParagonID 10 //0xaエリート
-#define RemoveID 11 //0xb再行動
+#define RemoveID 11 //0xb再動
 #define PassID 12 //0xcすり抜け
 #define RenewalID 13 //0xd回復
 #define DauntID 14 //0xe恐怖
@@ -33,6 +33,8 @@
 #define DistantDefID 31 //0x1f遠距離防御
 #define DeflectID 32  //0x20連撃防御
 #define DesperationID 33 //0x21攻め立て
+#define BlitzkriegID 34 //0x22電撃戦闘
+
 
 #define AstraID 64 //0x40流星
 #define LunaID 65 //0x41月光
@@ -61,3 +63,6 @@
 #define VoidCurseID 88//0x58虚無の呪い(表示のみ)
 #define DistantGuardID 89 //0x59遠距離無効
 #define RightfulGodID 90 //0x5a神の器
+#define CantoPlusID 91 //0x5b再移動
+
+

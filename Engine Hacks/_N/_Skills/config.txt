@@ -8,7 +8,6 @@
 #include "Tokkou\EA.txt"
 #include "Kaifuku\EA.txt"
 #include "pass\EA.txt"
-#include "saiidou_fix\EA.txt"
 #include "saikoudou\EA.txt"
 #include "BOW\EA.txt"
 #include "NihilKing\EA.txt"

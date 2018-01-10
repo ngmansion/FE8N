@@ -1,5 +1,10 @@
-//敵に付けても正常動作しません
+//敵に付けても動作しません
 
 RemoveList:
-BYTE $00 0
+    BYTE $00 0
 
+GaleforceList:
+    BYTE $23 $24 $03 $04 0
+
+CantoPlusList:
+    BYTE $00 0

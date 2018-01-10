@@ -1,3 +1,0 @@
-GaleforceList:
-    BYTE $23 $24 $03 $04 0
-

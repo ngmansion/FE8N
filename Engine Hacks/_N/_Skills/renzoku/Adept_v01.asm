@@ -6,7 +6,8 @@
 	mov	r1, #32
 	and	r0, r1
 	cmp	r0, #0
-	beq	skill				;x勇者系以外はジャンプ
+	beq skill ;x勇者武器持ってないならジャンプ
+Brave:
 	ldr	r0, =$0203a604
 	ldr	r3, [r0, #0]
 	ldr	r2, [r3, #0]
@@ -21,7 +22,26 @@
 	mov	r4, #1				;;攻撃回数加算
 	b end
 ;これ以下は新処理
-skill
+skill:
+    mov r0, r6
+    mov r1, r8
+        @align 4
+        ldr r3, [adr+4] ;bolt
+        mov lr, r3
+        @dcw $F800
+    orr r4, r0
+    
+    mov r0, r8
+    mov r1, r6
+        @align 4
+        ldr r3, [adr+4] ;bolt
+        mov lr, r3
+        @dcw $F800
+    orr r4, r0
+    
+    cmp r4, #0
+    bne Brave
+renzoku:
     mov r0, r6
         @align 4
         ldr r1, [adr] ;連続
@@ -59,5 +79,6 @@ end
 	mov	r0, r4
 	pop	{r4}
 	pop	{pc}
+	
 @ltorg
 adr:

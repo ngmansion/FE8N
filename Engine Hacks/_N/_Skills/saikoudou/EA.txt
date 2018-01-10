@@ -1,32 +1,64 @@
 #include config.txt
 
-ALIGN 4
 PUSH
-ORG	0x1ceac
-BYTE	$3D
-ORG	0x1cefc
-BYTE	$00 $4A $97 $46
-POIN	odorero
+
+//Revert
+
+ORG 0x01cefc
+SHORT $2000 $E02E
+WORD $03004df0
+
+ORG 0x1cef0
+SHORT $DD04
 
 POP
 
-#ifdef Debug_Mode
+//main
 
-odorero:
-#incbin "debug.dmp"
+PUSH
+
+ORG 0x018540
+    WORD $46874800
+    POIN kaze_back
+
+ORG 0x01cea8
+    jumpToHack(odorero)
+
+ORG 0x1CED4
+    BYTE $00 $48 $87 $46
+    POIN canto_impl
+
+POP
 ALIGN 4
 
-#else
+kaze_back:
+#incbin reboot.gba
 
-odorero:
-#incbin main.gba
-POIN hasRemove
-
-hasRemove:
+canto_impl:
+#incbin jinrai_fix_ijou.gba
+    POIN hasCantoPlus
+    
+hasCantoPlus:
     HAS_SKILL
-    POIN RemoveList
-    WORD RemoveID
+    POIN CantoPlusList
+    WORD CantoPlusID
+
+#ifdef Debug_Mode
+    odorero:
+        #incbin "debug.dmp"
+#else
+    odorero:
+        #incbin main.gba
+        POIN hasRemove
+        POIN hasGaleforce
+    hasRemove:
+        HAS_SKILL
+        POIN RemoveList
+        WORD RemoveID
+    hasGaleforce:
+        HAS_SKILL
+        POIN GaleforceList
+        WORD GaleforceID
+#endif
 
 ALIGN 4
-
-#endif
