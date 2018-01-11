@@ -10,11 +10,16 @@
     ldrb r1, [r0, #11]
     mov r2, #192
     and r2, r1
-    bne Return ;©ŒRˆÈŠO‚ÍI—¹
+    bne Return ;è‡ªè»ä»¥å¤–ã¯çµ‚äº†
     ldrb	r1, [r0, #0x13]
     cmp r1, #0
-    beq Return ;€‚ñ‚¾‚çI—¹
-    
+    beq Return ;æ­»ã‚“ã ã‚‰çµ‚äº†
+    ldr r0, [r0, #12]
+    ldr r1, =$0801cf04
+    ldr r1, [r1]
+    and	r0, r1
+    bne Return ;å†ç§»å‹•å¾Œã¯ã‚¹ã‚­ãƒƒãƒ—
+    ldr r0, [r4]
     bl kaze
     cmp r0, #0
     bne Sound
@@ -59,7 +64,7 @@ kaze:
     cmp r0, r1
     bne non_ka
     ldr r1, =$0203a568
-    ldrb r1, [r1, #0x13] ;‘ŠèŒ‚”j
+    ldrb r1, [r1, #0x13] ;ç›¸æ‰‹æ’ƒç ´
     cmp r1, #0
     bne non_ka
     
@@ -69,11 +74,11 @@ kaze:
     ldrb	r1, [r0]
     cmp r1, #0xFF
     bne gogot
-    b non_ka ;‘Ò‹@ƒ`ƒFƒbƒN
+    b non_ka ;å¾…æ©Ÿãƒã‚§ãƒƒã‚¯
     
 gogot:
     mov r1, #0xFF
-    strb r1, [r0] ;Šù¬–À
+    strb r1, [r0] ;æ—¢æˆäº‹å®Ÿ
     
     ldr	r0, [r4, #0]
     ldr	r1, [r0, #12]
