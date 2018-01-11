@@ -1,11 +1,10 @@
 @thumb
 	ldr	r5, =$0203a4d0
-;闘技場チェック
     ldr r0, =$0203a4d0
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
-    bne endwo
+    bne endwo ;闘技場チェック
 	    mov r0, r8
 		@align 4
 		ldr r1, [adr+8] ;見切り
