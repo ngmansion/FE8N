@@ -19,7 +19,7 @@ Elitenon:
     POIN hasElite
 hasElite:
     HAS_SKILL
-    POIN ParagonList
     WORD ParagonID
-
+    POIN judgeSkill
+    
     

@@ -16,9 +16,8 @@ POIN hasGecko
 
 hasGecko:
     HAS_SKILL
-    POIN GeckoClass
     WORD LunaID
-    
+    POIN judgeSkill
 
 //////////貫通系奥義分岐
 

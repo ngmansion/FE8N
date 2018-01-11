@@ -11,6 +11,6 @@ passem:
     POIN hasPass
 hasPass:
     HAS_SKILL
-    POIN PassList
     WORD PassID
+    POIN judgeSkill
     

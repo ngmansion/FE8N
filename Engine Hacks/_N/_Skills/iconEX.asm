@@ -1,6 +1,6 @@
 @thumb
 
-@define ICON_LIST_SIZE 12 ;(4 * 3)
+@define ICON_LIST_SIZE 16
 @define ICON_GAP 6
 
 ;@org	$08089268
@@ -109,7 +109,7 @@ nomi:
     ldr r4, [r4, #12]
     ldr r4, [r4, #4]
     ldrb r4, [r4, #4]
-    mov r0, #1;CLASS
+    mov r3, #2;CLASS
     bl SKILL4
 @align 4
 	ldr r5, [adr+8]	;WEAPON
@@ -122,7 +122,7 @@ nomi:
     ldr r5, [adr+16] ;weapon2
     ldr r4, =$0203a530
     ldrb r4, [r4]
-    mov r0, #2 ;weapon2
+    mov r3, #3 ;weapon2
     bl SKILL4
 end
 	pop	{r4, r5, r6, r7, pc}
@@ -309,11 +309,11 @@ nonitem3
 
 
 SKILL4:
-    push {r4, lr} ;r4=判定ID
+    push {r3, r4, lr} ;r4=判定ID
     cmp r4, #0
     beq end4
     mov r4, #0 ;以後r4はカウンタ
-    lsl r3, r0, #2 ;リスト始点をずらす
+    lsl r3, r3, #2 ;リスト始点をずらす
     b next4
     
 loopstart4:
@@ -334,7 +334,7 @@ loopyloopy4
     
 list_checker:
     ldr r2, [r5, r3] ;リストポインタロード
-    ldr r1, [sp]  ;IDをロード
+    ldr r1, [sp+4]  ;IDをロード
 list_loop:
     ldrb r0, [r2]
     cmp r0, #0
@@ -362,6 +362,8 @@ nonitem4
     lsl r2, r2, #7
     mov r0, r6
     bl icon
+    ldr r3, [sp]  ;r3復帰
+    lsl r3, r3, #2 ;リスト始点をずらす
     add r6, #ICON_GAP
     add r7, #2	;HELP memory increment
 next4:
@@ -370,7 +372,7 @@ next4:
     cmp r4, #127 ;スキル最大数
     ble loopstart4
 end4:
-    pop {r4, pc}
+    pop {r3, r4, pc}
 
 
 @ltorg

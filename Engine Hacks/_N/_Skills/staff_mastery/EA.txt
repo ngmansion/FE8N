@@ -39,6 +39,6 @@ staff_mastery_effect:
 
 staff_mastery_hasSkill:
     HAS_SKILL
-    POIN staff_mastery_list
     WORD StafffaireID
+    POIN judgeSkill
 ALIGN 4

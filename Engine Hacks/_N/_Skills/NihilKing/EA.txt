@@ -17,17 +17,16 @@ mirikiri:
  
 hasRightfulKing:
  HAS_SKILL
- POIN RightfulKingClassList
  WORD RightfulKingID
+ POIN judgeSkill
 hasResolve:
  HAS_SKILL
- POIN ResolveClassList
  WORD ResolveID
+ POIN judgeSkill
 hasRightfulGod:
  HAS_SKILL
- POIN RightfulGodList
  WORD RightfulGodID
- 
+ POIN judgeSkill
  
  
 ////////////////////KingFix

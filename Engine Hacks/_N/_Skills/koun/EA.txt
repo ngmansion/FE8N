@@ -14,7 +14,6 @@ sli_koun:
     
 hasFortune:
     HAS_SKILL
-    POIN FortuneList
     WORD FortuneID
-    
+    POIN judgeSkill
 ALIGN 4

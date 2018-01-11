@@ -27,10 +27,9 @@ yosoku:
 
 
 hasAdept:
-    HAS_SKILL_W
-    POIN adept_list
+    HAS_SKILL
     WORD AdeptID
-    POIN adept_list_w
+    POIN judgeSkill
     
 bolting_impl:
 #incbin "bolt.gba"
@@ -38,10 +37,9 @@ POIN hasNihil
 POIN hasBlitzkrieg
     
 hasBlitzkrieg:
-    HAS_SKILL_W
-    POIN blitzkrieg_list
+    HAS_SKILL
     WORD BlitzkriegID
-    POIN blitzkrieg_list_w
+    POIN judgeSkill
 
 ////////////////必的の後処理
 PUSH

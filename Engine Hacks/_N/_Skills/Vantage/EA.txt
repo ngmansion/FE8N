@@ -24,6 +24,6 @@ ski_vantage:
 
 hasVantage:
  HAS_SKILL
- POIN VantageList
  WORD VantageID
+ POIN judgeSkill
  

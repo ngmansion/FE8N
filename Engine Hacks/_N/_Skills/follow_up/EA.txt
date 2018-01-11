@@ -28,55 +28,46 @@ breaker_semetate:
     POIN hasNihil
     
 breaker_hasSkill1:
-    HAS_SKILL_W
-    POIN Swordbreaker
+    HAS_SKILL
     WORD SwordbreakerID
-    POIN Swordbreaker_w
+    POIN judgeSkill
     
 breaker_hasSkill2:
-    HAS_SKILL_W
-    POIN Lancebreaker
+    HAS_SKILL
     WORD LancebreakerID
-    POIN Lancebreaker_w
+    POIN judgeSkill
     
 breaker_hasSkill3:
-    HAS_SKILL_W
-    POIN Axebreaker
+    HAS_SKILL
     WORD AxebreakerID
-    POIN Axebreaker_w
+    POIN judgeSkill
     
 breaker_hasSkill4:
-    HAS_SKILL_W
-    POIN Bowbreaker
+    HAS_SKILL
     WORD BowbreakerID
-    POIN Bowbreaker_w
+    POIN judgeSkill
     
 breaker_hasSkill5:
-    HAS_SKILL_W
-    POIN Tomebreaker
+    HAS_SKILL
     WORD TomebreakerID
-    POIN Tomebreaker_w
+    POIN judgeSkill
     
 waryFighter_hasSkill:
-    HAS_SKILL_W
-    POIN waryFighterList
+    HAS_SKILL
     WORD WaryFighterID
-    POIN waryFighterList_w
+    POIN judgeSkill
     
 boldFighter_hasSkill:
-    HAS_SKILL_W
-    POIN boldFighterList
+    HAS_SKILL
     WORD BoldFighterID
-    POIN boldFighterList_w
+    POIN judgeSkill
     
 vengefulFighter_hasSkill:
-    HAS_SKILL_W
-    POIN vengefulFighterList
+    HAS_SKILL
     WORD VengefulFighterID
-    POIN vengefulFighterList_w
+    POIN judgeSkill
     
 hasDesperation:
-    HAS_SKILL_W
-    POIN DesperationList
+    HAS_SKILL
     WORD DesperationID
-    POIN DesperationList_w
+    POIN judgeSkill

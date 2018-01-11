@@ -1,15 +1,7 @@
 @thumb
     push {r4, lr}
     mov r4, r0
-    ldr r0, [r4, #4]
-    ldr r1, [r4, #0]
-    ldr r0, [r0, #40]
-    ldr r1, [r1, #40]
-    orr r0, r1
-    lsl r0, r0, #8
-    bmi oui
-@align 4
-    ldr r2, [adr] ;ID
+    mov r2, r1
     lsl r2, r2, #24
     lsr r2, r2, #24
 ;書チェック
@@ -23,10 +15,12 @@
     and r0, r1
     cmp r0, r2
     beq oui
-unit: ;ユニットチェック
+;ユニットチェック
+unit:
     ldr r0, [r4]
     add r0, #0x26
     ldrb r0, [r0]
+@align 4
     cmp r0, r2
     beq oui
 ;上級スキルチェック
@@ -42,7 +36,7 @@ unit: ;ユニットチェック
     beq oui
 jump0: ;リストチェック
 @align 4
-    ldr r3, [adr+4]
+    ldr r3, [adr]
     lsl r2, r2, #4
     add r3, r2, r3
 ;ユニット

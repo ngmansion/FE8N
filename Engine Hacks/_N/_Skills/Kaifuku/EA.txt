@@ -13,5 +13,6 @@ POIN hasRenewal
 
 hasRenewal:
     HAS_SKILL
-    POIN listHeal
     WORD RenewalID
+    POIN judgeSkill
+    

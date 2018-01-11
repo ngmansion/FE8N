@@ -16,15 +16,13 @@ POIN hasWrath
 POIN hasNihil
 
 hasCancel:
-    HAS_SKILL_W
-    POIN cancel_list
+    HAS_SKILL
     WORD CancelID
-    POIN cancel_list_w
-
+    POIN judgeSkill
+    
 hasWrath:
-    HAS_SKILL_W
-    POIN wrath_list
+    HAS_SKILL
     WORD WrathID
-    POIN wrath_list_w
-
+    POIN judgeSkill
+    
 ALIGN 4

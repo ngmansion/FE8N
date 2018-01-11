@@ -22,19 +22,18 @@ effective_main:
     
 effective_hasSkill1:
     HAS_SKILL
-    POIN effective_class1
     WORD Effective1ID
+    POIN judgeSkill
 effective_hasSkill2:
     HAS_SKILL
-    POIN effective_class2
     WORD Effective2ID
+    POIN judgeSkill
 effective_hasSkill3:
     HAS_SKILL
-    POIN effective_class3
     WORD Effective3ID
+    POIN judgeSkill
 effective_hasSkill4:
     HAS_SKILL
-    POIN effective_class4
     WORD Effective4ID
-    
+    POIN judgeSkill
     

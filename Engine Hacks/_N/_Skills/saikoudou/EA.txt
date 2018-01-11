@@ -40,8 +40,8 @@ canto_impl:
     
 hasCantoPlus:
     HAS_SKILL
-    POIN CantoPlusList
     WORD CantoPlusID
+    POIN judgeSkill
 
 #ifdef Debug_Mode
     odorero:
@@ -51,14 +51,15 @@ hasCantoPlus:
         #incbin main.gba
         POIN hasRemove
         POIN hasGaleforce
+        
     hasRemove:
         HAS_SKILL
-        POIN RemoveList
         WORD RemoveID
+        POIN judgeSkill
     hasGaleforce:
         HAS_SKILL
-        POIN GaleforceList
         WORD GaleforceID
+        POIN judgeSkill
 #endif
 
 ALIGN 4

@@ -14,8 +14,6 @@ POIN hasRentatsu
 POIN hasNihil
 
 hasRentatsu:
-    HAS_SKILL_W
-    POIN Rentatsu_List
+    HAS_SKILL
     WORD NullifyID
-    POIN Rentatsu_List_w
-    
+    POIN judgeSkill

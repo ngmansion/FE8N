@@ -76,17 +76,18 @@ POIN	hasYoukoh
 
 hasSOL:
     HAS_SKILL
-    POIN SolList
     WORD SolID
+    POIN judgeSkill
 hasTenku:
     HAS_SKILL
-    POIN TenkuList
     WORD AetherID
+    POIN judgeSkill
 hasYoukoh:
     HAS_SKILL
-    POIN YoukohList
     WORD FlareID
+    POIN judgeSkill
 hasRyusei:
     HAS_SKILL
-    POIN RyuseiList
     WORD AstraID
+    POIN judgeSkill
+    
