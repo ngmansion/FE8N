@@ -1,9 +1,17 @@
 #include config.txt
 
 ALIGN 4
+
+//revert
 PUSH
-ORG	0x2c354
-jumpToHack(Elitenon)
+  ORG 0x2c35C
+    SHORT $6a91 $4308 $2180 $0489 $4008 $2800 $d102 $e00f
+POP
+
+/////main
+PUSH
+  ORG 0x2c354
+    jumpToHack(Elitenon)
 POP
 
 Elitenon:
