@@ -1,11 +1,15 @@
 @thumb
+
+@define ICON_LIST_SIZE 12 ;(4 * 3)
+@define ICON_GAP 6
+
 ;@org	$08089268
 	
 	push	{r4, r5, r6, r7, lr}
 ;画像
 	mov	r4, #0
     @align 4
-    ldr r0, [adr+24]	;EQUIPMENT_POSITION
+    ldr r0, [adr+20]	;EQUIPMENT_POSITION
     ldr r0, [r0]
     
 	ldr	r6, =$00007060
@@ -100,12 +104,12 @@ nomi:
 	ldrb	r4, [r4, #4]
 	bl	SKILL
 @align 4
-	ldr	r5, [adr+20]	;CLASS2
+	ldr	r5, [adr+16]	;CLASS2
     ldr r4, =$02003BFC
     ldr r4, [r4, #12]
     ldr r4, [r4, #4]
     ldrb r4, [r4, #4]
-    mov r0, #0;CLASS
+    mov r0, #1;CLASS
     bl SKILL4
 @align 4
 	ldr r5, [adr+8]	;WEAPON
@@ -115,16 +119,16 @@ nomi:
 	beq end
 	bl	SKILL
 @align 4
-    ldr r5, [adr+20] ;weapon2
+    ldr r5, [adr+16] ;weapon2
     ldr r4, =$0203a530
     ldrb r4, [r4]
-    mov r0, #4 ;weapon2
+    mov r0, #2 ;weapon2
     bl SKILL4
 end
 	pop	{r4, r5, r6, r7, pc}
 
 
-SKILL
+SKILL: ;旧仕様
 	push	{lr}
 	b	test
 restart
@@ -154,7 +158,7 @@ nonitem
 	lsl	r2, r2, #7
 	mov	r0, r6
 	bl	icon
-	add	r6, #6	;アイコンの間隔
+	add	r6, #ICON_GAP
 	add	r7, #2	;HELP memory increment
 	
 jump
@@ -191,7 +195,7 @@ icon
 	
 
 
-SKILL2
+SKILL2: ;ability仕様
 	push	{lr}
 	cmp	r4, #0
 	bne	test2
@@ -224,7 +228,7 @@ nonitem2
 	lsl	r2, r2, #7
 	mov	r0, r6
 	bl	icon
-	add	r6, #6	;アイコンの間隔
+	add	r6, #ICON_GAP
 	add	r7, #2	;HELP memory increment
 	
 jump2
@@ -255,7 +259,7 @@ limitter2
 	pop {pc}
 	
 	
-SKILL3:
+SKILL3: ;新仕様1
     push {lr}
     cmp r4, #0
     bne test3
@@ -264,7 +268,8 @@ end3:
 test3
     cmp r4, #127
     bge end3
-    lsl r0, r4, #2
+    mov r0, #ICON_LIST_SIZE
+    mul r0, r4
     add r5, r5, r0
     ldrh r0, [r5]
     cmp r0, #0
@@ -298,7 +303,7 @@ nonitem3
     lsl r2, r2, #7
     mov r0, r6
     bl icon
-    add r6, #6	;アイコンの間隔
+    add r6, #ICON_GAP
     add r7, #2	;HELP memory increment
     pop {pc}
 
@@ -307,20 +312,16 @@ SKILL4:
     push {r4, lr} ;r4=判定ID
     cmp r4, #0
     beq end4
-    mov r4, #0
-    add r5, r5, r0
+    mov r4, #0 ;以後r4はカウンタ
+    lsl r3, r0, #2 ;リスト始点をずらす
     b next4
     
 loopstart4:
-    ldr r0, [r5] ;リストポインタロード
+    ldr r0, [r5, r3] ;リストポインタロード
     cmp r0, #0
     beq next4
 ;ダブりチェック
-    @align 4
-    ldr r3, [adr+16] ;アイコンヘルプテーブル
-    lsl r0, r4, #2
-    add r3, r3, r0
-    ldrh r0, [r3]
+    ldrh r0, [r5]
     ldr r2 =$02003B00
 loopyloopy4
     cmp r2, r7
@@ -332,14 +333,14 @@ loopyloopy4
     b loopyloopy4
     
 list_checker:
-    ldr r2, [r5] ;リストポインタロード
-    ldr r1, [sp] ;IDをロード
+    ldr r2, [r5, r3] ;リストポインタロード
+    ldr r1, [sp]  ;IDをロード
 list_loop:
     ldrb r0, [r2]
     cmp r0, #0
     beq next4
     cmp r0, r1
-    beq limitter4
+    beq limitter4 ;IDが一致
     add r2, #1
     b list_loop
 
@@ -348,12 +349,12 @@ limitter4: ;上限チェック
     lsr r1, r1, #24
     cmp r1, #12 ;アイコン上限
     beq end4
-    ldrh r0, [r3]
-    strh r0, [r7]
+    ldrh r0, [r5]
+    strh r0, [r7] ;ヘルプストア
     add r1, r4, #1
     add r1, #255
     mov r2, #0xA0
-    ldrb r0, [r3, #2]
+    ldrb r0, [r5, #2]
     cmp r0, #0xFF
     bne nonitem4
     sub r2, #0x20
@@ -361,26 +362,15 @@ nonitem4
     lsl r2, r2, #7
     mov r0, r6
     bl icon
-    add r6, #6	;アイコンの間隔
+    add r6, #ICON_GAP
     add r7, #2	;HELP memory increment
 next4:
-    add r5, #8
+    add r5, #ICON_LIST_SIZE
     add r4, #1
     cmp r4, #127 ;スキル最大数
     ble loopstart4
 end4:
     pop {r4, pc}
-
-
-
-
-
-
-
-
-
-
-
 
 
 @ltorg
