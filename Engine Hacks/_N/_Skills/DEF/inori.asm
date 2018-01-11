@@ -59,6 +59,11 @@ end:
     
     Deflect:
         push {lr}
+            ldr r0, =$0203a4d0
+            ldrh r0, [r0]
+            mov r1, #0x20
+            and r0, r1
+            bne endDeflect ;闘技場チェック
         mov r0, r8
             @align 4
             ldr r3, [adr+32] ;連撃防御
@@ -120,6 +125,11 @@ end:
         
     DistantDef:
         push {lr}
+            ldr r0, =$0203a4d0
+            ldrh r0, [r0]
+            mov r1, #0x20
+            and r0, r1
+            bne endDistantDef ;闘技場チェック
         mov r0, r8
             @align 4
             ldr r1, [adr+28] ;遠距離防御

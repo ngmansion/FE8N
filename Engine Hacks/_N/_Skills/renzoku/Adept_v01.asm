@@ -23,6 +23,13 @@ Brave:
 	b end
 ;これ以下は新処理
 skill:
+
+    ldr r0, =$0203a4d0
+    ldrh r0, [r0]
+    mov r1, #0x20
+    and r0, r1
+    bne renzoku
+
     mov r0, r6
     mov r1, r8
         @align 4
