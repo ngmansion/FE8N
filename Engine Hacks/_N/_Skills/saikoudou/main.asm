@@ -4,13 +4,7 @@
     ldr r4, =$0801cf00
     ldr r4, [r4]
     
-    
-    
     ldr r0, [r4, #0]
-    ldrb r1, [r0, #11]
-    mov r2, #192
-    and r2, r1
-    bne Return ;自軍以外は終了
     ldrb	r1, [r0, #0x13]
     cmp r1, #0
     beq Return ;死んだら終了
@@ -19,7 +13,16 @@
     ldr r1, [r1]
     and	r0, r1
     bne Return ;再移動後はスキップ
-    ldr r0, [r4]
+    
+    bl kaifuku
+    
+    
+    ldr r0, [r4, #0]
+    ldrb r1, [r0, #11]
+    mov r2, #192
+    and r2, r1
+    bne Return ;自軍以外は終了
+
     bl kaze
     cmp r0, #0
     bne Sound
@@ -46,6 +49,56 @@ Sound:
 end:
     mov	r0, #0
     pop	{r4, r5, pc}
+    
+    
+    mov r0, #0x89
+    mov r1, #0xB8
+        ldr r2, =$08014B50
+        mov lr, r2
+        @dcw $F800
+    
+    
+kaifuku:
+    push {lr}
+    ldr	r0, [r4, #0]
+        @align 4
+        ldr r2, [adr+8]
+        mov lr, r2
+        @dcw $F800
+    cmp r0, #0
+    beq non_hp
+    
+    ldr r0, [r4]
+    ldr r1, =$0203a4e8
+    ldrb r0, [r0, #0xB]
+    ldrb r1, [r1, #0xB]
+    cmp r0, r1
+    bne non_hp
+    ldr r1, =$0203a568
+    ldrb r1, [r1, #0x13] ;相手撃破
+    cmp r1, #0
+    bne non_hp
+    
+    ldr	r2, [r4]
+    ldrb r0, [r2, #19] ;現在19
+    ldrb r1, [r2, #18] ;最大18
+    asr r1, r1, #1
+    add r0, r0, r1
+    
+    ldrb r1, [r2, #18] ;最大18
+    cmp r0, r1
+    bgt jump_hp
+    mov r0, r1
+jump_hp:
+    strb r0, [r2, #19] ;現在19
+    
+    mov	r0, #1
+    @dcw $E000
+non_hp:
+    mov	r0, #0
+    pop	{lr}
+    
+    
     
 kaze:
     push {lr}
