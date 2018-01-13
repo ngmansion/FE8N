@@ -64,5 +64,5 @@
 #define DistantGuardID 89 //0x59遠距離無効
 #define RightfulGodID 90 //0x5a神の器
 #define CantoPlusID 91 //0x5b再移動
-#define listImpale 92 //0x5c撃破(表示のみ)
+#define ImpaleID 92 //0x5c撃破(表示のみ)
 
