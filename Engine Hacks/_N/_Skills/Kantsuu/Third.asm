@@ -63,7 +63,20 @@ start:
 	ldrb	r1, [r2, #1]
 	cmp	r0, r1
 	beq	Flower
+@align 4
+	ldr	r2, [adr+24]
+	ldrb	r1, [r2]
+	cmp	r0, r1
+	beq	Impale
+	ldrb	r1, [r2, #1]
+	cmp	r0, r1
+	beq	Impale
 	b	end
+	
+Impale:
+	mov	r1, r9
+	sub	r0, r1, r4
+	b	jump
 	
 Revenge:
 	bl	Gecko
