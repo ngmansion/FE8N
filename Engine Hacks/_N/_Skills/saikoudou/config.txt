@@ -1,4 +1,10 @@
-//敵に付けても動作しません
+
+Lifetaker_list:
+    BYTE $00 0
+Lifetaker_list_w:
+    BYTE $00 0
+    
+//以下は敵に付けても動作しません
 
 RemoveList:
     BYTE $00 0
@@ -8,3 +14,6 @@ GaleforceList:
 
 CantoPlusList:
     BYTE $00 0
+    
+    
+    

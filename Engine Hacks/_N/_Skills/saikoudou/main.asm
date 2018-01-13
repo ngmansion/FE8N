@@ -14,8 +14,7 @@
     and	r0, r1
     bne Return ;再移動後はスキップ
     
-    bl kaifuku
-    
+    bl kaifuku ;戻り値は未使用
     
     ldr r0, [r4, #0]
     ldrb r1, [r0, #11]
@@ -51,13 +50,6 @@ end:
     pop	{r4, r5, pc}
     
     
-    mov r0, #0x89
-    mov r1, #0xB8
-        ldr r2, =$08014B50
-        mov lr, r2
-        @dcw $F800
-    
-    
 kaifuku:
     push {lr}
     ldr	r0, [r4, #0]
@@ -87,11 +79,16 @@ kaifuku:
     
     ldrb r1, [r2, #18] ;最大18
     cmp r0, r1
-    bgt jump_hp
+    ble jump_hp
     mov r0, r1
 jump_hp:
     strb r0, [r2, #19] ;現在19
     
+    mov r0, #0x89
+    mov r1, #0xB8
+        ldr r2, =$08014B50
+        mov lr, r2
+        @dcw $F800
     mov	r0, #1
     @dcw $E000
 non_hp:

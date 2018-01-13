@@ -51,7 +51,7 @@ hasCantoPlus:
         #incbin main.gba
         POIN hasRemove
         POIN hasGaleforce
-        
+        POIN hasLifetaker
     hasRemove:
         HAS_SKILL
         WORD RemoveID
@@ -59,6 +59,10 @@ hasCantoPlus:
     hasGaleforce:
         HAS_SKILL
         WORD GaleforceID
+        POIN judgeSkill
+    hasLifetaker:
+        HAS_SKILL
+        WORD LifetakerID
         POIN judgeSkill
 #endif
 

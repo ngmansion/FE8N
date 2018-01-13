@@ -1,8 +1,7 @@
 #include skill_definitions.event
 #include list_definitions.event
+#include config.txt
 
-NihilList:
-BYTE $00 0
 
 ALIGN 4
 #define HAS_SKILL "BYTE $01 $49 $02 $4A $97 $46 $00 $00"

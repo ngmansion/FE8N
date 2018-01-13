@@ -76,6 +76,18 @@ loopE
 	bl	SKILL3 ;上級スキル
 nomi:
 @align 4
+	ldr	r5, [adr+16]	;skl_icon_table
+	ldr	r4, =$02003BFC
+	ldr	r4, [r4, #12]
+	ldrb	r0, [r4, #0xB]
+	lsr	r0, r0, #6
+	beq nomi2 ;自軍外のみ
+	ldr	r4, [r4]
+	add	r4, #0x31
+	ldrb	r4, [r4]
+	bl	SKILL3 ;自軍外スキル
+nomi2:
+@align 4
 	ldr	r5, [adr]	;UNIT
 	ldr	r4, =$02003BFC
 	ldr	r4, [r4, #12]

@@ -20,7 +20,6 @@ unit:
     ldr r0, [r4]
     add r0, #0x26
     ldrb r0, [r0]
-@align 4
     cmp r0, r2
     beq oui
 ;上級スキルチェック
@@ -28,9 +27,19 @@ unit:
     ldr r1, [r1, #40]
     ldr r0, =$100
     and r0, r1
-    beq jump0
+    beq jump9
     ldr r0, [r4]
     add r0, #0x27
+    ldrb r0, [r0]
+    cmp r0, r2
+    beq oui
+jump9: ;自軍以外チェック
+    ldrb r1, [r4, #0xB]
+    mov r0, #0xC0
+    and r0, r1
+    beq jump0
+    ldr r0, [r4]
+    add r0, #0x31
     ldrb r0, [r0]
     cmp r0, r2
     beq oui
