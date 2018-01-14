@@ -23,7 +23,9 @@ mov	lr r2
 	cmp r0, #0
 	bne return
 	bl impale_impl ;撃破
-	
+	cmp r0, #0
+	bne return
+	bl ecripse_impl ;月食
 return:
 	mov	r1, #4
 	ldsh	r0, [r4, r1]
@@ -32,8 +34,54 @@ return:
 	mov	r0, #127
 	strh	r0, [r4, #4]
 nonmax
-	ldr	r0, =$0802b48e
-	mov	pc, r0
+    ldr r0, =$0802b48e
+    mov pc, r0
+
+
+ecripse_impl:
+    push {lr};;;;月食チェック
+;ダメージがゼロなら発動しない
+    mov r0, #4
+    ldsh r0, [r5, r0]
+    cmp r0, #0
+    ble false
+    
+    mov r2, r8
+    ldrb r1, [r2, #0x13] ;nowHP
+    cmp r0, r1
+    bge false ;一撃なら不発
+    ldrb r0, [r2, #0x12] ;maxHP
+    cmp r0, r1
+    beq false ;体力最大なら不発
+    
+    ldr r0, [r2]
+    ldr r1, [r2, #4]
+    ldr r0, [r0, #40]
+    ldr r1, [r1, #40]
+    orr r0, r1
+    ldr r1, =0x01008000
+    and r0, r1
+    bne false ;敵将チェック
+;ユニットチェック
+    mov r0, r7
+        @align 4
+        ldr r1, [adr+16] ;月食
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq false
+    ldrb r0, [r7, #21]	;技
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq false
+
+    mov r0, r8
+    ldrb r0, [r0, #0x13] ;nowHP
+    sub r0, #1
+    strh r0, [r5, #4]
+    b effect
+
 impale_impl:
     push {lr};;;;撃破チェック
 ;ダメージがゼロなら発動しない

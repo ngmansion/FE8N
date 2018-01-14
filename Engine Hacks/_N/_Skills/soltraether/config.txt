@@ -9,3 +9,8 @@ RyuseiList:
     BYTE$15 $16 0
 listImpale: //撃破
     BYTE $00 $00 0
+listEclipse: //月食
+    BYTE $2F $30 0
+    
+    
+    

@@ -15,6 +15,7 @@ POIN	hasTenku
 POIN	hasYoukoh
 POIN	hasRyusei
 POIN	hasImpale
+POIN	hasEclipse
 
 ALIGN 4
 
@@ -94,3 +95,8 @@ hasImpale:
     HAS_SKILL
     WORD ImpaleID
     POIN judgeSkill
+hasEclipse:
+    HAS_SKILL
+    WORD EclipseID
+    POIN judgeSkill
+

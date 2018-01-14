@@ -67,5 +67,6 @@
 #define ImpaleID 92 //0x5c撃破
 #define Leadership1ID 93 //0x5d指揮+1
 #define Leadership2ID 94 //0x5e指揮+2
+#define EclipseID 95 //0x5f月食
 
 
