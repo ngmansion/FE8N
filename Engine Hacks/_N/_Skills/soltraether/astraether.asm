@@ -191,9 +191,9 @@ jump
 		bl	random
 	cmp	r0, #0
 	beq	false
-
-    mov r0, #8
-    ldsh r0, [r5, r0] ;防御
+    
+    mov r0, r8
+    ldrb r0, [r0, #0x17] ;守備
     lsl r0, r0, #2
     mov r1, #0
 loop_eight:
@@ -216,8 +216,8 @@ YOUKOU:
 	beq	false
 	mov	r0, #4
 	ldsh	r1, [r5, r0]
-    mov r0, #8
-    ldsh r0, [r5, r0] ;防御
+    mov r0, r8
+    ldrb r0, [r0, #0x18] ;魔防
 	asr	r0, r0, #1
 	add	r0, r0, r1
 	strh	r0, [r5, #4]
