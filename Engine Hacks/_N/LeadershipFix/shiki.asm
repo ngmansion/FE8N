@@ -26,8 +26,14 @@ jumen
 	ldrb	r1, [r2, #12]	;救出
 	lsl	r1, r1, #26
 	bmi	nonono
-	mov	r1, #37
-	ldrb	r0, [r0, r1]
+    
+    mov r0, r5
+        @align 4
+        ldr r1, =$0802A968
+        ldr r1, [r1]
+        mov lr, r1
+        @dcw $F800
+    
 	add	r3, r3, r0		;合計の指揮
 nonono
 	add	r2, #72
@@ -138,7 +144,9 @@ finale
 	add	r0, r0, r4
 	strh	r0, [r1, #0]
 return
-	@dcw	$B002	//add	sp, #8
+	@dcw	$B002	;;add	sp, #8
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
+@ltorg
+adr:

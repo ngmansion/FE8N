@@ -1,17 +1,24 @@
 @thumb
 ;@org	$080896ac
 
-
+    push {r6,lr}
+    mov r6, r0
 	ldr	r2, [r4, #12]
 	ldr	r5, [r2, #0xC]
 	lsl	r5, r5, #26
-	lsr	r5, r5, #31	;•¯
+	lsr	r5, r5, #31	;é»’æ˜Ÿ
 	bne	black
-	mov	r5, #2	;¯‚ÌF
+	mov	r5, #2	;æ˜Ÿã®è‰²
 black:
-	ldr	r2, [r2]
-	mov	r1, #0x25
-	ldrb	r2, [r2, r1]
+
+    mov r0, r2
+        @align 4
+        ldr r1, =$0802A968
+        ldr r1, [r1]
+        mov lr, r1
+        @dcw $F800
+
+    mov r2, r0
 	cmp	r2, #0
 	beq	jump
 backSTAR:
@@ -28,11 +35,11 @@ backSTAR:
 	beq	two
 	cmp	r2, #1
 	beq	one
-miracleSTAR:
-	ldr	r0, =$02003f06
+miracleSTAR: ;6ä»¥ä¸Šã®â˜…
+    mov r0, r6;;ldr	r0, =$02003f06;;;;;;;;;æ•°å­—ä½ç½®
 	ldr	r1, =$08004a9c
 	mov	lr, r1
-	mov	r1, r5		;š”š‚ÌF
+	mov	r1, r5		;â˜…æ•°å­—ã®è‰²
 	cmp	r2, #10
 	blt	Hitoketa
 	add	r0, #0x2
@@ -43,19 +50,19 @@ Hitoketa:
 	
 	
 one:
-	mov	r0, $74	;•¶š
+	mov	r0, $74	;æ–‡å­—
 	b	nextSTAR
 two:
-	mov	r0, $73	;•¶š
+	mov	r0, $73	;æ–‡å­—
 	b	nextSTAR
 three:
-	mov	r0, $72	;•¶š
+	mov	r0, $72	;æ–‡å­—
 	b	nextSTAR
 four:
-	mov	r0, $71	;•¶š
+	mov	r0, $71	;æ–‡å­—
 	b	nextSTAR
 five:
-	mov	r0, $70	;•¶š
+	mov	r0, $70	;æ–‡å­—
 nextSTAR:
 	@dcw	$F800
 	
@@ -63,23 +70,26 @@ nextSTAR:
 	mov	lr, r3
 	
 	mov	r3, r0
-	ldr	r0, =$02003CEC	;wŠöiŒ³‹~oj
+	ldr	r0, =$02003CEC	;æŒ‡æ®ï¼ˆå…ƒæ•‘å‡ºï¼‰
 	
 
-	mov	r1, #0x18	;‰¡ˆÊ’u‚È‚Ì‚ÍŠm‚©
-	mov	r2, r5		;¯‚ÌF
+	mov	r1, #0x18	;æ¨ªä½ç½®ãªã®ã¯ç¢ºã‹
+	mov	r2, r5		;æ˜Ÿã®è‰²
 	@dcw	$F800
 	b	end
 	
 jump:
 	mov	r2, #255
-	ldr	r0, =$02003f06
+    mov r0, r6;;	ldr	r0, =$02003f06;;;;;;;;;æ•°å­—ä½ç½®
 	ldr	r1, =$08004a9c
 	mov	lr, r1
-	mov	r1, r5		;”š‚ÌF
+	mov	r1, r5		;æ•°å­—ã®è‰²
 	@dcw	$F800
 	b	end
 
 end:
+    pop {r4, lr}
+
+
 	ldr	r1, =$080896d8
 	mov	pc, r1

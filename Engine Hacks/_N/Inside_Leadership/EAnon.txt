@@ -65,11 +65,19 @@ SHORT	$46C0 $2000
 ORG	0x89924	//光らせない
 SHORT	$46C0 $2000
 
+
+
+ORG 0x02A96C
+POIN hoshiki
+
 POP
 
 ALIGN 4
 
 nakashiki:
-#incbin "hoshiki.gba"
+    #incbin "nakashiki.gba"
+ALIGN 4
 
+hoshiki:
+    #incbin "hoshiki.gba"
 ALIGN 4

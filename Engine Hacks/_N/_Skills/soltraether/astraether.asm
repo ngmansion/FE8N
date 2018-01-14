@@ -34,7 +34,6 @@ return:
 nonmax
 	ldr	r0, =$0802b48e
 	mov	pc, r0
-	
 impale_impl:
     push {lr};;;;撃破チェック
 ;ダメージがゼロなら発動しない
@@ -136,6 +135,9 @@ nononon
 bl	RYUSEI
 	b	effect
 
+false:
+	mov r0, #0
+	pop {pc}
 
 tenku_impl:
     push {lr}
@@ -227,9 +229,7 @@ YOUKOU:
 	lsr	r1, r1, #13
 	b	gekko
 	
-false:
-	mov r0, #0
-	bx lr
+
 	
 effect:
 	ldr	r3, [r6, #0]
