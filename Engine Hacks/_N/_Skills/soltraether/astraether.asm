@@ -40,12 +40,14 @@ nonmax
 
 ecripse_impl:
     push {lr};;;;月食チェック
-;ダメージがゼロなら発動しない
+    ldr r0, [r7, #76]
+    lsl r0, r0, #24
+    bmi false ;反撃不可武器チェック
     mov r0, #4
     ldsh r0, [r5, r0]
     cmp r0, #0
-    ble false
-    
+    ble false;ダメージがゼロなら発動しない
+
     mov r2, r8
     ldrb r1, [r2, #0x13] ;nowHP
     cmp r0, r1
