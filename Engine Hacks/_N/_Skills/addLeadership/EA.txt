@@ -1,0 +1,29 @@
+#include config.txt
+
+ALIGN 4
+PUSH
+//ORG 0x2A960
+//    WORD $468F4900
+//    POIN leadershipfix
+ORG 0x02a968
+    POIN hasLeadership
+POP
+
+////////////////
+
+hasLeadership:
+    #incbin "shikis.gba"
+ALIGN 4
+    POIN hasLeadership1
+    POIN hasLeadership2
+
+hasLeadership1:
+    HAS_SKILL
+    WORD Leadership1ID
+    POIN judgeSkill
+hasLeadership2:
+    HAS_SKILL
+    WORD Leadership2ID
+    POIN judgeSkill
+    
+ALIGN 4

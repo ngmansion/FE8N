@@ -3,7 +3,7 @@ ORG 0x2A960
     WORD $468F4900
     POIN leadershipfix
 #ifdef SKILL_PATCH
-    POIN nonSkilleader
+
 #else
 ORG 0x2A968
     POIN nonSkilleader

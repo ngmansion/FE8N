@@ -27,7 +27,7 @@ jumen
 	lsl	r1, r1, #26
 	bmi	nonono
     
-    mov r0, r5
+    mov r0, r2
         @align 4
         ldr r1, =$0802A968
         ldr r1, [r1]
@@ -96,9 +96,12 @@ loop
 	ldrb	r0, [r2, #12]	;救出
 	lsl	r0, r0, #26
 	bmi	nononomi
-	ldr	r0, [r2, #0]
-	add	r0, #37
-	ldrb	r0, [r0, #0]
+        @align 4
+        ldr r0, =$0802A968
+        ldr r0, [r0]
+        mov lr, r0
+    mov r0, r2
+    @dcw $F800
 	add	r3, r3, r0
 nononomi
 	add	r2, #72

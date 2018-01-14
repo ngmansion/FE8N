@@ -17,6 +17,8 @@
 #include "koun\EA.txt"
 #include "staff_mastery\EA.txt"
 #include "follow_up\EA.txt"
+#include "addLeadership\EA.txt"
+
 
 
 //#include "my_skill\EA.txt"
