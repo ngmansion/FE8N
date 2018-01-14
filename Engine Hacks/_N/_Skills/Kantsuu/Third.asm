@@ -1,6 +1,6 @@
 @thumb
 ;@org	$08E4B3C0
-	;;ŒŒõˆ—‚ğ“Æ—§
+	;;æœˆå…‰å‡¦ç†ã‚’ç‹¬ç«‹
 	
 	ldr	r2, [r6, #0]
 	ldr	r0, [r2, #0]
@@ -9,8 +9,8 @@
 	mov	r1, #128
 	lsl	r1, r1, #9
 	and	r0, r1
-	beq	start	;ŒŒõ‚È‚µ‚ÅŠJn
-	b	end
+	beq	start	;æœˆå…‰ãªã—ã§é–‹å§‹
+	b	retrun
 start:
 	ldr	r0, [r7, #4]
 	ldrb	r0, [r0, #4]
@@ -63,20 +63,10 @@ start:
 	ldrb	r1, [r2, #1]
 	cmp	r0, r1
 	beq	Flower
-@align 4
-	ldr	r2, [adr+24]
-	ldrb	r1, [r2]
-	cmp	r0, r1
-	beq	Impale
-	ldrb	r1, [r2, #1]
-	cmp	r0, r1
-	beq	Impale
-	b	end
-	
-Impale:
-	mov	r1, r9
-	sub	r0, r1, r4
-	b	jump
+
+
+
+    b retrun
 	
 Revenge:
 	bl	Gecko
@@ -110,7 +100,7 @@ magicMeido:
 Flower:
 	bl	Gecko
 	mov	r0, #0x50
-	ldrb	r0, [r7, r0]	;•¨—”»’è
+	ldrb	r0, [r7, r0]	;ç‰©ç†åˆ¤å®š
 	cmp	r0, #7
 	beq	addStrength
 	cmp	r0, #6
@@ -130,17 +120,17 @@ Stan:
 	mov	r2, r8
 	ldr	r1, [r2, #4]
 	ldrb	r0, [r1, #4]
-	cmp	r0, #0x66	;;–‚‰¤‚É–³Œø
-	beq	end
+	cmp	r0, #0x66	;;é­”ç‹ã«ç„¡åŠ¹
+	beq	retrun
 	ldr	r2, [r2]
 	ldr	r2, [r2, #40]
 	ldr	r1, [r1, #40]
 	orr	r1, r2
 	lsl	r1, r1, #16
-	bmi	end	;“G«‚É–³Œø
+	bmi	retrun	;æ•µå°†ã«ç„¡åŠ¹
 	mov	r1, r8
 	add	r1, #111
-	mov	r0, #0x24		;;ó‘ÔˆÙí(2ƒXƒŠƒv,3ƒTƒCƒŒƒX,4ƒoƒTƒN,BƒXƒgƒ“)
+	mov	r0, #0x24		;;çŠ¶æ…‹ç•°å¸¸(2ã‚¹ãƒªãƒ—,3ã‚µã‚¤ãƒ¬ã‚¹,4ãƒã‚µã‚¯,Bã‚¹ãƒˆãƒ³)
 	strb	r0, [r1, #0]
 	b	Effect
 	
@@ -149,17 +139,17 @@ Stone:
 	mov	r2, r8
 	ldr	r1, [r2, #4]
 	ldrb	r0, [r1, #4]
-	cmp	r0, #0x66	;;–‚‰¤‚É–³Œø
-	beq	end
+	cmp	r0, #0x66	;;é­”ç‹ã«ç„¡åŠ¹
+	beq	retrun
 	ldr	r2, [r2]
 	ldr	r2, [r2, #40]
 	ldr	r1, [r1, #40]
 	orr	r1, r2
 	lsl	r1, r1, #16
-	bmi	end		;“G«‚É–³Œø
+	bmi	retrun		;æ•µå°†ã«ç„¡åŠ¹
 	mov	r1, r8
 	add	r1, #111
-	mov	r0, #0x2B		;;ó‘ÔˆÙí(2ƒXƒŠƒv,3ƒTƒCƒŒƒX,4ƒoƒTƒN,BƒXƒgƒ“)
+	mov	r0, #0x2B		;;çŠ¶æ…‹ç•°å¸¸(2ã‚¹ãƒªãƒ—,3ã‚µã‚¤ãƒ¬ã‚¹,4ãƒã‚µã‚¯,Bã‚¹ãƒˆãƒ³)
 	strb	r0, [r1, #0]
 Effect:
 ;;	ldr	r3, =$0203A604
@@ -179,17 +169,17 @@ Effect:
 	cmp	r1, #11
 	beq	ouiStone
 	cmp	r1, #13
-	bne	end
+	bne	retrun
 ouiStone:
 	ldr	r0, [r3, #12]
 	mov	r1, #3
 	neg	r1, r1
 	and	r0, r1
 	str	r0, [r3, #12]
-	b	end
+	b	retrun
 jump
 	add	r9, r0
-end
+retrun
 	mov	r1, r9
 	sub	r0, r1, r4
 	strh	r0, [r5, #4]
@@ -202,23 +192,23 @@ Gecko:
 	ldrh	r0, [r7, r0]
 		bl	WEAPON
 	cmp	r0, #7
-	bgt	return
+	bgt	false
 	add	r0, #40
 	ldrb	r0, [r7, r0]
 	cmp	r0, #250
-	bls	return
+	bls	false
 	
-	ldrb	r0, [r7, #0x15]	;;‰œ‹`”­“®—¦
+	ldrb	r0, [r7, #0x15]	;;å¥¥ç¾©ç™ºå‹•ç‡
 	mov	r1, #0
-	ldr	r2, =$0802a490 ;;r0=Šm—¦, r1=#0 —”
+	ldr	r2, =$0802a490 ;;r0=ç¢ºç‡, r1=#0 ä¹±æ•°
 	mov	lr, r2
 	@dcw	$F800
 	
 	cmp	r0, #1
 	beq	ouiGecko
-return:
+false:
 	pop	{r0}
-	b	end
+	b	retrun
 
 ouiGecko:
 	ldr	r3, [r6]

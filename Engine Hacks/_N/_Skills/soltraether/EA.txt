@@ -14,7 +14,7 @@ astron:
 POIN	hasTenku
 POIN	hasYoukoh
 POIN	hasRyusei
-
+POIN	hasImpale
 
 ALIGN 4
 
@@ -90,4 +90,7 @@ hasRyusei:
     HAS_SKILL
     WORD AstraID
     POIN judgeSkill
-    
+hasImpale:
+    HAS_SKILL
+    WORD ImpaleID
+    POIN judgeSkill

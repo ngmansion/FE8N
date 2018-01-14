@@ -39,4 +39,3 @@ POIN	listRevenge
 POIN	listStan
 POIN	listStone
 POIN	listFlower
-POIN	listImpale

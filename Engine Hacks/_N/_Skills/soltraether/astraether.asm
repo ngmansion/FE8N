@@ -8,17 +8,76 @@ mov	lr r2
 @dcw	$F800
 	mov	r1, r0
 	cmp	r1, #7
-	bgt	end
+	bgt	return
 	mov	r0, r7
 	add	r0, #40
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #250
-	bls	end
-;;;;流星チェック
+	bls	return
+	
+	bl astra_impl ;流星
+	cmp r0, #0
+	bne return
+	bl tenku_impl ;天空・陽光
+	cmp r0, #0
+	bne return
+	bl impale_impl ;撃破
+	
+return:
+	mov	r1, #4
+	ldsh	r0, [r4, r1]
+	cmp	r0, #127
+	ble	nonmax
+	mov	r0, #127
+	strh	r0, [r4, #4]
+nonmax
+	ldr	r0, =$0802b48e
+	mov	pc, r0
+	
+impale_impl:
+    push {lr};;;;撃破チェック
+;ダメージがゼロなら発動しない
+    mov r0, #4
+    ldsh r0, [r5, r0]
+    cmp r0, #0
+    ble false
+;ユニットチェック
+    mov r0, r7
+        @align 4
+        ldr r1, [adr+12] ;撃破
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq false
+	ldrb	r0, [r7, #21]	;技
+	mov	r1, #0
+		bl	random
+	cmp	r0, #0
+	beq	false
+
+    mov r0, #6
+    ldsh r0, [r5, r0] ;攻撃
+    mov r1, #8
+    ldsh r1, [r5, r1] ;防御
+    sub r0, r0, r1
+
+    mov r1, #4
+    ldsh r1, [r5, r1] ; ダメージ
+    add r0, r0, r1
+    strh r0, [r5, #4]
+    
+    ldr r3, [r6, #0]
+    ldr r2, [r3, #0]
+    lsl r1, r2, #13
+    lsr r1, r1, #13
+    b gekko
+    
+astra_impl:
+    push {lr};;;;流星チェック
 ;剣以外では発動しない
 	cmp	r1, #0
-	bne	skill2
+	bne	false
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -26,29 +85,29 @@ mov	lr r2
         mov lr, r1
         @dcw $F800
     cmp r0, #0
-    beq skill2
+    beq false
 
 ouiAstra:
 ;ダメージがゼロなら発動しない
 	mov	r0, #4
 	ldsh	r0, [r5, r0]
 	cmp	r0, #0
-	ble	skill2
+	ble	false
 ;近距離しか発動しない
 	ldr	r0,	=$0203a4d2
 	ldrb	r0, [r0]
 	cmp	r0, #1
-	bne	skill2
+	bne	false
 ;必殺率がゼロなら発動しない
 	ldrh	r0, [r5, #12]	;必殺
 	cmp	r0, #0
-	beq	skill2
+	beq	false
 ;発動乱数
 	ldrb	r0, [r7, #8]	;レベル
 	mov	r1, #0
 bl	random
 	cmp	r0, #1
-	bne	skill2
+	bne	false
 ;必殺チェック
 	mov	r0, #4
 	ldsh	r2, [r5, r0]
@@ -76,22 +135,10 @@ waranai
 nononon
 bl	RYUSEI
 	b	effect
-end:
-	mov	r1, #4
-	ldsh	r0, [r4, r1]
-	cmp	r0, #127
-	ble	nonmax
-	mov	r0, #127
-	strh	r0, [r4, #4]
-nonmax
-	ldr	r0, =$0802b48e
-	mov	pc, r0
-skill2
-;必殺と重複しない
-	ldr	r0, [r6, #0]
-	ldr	r0, [r0, #0]
-	lsl r0, r0, #31
-	bmi	end
+
+
+tenku_impl:
+    push {lr}
 ;HP吸収武器では発動しない
 	mov	r0, #72
 	ldrh	r0, [r7, r0]
@@ -99,15 +146,7 @@ ldr	r1,	=$080174cc
 mov	lr, r1
 @dcw	$F800
 	cmp	r0, #2
-	beq	end
-;ユニットチェック
-    mov r0, r7
-        @align 4
-        ldr r1, [adr] ;天空
-        mov lr, r1
-        @dcw $F800
-    cmp r0, #0
-    bne TENKU
+	beq	false
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -116,12 +155,25 @@ mov	lr, r1
         @dcw $F800
     cmp r0, #0
     bne YOUKOU
-	b	end
+;必殺と重複しない
+	ldr	r0, [r6, #0]
+	ldr	r0, [r0, #0]
+	lsl r0, r0, #31
+	bmi	false
+;ユニットチェック
+    mov r0, r7
+        @align 4
+        ldr r1, [adr] ;天空
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne TENKU
+	b	false
 TENKU:
 	ldr	r0,	=$0203a4d2
 	ldrb	r0, [r0]	;距離
 	cmp	r0, #1
-	bne	end
+	bne	false
 	mov	r0, r7
 	add	r0, #72
 	ldrh	r0, [r0, #0]
@@ -132,18 +184,27 @@ mov	lr,r3
 	cmp	r1, #2	;;斧
 	bne	jump
 	cmp	r0, #0x12
-	beq	end	;;手斧チェック
+	beq	false	;;手斧チェック
 jump
 	ldrb	r0, [r7, #8]	;レベル
 	mov	r1, #0
 		bl	random
-	cmp	r0, #1
-	bne	end
-	mov	r0, #4
-	ldsh	r1, [r5, r0]
-	mov	r0, r8
-	ldrb	r0, [r0, #23]
-	asr	r0, r0, #1
+	cmp	r0, #0
+	beq	false
+
+    mov r0, #8
+    ldsh r0, [r5, r0] ;防御
+    lsl r0, r0, #2
+    mov r1, #0
+loop_eight:
+    sub r0, #5
+    blt eight
+    add r1, #1
+    b loop_eight
+eight:
+    mov r0, r1
+	mov	r1, #4
+	ldsh	r1, [r5, r1] ;ダメージ
 	add	r0, r0, r1
 	strh	r0, [r5, #4]
 	b	effect
@@ -151,12 +212,12 @@ YOUKOU:
 	ldrb	r0, [r7, #21]	;技
 	mov	r1, #0
 		bl	random
-	cmp	r0, #1
-	bne	end
+	cmp	r0, #0
+	beq	false
 	mov	r0, #4
 	ldsh	r1, [r5, r0]
-	mov	r0, r8
-	ldrb	r0, [r0, #23]
+    mov r0, #8
+    ldsh r0, [r5, r0] ;防御
 	asr	r0, r0, #1
 	add	r0, r0, r1
 	strh	r0, [r5, #4]
@@ -166,14 +227,18 @@ YOUKOU:
 	lsr	r1, r1, #13
 	b	gekko
 	
-effect
+false:
+	mov r0, #0
+	bx lr
+	
+effect:
 	ldr	r3, [r6, #0]
 	ldr	r2, [r3, #0]
 	lsl	r1, r2, #13
 	lsr	r1, r1, #13
 	mov	r0, #1
 	orr	r1, r0
-gekko
+gekko:
 	ldr	r0, =$0007FFFF
 	and	r1, r0
 	ldr	r0, =$FFF80000
@@ -183,8 +248,10 @@ gekko
 	lsl	r1, r1, #9
 	orr	r0, r1
 	str	r0, [r3, #0]
-	b	end
-random
+	
+	mov r0, #1
+	bx lr
+random:
 	ldr	r3, =$0802a490
 	mov	pc, r3
 	

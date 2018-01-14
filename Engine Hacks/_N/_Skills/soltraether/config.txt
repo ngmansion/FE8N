@@ -1,11 +1,11 @@
-//各奥義を重複して取得出来る事がないように設定して下さい
 
 SolList:
-BYTE	$03 $07 $08 $22 0
+    BYTE $03 $07 $08 $22 0
 TenkuList:
-BYTE	$11 $12 0
+    BYTE $11 $12 0
 YoukohList:
-BYTE	$27 $28 0
+    BYTE $27 $28 0
 RyuseiList:
-BYTE	$15 $16 0
-
+    BYTE$15 $16 0
+listImpale: //撃破
+    BYTE $00 $00 0
