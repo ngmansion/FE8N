@@ -1,3 +1,5 @@
+#include config.txt
+
 PUSH
 //解除
 
@@ -80,4 +82,5 @@ ALIGN 4
 
 hoshiki:
     #incbin "hoshiki.gba"
+    WORD ONE_STAR_TEXT_ID TWO_STARS_TEXT_ID THREE_STARS_TEXT_ID FOUR_STARS_TEXT_ID FIVE_STARS_TEXT_ID
 ALIGN 4

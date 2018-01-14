@@ -50,19 +50,24 @@ Hitoketa:
 	
 	
 one:
-	mov	r0, $74	;文字
+    @align 4
+    ldr r0, [adr]
 	b	nextSTAR
 two:
-	mov	r0, $73	;文字
+    @align 4
+    ldr r0, [adr+4]
 	b	nextSTAR
 three:
-	mov	r0, $72	;文字
+    @align 4
+    ldr r0, [adr+8]
 	b	nextSTAR
 four:
-	mov	r0, $71	;文字
+    @align 4
+    ldr r0, [adr+12]
 	b	nextSTAR
 five:
-	mov	r0, $70	;文字
+    @align 4
+    ldr r0, [adr+16]
 nextSTAR:
 	@dcw	$F800
 	
@@ -93,3 +98,5 @@ end:
 
 	ldr	r1, =$080896d8
 	mov	pc, r1
+@ltorg
+adr:
