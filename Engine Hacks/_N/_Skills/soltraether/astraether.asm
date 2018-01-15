@@ -41,14 +41,17 @@ nonmax
     mov pc, r0
 
 jihad_impl: ;ジハド
-    push {lr};;;;月食チェック
+    push {lr}
 
     ldrb r1, [r7, #0x13] ;nowHP
     lsl r1, r1, #1
     ldrb r0, [r7, #0x12] ;maxHP
     cmp r0, r1
     blt false ;体力半分以上なら不発
-    
+    ldr r0, =$0203a4d2
+    ldrb r0, [r0]
+    cmp r0, #1
+    bne false ;近距離しか発動しない
 ;ユニットチェック
     mov r0, r7
         @align 4
