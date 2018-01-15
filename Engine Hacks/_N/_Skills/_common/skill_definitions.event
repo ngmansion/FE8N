@@ -68,6 +68,6 @@
 #define Leadership1ID 93 //0x5d指揮+1
 #define Leadership2ID 94 //0x5e指揮+2
 #define EclipseID 95 //0x5f月食
-#define JihadIDID 96 //0x60ジハド
+#define JihadID 96 //0x60ジハド
 
 
