@@ -11,6 +11,8 @@ listImpale: //撃破
     BYTE $00 $00 0
 listEclipse: //月食
     BYTE $2F $30 0
-    
-    
+listJihad:
+    BYTE $00 $00 0
+listJihad_w:
+    BYTE $00 $00 0
     

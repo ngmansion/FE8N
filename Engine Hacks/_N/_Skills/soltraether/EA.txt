@@ -11,11 +11,12 @@ POP
 
 astron:
 #incbin "astraether.gba"
-POIN	hasTenku
-POIN	hasYoukoh
-POIN	hasRyusei
-POIN	hasImpale
-POIN	hasEclipse
+POIN hasTenku
+POIN hasYoukoh
+POIN hasRyusei
+POIN hasImpale
+POIN hasEclipse
+POIN hasJihad
 
 ALIGN 4
 
@@ -71,9 +72,10 @@ taiyo3:
 ALIGN	4
 taiyo4:
 	#incbin "taiyo44.gba"
-POIN	hasSOL
-POIN	hasTenku
-POIN	hasYoukoh
+POIN hasSOL
+POIN hasTenku
+POIN hasYoukoh
+POIN hasJihad
 
 hasSOL:
     HAS_SKILL
@@ -99,4 +101,7 @@ hasEclipse:
     HAS_SKILL
     WORD EclipseID
     POIN judgeSkill
-
+hasJihad:
+    HAS_SKILL
+    WORD JihadID
+    POIN judgeSkill

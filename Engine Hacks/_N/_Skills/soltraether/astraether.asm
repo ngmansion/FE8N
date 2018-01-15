@@ -26,6 +26,9 @@ mov	lr r2
 	cmp r0, #0
 	bne return
 	bl ecripse_impl ;月食
+	cmp r0, #0
+	bne return
+	bl jihad_impl ;ジハド
 return:
 	mov	r1, #4
 	ldsh	r0, [r4, r1]
@@ -37,6 +40,52 @@ nonmax
     ldr r0, =$0802b48e
     mov pc, r0
 
+jihad_impl: ;ジハド
+    push {lr};;;;月食チェック
+
+    ldrb r1, [r7, #0x13] ;nowHP
+    lsl r1, r1, #1
+    ldrb r0, [r7, #0x12] ;maxHP
+    cmp r0, r1
+    blt false ;体力半分以上なら不発
+    
+;ユニットチェック
+    mov r0, r7
+        @align 4
+        ldr r1, [adr+20] ;ジハド
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq false
+    ldrb r0, [r7, #8] ;レベル
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq false
+
+;必殺減衰処理
+    ldr r0, [r6]
+    ldr r0, [r0]
+    lsl r0, r0, #31
+    bpl not_dec ;無必殺はなし
+    mov r0, #4
+    ldsh r0, [r5, r0]
+    cmp r0, #0
+    ble not_dec ;ノーダメ以下はなし
+    mov r1, #0
+loop_three:
+    add r1, #1
+    sub r0, #3
+    blt loop_three
+    strh r1, [r5, #4]
+not_dec:
+    mov r0, #4
+    ldsh r0, [r5, r0] ;ダメージ
+    mov r1, #6
+    ldsh r1, [r5, r1] ;攻撃力
+    add r0, r0, r1
+    strh r0, [r5, #4] ;ダメージ
+    b effect
 
 ecripse_impl:
     push {lr};;;;月食チェック
@@ -122,6 +171,11 @@ impale_impl:
     lsr r1, r1, #13
     b gekko
     
+    
+false:
+    mov r0, #0
+    pop {pc}
+    
 astra_impl:
     push {lr};;;;流星チェック
 ;剣以外では発動しない
@@ -185,9 +239,7 @@ nononon
 bl	RYUSEI
 	b	effect
 
-false:
-	mov r0, #0
-	pop {pc}
+
 
 tenku_impl:
     push {lr}

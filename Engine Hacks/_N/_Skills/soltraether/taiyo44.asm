@@ -46,6 +46,14 @@ mov	lr, r1
         
     mov r0, r5
         @align 4
+        ldr r1, [adr+12] ;ジハド
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne tenku
+        
+    mov r0, r5
+        @align 4
         ldr r1, [adr] ;太陽
         mov lr, r1
         @dcw $F800
