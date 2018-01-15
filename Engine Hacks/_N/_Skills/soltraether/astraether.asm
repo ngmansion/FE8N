@@ -76,7 +76,7 @@ jihad_impl: ;ジハド
 loop_three:
     add r1, #1
     sub r0, #3
-    blt loop_three
+    bgt loop_three
     strh r1, [r5, #4]
 not_dec:
     mov r0, #4
