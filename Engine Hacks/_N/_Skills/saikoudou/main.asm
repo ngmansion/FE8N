@@ -7,12 +7,12 @@
     ldr r0, [r4, #0]
     ldrb	r1, [r0, #0x13]
     cmp r1, #0
-    beq Return ;死んだら終了
+    beq end ;死んだら終了
     ldr r0, [r0, #12]
     ldr r1, =$0801cf04
     ldr r1, [r1]
     and	r0, r1
-    bne Return ;再移動後はスキップ
+    bne end ;再移動後はスキップ
     
     bl kaifuku ;戻り値は未使用
     
@@ -20,7 +20,7 @@
     ldrb r1, [r0, #11]
     mov r2, #192
     and r2, r1
-    bne Return ;自軍以外は終了
+    bne end ;自軍以外は終了
 
     bl kaze
     cmp r0, #0
@@ -29,11 +29,23 @@
     bl random
     cmp r0, #0
     bne Sound
-Return:
+;スキル再移動による再移動化
+    ldr r0, [r4]
+        @align 4
+        ldr r1, [adr+12] ;再移動
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne Canto
     mov r2, r4
     ldr r3, [r2]
-    ldr r0, =$0801ceb0
+    ldr r0, =$0801ceb0 ;通常の再移動判定
     mov pc, r0
+    
+Canto:
+    ldr r0, =$0801cece
+    mov pc, r0
+    
     
 Sound:
     ldr	r0, =$0202bcec

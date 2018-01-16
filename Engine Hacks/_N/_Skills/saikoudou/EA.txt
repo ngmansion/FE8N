@@ -37,11 +37,7 @@ kaze_back:
 canto_impl:
 #incbin jinrai_fix_ijou.gba
     POIN hasCantoPlus
-    
-hasCantoPlus:
-    HAS_SKILL
-    WORD CantoPlusID
-    POIN judgeSkill
+
 
 #ifdef Debug_Mode
     odorero:
@@ -52,6 +48,7 @@ hasCantoPlus:
         POIN hasRemove
         POIN hasGaleforce
         POIN hasLifetaker
+        POIN hasCantoPlus
     hasRemove:
         HAS_SKILL
         WORD RemoveID
@@ -64,6 +61,10 @@ hasCantoPlus:
         HAS_SKILL
         WORD LifetakerID
         POIN judgeSkill
+hasCantoPlus:
+    HAS_SKILL
+    WORD CantoPlusID
+    POIN judgeSkill
 #endif
 
 ALIGN 4
