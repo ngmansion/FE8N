@@ -204,7 +204,7 @@ limitter
 icon
 	ldr	r3, =$08003608
 	mov	pc, r3
-	
+
 
 
 SKILL2: ;ability仕様
@@ -303,6 +303,8 @@ limitter3
 	beq end3
 
     ldrh r0, [r5]
+    cmp r0, #0
+    beq end3 ;ヘルプが無ければ終了
     strh r0, [r7]
     add r1, r4, #1
     add r1, #255
@@ -362,6 +364,8 @@ limitter4: ;上限チェック
     cmp r1, #12 ;アイコン上限
     beq end4
     ldrh r0, [r5]
+    cmp r0, #0
+    beq next4 ;ヘルプが無ければ次へ
     strh r0, [r7] ;ヘルプストア
     add r1, r4, #1
     add r1, #255
