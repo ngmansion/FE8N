@@ -271,8 +271,8 @@
 #define SKL_HELP_90 $0000
  #define SKL_COLOR_90 0
 
-#define SKL_HELP_91 $0000
- #define SKL_COLOR_91 0
+#define SKL_HELP_91 $05C5
+ #define SKL_COLOR_91 $FF
 
 #define SKL_HELP_92 $0000
  #define SKL_COLOR_92 0

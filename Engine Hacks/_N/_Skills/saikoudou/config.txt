@@ -13,7 +13,7 @@ GaleforceList:
     BYTE $23 $24 $03 $04 0
 
 CantoPlusList:
-    BYTE $00 0
+    BYTE $03 $04 0
     
     
     
