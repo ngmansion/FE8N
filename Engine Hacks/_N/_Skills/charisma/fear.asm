@@ -36,10 +36,12 @@ entry
 	bne next
 ;ユニット
     mov r0, r6
+        push {r2}
         @align 4
         ldr r1, [adr] ;恐怖
         mov lr, r1
         @dcw $F800
+        pop {r2}
     cmp r0, #0
     bne Xdistance
 next
@@ -93,4 +95,5 @@ end
 	strh r1,[r0]
 	pop {r1}
 	bx r1
-
+@ltorg
+adr:

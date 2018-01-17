@@ -6,7 +6,7 @@ adept_list_w:
     BYTE $00 0
 
 blitzkrieg_list:
-    BYTE $09 0
+    BYTE $00 0
 blitzkrieg_list_w:
     BYTE $00 0
 

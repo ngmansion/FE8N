@@ -1,9 +1,40 @@
 #include config.txt
 
-
 /////////////////////
 PUSH
-    ORG 0x16A30
+
+
+  ORG 0x02aa62
+    SHORT $2000
+    SHORT $5e2c
+    SHORT $0060
+    SHORT $1900
+    SHORT $0400
+    SHORT $1404
+
+#ifdef EFFECTIVE_TWICE
+  ORG 0x02aa62
+    SHORT $2000
+    SHORT $5e2c
+    SHORT $0060
+    SHORT $46C0
+    SHORT $0400
+    SHORT $1404
+#endif
+
+#ifdef EFFECTIVE_TEN //+10
+  ORG 0x02aa62
+    SHORT $2000 
+    SHORT $5e2c
+    SHORT $240A
+    SHORT $1900
+    SHORT $0400
+    SHORT $1404
+#endif
+
+
+
+  ORG 0x16A30
     jumpToHack(effective_main)
 POP
 
@@ -19,6 +50,8 @@ effective_main:
     POIN effective_against2
     POIN effective_against3
     POIN effective_against4
+    POIN hasNihil
+    POIN hasRentatsu
     
 effective_hasSkill1:
     HAS_SKILL

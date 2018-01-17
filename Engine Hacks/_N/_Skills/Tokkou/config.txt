@@ -17,3 +17,7 @@ effective_class4:
     BYTE 0
 effective_against4:
     BYTE 0
+
+//#define EFFECTIVE_TWICE
+#define EFFECTIVE_TEN
+

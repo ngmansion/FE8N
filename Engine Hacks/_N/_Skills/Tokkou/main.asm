@@ -5,35 +5,60 @@
     mov r4, r0
     mov r5, r1
     
-    @align 4
-    ldr r0, [Adr]
-    mov lr, r0
+    mov r0, r5
+        @align 4
+        ldr r1, [Adr+32] ;相手見切り
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne non
+    
     mov r0, r4
-    @dcw $F800
+        @align 4
+        ldr r1, [Adr+32] ;相手見切り
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne got
+    
+    mov r0, r5
+        @align 4
+        ldr r1, [Adr+36] ;相手練達
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne non
+    
+got:
+        @align 4
+        ldr r0, [Adr]
+        mov lr, r0
+        mov r0, r4
+        @dcw $F800
     cmp r0, #0
     bne hit1
     
-    @align 4
-    ldr r0, [Adr+4]
-    mov lr, r0
-    mov r0, r4
-    @dcw $F800
+        @align 4
+        ldr r0, [Adr+4]
+        mov lr, r0
+        mov r0, r4
+        @dcw $F800
     cmp r0, #0
     bne hit2
     
-    @align 4
-    ldr r0, [Adr+8]
-    mov lr, r0
-    mov r0, r4
-    @dcw $F800
+        @align 4
+        ldr r0, [Adr+8]
+        mov lr, r0
+        mov r0, r4
+        @dcw $F800
     cmp r0, #0
     bne hit3
     
-    @align 4
-    ldr r0, [Adr+12]
-    mov lr, r0
-    mov r0, r4
-    @dcw $F800
+        @align 4
+        ldr r0, [Adr+12]
+        mov lr, r0
+        mov r0, r4
+        @dcw $F800
     cmp r0, #0
     bne hit4
     

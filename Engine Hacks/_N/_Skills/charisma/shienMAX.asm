@@ -27,6 +27,7 @@ entry
 	cmp r0, #0	;; 戦闘参加中判定
 	bne next
 class
+    push {r2}
     push {r3}
     mov r0, r3
         @align 4
@@ -34,6 +35,7 @@ class
         mov lr, r1
         @dcw $F800
     pop {r3}
+    pop {r2}
     cmp r0, #0
     bne Xdistance
         
@@ -129,3 +131,5 @@ tobi6
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
+@ltorg
+adr:
