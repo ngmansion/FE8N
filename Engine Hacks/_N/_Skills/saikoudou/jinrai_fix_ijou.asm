@@ -23,16 +23,10 @@ check
 	beq	false
 	cmp	r0, #13	;ストーン
 	beq	false
-
-    ldr r0, [r4]
-        push {r2}
-        @align 4
-        ldr r1, [adr] ;
-        mov lr, r1
-        @dcw $F800
-        pop {r2}
-    cmp r0, #0
-    bne true
+    
+    ldr r0, =$0801cece
+    cmp r0, r3
+    beq true ;スキル再移動発動判定済み
 
 	ldr	r1, [r4]
 	mov	r0, #29

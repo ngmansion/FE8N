@@ -43,8 +43,8 @@
     mov pc, r0
     
 Canto:
-    ldr r0, =$0801cece
-    mov pc, r0
+    ldr r3, =$0801cece
+    mov pc, r3
     
     
 Sound:
