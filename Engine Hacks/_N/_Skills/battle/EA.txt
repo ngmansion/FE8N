@@ -1,0 +1,21 @@
+#include config.txt
+
+
+ALIGN 4
+
+
+PUSH
+
+ORG 0x02ad3c
+    jumpToHack(battle_calc)
+POP
+
+battle_calc:
+    #incbin main.gba
+    POIN hasNihil
+    POIN LifeAndDeath
+    
+LifeAndDeath:
+    HAS_SKILL
+    WORD LifeAndDeathID
+    POIN judgeSkill

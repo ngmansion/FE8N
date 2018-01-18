@@ -35,6 +35,7 @@
 #define DesperationID 33 //0x21攻め立て
 #define BlitzkriegID 34 //0x22電撃戦闘
 #define LifetakerID 35 //0x23生命吸収
+#define LifeAndDeathID 36 //0x24死線
 
 #define AstraID 64 //0x40流星
 #define LunaID 65 //0x41月光

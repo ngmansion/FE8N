@@ -8,6 +8,10 @@
     bne got
     mov r0, r4
     ldr r1, =$0203a568
+    cmp r0, r1
+    bne non_change1
+    ldr r1, =$0203a4e8
+non_change1:
         @align 4
         ldr r3, [adr] ;bolt
         mov lr, r3
@@ -16,6 +20,10 @@
     bne got
     ldr r0, =$0203a568
     mov r1, r4
+    cmp r0, r1
+    bne non_change2
+    ldr r0, =$0203a4e8
+non_change2:
         @align 4
         ldr r3, [adr] ;bolt
         mov lr, r3

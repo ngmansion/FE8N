@@ -1,0 +1,5 @@
+LifeAndDeathList:
+    BYTE $00 0
+    
+    
+    

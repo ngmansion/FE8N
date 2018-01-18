@@ -16,8 +16,8 @@ bl DistantGuard ;遠距離無効
     mov r1, #0xDF		;防御用
     mov r10, r1
 bl HolyShield
-	cmp	r0, #1
-	beq	effect
+    cmp r0, #1
+    beq effect
 bl Pray
 	cmp	r0, #1
 	beq	effect
@@ -163,15 +163,14 @@ end:
 
 
 BigShield:
-	push {lr}
-	
-	@align 4
-	ldr r1, [adr] ;大盾
-	mov lr, r1
-	mov r0, r8
-	@dcw $F800
-	cmp r0, #0
-	beq endShield
+    push {lr}
+    mov r0, r8
+        @align 4
+        ldr r1, [adr] ;大盾
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq endShield
 ouiShield:
     mov	r3, r8
 	mov	r0, #0x50
@@ -199,14 +198,14 @@ endShield:
 	
 	
 HolyShield:
-	push {lr}
-	@align 4
-	ldr r1, [adr+4] ;聖盾
-	mov lr, r1
-	mov r0, r8
-	@dcw $F800
-	cmp r0, #0
-	beq endHoly
+    push {lr}
+    mov r0, r8
+        @align 4
+        ldr r1, [adr+4] ;聖盾
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq endHoly
 Holy:
     mov	r3, r8
 	mov	r0, #0x50
@@ -237,13 +236,13 @@ endHoly:
 	
 Pray:
 	push {lr}
-	@align 4
-	ldr r1, [adr+12] ;祈り
-	mov lr, r1
-	mov r0, r8
-	@dcw $F800
-	cmp r0, #0
-	beq	endPray
+    mov r0, r8
+        @align 4
+        ldr r1, [adr+12] ;祈り
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq	endPray
     mov r3, r8
     ldrb r1, [r3, #19]
     cmp r1, #1
@@ -265,7 +264,7 @@ newPray:
         mov lr, r1
         @dcw $F800
     cmp r0, #0
-    bne	endPray ;見切り持ちなら終了
+    bne endPray ;見切り持ちなら終了
     b effectPray
 
 originalPray:

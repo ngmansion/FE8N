@@ -42,41 +42,41 @@
 #define SKL_HELP_14 $05AF
  #define SKL_COLOR_14 $FF
 
-#define SKL_HELP_15 $0000
+#define SKL_HELP_15 $05D3
  #define SKL_COLOR_15 0
 
 #define SKL_HELP_16 $05B2
  #define SKL_COLOR_16 0
 
-#define SKL_HELP_17 $0000
- #define SKL_COLOR_17 0
+#define SKL_HELP_17 $05D4
+ #define SKL_COLOR_17 $FF
 
 #define SKL_HELP_18 $05C3
  #define SKL_COLOR_18 $FF
 
-#define SKL_HELP_19 $0000
- #define SKL_COLOR_19 0
+#define SKL_HELP_19 $05C6
+ #define SKL_COLOR_19 $FF
 
-#define SKL_HELP_20 $0000
- #define SKL_COLOR_20 0
+#define SKL_HELP_20 $05C7
+ #define SKL_COLOR_20 $FF
 
-#define SKL_HELP_21 $0000
- #define SKL_COLOR_21 0
+#define SKL_HELP_21 $05C8
+ #define SKL_COLOR_21 $FF
 
-#define SKL_HELP_22 $0000
- #define SKL_COLOR_22 0
+#define SKL_HELP_22 $05C9
+ #define SKL_COLOR_22 $FF
 
-#define SKL_HELP_23 $0000
- #define SKL_COLOR_23 0
+#define SKL_HELP_23 $05CA
+ #define SKL_COLOR_23 $FF
 
-#define SKL_HELP_24 $0000
- #define SKL_COLOR_24 0
+#define SKL_HELP_24 $05CB
+ #define SKL_COLOR_24 $FF
 
-#define SKL_HELP_25 $0000
- #define SKL_COLOR_25 0
+#define SKL_HELP_25 $05CC
+ #define SKL_COLOR_25 $FF
 
-#define SKL_HELP_26 $0000
- #define SKL_COLOR_26 0
+#define SKL_HELP_26 $05CD
+ #define SKL_COLOR_26 $FF
 
 #define SKL_HELP_27 $05B4
  #define SKL_COLOR_27 $FF
@@ -90,23 +90,23 @@
 #define SKL_HELP_30 $0000
  #define SKL_COLOR_30 0
 
-#define SKL_HELP_31 $0000
- #define SKL_COLOR_31 0
+#define SKL_HELP_31 $05CE
+ #define SKL_COLOR_31 $FF
 
-#define SKL_HELP_32 $0000
- #define SKL_COLOR_32 0
+#define SKL_HELP_32 $05CF
+ #define SKL_COLOR_32 $FF
 
-#define SKL_HELP_33 $0000
- #define SKL_COLOR_33 0
+#define SKL_HELP_33 $05D0
+ #define SKL_COLOR_33 $FF
 
-#define SKL_HELP_34 $0000
- #define SKL_COLOR_34 0
+#define SKL_HELP_34 $05D1
+ #define SKL_COLOR_34 $FF
 
-#define SKL_HELP_35 $0000
- #define SKL_COLOR_35 0
+#define SKL_HELP_35 $05D2
+ #define SKL_COLOR_35 $FF
 
-#define SKL_HELP_36 $0000
- #define SKL_COLOR_36 0
+#define SKL_HELP_36 $05D5
+ #define SKL_COLOR_36 $FF
 
 #define SKL_HELP_37 $0000
  #define SKL_COLOR_37 0
