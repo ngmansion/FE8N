@@ -13,9 +13,26 @@ POP
 battle_calc:
     #incbin main.gba
     POIN hasNihil
-    POIN LifeAndDeath
+    POIN hasLifeAndDeath
+    POIN hasDeathBlow
+    POIN hasArmoredBlow
     
-LifeAndDeath:
+hasLifeAndDeath:
     HAS_SKILL
     WORD LifeAndDeathID
     POIN judgeSkill
+    
+hasDeathBlow:
+    HAS_SKILL
+    WORD DeathBlowID
+    POIN judgeSkill
+    
+hasArmoredBlow:
+    HAS_SKILL
+    WORD ArmoredBlowID
+    POIN judgeSkill
+    
+    
+    
+    
+    

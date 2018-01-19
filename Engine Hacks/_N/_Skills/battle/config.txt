@@ -1,5 +1,10 @@
 LifeAndDeathList:
     BYTE $00 0
     
+DeathBlowList:
+    BYTE $00 0
+    
+ArmoredBlowList:
+    BYTE $00 0
     
     

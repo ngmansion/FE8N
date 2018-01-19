@@ -108,11 +108,11 @@
 #define SKL_HELP_36 $05D5
  #define SKL_COLOR_36 $FF
 
-#define SKL_HELP_37 $0000
- #define SKL_COLOR_37 0
+#define SKL_HELP_37 $0552
+ #define SKL_COLOR_37 $FF
 
-#define SKL_HELP_38 $0000
- #define SKL_COLOR_38 0
+#define SKL_HELP_38 $0553
+ #define SKL_COLOR_38 $FF
 
 #define SKL_HELP_39 $0000
  #define SKL_COLOR_39 0
