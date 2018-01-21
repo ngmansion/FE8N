@@ -27,3 +27,6 @@
 	#include "mug_exceed\EA.txt"
 	#include "debug\EA.txt"
 	#include "break_save\EA.txt"
+	#include "SortWin\EA.txt"
+	#include "CCCleaner\EA.txt"
+	

@@ -1,0 +1,21 @@
+
+PUSH
+ORG		0x094fc0
+WORD	$469F4B00
+POIN	asm_SortWin1
+
+ORG		0x0950b0
+WORD	$469F4B00
+POIN	asm_SortWin2
+
+POP
+
+ALIGN 4
+
+asm_SortWin1:
+#incbin clip.gba
+
+asm_SortWin2:
+#incbin clip2.gba
+
+ALIGN 4
