@@ -13,6 +13,11 @@
     bne Return
     
     bl shisen
+    ldr r0, =$0203a4d0
+    ldrh r0, [r0]
+    mov r1, #0x20
+    and r0, r1
+    bne Return ;闘技場チェック
     
     bl kishin
     
