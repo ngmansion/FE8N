@@ -6,8 +6,12 @@
 	mov	r0, #0
 	strh	r0, [r6, #46]	;????
 	mov	r3, #0
-	ldr	r5, =$08031500		;;;;
-	ldr	r5, [r5]
+	
+	ldr r0, =$0803144c
+	mov lr, r0
+	@dcw $F800 ;輸送体ベースアドレスロード
+	mov r5, r0
+	
 loopstart
 	ldrh	r0, [r5]
 	cmp	r0, #0
@@ -18,7 +22,7 @@ okee
 	b	end
 item
 
-	ldr	r2, =$085775cc
+	ldr	r2, =$085775cc ;ボタン
 	ldr	r2, [r2]
 	ldrh	r2, [r2, #4]
 	lsl	r2, r2, #22
@@ -76,12 +80,15 @@ zoushoku
 ;	ble	azukeloop
 ;	b	non
 loop
-	add	r5, #2
-	add	r3, #1
-	cmp	r3, #99		;！！輸送隊アイテム上限！！
-	ble	loopstart
+    add r5, #2
+    add r3, #1
+    @align 4
+    ldr r0, [adr]
+    ldrb r0, [r0]
+    cmp r3, r0
+    ble loopstart
 non
-	strh	r4, [r6, #46]	;????
+    strh r4, [r6, #46]	;????
 ;	mov	r0, #1
 ;	neg	r0, r0	
 end
@@ -90,3 +97,5 @@ end
 	ldrb	r1, [r6]
 	ldr	r2, =$80a0b40
 	mov	pc, r2
+@ltorg
+adr:

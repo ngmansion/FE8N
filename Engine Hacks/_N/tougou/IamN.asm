@@ -12,7 +12,7 @@
 	lsl	r2, r2, #22
 	bpl	okee
 	
-ldr	r1, =$08017358
+ldr	r1, =$08017358 ;アイテムの使用上限をロード
 mov	lr, r1
 @dcw	$F800
 	cmp	r0, #0xFF
@@ -64,4 +64,5 @@ end
 	pop	{r4, r5}
 	ldr	r0, =$080a05cc
 	mov	pc, r0
-	
+@ltorg
+adr:

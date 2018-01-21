@@ -1,6 +1,8 @@
 #include config.txt
 
 
+#define SOL_WORK_ADRESS $0203AB20
+
 //code
 ALIGN 4
 PUSH
@@ -57,25 +59,29 @@ ORG		0x5948e
 POP
 
 taiyo1:
-	#incbin "taiyo1.gba"
-POIN	taiyo11+1
+    #incbin "taiyo1.gba"
+    POIN taiyo11+1
+    WORD SOL_WORK_ADRESS
 
 ALIGN	4
 taiyo11:
 	#incbin "taiyo11.gba"
 ALIGN	4
 taiyo2:
-	#incbin "taiyo2.gba"
+    #incbin "taiyo2.gba"
+    WORD SOL_WORK_ADRESS
 ALIGN	4
 taiyo3:
 	#incbin "taiyo3.gba"
+    WORD SOL_WORK_ADRESS
 ALIGN	4
 taiyo4:
 	#incbin "taiyo44.gba"
-POIN hasSOL
-POIN hasTenku
-POIN hasYoukoh
-POIN hasJihad
+    WORD SOL_WORK_ADRESS
+    POIN hasSOL
+    POIN hasTenku
+    POIN hasYoukoh
+    POIN hasJihad
 
 hasSOL:
     HAS_SKILL

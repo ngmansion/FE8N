@@ -4,7 +4,8 @@
 	lsl	r0, r0, #2
 	add	r0, r0, r6
 	strh	r1, [r0]
-	ldr	r6, =$0203AB20	;(勝手な太陽フラグ)
+	@align 4
+	ldr	r6, [adr]	;(勝手な太陽フラグ)
 	mov	r0, r10
 ;	
 ;
@@ -16,3 +17,5 @@
 	strh	r1, [r0]
 	ldr	r0, =$0805950C
 	mov	pc, r0
+@ltorg
+adr:

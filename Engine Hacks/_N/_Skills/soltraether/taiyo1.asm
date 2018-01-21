@@ -22,7 +22,8 @@ number1
 	ldrb	r0, [r0]
 	lsl	r0, r0, #2
 number2
-	ldr	r1, =$0203AB20	;(勝手な太陽フラグ)
+    @align 4
+    ldr r1, [adr+4] ;=$0203AB20	;(勝手な太陽フラグ)
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	cmp	r1, #1
@@ -30,7 +31,8 @@ number2
 ;回復する
 	mov	r1, #0
 	strb	r1, [r0]
-	ldr	r1, [next+4]		;次の処理の先頭+1（HP上昇の処理か？）
+	@align 4
+	ldr	r1, [adr]		;次の処理の先頭+1（HP上昇の処理か？）
 	b	number9
 ;回復しない
 number8
@@ -44,6 +46,5 @@ b5AF10
 	ldr	r1, =$0805af10
 	mov	pc, r1
 @ltorg
-
-next
+adr:
 

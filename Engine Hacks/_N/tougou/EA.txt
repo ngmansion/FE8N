@@ -1,3 +1,5 @@
+#define TRANSPORTER_MAX $080B92C0
+
 //////////////統合システム
 PUSH
 ORG	0xA05C4	//受け取り
@@ -9,12 +11,13 @@ WORD	$468F4900
 POIN	tougou_az
 POP
 
+ALIGN 4
 tougou_uk:
 #incbin "IamN.gba"
-ALIGN 4
 
 tougou_az:
 #incbin "IamL.gba"
+WORD TRANSPORTER_MAX
 ALIGN 4
 
 /////////////画像表示

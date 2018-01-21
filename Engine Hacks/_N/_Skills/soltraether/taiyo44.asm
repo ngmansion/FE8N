@@ -2,7 +2,8 @@
 ;(2B666 > )
 ;フラグ初期化
 	mov	r0, #0
-	ldr	r1, =$0203AB20	;(勝手な太陽フラグ)
+	@align 4
+	ldr	r1, [adr] ;(勝手な太陽フラグ)
 	str	r0, [r1]
 	str	r0, [r1, #4]
 	str	r0, [r1, #8]
@@ -30,7 +31,7 @@ mov	lr, r1
 	
     mov r0, r5
         @align 4
-        ldr r1, [adr+4] ;天空
+        ldr r1, [adr+8] ;天空
         mov lr, r1
         @dcw $F800
     cmp r0, #0
@@ -38,7 +39,7 @@ mov	lr, r1
         
     mov r0, r5
         @align 4
-        ldr r1, [adr+8] ;陽光
+        ldr r1, [adr+12] ;陽光
         mov lr, r1
         @dcw $F800
     cmp r0, #0
@@ -46,7 +47,7 @@ mov	lr, r1
         
     mov r0, r5
         @align 4
-        ldr r1, [adr+12] ;ジハド
+        ldr r1, [adr+16] ;ジハド
         mov lr, r1
         @dcw $F800
     cmp r0, #0
@@ -54,7 +55,7 @@ mov	lr, r1
         
     mov r0, r5
         @align 4
-        ldr r1, [adr] ;太陽
+        ldr r1, [adr+4] ;太陽
         mov lr, r1
         @dcw $F800
     cmp r0, #0
