@@ -1,0 +1,25 @@
+#include nyaa.txt
+
+PUSH
+
+ORG 0x0a7c28
+    jumpToHack(yuso_save)
+ORG 0x0a7cb0
+    jumpToHack(yuso_load)
+
+ORG 0xAA600
+//    WORD $732C
+ORG 0xAA79C
+//    WORD $732C
+
+ORG 0xA7C8E
+   #incbin A7C8E.bin
+   
+ORG 0x0a7d16
+    SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700
+
+POP
+yuso_save:
+    #incbin save.gba
+yuso_load:
+    #incbin load.gba

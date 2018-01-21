@@ -1,0 +1,60 @@
+PUSH
+
+    
+ORG 0x01dc0e
+    BYTE $C7
+ORG 0x01dcb6
+    BYTE $C7
+    
+ORG 0x01dd48
+    BYTE $C7
+    
+    
+ORG 0x031450
+    WORD $0203AB48
+ORG 0x031470
+    WORD $0203AB48
+ORG 0x0314dc
+    WORD $0203AB48
+ORG 0x031500
+    WORD $0203AB48
+ORG 0x03152c
+    WORD $0203AB48
+ORG 0x031550
+    WORD $0203AB48
+
+ORG 0x031474
+    BYTE $C8
+ORG 0x0314c2
+    BYTE $C7
+ORG 0x031508
+    BYTE $C7
+
+
+
+ORG 0x09a566
+    BYTE $C7
+    
+ORG 0x09c81c
+    BYTE $C7
+ORG 0x09c836
+    BYTE $C7
+    
+    
+ORG 0x09f912
+    BYTE $C8
+ORG 0x09f9d6
+    BYTE $C8
+ORG 0x09fa00
+    BYTE $C8
+    
+ORG 0x09ffb0
+    BYTE $C7
+    
+ORG 0x0a0ba2
+    BYTE $C8
+    
+ORG 0x0b92C0
+    BYTE $C7
+    
+POP
