@@ -1,14 +1,16 @@
 //header
 #define SKILL_PATCH
-    #include config_icon.txt
-    #include "_common\EA.txt"
-    #include "_help\EA.txt"
-    #include config.txt
+  #include config_icon.txt
+  #include skill_definitions.event
+  #include list_definitions.event
+  #include "_help\EA.txt"
+  #include "_common\EA.txt"
+  #include index.event
 PUSH
 
 #ifndef MAGIC_PATCH //魔力パッチなし、もしくは以降
     ORG 0xA741A8
-    #incext Png2Dmp Equipment7.png --lz77
+    #incext Png2Dmp "_common\Equipment7.png" --lz77
 ORG 0x089350 //Ability文字位置1
     WORD $02003DAC
     
@@ -21,17 +23,17 @@ POIN Skills_Icon
 POP
 
 Skills_Icon:
-#incbin "iconEX.gba"
+#incbin "_common\iconEX.gba"
 POIN	SIcon_U SIcon_C SIcon_W SIcon_A skl_table
 WORD $08089350 //Ability文字位置2
 
 SIcon_U:
-    #incbin "UNIT.bin"
+    #incbin "_common\UNIT.bin"
 SIcon_C:
-    #incbin "CLASS.bin"
+    #incbin "_common\CLASS.bin"
 SIcon_W:
-    #incbin "WEAPON.bin"
+    #incbin "_common\WEAPON.bin"
 SIcon_A:
-    #incbin "ABILITY.bin"
+    #incbin "_common\ABILITY.bin"
 ALIGN 4
     

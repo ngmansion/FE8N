@@ -1,5 +1,3 @@
-#include skill_definitions.event
-#include list_definitions.event
 #include config.txt
 
 
