@@ -4,6 +4,8 @@ PUSH
 
 ORG 0x89270
 
+#ifndef MAGIC_PATCH
+
 SK_ONE:
 WORD $08A72D08 0 $08A72C60
 POIN SK_TWO
@@ -47,11 +49,59 @@ BYTE $e0 $88
 SHORT $063F
 POIN	helpnon+21 helpdel+21
 
+#else
+
+SK_ONE:
+WORD $08A72D08 0 $08A72C60
+POIN SK_TWO
+BYTE $90 $88
+SHORT $063F
+POIN	helpnon+1 helpdel+1
+
+SK_TWO:
+WORD $08A72D08 0
+POIN SK_ONE SK_THREE
+BYTE $a0 $88
+SHORT $063F
+POIN	helpnon+5 helpdel+5
+
+SK_THREE:
+WORD $08A72D08 0
+POIN SK_TWO SK_FOUR
+BYTE $b0 $88
+SHORT $063F
+POIN	helpnon+9 helpdel+9
+
+SK_FOUR:
+WORD $08A72DB0 0
+POIN SK_THREE SK_FIVE
+BYTE $c0 $88
+SHORT $063F
+POIN	helpnon+13 helpdel+13
+
+SK_FIVE:
+WORD $08A72DB0 0
+POIN SK_FOUR SK_SIX
+BYTE $d0 $88
+SHORT $063F
+POIN	helpnon+17 helpdel+17
+
+SK_SIX:
+WORD $08A72DB0 0
+POIN SK_FIVE
+WORD 0
+BYTE $e0 $88
+SHORT $063F
+POIN	helpnon+21 helpdel+21
+
+#endif
+
+POP
+ALIGN 4
 helpdel:
 #incbin "help.gba"
 ALIGN 4
 
-POP
 helpnon:
 #incbin "helpnon.gba"
 ALIGN 4

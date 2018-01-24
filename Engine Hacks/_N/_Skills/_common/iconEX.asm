@@ -1,7 +1,6 @@
 @thumb
 
 @define ICON_LIST_SIZE 16
-@define ICON_GAP 6
 
 ;@org	$08089268
 	
@@ -31,7 +30,9 @@ loopE
 	cmp	r4, #7
 	ble	loopE
 ;アイコン
-	ldr	r6, =$020040ee	;icon position($02004130)
+    @align 4
+    ldr r6, [adr+24] ;ICON_POSITION =$020040ee ;icon position($02004130)
+    ldr r6, [r6]
 	ldr	r7, =$02003B00	;help memory
 	mov	r5, #0
 	str	r5, [r7]
@@ -170,7 +171,10 @@ nonitem
 	lsl	r2, r2, #7
 	mov	r0, r6
 	bl	icon
-	add	r6, #ICON_GAP
+    @align 4
+    ldr r0, [adr+28] ;ICON_GAP
+    ldr r0, [r0]
+    add r6, r6, r0
 	add	r7, #2	;HELP memory increment
 	
 jump
@@ -240,7 +244,10 @@ nonitem2
 	lsl	r2, r2, #7
 	mov	r0, r6
 	bl	icon
-	add	r6, #ICON_GAP
+    @align 4
+    ldr r0, [adr+28] ;ICON_GAP
+    ldr r0, [r0]
+    add r6, r6, r0
 	add	r7, #2	;HELP memory increment
 	
 jump2
@@ -317,7 +324,10 @@ nonitem3
     lsl r2, r2, #7
     mov r0, r6
     bl icon
-    add r6, #ICON_GAP
+    @align 4
+    ldr r0, [adr+28] ;ICON_GAP
+    ldr r0, [r0]
+    add r6, r6, r0
     add r7, #2	;HELP memory increment
     pop {pc}
 
@@ -380,7 +390,10 @@ nonitem4
     bl icon
     ldr r3, [sp]  ;r3復帰
     lsl r3, r3, #2 ;リスト始点をずらす
-    add r6, #ICON_GAP
+    @align 4
+    ldr r0, [adr+28] ;ICON_GAP
+    ldr r0, [r0]
+    add r6, r6, r0
     add r7, #2	;HELP memory increment
 next4:
     add r5, #ICON_LIST_SIZE
