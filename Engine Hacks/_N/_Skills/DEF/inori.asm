@@ -11,8 +11,15 @@ bl DistantGuard ;遠距離無効
     bne zero
     
     mov r1, r10
-    cmp r1, #0xDE ;必的チェック
-    beq end
+    cmp r1, #0xDE
+    beq end    ;必的チェック
+    ldr r0, =$0802b54c
+    ldr r0, [r0]
+    ldr r0, [r0]
+    mov r1, #128
+    lsl r1, r1, #3
+    and r0, r1
+    bne end    ;トライアングルチェック
     mov r1, #0xDF		;防御用
     mov r10, r1
 bl HolyShield

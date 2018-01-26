@@ -69,8 +69,19 @@ Reverse
 	eor r3, r2
 	eor r2, r3
 	eor r3, r2
-nonTATE
-;見切りチェック
+nonTATE:
+;トライアングルチェック
+    ldr r0, =$0802b54c
+    ldr r0, [r0]
+    ldr r0, [r0]
+    mov r1, #128
+    lsl r1, r1, #3
+    and r0, r1
+    beq nonTri
+    mov r0, #0
+    str r0, [sp] ;r3
+    b end
+nonTri:    ;見切りチェック
     mov r0, r3
         push {r2}
         @align 4
