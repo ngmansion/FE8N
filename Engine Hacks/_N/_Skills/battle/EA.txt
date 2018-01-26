@@ -12,10 +12,15 @@ POP
 
 battle_calc:
     #incbin main.gba
-    POIN hasNihil
-    POIN hasLifeAndDeath
-    POIN hasDeathBlow
-    POIN hasArmoredBlow
+    POIN hasNihil //0
+    POIN hasLifeAndDeath //4
+    POIN hasDeathBlow //8
+    POIN hasArmoredBlow //12
+    POIN breaker_hasSkill1 //16
+    POIN breaker_hasSkill2 //20
+    POIN breaker_hasSkill3 //24
+    POIN breaker_hasSkill4 //28
+    POIN breaker_hasSkill5 //32
     
 hasLifeAndDeath:
     HAS_SKILL
