@@ -132,8 +132,10 @@ kongou:
     add r0, #10
     strh r0, [r4, r1] ;自分
     b true
+    
 breaker_impl:
-    mov r0, r4
+    push {lr}
+    mov r0, r6
     add r0, #74
     ldrh r0, [r0]
         ldr r1, =$080172f0
@@ -187,9 +189,6 @@ magic:
     mov r0, r4
     @dcw $F800
 merge:
-    cmp r0, #0
-    @dcw $D000
-    b true
     pop {pc}
 @ltorg
 adr:
