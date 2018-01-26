@@ -1,30 +1,5 @@
 //config
 
-Swordbreaker: //剣殺し
-    BYTE $00 0
-Swordbreaker_w:
-    BYTE $00 0
-    
-Lancebreaker: //槍殺し
-    BYTE $00 0
-Lancebreaker_w:
-    BYTE $00 0
-    
-Axebreaker: //斧殺し
-    BYTE $00 0
-Axebreaker_w:
-    BYTE $00 0
-    
-Bowbreaker: //弓殺し
-    BYTE $00 0
-Bowbreaker_w:
-    BYTE $00 0
-    
-Tomebreaker: //魔殺し
-    BYTE $00 0
-Tomebreaker_w:
-    BYTE $00 0
-
 waryFighterList: //守備隊形
     BYTE $00 0
 waryFighterList_w:

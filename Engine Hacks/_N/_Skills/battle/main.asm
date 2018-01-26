@@ -54,10 +54,15 @@ koroshi:
     
     mov r1, #94
     ldrh r0, [r4, r1]
-    add r0, #20
+    add r0, #3
     strh r0, [r4, r1] ;自分
     
     mov r1, #96
+    ldrh r0, [r4, r1]
+    add r0, #20
+    strh r0, [r4, r1] ;自分
+    
+    mov r1, #98
     ldrh r0, [r4, r1]
     add r0, #20
     strh r0, [r4, r1] ;自分

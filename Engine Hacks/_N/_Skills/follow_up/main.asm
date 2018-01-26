@@ -167,7 +167,6 @@ normal: ;通常追撃判定
         breaker_judgeActivate:
         push {r7,lr}
             mov r7, #0
-
             mov r0, r5
             mov r1, r6
             bl breaker_impl ;殺しスキル攻め側判定
@@ -183,6 +182,7 @@ normal: ;通常追撃判定
 
             breaker_impl:
             push {r4, r5, lr}
+                b end ;殺しスキルはダミー
                 mov r4, r0
                 mov r5, r1
                 
