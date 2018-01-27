@@ -25,17 +25,16 @@ endZero:
     mov r1, r6
     add r1, #92
     strh r0, [r1] ;防御
-    b End
+    pop {r4, r5, r6}
+    pop {r0}
+    bx r0
 endHarf:
     mov r1, #90
     ldrh r0, [r4, r1] ;威力
     asr r0, r0, #1
     strh r0, [r4, r1] ;威力
-    
-End:
-    pop {r4, r5, r6}
-    pop {r0}
-    bx r0
+    b Return
+
 
 DistantGuard:
     push {lr}
