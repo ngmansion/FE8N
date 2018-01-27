@@ -73,5 +73,6 @@
 #define Leadership2ID 94 //0x5e指揮+2
 #define EclipseID 95 //0x5f月食
 #define JihadID 96 //0x60ジハド
-
+#define LightBlessID 97 //0x61光竜の加護
+#define DarkBlessID 98 //0x62暗黒竜の加護
 

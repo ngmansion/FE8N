@@ -32,3 +32,13 @@ Tomebreaker: //魔殺し
 Tomebreaker_w:
     BYTE $00 0
     
+LightBlessList:
+    BYTE $00 0
+LightBlessList_w:
+    BYTE $00 0
+    
+DarkBlessList:
+    BYTE $00 0
+DarkBlessList_w:
+    BYTE $00 0
+    

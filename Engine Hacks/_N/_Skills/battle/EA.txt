@@ -6,21 +6,40 @@ ALIGN 4
 
 PUSH
 
+ORG 0x02a90c
+    jumpToHack(battle_before)
+
 ORG 0x02ad3c
-    jumpToHack(battle_calc)
+    jumpToHack(battle_after)
 POP
 
-battle_calc:
-    #incbin main.gba
-    POIN hasNihil //0
-    POIN hasLifeAndDeath //4
-    POIN hasDeathBlow //8
-    POIN hasArmoredBlow //12
+battle_before:
+    #incbin before.gba
+    POIN hasNihil
+    POIN hasLifeAndDeath
+    POIN hasDeathBlow
+    POIN hasArmoredBlow
     POIN breaker_hasSkill1 //16
     POIN breaker_hasSkill2 //20
     POIN breaker_hasSkill3 //24
     POIN breaker_hasSkill4 //28
     POIN breaker_hasSkill5 //32
+    
+battle_after:
+    #incbin main.gba
+    POIN hasDistantGuard
+    POIN hasLightBless
+    POIN hasDarkBless
+    
+hasLightBless:
+    HAS_SKILL
+    WORD LightBlessID
+    POIN judgeSkill
+    
+hasDarkBless:
+    HAS_SKILL
+    WORD DarkBlessID
+    POIN judgeSkill
     
 hasLifeAndDeath:
     HAS_SKILL
