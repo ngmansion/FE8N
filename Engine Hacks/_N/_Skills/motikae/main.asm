@@ -5,8 +5,9 @@
     ldr r0, =$08016922
     mov pc, r0
 start:
-    push {r7}
+    push {r6, r7}
     mov r7, r4
+    mov r6, #0xFF
 
     ldr r0, =$0203A568
     ldr r1, [r0, #4]
@@ -47,28 +48,54 @@ loop:
         ldr r1, =$08017448 ;射程
         mov lr, r1
         @dcw $F800
-    cmp r0, #0xFF
-    beq got ;全距離反撃
     
     ldr r1, =$0203a4d2
     ldrb r1, [r1] ;距離
+    
+    ldrb r2, [r5, #0xB]
+    lsl r2, r2, #24
+    lsr r2, r2, #30
+    beq ally ;自軍なら予約制度無し
+    
+    lsl r2, r1, #4
+    orr r2, r1
+    cmp r0, r2
+    beq got ;ピッタリ
+    cmp r6, #0xFF
+    bne next ;先約有り
     
     mov r2, #0xF
     and r2, r0
     cmp r1, r2
     bgt next ;射程より遠い
-    
     mov r2, #0xF0
     and r2, r0
     lsr r2, r2, #4
     cmp r1, r2
     blt next ;射程より近い
-    b got ;反撃可
+    mov r6, r4
+    b next ;予約して次へ
+    
+ally:
+    mov r2, #0xF
+    and r2, r0
+    cmp r1, r2
+    bgt next ;射程より遠い
+    mov r2, #0xF0
+    and r2, r0
+    lsr r2, r2, #4
+    cmp r1, r2
+    blt next ;射程より近い
+    b got
+
 nothing:
     mov r4, r7
+    cmp r6, #0xFF
+    beq got ;予約なし
+    mov r4, r6
 got: ;問題なし
     mov r0, r4
-    pop {r7}
+    pop {r6, r7}
     pop {r4, r5}
     pop {r1}
     bx r1
