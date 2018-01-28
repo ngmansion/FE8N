@@ -40,7 +40,7 @@ cancel:
 ;   bmi false ;追撃チェック
 
     mov r0, #0x15
-    ldsb r0, [r7] ;技％
+    ldsb r0, [r7, r0] ;技％
     lsl r0, r0, #16
     lsr r0, r0, #16
     mov r1, #0
@@ -78,7 +78,7 @@ ikari: ;怒り
     and r0, r1
     bne false ;反撃不可武器と魔法剣は無視
     
-    mov r0, r7 ;イクリプス開始
+    mov r0, r7
     add r0, #74
     ldrh r0, [r0]
         ldr r1, =$080174cc
