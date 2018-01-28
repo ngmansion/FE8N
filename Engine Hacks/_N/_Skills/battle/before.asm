@@ -83,19 +83,15 @@ kishin:
     ldrb r1, [r4, #0xB]
     cmp r0, r1
     bne false
-    mov r1, r4
-    mov r0, #90
-    ldrh r0, [r1, r0]
+    mov r1, #90
+    ldrh r0, [r4, r1]
     add r0, #5 ;威力
-    add r1, #90
-    strh r0, [r1] ;自分
+    strh r0, [r4, r1] ;自分
 
-    mov r1, r4
-    mov r0, #106
-    ldrh r0, [r1, r0]
+    mov r1, #102
+    ldrh r0, [r4, r1]
     add r0, #15 ;必殺
-    add r1, #106
-    strh r0, [r1] ;自分
+    strh r0, [r4, r1] ;自分
     b true
 
 kongou:
@@ -115,12 +111,10 @@ kongou:
     ldrb r1, [r4, #0xB]
     cmp r0, r1
     bne false
-    mov r1, r5
-    mov r0, #90
-    ldrh r0, [r1, r0]
-    sub r0, #10
-    add r1, #90
-    strh r0, [r1] ;相手
+    mov r1, #92
+    ldrh r0, [r4, r1]
+    add r0, #10
+    strh r0, [r4, r1]
     b true
 
 breaker_impl:
