@@ -8,7 +8,6 @@
     cmp r0, #0
     bne Return
     
-    bl shisen
     ldr r0, =$0203a4d0
     ldrh r0, [r0]
     mov r1, #0x20
@@ -65,29 +64,7 @@ koroshi:
     strh r0, [r4, r1] ;自分
     b true
 
-shisen:
-    push {lr}
-    mov r0, r4
-        @align 4
-        ldr r1, [adr+4] ;死線
-        mov lr, r1
-        @dcw $F800
-    cmp r0, #0
-    beq false
-    
-    mov r1, r4
-    mov r0, #90
-    ldrh r0, [r1, r0]
-    add r0, #10
-    add r1, #90
-    strh r0, [r1] ;自分
-    mov r1, r5
-    mov r0, #90
-    ldrh r0, [r1, r0]
-    add r0, #10
-    add r1, #90
-    strh r0, [r1] ;相手
-    b true
+
 
 kishin:
     push {lr}

@@ -16,7 +16,7 @@ POP
 battle_before:
     #incbin before.gba
     POIN hasNihil
-    POIN hasLifeAndDeath
+    POIN 0 //元死線
     POIN hasDeathBlow
     POIN hasArmoredBlow
     POIN breaker_hasSkill1 //16
@@ -30,6 +30,7 @@ battle_after:
     POIN hasDistantGuard
     POIN hasLightBless
     POIN hasDarkBless
+    POIN hasLifeAndDeath
     
 hasLightBless:
     HAS_SKILL
