@@ -8,7 +8,18 @@
     cmp r0, #0
     bne endZero
     
+    mov	r0, r6
+        @align 4
+        ldr r1, [adr+16] ;見切り
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne next
+    
     bl shisen
+    
+next:
+    
     bl godBless
 
 Return:
@@ -97,6 +108,7 @@ shisen:
     add r0, #10
     add r1, #90
     strh r0, [r1] ;自分
+    
     mov r1, r6
     mov r0, #90
     ldrh r0, [r1, r0]

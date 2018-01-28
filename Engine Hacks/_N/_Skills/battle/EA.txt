@@ -31,6 +31,7 @@ battle_after:
     POIN hasLightBless
     POIN hasDarkBless
     POIN hasLifeAndDeath
+    POIN hasNihil
     
 hasLightBless:
     HAS_SKILL
