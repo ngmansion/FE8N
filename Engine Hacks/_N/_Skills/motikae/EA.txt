@@ -1,18 +1,30 @@
 #include config.txt
 
 ALIGN 4
+
 PUSH
-  ORG 0x0168e8
+  ORG 0x016918
     jumpToHack(motikae_main)
 POP
 motikae_main:
+    #incbin main.gba
+    POIN hasNihil
+    POIN hasCounter
+
+/*
+PUSH
+  ORG 0x0168e8
+    jumpToHack(motikae_test)
+POP
+motikae_test:
     #incbin motikae.gba
     POIN hasNihil
-    POIN hasMochikae
+    POIN hasCounter
+*/
     
-hasMochikae:
+hasCounter:
     HAS_SKILL
-    WORD 1
+    WORD CounterID
     POIN judgeSkill
     
     //16540

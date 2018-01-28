@@ -38,6 +38,7 @@
 #define LifeAndDeathID 36 //0x24死線
 #define DeathBlowID 37 //0x25鬼神の一撃
 #define ArmoredBlowID 38 //0x26金剛の一撃
+#define CounterID 39 //0x27 持ち替え
 
 
 #define AstraID 64 //0x40流星
