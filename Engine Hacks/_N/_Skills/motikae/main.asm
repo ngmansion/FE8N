@@ -51,12 +51,12 @@ loop:
     
     ldr r1, =$0203a4d2
     ldrb r1, [r1] ;距離
-    
-    ldrb r2, [r5, #0xB]
-    lsl r2, r2, #24
-    lsr r2, r2, #30
-    beq ally ;自軍なら予約制度無し
-    
+
+;    ldrb r2, [r5, #0xB]
+;    lsl r2, r2, #24
+;    lsr r2, r2, #30
+;    beq ally ;自軍なら予約制度無し
+
     lsl r2, r1, #4
     orr r2, r1
     cmp r0, r2
