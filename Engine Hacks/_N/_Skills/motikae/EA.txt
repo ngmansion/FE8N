@@ -1,0 +1,23 @@
+#include config.txt
+
+ALIGN 4
+PUSH
+  ORG 0x0168e8
+    jumpToHack(motikae_main)
+POP
+motikae_main:
+    #incbin motikae.gba
+    POIN hasNihil
+    POIN hasMochikae
+    
+hasMochikae:
+    HAS_SKILL
+    WORD 1
+    POIN judgeSkill
+    
+    //16540
+    
+    //call 00016912
+    //call 0002499c
+    
+    
