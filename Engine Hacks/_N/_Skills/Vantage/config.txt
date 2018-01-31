@@ -2,5 +2,7 @@
 
 VantageList:
  BYTE	$33 $34 0
- 
+
+VantageList_w:
+ BYTE	$00 0
 

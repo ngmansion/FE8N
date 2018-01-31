@@ -36,8 +36,8 @@ routine1
 	lsl	r3, r2, #24
 	bmi	end100
 ;待ち伏せ武器チェック
-	lsl	r2, r2, #7
-	bmi	jump100
+;	lsl	r2, r2, #7
+;	bmi	jump100
 	bl	routine3
 	cmp	r2, #0
 	beq	end100
@@ -51,9 +51,9 @@ jump100
 	ldr	r2, [r0, #76]
 	lsl	r3, r2, #24
 	bmi	end100
-;待ち伏せ武器チェック
-	lsl	r2, r2, #7
-	bmi	end100
+;元待ち伏せ武器チェック
+;	lsl	r2, r2, #7
+;	bmi	end100
 	bl	routine3
 	cmp	r2, #0
 	bne	end100

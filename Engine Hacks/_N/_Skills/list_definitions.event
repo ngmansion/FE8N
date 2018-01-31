@@ -23,7 +23,7 @@ SHORT SKL_HELP_07 SKL_COLOR_07
 POIN 0 ResolveClassList 0
 
 SHORT SKL_HELP_08 SKL_COLOR_08 
-POIN 0 VantageList 0
+POIN 0 VantageList VantageList_w
 
 SHORT SKL_HELP_09 SKL_COLOR_09 
 POIN 0 adept_list adept_list_w
