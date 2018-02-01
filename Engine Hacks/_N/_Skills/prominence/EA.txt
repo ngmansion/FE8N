@@ -1,0 +1,16 @@
+
+
+PUSH
+  ORG 0x02e7ec
+    jumpToHack(magma_bomb)
+POP
+
+magma_bomb:
+    #incbin main_errata.gba
+    POIN hasProminence
+hasProminence:
+    HAS_SKILL
+    WORD ProminenceID
+    POIN judgeSkill
+    
+    
