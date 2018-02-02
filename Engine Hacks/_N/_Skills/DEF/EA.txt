@@ -7,8 +7,8 @@ PUSH
  BYTE	$00 $4A $97 $46
  POIN	shikkokunori
 
- ORG 0x2b3b0 //元の大盾削除
- SHORT $46C0 $46C0 $46C0 $46C0
+ ORG 0x02b258//元の大盾削除
+ SHORT $4770
 
 POP
 
