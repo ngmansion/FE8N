@@ -13,8 +13,7 @@ bl DistantGuard ;遠距離無効
     mov r1, r10
     cmp r1, #0xDE
     beq end    ;必的チェック
-    ldr r0, =$0802b54c
-    ldr r0, [r0]
+    ldr r0, =$0203a604
     ldr r0, [r0]
     ldr r0, [r0]
     mov r1, #128

@@ -71,8 +71,7 @@ Reverse
 	eor r3, r2
 nonTATE:
 ;トライアングルチェック
-    ldr r0, =$0802b54c
-    ldr r0, [r0]
+    ldr r0, =$0203a604
     ldr r0, [r0]
     ldr r0, [r0]
     mov r1, #128
