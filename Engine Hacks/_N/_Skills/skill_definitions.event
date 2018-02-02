@@ -39,6 +39,8 @@
 #define DeathBlowID 37 //0x25鬼神の一撃
 #define ArmoredBlowID 38 //0x26金剛の一撃
 #define CounterID 39 //0x27 持ち替え
+#define QuickenedPulseID 40 //0x28 奥義の拍動
+#define GaleCauseID 41 //0x29神風招来
 
 
 #define AstraID 64 //0x40流星

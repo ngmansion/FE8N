@@ -25,7 +25,7 @@ start:
     cmp r0, r1
     beq return
 ;除外判定終了
-	push	{r3, lr}    ;;;;;;;;
+	push	{r3, r4, lr}    ;;;;;;;;
 	mov	r3, sp
 	ldr r2, =$0802AFD1 ;汎用
 	ldr r1, =$0802aff9 ;連続専用
@@ -83,25 +83,50 @@ nonTATE:
     b end
 nonTri:    ;見切りチェック
     mov r0, r3
-        push {r2}
+    mov r4, r2
         @align 4
         ldr r3, [adr]
         mov lr, r3
         @dcw $F800
-        pop {r2}
+    cmp r0, #0
+    beq pulse
+    mov r0, #0
+    str r0, [sp]
+pulse:
+    ldr r0, [sp] ;r3
     cmp r0, #0
     beq toking
-    mov r0, #0
-    str r0, [sp+4] ;r3
+    
+    mov r0, r4
+        @align 4
+        ldr r3, [adr+16] ;奥義の鼓動
+        mov lr, r3
+        @dcw $F800
+    cmp r0, #0
+    beq toking
+    
+    ldrb r0, [r4, #11]
+    cmp r0, #0x40
+    bge toking
+        ldr r1, =$08019108
+        mov lr, r1
+        @dcw $F800
+    add r0, #67
+    ldrb r1, [r0]
+    cmp r1, #4
+    blt toking
+    mov r1, #0
+    strb r1, [r0]
+    mov r0, #100
+    str r0, [sp] ;r3
+    b end
     
 toking: ;王の器チェック
-    mov r0, r2
-        push {r2}
+    mov r0, r4
         @align 4
         ldr r3, [adr+4] ;王の器
         mov lr, r3
         @dcw $F800
-        pop {r2}
     cmp r0, #0
     beq togod
     ldr r0, [sp] ;r3
@@ -109,13 +134,11 @@ toking: ;王の器チェック
     str r0, [sp] ;r3
     
 togod: ;神の器チェック
-    mov r0, r2
-        push {r2}
+    mov r0, r4
         @align 4
         ldr r3, [adr+12] ;神の器
         mov lr, r3
         @dcw $F800
-        pop {r2}
     cmp r0, #0
     beq toace
     ldr r0, [sp] ;r3
@@ -123,18 +146,16 @@ togod: ;神の器チェック
     str r0, [sp] ;r3
     
 toace: ;勇将チェック
-    mov r0, r2
-        push {r2}
+    mov r0, r4
         @align 4
         ldr r3, [adr+8] ;勇将
         mov lr, r3
         @dcw $F800
-        pop {r2}
 	cmp	r0, #0
 	beq	end
 gotAC:
-	ldrb	r0, [r2, #0x13]	;NOW
-	ldrb	r1, [r2, #0x12]	;MAX
+	ldrb	r0, [r4, #0x13]	;NOW
+	ldrb	r1, [r4, #0x12]	;MAX
 	lsl	r0, r0, #1
 	cmp	r0, r1
 	bgt	end
@@ -143,9 +164,15 @@ gotAC:
 	str	r0, [sp] ;r3
 end
     mov r2, #0
-    pop {r3}
+    pop {r3, r4}
     ldr r0, =RETURN_ADR
     mov pc, r0
+
+
+
+
+
+
 
 ;non
 ;	pop	{r3}

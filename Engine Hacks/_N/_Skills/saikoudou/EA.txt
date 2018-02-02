@@ -49,6 +49,7 @@ canto_impl:
         POIN hasGaleforce
         POIN hasLifetaker
         POIN hasCantoPlus
+        POIN hasGaleCause
     hasRemove:
         HAS_SKILL
         WORD RemoveID
@@ -64,6 +65,10 @@ canto_impl:
 hasCantoPlus:
     HAS_SKILL
     WORD CantoPlusID
+    POIN judgeSkill
+hasGaleCause:
+    HAS_SKILL
+    WORD GaleCauseID
     POIN judgeSkill
 #endif
 

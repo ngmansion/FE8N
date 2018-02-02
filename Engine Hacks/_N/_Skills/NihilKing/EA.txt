@@ -14,6 +14,7 @@ mirikiri:
  POIN hasRightfulKing
  POIN hasResolve
  POIN hasRightfulGod
+ POIN hasQuickenedPulse
  
 hasRightfulKing:
  HAS_SKILL
@@ -27,7 +28,10 @@ hasRightfulGod:
  HAS_SKILL
  WORD RightfulGodID
  POIN judgeSkill
- 
+hasQuickenedPulse:
+ HAS_SKILL
+ WORD QuickenedPulseID
+ POIN judgeSkill
  
 ////////////////////KingFix
 PUSH

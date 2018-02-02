@@ -21,7 +21,10 @@
     mov r2, #192
     and r2, r1
     bne end ;自軍以外は終了
-
+    
+    bl kami
+    cmp r0, #0
+    bne Sound
     bl kaze
     cmp r0, #0
     bne Sound
@@ -60,6 +63,44 @@ Sound:
 end:
     mov	r0, #0
     pop	{r4, r5, pc}
+    
+kami:
+    push {lr}
+    ldr	r0, [r4]
+        @align 4
+        ldr r2, [adr+16]
+        mov lr, r2
+        @dcw $F800
+    cmp r0, #0
+    beq dameda
+    
+    ldr r0, [r4]
+    ldr r1, =$0203a4e8
+    ldrb r0, [r0, #0xB]
+    ldrb r2, [r1, #0xB]
+    cmp r0, r2
+    bne dameda
+    add r1, #0x48
+    ldrh r0, [r1
+        ldr r2, =$080172f0
+        mov lr, r2
+        @dcw $F800
+    cmp r0, #4
+    bne dameda
+    ldr	r0, [r4]
+    add r0, #69
+    
+    ldrb	r1, [r0]
+    cmp r1, #0xFF
+    beq dameda
+    b gogot ;待機チェック
+
+dameda:
+    mov	r0, #0
+    pop	{lr}
+    
+    
+    
     
     
 kaifuku:
