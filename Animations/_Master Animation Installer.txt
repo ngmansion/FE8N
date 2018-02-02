@@ -16,8 +16,8 @@
 #include "armor_haxe Installer.event"	//0xCF手斧アーマー - The Blind Archer
 #include "Wyvernlordpaledit_axe Installer.event"	//0xD0斧ドラマス - The Blind Archer, Feaw
 #include "Wyvernlordpaledit_haxe Installer.event"	//0xD1手斧ドラマス - The Blind Archer, Feaw
-#include "rag_bow Installer.event"	//0xD2弓ラガルト - ケンプフ
-#include "assassin_bow Installer.event"	//0xD3弓アサシン - ケンプフ
+#include "ragaruto Installer.event"	//0xD2弓ラガルト - ケンプフ
+#include "asasinyumi_Installer.event"	//0xD3弓アサシン - ケンプフ
 #include "StaffRogue Installer.event"	//0xD4杖ローグ - ukulelej
 
 

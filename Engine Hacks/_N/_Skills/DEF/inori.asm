@@ -16,6 +16,7 @@ bl DistantGuard ;遠距離無効
     ldr r0, =$0802b54c
     ldr r0, [r0]
     ldr r0, [r0]
+    ldr r0, [r0]
     mov r1, #128
     lsl r1, r1, #3
     and r0, r1
@@ -23,25 +24,25 @@ bl DistantGuard ;遠距離無効
     mov r1, #0xDF		;防御用
     mov r10, r1
 bl HolyShield
-    cmp r0, #1
-    beq effect
+    cmp r0, #0
+    bne effect
 bl Pray
-	cmp	r0, #1
-	beq	effect
+    cmp r0, #0
+    bne effect
 bl Amulet
-	cmp	r0, #1
-	beq	effect
+    cmp r0, #0
+    bne effect
 bl DistantDef
-	cmp	r0, #1
-	beq	effect
+    cmp r0, #0
+    bne end
 bl BigShield
-	cmp	r0, #1
-	beq	effect
+    cmp r0, #0
+    bne effect
 bl Deflect
-    cmp r0, #1
-    beq effect
+    cmp r0, #0
+    bne end
 bl Oracle
-	b	end
+    b end
 
 effect:
 	ldr	r3, =$0203a604
