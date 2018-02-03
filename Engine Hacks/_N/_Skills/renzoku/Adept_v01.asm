@@ -1,12 +1,12 @@
 @thumb
 ;@org	$0802b004
-	push	{r4, lr}
-	mov	r4, #0
-	ldr	r0, [r0, #76]
-	mov	r1, #32
-	and	r0, r1
-	cmp	r0, #0
-	beq Brave ;x勇者武器持ってないならジャンプ
+    push {r4, lr}
+    mov r4, #0
+    ldr r0, [r0, #76]
+    mov r1, #32
+    and r0, r1
+    cmp r0, #0
+    bne Brave ;x勇者武器持ってるなら
 
     bl dengeki
     cmp r4, #0
