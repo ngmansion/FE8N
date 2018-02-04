@@ -21,6 +21,7 @@
 #include "battle\EA.txt"
 #include "motikae\EA.txt"
 #include "prominence\EA.txt"
+#include "xeno\EA.txt"
 
 
 //#include "my_skill\EA.txt"

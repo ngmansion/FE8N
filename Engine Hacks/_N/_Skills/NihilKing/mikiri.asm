@@ -1,4 +1,4 @@
-
+;0x2A490
 @thumb
 @define RETURN_ADR $0802a4a6
 	lsl	r0, r0, #16
@@ -61,14 +61,14 @@ check:
 	cmp	r0, r1
 	beq	Reverse
 ;独自チェック
-	mov	r0, r10
-	cmp	r0, #0xDF
-	beq	Reverse
-	b	nonTATE
+    mov r0, r10
+    cmp r0, #0xDF
+    beq Reverse
+    b nonTATE
 Reverse
-	eor r3, r2
-	eor r2, r3
-	eor r3, r2
+    eor r3, r2
+    eor r2, r3
+    eor r3, r2
 nonTATE:
 ;トライアングルチェック
     ldr r0, =$0203a604
@@ -81,7 +81,25 @@ nonTATE:
     mov r0, #0
     str r0, [sp] ;r3
     b end
-nonTri:    ;見切りチェック
+nonTri:
+    ldrb r0, [r3, #11]
+    ldr r1, =$0203a5e8 ;ゲノ
+    ldrb r1, [r1]
+    cmp r0, r1
+    bne goneGeno
+    mov r0, #0
+    str r0, [sp] ;r3
+    b end
+nonGeno:
+;スキル100%効果
+    ldrb r0, [r2, #11]
+    cmp r0, r1
+    bne goneGeno
+    mov r0, #100
+    str r0, [sp] ;r3
+    b end
+goneGeno:
+;見切りチェック
     mov r0, r3
     mov r4, r2
         @align 4

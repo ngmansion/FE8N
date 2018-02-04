@@ -40,4 +40,6 @@ POP
 
 hotaru_oto:
 #incbin "kyuin2.gba"
+    WORD $3D1 //貫通の音
+    WORD $3D1 //必的の音
 ALIGN 4

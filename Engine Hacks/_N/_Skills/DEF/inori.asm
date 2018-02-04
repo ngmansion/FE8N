@@ -41,6 +41,7 @@ bl Deflect
     cmp r0, #0
     bne end
 bl Oracle
+bl Xeno
     b end
 
 effect:
@@ -61,8 +62,8 @@ zero:
 	mov	r0, #0
 	strh	r0, [r4, #4]
 end:
-	ldr	r0, =$0802b49a
-	mov	pc, r0
+    ldr r0, =$0802b49a
+    mov pc, r0
     
     Deflect:
         push {lr}
@@ -377,7 +378,27 @@ ouiAmulet:
 endAmulet:
 	mov	r0, #0
 	pop	{pc, r5}
-	
+
+Xeno:
+    mov r2, r8
+    ldrb r0, [r2, #11]
+    ldr r1, =$0203a5e8 ;ゲノ
+    ldrb r1, [r1]
+    cmp r0, r1
+    bne endXeno ;不発
+    ldrh r0, [r4, #4]
+    lsr r0, r0, #1
+    strh r0, [r4, #4]
+    ldrb r1, [r2, #19]	;現在HP
+;一撃で死ぬか
+    cmp r0, r1
+    blt endXeno
+    sub r1, #1
+    strh r1, [r4, #4]
+endXeno:
+    bx lr
+
+
 random:
 	ldr	r2, =$0802a490
 	mov	pc, r2

@@ -1,0 +1,26 @@
+
+    
+PUSH
+    ORG 0x02ae54
+    jumpToHack(xeno_main)
+    ORG 0x02aec0
+    jumpToHack(xeno_back)
+    ORG 0x06fc18
+    jumpToHack(xeno_light)
+    
+POP
+    
+xeno_main:
+    #incbin main.gba
+    POIN hasNihil
+    POIN hasXeno
+xeno_light:
+    #incbin light.gba
+xeno_back:
+    #incbin back.gba
+hasXeno:
+    HAS_SKILL
+    WORD GenocideID
+    POIN judgeSkill
+    
+    
