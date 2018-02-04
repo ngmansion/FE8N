@@ -1,4 +1,4 @@
-
+#include config.txt
     
 PUSH
     ORG 0x02ae54
