@@ -13,10 +13,11 @@
     ldr r1, [r2]
     cmp r1, #0
     beq Retrun ;0x00なら終了
-    mov r0, #0xFF
+    mov r0, #0xFF ;突撃フラグ
+    ldrb r1, [r2, #1]
     cmp r0, r1
     beq Retrun ;0xFFなら終了
-    str r0, [r2]
+    strb r0, [r2, #1]
 Again:
     @dcw $ac01
     @dcw $4668
