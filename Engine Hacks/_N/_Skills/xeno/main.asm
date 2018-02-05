@@ -7,23 +7,27 @@
     
     ldr r0, [sp, #0]
     ldr r1, [sp, #4]
+    mov r2, #72
+    ldrh r2, [r1, r2]
+    cmp r2, #0
+    beq Return ;相手が反撃不可
     bl zeno
     
     cmp r0, #0
     beq jump
-    ldr r0, [sp]
-    ldr r1, [sp, #4]
-    bl zeno_impl
-    b Return
-jump:
+        ldr r0, [sp]
+        ldr r1, [sp, #4]
+        bl zeno_impl
+        b Return
+jump
     ldr r1, [sp, #0]
     ldr r0, [sp, #4]
     bl zeno
     cmp r0, #0
     beq Return
-    ldr r0, [sp, #4]
-    ldr r1, [sp]
-    bl zeno_impl
+        ldr r0, [sp, #4]
+        ldr r1, [sp]
+        bl zeno_impl
 Return:
     ldr r3, [r6]
     ldr r1, [r3]
