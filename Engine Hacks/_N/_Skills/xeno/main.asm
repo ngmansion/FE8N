@@ -3,8 +3,25 @@
     
     ldr r2, =$0203a5e8
     mov r0, #0x0
-    str r0, [r2]
+    str r0, [r2] ;フラグリセット
     
+    ldr r0, =$0203a4d0
+    ldrh r2, [r0]
+    mov r0, #2
+    and r0, r2
+    cmp r0, #0
+    bne Return ;戦闘予測
+    mov r0, #0x20
+    and r0, r2
+    bne Return ;闘技場チェック
+;突撃
+    ldr r0, [sp, #0]
+    ldr r1, [sp, #4]
+    bl charge
+    ldr r1, [sp, #0]
+    ldr r0, [sp, #4]
+    bl charge
+;ジェノサイド
     ldr r0, [sp, #0]
     ldr r1, [sp, #4]
     mov r2, #72
@@ -12,22 +29,14 @@
     cmp r2, #0
     beq Return ;相手が反撃不可
     bl zeno
-    
     cmp r0, #0
-    beq jump
-        ldr r0, [sp]
-        ldr r1, [sp, #4]
-        bl zeno_impl
-        b Return
-jump
+    bne firstXeno
+    
     ldr r1, [sp, #0]
     ldr r0, [sp, #4]
     bl zeno
     cmp r0, #0
-    beq Return
-        ldr r0, [sp, #4]
-        ldr r1, [sp]
-        bl zeno_impl
+    bne secondXeno
 Return:
     ldr r3, [r6]
     ldr r1, [r3]
@@ -36,6 +45,17 @@ Return:
     ldr r0, =$0802ae5c
     mov pc, r0
 
+firstXeno
+    ldr r0, [sp]
+    ldr r1, [sp, #4]
+    bl zeno_impl
+    b Return
+secondXeno
+    ldr r0, [sp, #4]
+    ldr r1, [sp]
+    bl zeno_impl
+    b Return
+    
 zeno_impl:
     mov r3, r0
     ldr r2, =$0203a5e8
@@ -77,13 +97,6 @@ zeno:
         @dcw $F800
     cmp r0, #0
     beq notZeno
-    
-    ldr r0, =$0203a4d0
-    ldrh r1, [r0
-    mov r0, #2
-    and r0, r1
-    cmp r0, #0
-    bne notZeno
     ldrb r0, [r4, #0x13] ;nowHP   
         ldr r1, =$08000c78
         mov lr, r1
@@ -95,5 +108,49 @@ notZeno:
     mov r0, #0
 endZeno:
     pop {r4, pc}
+    
+charge:
+    push {r4, lr}
+    mov r4, r0
+    mov r2, #94
+    ldsh r0, [r4, r2]
+    ldsh r2, [r1, r2]
+    cmp r0, r2
+    ble notCharge ;速さが足りない！
+    ldrb r0, [r4, 0x13]
+    ldrb r2, [r1, 0x13]
+    cmp r0, r2
+    ble notCharge ;HPが足りない！
+
+    
+    mov r0, r1
+        @align 4
+        ldr r1, [adr] ;見切り
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    bne notCharge
+    mov r0, r4
+        @align 4
+        ldr r1, [adr+8] ;突撃
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq notCharge
+    mov r0, #0xFF
+    ldr r2, =$0203a5e8 ;無効ユニットIDストア
+    strb r0, [r2]
+    mov r0, #1
+    b endCharge
+notCharge
+    mov r0, #0
+endCharge
+    pop {r4, pc}
+    
+    
+    
+    
+    
+    
 @ltorg
 adr:
