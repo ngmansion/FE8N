@@ -6,6 +6,7 @@
         ldr r1, [adr] ;‰ñ•œ
         mov lr, r1
     mov r2, r0
+    mov r0, r4
     ldr r1, =$08019f44
     ldr r1, [r1]
     add r0, r0, r1
