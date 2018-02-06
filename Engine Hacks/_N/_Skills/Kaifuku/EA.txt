@@ -4,6 +4,10 @@ PUSH
 ORG	0x19f28
 BYTE	$00 $4B $9F $46
 POIN	ski_kaifuku
+
+    ORG 0x019f38
+    jumpToHack(tiyu_main)
+
 POP
 
 ALIGN 4
@@ -11,8 +15,18 @@ ski_kaifuku:
 #incbin "KAIFUKU.gba"
 POIN hasRenewal
 
+tiyu_main:s
+  #incbin tiyu.gba
+  POIN hasImbue
+
 hasRenewal:
     HAS_SKILL
     WORD RenewalID
     POIN judgeSkill
+    
+hasImbue:
+    HAS_SKILL
+    WORD ImbueID
+    POIN judgeSkill
+    
     
