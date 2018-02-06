@@ -15,7 +15,7 @@ ski_kaifuku:
 #incbin "KAIFUKU.gba"
 POIN hasRenewal
 
-tiyu_main:s
+tiyu_main:
   #incbin tiyu.gba
   POIN hasImbue
 
