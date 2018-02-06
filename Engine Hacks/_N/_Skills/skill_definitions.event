@@ -81,6 +81,6 @@
 #define LightBlessID 97 //0x61光竜の加護
 #define DarkBlessID 98 //0x62暗黒竜の加護
 #define ProminenceID 99 //0x63プロミネンス
-#define GenocideID 99 //0x64ジェノサイド
+#define GenocideID 100 //0x64ジェノサイド
 
 
