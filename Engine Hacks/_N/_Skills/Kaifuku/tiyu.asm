@@ -3,7 +3,7 @@
     mov r4, r0
     mov r0, r5
         @align 4
-        ldr r1, [adr] ;‰ñ•œ
+        ldr r1, [adr] ;å›žå¾©
         mov lr, r1
     mov r2, r0
     mov r0, r4
