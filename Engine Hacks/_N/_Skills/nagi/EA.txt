@@ -1,0 +1,23 @@
+#include config.txt
+
+PUSH
+  ORG 0x02a834
+    jumpToHack(nagi_kaze)
+  ORG 0x02af60
+    jumpToHack(nagi_tome)
+POP
+
+nagi_kaze:
+  #incbin kaze.gba
+  POIN hasNihil
+  POIN hasWindsweep
+
+nagi_tome:
+  #incbin tome.gba
+  POIN hasNihil
+  POIN hasWindsweep
+
+hasWindsweep:
+ HAS_SKILL
+ WORD WindsweepID
+ POIN judgeSkill
