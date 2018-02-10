@@ -1,2 +1,7 @@
-NihilList:
+NihilList:	//見切り
     BYTE $00 0
+
+OccultList_u:	//奥義の書
+    BYTE $00 0
+
+

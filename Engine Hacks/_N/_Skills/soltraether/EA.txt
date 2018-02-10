@@ -1,7 +1,7 @@
 #include config.txt
 
 
-#define SOL_WORK_ADRESS $0203AB20
+#define SOL_WORK_ADDRESS $0203AB20
 
 //code
 ALIGN 4
@@ -62,7 +62,7 @@ POP
 taiyo1:
     #incbin "taiyo1.gba"
     POIN taiyo11+1
-    WORD SOL_WORK_ADRESS
+    WORD SOL_WORK_ADDRESS
 
 ALIGN	4
 taiyo11:
@@ -70,15 +70,15 @@ taiyo11:
 ALIGN	4
 taiyo2:
     #incbin "taiyo2.gba"
-    WORD SOL_WORK_ADRESS
+    WORD SOL_WORK_ADDRESS
 ALIGN	4
 taiyo3:
 	#incbin "taiyo3.gba"
-    WORD SOL_WORK_ADRESS
+    WORD SOL_WORK_ADDRESS
 ALIGN	4
 taiyo4:
 	#incbin "taiyo44.gba"
-    WORD SOL_WORK_ADRESS
+    WORD SOL_WORK_ADDRESS
     POIN hasSOL
     POIN hasTenku
     POIN hasYoukoh
@@ -113,3 +113,4 @@ hasJihad:
     HAS_SKILL
     WORD JihadID
     POIN judgeSkill
+
