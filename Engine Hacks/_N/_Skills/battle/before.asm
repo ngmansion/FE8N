@@ -55,7 +55,7 @@ Return:
         
         mov r1, #92
         ldrh r0, [r4, r1]
-        add r0, #10
+        add r0, #6
         strh r0, [r4, r1]
         mov r0, #1
         @dcw $E000
@@ -89,7 +89,7 @@ Return:
         
         mov r1, #92
         ldrh r0, [r4, r1]
-        add r0, #10
+        add r0, #6
         strh r0, [r4, r1]
         mov r0, #1
         @dcw $E000
