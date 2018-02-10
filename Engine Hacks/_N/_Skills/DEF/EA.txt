@@ -24,6 +24,7 @@ shikkokunori:
  POIN hasDistantGuard
  POIN hasDistantDef
  POIN hasDeflect
+ POIN hasCloseDef
  
 BigShield_hasSkill:
  HAS_SKILL
@@ -58,5 +59,10 @@ hasDistantDef:
 hasDeflect:
  HAS_SKILL
  WORD DeflectID
+ POIN judgeSkill
+ 
+hasCloseDef:
+ HAS_SKILL
+ WORD CloseDefID
  POIN judgeSkill
  

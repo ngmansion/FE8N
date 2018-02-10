@@ -19,6 +19,7 @@ POIN hasRyusei
 POIN hasImpale
 POIN hasEclipse
 POIN hasJihad
+POIN hasOccult
 
 ALIGN 4
 
@@ -82,6 +83,7 @@ taiyo4:
     POIN hasTenku
     POIN hasYoukoh
     POIN hasJihad
+    POIN hasOccult
 
 hasSOL:
     HAS_SKILL
