@@ -34,6 +34,9 @@ bl Amulet
 bl DistantDef
     cmp r0, #0
     bne end
+bl CloseDef
+    cmp r0, #0
+    bne end
 bl BigShield
     cmp r0, #0
     bne effect
@@ -44,7 +47,7 @@ bl Oracle
 bl Xeno
     b end
 
-effect:
+effect
 	ldr	r3, =$0203a604
 	ldr	r3, [r3]
 	ldr	r2, [r3]
@@ -58,12 +61,60 @@ effect:
 	orr	r0, r1
 	str	r0, [r3]
 	b	end
-zero:
+zero
 	mov	r0, #0
 	strh	r0, [r4, #4]
-end:
+end
     ldr r0, =$0802b49a
     mov pc, r0
+    
+    CloseDef:
+        push {lr}
+        ldr r0, =$0203a4d0
+        ldrh r0, [r0]
+        mov r1, #0x20
+        and r0, r1
+        bne endCloseDef ;闘技場チェック
+        
+        ldr r0, =$0203a4d2
+        ldrb r0, [r0] ;距離
+        cmp r0, #1
+        bne endCloseDef
+        
+        mov r0, r8
+        ldrb r0, [r0, #11]
+        ldr r1, =$03004df0
+        ldr r1, [r1]
+        ldrb r1, [r1, #11]
+        cmp r0, r1
+        beq endCloseDef	;攻撃者と一致
+        
+        mov r0, r8
+            @align 4
+            ldr r1, [adr+36] ;近距離防御
+            mov lr, r1
+            @dcw $F800
+        cmp r0, #0
+        beq endCloseDef
+        
+        mov r0, r7
+            @align 4
+            ldr r1, [adr+16] ;見切り
+            mov lr, r1
+            @dcw $F800
+        cmp r0, #0
+        bne endCloseDef
+        
+        ldrh r0, [r4, #4]
+        asr r0, r0, #1
+        strh r0, [r4, #4]
+        mov r0, #1
+        @dcw $E000
+    endCloseDef
+        mov r0, #0
+        pop {pc}
+    
+    
     
     Deflect:
         push {lr}
@@ -104,7 +155,7 @@ end:
         strh r0, [r4, #4]
         mov r0, #1
         @dcw $E000
-    endDeflect:
+    endDeflect
         mov r0, #0
         pop {pc}
     
@@ -127,28 +178,37 @@ end:
         
         mov r0, #1
         @dcw $E000
-    endDistantGuard:
+    endDistantGuard
         mov r0, #0
         pop {pc}
         
     DistantDef:
         push {lr}
-            ldr r0, =$0203a4d0
-            ldrh r0, [r0]
-            mov r1, #0x20
-            and r0, r1
-            bne endDistantDef ;闘技場チェック
+        ldr r0, =$0203a4d0
+        ldrh r0, [r0]
+        mov r1, #0x20
+        and r0, r1
+        bne endDistantDef ;闘技場チェック
+        
+        ldr r0, =$0203a4d2
+        ldrb r0, [r0] ;距離
+        cmp r0, #1
+        beq endDistantDef
+        
+        mov r0, r8
+        ldrb r0, [r0, #11]
+        ldr r1, =$03004df0
+        ldr r1, [r1]
+        ldrb r1, [r1, #11]
+        cmp r0, r1
+        beq endDistantDef	;攻撃者と一致
+        
         mov r0, r8
             @align 4
             ldr r1, [adr+28] ;遠距離防御
             mov lr, r1
             @dcw $F800
         cmp r0, #0
-        beq endDistantDef
-        
-        ldr r0, =$0203a4d2
-        ldrb r0, [r0] ;距離
-        cmp r0, #1
         beq endDistantDef
         
         mov r0, r7
@@ -164,7 +224,7 @@ end:
         strh r0, [r4, #4]
         mov r0, #1
         @dcw $E000
-    endDistantDef:
+    endDistantDef
         mov r0, #0
         pop {pc}
         
@@ -179,7 +239,7 @@ BigShield:
         @dcw $F800
     cmp r0, #0
     beq endShield
-ouiShield:
+ouiShield
     mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;魔法判定
@@ -200,7 +260,7 @@ ouiShield:
 	strh	r0, [r4, #4]
 	mov	r0, #1
 	@dcw $E000
-endShield:
+endShield
 	mov	r0, #0
 	pop	{pc}
 	
@@ -214,7 +274,7 @@ HolyShield:
         @dcw $F800
     cmp r0, #0
     beq endHoly
-Holy:
+Holy
     mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	;物理判定
@@ -225,7 +285,7 @@ Holy:
 	cmp	r0, #5
 	beq	ouiHoly
 	b endHoly
-ouiHoly:
+ouiHoly
 	ldrb	r0, [r3, #21]	;技
 	mov	r1, #0
 	bl	random
@@ -237,7 +297,7 @@ ouiHoly:
 	mov	r0, #1
 	pop	{pc}
 
-endHoly:
+endHoly
 	mov	r0, #0
 	pop	{pc}
 	
@@ -285,14 +345,14 @@ originalPray:
 	beq	endPray
 	
 	
-effectPray:
+effectPray
 	mov	r0, r8
 	ldrb	r0, [r0, #19]
 	sub	r0, #1
 	strh	r0, [r4, #4]
 	mov	r0, #1
 	pop	{pc}
-endPray:
+endPray
 	mov	r0, #0
 	pop	{pc}
 
@@ -307,7 +367,7 @@ Oracle:
 	cmp r0, #0
 	beq	endOracle
 	
-nihil_check:
+nihil_check
     mov r0, r7
         @align 4
         ldr r1, [adr+16] ;見切り
@@ -329,7 +389,7 @@ division
 	bgt	division
 	sub	r1, #1
 	strh	r1, [r4, #4]
-endOracle:
+endOracle
 	pop	{pc}
 	
 	
@@ -337,7 +397,7 @@ Amulet:
 	push {lr, r5}
 	mov	r5, #0x1C
 	mov	r3, r8
-loopAmulet:
+loopAmulet
 	add	r5, #2
 	cmp	r5, #40
 	beq	endAmulet
@@ -354,7 +414,7 @@ loopAmulet:
 	bmi	ouiAmulet
 	b	loopAmulet
 	
-ouiAmulet:
+ouiAmulet
 	ldrb	r1, [r3, #19]	;現在HP
 ;一撃で死ぬか
 	ldrh	r0, [r4, #4]	;ダメージ
@@ -375,7 +435,7 @@ ouiAmulet:
 	strh	r0, [r4, #4]
 	mov	r0, #1
 	pop	{pc, r5}
-endAmulet:
+endAmulet
 	mov	r0, #0
 	pop	{pc, r5}
 
@@ -395,7 +455,7 @@ Xeno:
     blt endXeno
     sub r1, #1
     strh r1, [r4, #4]
-endXeno:
+endXeno
     bx lr
 
 
