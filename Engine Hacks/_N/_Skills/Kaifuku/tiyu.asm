@@ -5,6 +5,7 @@
         @align 4
         ldr r1, [adr] ;治癒
         mov lr, r1
+        @dcw $F800
     mov r2, r0
     mov r0, r4
     ldr r1, =$08019f44
