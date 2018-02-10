@@ -3,7 +3,7 @@
     push {r4, lr}
     mov r4, r0
         @align 4
-        ldr r1, [adr+0] ;ƒXƒLƒ‹
+        ldr r1, [adr+0] ;ã‚¹ã‚­ãƒ«
         mov lr, r1
         @dcw $F800
     cmp r0, #0
@@ -12,7 +12,7 @@
     mov r0, #72
     ldrh r0, [r4, r0]
         @align 4
-        ldr r1, [adr+4] ;•Šíí—Ş
+        ldr r1, [adr+4] ;æ­¦å™¨ç¨®é¡
         mov lr, r1
         @dcw $F800
     cmp r0, #7
