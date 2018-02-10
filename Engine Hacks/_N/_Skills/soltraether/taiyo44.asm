@@ -17,18 +17,15 @@
 	cmp	r0, #0
 	beq	buki
 ;太陽発動分岐
-	mov	r0, #72
-	ldrh	r0, [r5, r0]
-ldr	r1,	=$080172f0
-mov	lr, r1
-@dcw	$F800
-	cmp	r0, #7
-	bgt	buki
-	add	r0, #40
-	ldrb	r0, [r5, r0]
-	cmp	r0, #250
-	bls	buki
-	
+
+    mov r0, r5
+        @align 4
+        ldr r1, [adr+20] ;奥義判定
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq buki ;奥義無し
+    
     mov r0, r5
         @align 4
         ldr r1, [adr+8] ;天空

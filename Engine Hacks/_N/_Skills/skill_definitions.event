@@ -44,6 +44,7 @@
 #define ChargeID 42 //0x2A 突撃
 #define ImbueID 43 //0x2B 治癒
 #define WindsweepID 44 //0x2C 風薙ぎ
+#define CloseDefID 45 //0x2D 近距離防御
 
 #define AstraID 64 //0x40流星
 #define LunaID 65 //0x41月光
@@ -82,5 +83,5 @@
 #define DarkBlessID 98 //0x62暗黒竜の加護
 #define ProminenceID 99 //0x63プロミネンス
 #define GenocideID 100 //0x64ジェノサイド
-
+#define OccultID 101 //0x65 奥義の書
 

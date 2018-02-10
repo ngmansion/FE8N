@@ -1,16 +1,16 @@
 @thumb
 ;;@org	$08E48BB0
-	
-	mov	r0, #72
-	ldrh	r0, [r2, r0]
-		bl	WEAPON
-	cmp	r0, #7
-	bgt	end
-	add	r0, #40
-	ldrb	r0, [r2, r0]
-	cmp	r0, #250
-	bls	end
-	
+
+    mov r0, r2
+        push {r2}
+        @align 4
+        ldr r1, [adr+4] ;奥義判定
+        mov lr, r1
+        @dcw $F800
+        pop {r2}
+    cmp r0, #0
+    beq end ;奥義無し
+
     mov r0, r2
         push {r2}
         @align 4

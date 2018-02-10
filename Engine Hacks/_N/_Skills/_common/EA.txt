@@ -13,3 +13,13 @@ judgeSkill:
     #incbin judgeSkill.gba
     POIN skl_table
     
+judgeOccult:
+    #incbin judgeOccult.gba
+    POIN hasOccult
+    WORD $080172f0
+    
+hasOccult:
+    HAS_SKILL
+    WORD OccultID
+    POIN judgeSkill
+    

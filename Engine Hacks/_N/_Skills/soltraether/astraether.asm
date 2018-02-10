@@ -1,20 +1,13 @@
 @thumb
 ;@org	$0802b484
 ;武器レベルチェック
-	mov	r0, #72
-	ldrh	r0, [r7, r0]
-ldr	r2, =$080172f0	;武器の種類ID
-mov	lr r2
-@dcw	$F800
-	mov	r1, r0
-	cmp	r1, #7
-	bgt	return
-	mov	r0, r7
-	add	r0, #40
-	add	r0, r0, r1
-	ldrb	r0, [r0]
-	cmp	r0, #250
-	bls	return
+    mov r0, r7
+        @align 4
+        ldr r1, [adr+24] ;奥義判定
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq return
 	
 	bl astra_impl ;流星
 	cmp r0, #0
