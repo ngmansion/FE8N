@@ -20,10 +20,82 @@
     
     bl koroshi
     
+    bl DistantDef
+    
+    bl CloseDef
+    
 Return:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+
+    DistantDef:
+        push {lr}
+        ldr r0, =$0203a4d2
+        ldrb r0, [r0] ;距離
+        cmp r0, #1
+        beq endDistantDef
+        
+        mov r0, r4
+        ldrb r0, [r0, #11]
+        ldr r1, =$03004df0
+        ldr r1, [r1]
+        ldrb r1, [r1, #11]
+        cmp r0, r1
+        beq endDistantDef	;攻撃者と一致
+        
+        mov r0, r4
+            @align 4
+            ldr r1, [adr+40] ;遠距離防御
+            mov lr, r1
+            @dcw $F800
+        cmp r0, #0
+        beq endDistantDef
+        
+        mov r1, #92
+        ldrh r0, [r4, r1]
+        add r0, #10
+        strh r0, [r4, r1]
+        mov r0, #1
+        @dcw $E000
+    endDistantDef
+        mov r0, #0
+        pop {pc}
+        
+
+    CloseDef:
+        push {lr}
+        ldr r0, =$0203a4d2
+        ldrb r0, [r0] ;距離
+        cmp r0, #1
+        bne endCloseDef
+        
+        mov r0, r4
+        ldrb r0, [r0, #11]
+        ldr r1, =$03004df0
+        ldr r1, [r1]
+        ldrb r1, [r1, #11]
+        cmp r0, r1
+        beq endCloseDef	;攻撃者と一致
+        
+        mov r0, r4
+            @align 4
+            ldr r1, [adr+36] ;近距離防御
+            mov lr, r1
+            @dcw $F800
+        cmp r0, #0
+        beq endCloseDef
+        
+        mov r1, #92
+        ldrh r0, [r4, r1]
+        add r0, #10
+        strh r0, [r4, r1]
+        mov r0, #1
+        @dcw $E000
+    endCloseDef
+        mov r0, #0
+        pop {pc}
 
 true:
     mov r0, #1

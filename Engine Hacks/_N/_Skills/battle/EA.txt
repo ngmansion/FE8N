@@ -24,7 +24,9 @@ battle_before:
     POIN breaker_hasSkill3 //24
     POIN breaker_hasSkill4 //28
     POIN breaker_hasSkill5 //32
-    
+    POIN hasCloseDef
+    POIN hasDistantDef
+
 battle_after:
     #incbin main.gba
     POIN hasDistantGuard
@@ -58,7 +60,14 @@ hasArmoredBlow:
     WORD ArmoredBlowID
     POIN judgeSkill
     
-    
-    
-    
-    
+hasCloseDef:
+ HAS_SKILL
+ WORD CloseDefID
+ POIN judgeSkill
+
+hasDistantDef:
+ HAS_SKILL
+ WORD DistantDefID
+ POIN judgeSkill
+
+

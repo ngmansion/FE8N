@@ -22,9 +22,9 @@ shikkokunori:
  POIN hasNihil
  WORD ADVANCED_MIRACLE
  POIN hasDistantGuard
- POIN hasDistantDef
+ POIN 0
  POIN hasDeflect
- POIN hasCloseDef
+ POIN 0
  
 BigShield_hasSkill:
  HAS_SKILL
@@ -51,18 +51,10 @@ hasDistantGuard:
  WORD DistantGuardID
  POIN judgeSkill
  
-hasDistantDef:
- HAS_SKILL
- WORD DistantDefID
- POIN judgeSkill
- 
 hasDeflect:
  HAS_SKILL
  WORD DeflectID
  POIN judgeSkill
  
-hasCloseDef:
- HAS_SKILL
- WORD CloseDefID
- POIN judgeSkill
+
  

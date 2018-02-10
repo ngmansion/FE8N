@@ -31,12 +31,6 @@ bl Pray
 bl Amulet
     cmp r0, #0
     bne effect
-bl DistantDef
-    cmp r0, #0
-    bne end
-bl CloseDef
-    cmp r0, #0
-    bne end
 bl BigShield
     cmp r0, #0
     bne effect
@@ -67,53 +61,6 @@ zero
 end
     ldr r0, =$0802b49a
     mov pc, r0
-    
-    CloseDef:
-        push {lr}
-        ldr r0, =$0203a4d0
-        ldrh r0, [r0]
-        mov r1, #0x20
-        and r0, r1
-        bne endCloseDef ;闘技場チェック
-        
-        ldr r0, =$0203a4d2
-        ldrb r0, [r0] ;距離
-        cmp r0, #1
-        bne endCloseDef
-        
-        mov r0, r8
-        ldrb r0, [r0, #11]
-        ldr r1, =$03004df0
-        ldr r1, [r1]
-        ldrb r1, [r1, #11]
-        cmp r0, r1
-        beq endCloseDef	;攻撃者と一致
-        
-        mov r0, r8
-            @align 4
-            ldr r1, [adr+36] ;近距離防御
-            mov lr, r1
-            @dcw $F800
-        cmp r0, #0
-        beq endCloseDef
-        
-        mov r0, r7
-            @align 4
-            ldr r1, [adr+16] ;見切り
-            mov lr, r1
-            @dcw $F800
-        cmp r0, #0
-        bne endCloseDef
-        
-        ldrh r0, [r4, #4]
-        asr r0, r0, #1
-        strh r0, [r4, #4]
-        mov r0, #1
-        @dcw $E000
-    endCloseDef
-        mov r0, #0
-        pop {pc}
-    
     
     
     Deflect:
@@ -182,53 +129,6 @@ end
         mov r0, #0
         pop {pc}
         
-    DistantDef:
-        push {lr}
-        ldr r0, =$0203a4d0
-        ldrh r0, [r0]
-        mov r1, #0x20
-        and r0, r1
-        bne endDistantDef ;闘技場チェック
-        
-        ldr r0, =$0203a4d2
-        ldrb r0, [r0] ;距離
-        cmp r0, #1
-        beq endDistantDef
-        
-        mov r0, r8
-        ldrb r0, [r0, #11]
-        ldr r1, =$03004df0
-        ldr r1, [r1]
-        ldrb r1, [r1, #11]
-        cmp r0, r1
-        beq endDistantDef	;攻撃者と一致
-        
-        mov r0, r8
-            @align 4
-            ldr r1, [adr+28] ;遠距離防御
-            mov lr, r1
-            @dcw $F800
-        cmp r0, #0
-        beq endDistantDef
-        
-        mov r0, r7
-            @align 4
-            ldr r1, [adr+16] ;見切り
-            mov lr, r1
-            @dcw $F800
-        cmp r0, #0
-        bne endDistantDef
-        
-        ldrh r0, [r4, #4]
-        asr r0, r0, #1
-        strh r0, [r4, #4]
-        mov r0, #1
-        @dcw $E000
-    endDistantDef
-        mov r0, #0
-        pop {pc}
-        
-
 
 BigShield:
     push {lr}
