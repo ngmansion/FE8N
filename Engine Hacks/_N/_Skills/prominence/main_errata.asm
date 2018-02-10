@@ -67,7 +67,7 @@ next_flare:
     add r2, #10 ;ダメージ
     
     ldrb r0, [r7, #19]
-    cmp r0, #5
+    cmp r0, #9
     ble genki
     cmp r0, r2
     bgt genki
