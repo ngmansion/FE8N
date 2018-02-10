@@ -1,4 +1,7 @@
-
+PUSH
+  ORG 0x9cd3bc
+  #incbin blank_data_for_revert.bin
+POP
 
 //Master Animation Installer
 //Macros
@@ -8,8 +11,8 @@
 
 
   #define SpellTable $5FF090	//$5d4e60
-  #define CSATable $5BA470	// 0x13ECバイト分の空き領域を指定
-  #define CSABlank $9cd3bc	//$95d780
+  #define CSATable $5BC894	// (0x13EC+0x480)バイト分の空き領域を指定
+  #define CSABlank CSATable+0x13EC	//プログラムサイズ0x480(現状)
   #define CSAEngine_Dim CSABlank+$6C	//=$9CD428	//$95d7ec
   #define CSAEngine_NoDim CSABlank+$118	//=$9CD4D4//$95d898
   
