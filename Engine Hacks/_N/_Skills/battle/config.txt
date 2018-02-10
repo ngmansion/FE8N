@@ -41,4 +41,15 @@ DarkBlessList:
     BYTE $00 0
 DarkBlessList_w:
     BYTE $00 0
+
+CloseDefList: //近距離防御
+ BYTE $00 0
+ 
+DistantDefList: //遠距離防御
+ BYTE $00 0
+    
+
+    
+    
+    
     

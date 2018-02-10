@@ -12,9 +12,6 @@ GodShieldList:
 PrayList:
  BYTE $00 0
 
-DistantDefList: //遠距離防御
- BYTE $00 0
-
 DistantGuardList: //遠距離無効
  BYTE $00 0
 
