@@ -13,6 +13,10 @@
     ldr r1, [r1]
     and	r0, r1
     bne end ;再移動後はスキップ
+    ldr r0, =$0203a568
+    ldr r0, [r0, #4] ;相手がいない
+    cmp r0, #0
+    beq end
     
     bl kaifuku ;戻り値は未使用
     
@@ -75,7 +79,8 @@ kami:
     beq dameda
     
     ldr r0, [r4]
-    ldr r1, =$0203a4e8
+    ldr r1, =$03004df0
+    ldr r1, [r1]
     ldrb r0, [r0, #0xB]
     ldrb r2, [r1, #0xB]
     cmp r0, r2
@@ -94,8 +99,7 @@ kami:
     cmp r1, #0xFF
     beq dameda
     b gogot ;待機チェック
-
-dameda:
+dameda
     mov	r0, #0
     pop	{lr}
     
@@ -114,7 +118,8 @@ kaifuku:
     beq non_hp
     
     ldr r0, [r4]
-    ldr r1, =$0203a4e8
+    ldr r1, =$03004df0
+    ldr r1, [r1]
     ldrb r0, [r0, #0xB]
     ldrb r1, [r1, #0xB]
     cmp r0, r1
@@ -139,7 +144,7 @@ jump_hp:
     
     mov r0, #0x89
     mov r1, #0xB8
-        ldr r2, =$08014B50
+        ldr r2, =$08014B50 ;音
         mov lr, r2
         @dcw $F800
     mov	r0, #1
@@ -161,7 +166,8 @@ kaze:
     beq non_ka
     
     ldr r0, [r4]
-    ldr r1, =$0203a4e8
+    ldr r1, =$03004df0
+    ldr r1, [r1]
     ldrb r0, [r0, #0xB]
     ldrb r1, [r1, #0xB]
     cmp r0, r1

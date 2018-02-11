@@ -64,18 +64,20 @@ next_flare:
         mov lr, r3
         @dcw $F800
     mov r2, r0
-    add r2, #10 ;ダメージ
-    
     ldrb r0, [r7, #19]
-    cmp r0, #9
-    ble genki
-    cmp r0, r2
+    cmp r0, #1
+    beq out
+    add r2, #10 ;ダメージ
+    sub r2, r0, r2
     bgt genki
-    sub r2, r0, #1
-genki:
+    mov r2, #1
+genki
+    strb r2, [r7, #19]
+    b loop_flare
+out
     mov r0, r4
     mov r1, r5
-
+    mov r2, #10 ;ダメージ
         ldr r3, =$0802e628
         mov lr, r3
         @dcw $F800
