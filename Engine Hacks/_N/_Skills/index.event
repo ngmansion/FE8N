@@ -23,6 +23,8 @@
 #include "prominence\EA.txt"
 #include "xeno\EA.txt"
 #include "nagi\EA.txt"
+#include "triangle\EA.txt"
+
 
 
 //#include "my_skill\EA.txt"

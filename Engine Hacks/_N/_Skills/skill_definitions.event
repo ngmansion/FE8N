@@ -46,6 +46,9 @@
 #define WindsweepID 44 //0x2C 風薙ぎ
 #define CloseDefID 45 //0x2D 近距離防御
 #define FuryID 46 //0x2E 獅子奮迅
+#define TriangleAdeptID 47 //0x2F 相性激化
+
+
 
 #define AstraID 64 //0x40流星
 #define LunaID 65 //0x41月光
