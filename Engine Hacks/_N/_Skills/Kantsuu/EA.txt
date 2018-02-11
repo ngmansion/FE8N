@@ -12,7 +12,7 @@ ALIGN 4
 geckojump:
 #incbin "Gecko.gba"
 POIN hasGecko
-POIN hasOccult
+POIN judgeOccult
 
 
 hasGecko:
@@ -40,6 +40,6 @@ POIN	listRevenge
 POIN	listStan
 POIN	listStone
 POIN	listFlower
-POIN hasOccult
+POIN judgeOccult
 
 
