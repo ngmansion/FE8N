@@ -7,16 +7,20 @@ ALIGN 4
 PUSH
 
 ORG 0x02a90c
-    jumpToHack(battle_before)
+  jumpToHack(battle_before)
 
 ORG 0x02ad3c
-    jumpToHack(battle_after)
+  jumpToHack(battle_after)
+    
+ORG 0x02bfd8
+  jumpToHack(battle_down)
+
 POP
 
 battle_before:
     #incbin before.gba
     POIN hasNihil
-    POIN 0 //元死線
+    POIN hasFury
     POIN hasDeathBlow
     POIN hasArmoredBlow
     POIN breaker_hasSkill1 //16
@@ -27,6 +31,7 @@ battle_before:
     POIN hasCloseDef
     POIN hasDistantDef
 
+
 battle_after:
     #incbin main.gba
     POIN hasDistantGuard
@@ -34,6 +39,16 @@ battle_after:
     POIN hasDarkBless
     POIN hasLifeAndDeath
     POIN hasNihil
+    
+battle_down:
+  #incbin down.gba
+  POIN hasNihil
+  POIN hasFury
+    
+hasFury:
+    HAS_SKILL
+    WORD FuryID
+    POIN judgeSkill
     
 hasLightBless:
     HAS_SKILL

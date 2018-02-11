@@ -24,6 +24,8 @@
     
     bl CloseDef
     
+    bl shishi
+    
 Return:
     pop {r4, r5}
     pop {r0}
@@ -109,7 +111,7 @@ koroshi:
     bl breaker_impl
     cmp r0, #0
     beq false
-    
+gotKoroshi
     mov r1, #90
     ldrh r0, [r4, r1]
     add r0, #3
@@ -136,8 +138,17 @@ koroshi:
     strh r0, [r4, r1] ;自分
     b true
 
-
-
+shishi:
+    push {lr}
+    mov r0, r4
+        @align 4
+        ldr r1, [adr+4]
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    b gotKoroshi
+    b false
+    
 kishin:
     push {lr}
     mov r0, r4

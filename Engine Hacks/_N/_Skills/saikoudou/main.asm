@@ -14,10 +14,12 @@
     and	r0, r1
     bne end ;再移動後はスキップ
     ldr r0, =$0203a568
-    ldr r0, [r0, #4] ;相手がいない
-    cmp r0, #0
-    beq end
-    
+    ldr r1, [r0, #4]
+    cmp r1, #0
+    beq next ;相手がいない
+    ldrb r1, [r0, #0xB]
+    cmp r1, #0
+    beq next ;相手がいない
     bl kaifuku ;戻り値は未使用
     
     ldr r0, [r4, #0]
@@ -32,7 +34,7 @@
     bl kaze
     cmp r0, #0
     bne Sound
-    
+next
     bl random
     cmp r0, #0
     bne Sound
