@@ -3,14 +3,16 @@
 //  #include "pal_table.event"
 
 ////////////////////空き領域1番目(0x6D)
-
-
-
+PalTable($6D)
+#incbin Frantz_bow.dmp
 
 ////////////////////空き領域2番目(0x6E)
+PalTable($6E)
+#incbin Forde_yumi.dmp
 
-
-
+////////////////////空き領域3番目(0x6F)
+PalTable($6F)
+#incbin Kyle_yumi.dmp
 
 
 
@@ -19,10 +21,19 @@
 
 
 PalTable($4B)
-#incbin "pal_moulder.dmp"
+#incbin pal_moulder.dmp
 
 PalTable($66)
-#incbin "pal_tana.dmp"
+#incbin pal_tana.dmp
 
 PalTable($67)
-#incbin "pal_vane.dmp"
+#incbin pal_vane.dmp
+
+PalTable($17)
+#incbin kuga_master.dmp
+
+PalTable($68)
+#incbin kuga_wy.dmp
+
+PalTable($18)
+#incbin glen_master.dmp
