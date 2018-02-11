@@ -146,6 +146,7 @@ shishi:
         mov lr, r1
         @dcw $F800
     cmp r0, #0
+    @dcw $D000
     b gotKoroshi
     b false
     
