@@ -1,4 +1,5 @@
 
+#define TRANSFORM_WORKING_MEMORY $0203AD68
 
 //0x668バイト+リスト分の容量を使用
 
@@ -119,8 +120,9 @@ POIN	TransformList
 
 ALIGN	4
 StrClsAndWe:		//E477FC
-	#incbin "StrClsAndWe.gba"
-POIN	TransRefProgram+$80
+  #incbin "StrClsAndWe.gba"
+  WORD TRANSFORM_WORKING_MEMORY
+  POIN TransRefProgram+$80
 	
 
 ALIGN	4

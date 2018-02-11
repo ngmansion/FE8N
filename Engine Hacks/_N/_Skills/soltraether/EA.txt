@@ -1,7 +1,7 @@
 #include config.txt
 
 
-#define SOL_WORK_ADDRESS $0203AB20
+#define SOL_WORK_ADDRESS $0203AD08 
 
 //code
 ALIGN 4

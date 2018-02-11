@@ -1,18 +1,19 @@
 @thumb
+@define MAX_BATTLE_NUM 24
 ;(2B666 > )
 ;フラグ初期化
-	mov	r0, #0
-	@align 4
-	ldr	r1, [adr] ;(勝手な太陽フラグ)
-	str	r0, [r1]
-	str	r0, [r1, #4]
-	str	r0, [r1, #8]
-	str	r0, [r1, #12]
-	str	r0, [r1, #16]
-	str	r0, [r1, #20]
-	str	r0, [r1, #24]
-	str	r0, [r1, #28]
-	ldr	r0, =$0203A4D0
+    mov r0, #0
+    mov r2, #0
+    @align 4
+    ldr r1, [adr] ;(勝手な太陽フラグ)
+clear_loop
+    str r0, [r1]
+    add r1, #4
+    add r2, #1
+    cmp r2, MAX_BATTLE_NUM
+    blt clear_loop
+
+    ldr r0, =$0203A4D0
 	ldrb	r0, [r0, #4]
 	cmp	r0, #0
 	beq	buki

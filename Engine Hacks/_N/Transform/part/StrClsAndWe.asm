@@ -7,7 +7,8 @@
 	ldrb	r1, [r1]
 	lsl	r1, r1, #8
 	add	r0, r0, r1
-	ldr	r1, =$0203AB18
+	@align 4
+	ldr	r1, [adr]
 	strh	r0, [r1]
 	ldr	r1, =$0203E184
 	ldr	r1, [r1]
@@ -17,9 +18,10 @@
 	ldrb	r1, [r1]
 	lsl	r1, r1, #8
 	add	r0, r0, r1
-	ldr	r1, =$0203AB18
+	@align 4
+	ldr	r1, [adr]
 	strh	r0, [r1, #2]
-	ldr	r1, [next]
+	ldr	r1, [adr+4]
 	mov	pc, r1
 @ltorg
-next
+adr
