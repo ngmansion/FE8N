@@ -18,38 +18,16 @@ clear_loop
 	cmp	r0, #0
 	beq	buki
 ;太陽発動分岐
+    ldr r3, [r6]
+    ldr r2, [r3]
+    lsl r0, r2, #13
+    lsr r0, r0, #13
 
-    mov r0, r5
-        @align 4
-        ldr r1, [adr+20] ;奥義判定
-        mov lr, r1
-        @dcw $F800
+    mov r2, $0x80
+    lsl r2, r2, #1
+    and r0, r2
     cmp r0, #0
-    beq buki ;奥義無し
-    
-    mov r0, r5
-        @align 4
-        ldr r1, [adr+8] ;天空
-        mov lr, r1
-        @dcw $F800
-    cmp r0, #0
-    bne tenku
-        
-    mov r0, r5
-        @align 4
-        ldr r1, [adr+12] ;陽光
-        mov lr, r1
-        @dcw $F800
-    cmp r0, #0
-    bne tenku
-        
-    mov r0, r5
-        @align 4
-        ldr r1, [adr+16] ;ジハド
-        mov lr, r1
-        @dcw $F800
-    cmp r0, #0
-    bne tenku
+    bne rizaia
         
     mov r0, r5
         @align 4
@@ -92,17 +70,7 @@ mov	lr, r2
 rizaia
 	ldr	r0, =$0802B670
 	mov	pc, r0
-tenku
-	ldr	r0, =$0203A604
-	ldr	r0, [r0]
-	ldr	r0, [r0]
-	lsl	r0, r0, #0xD
-	lsr	r1, r0, #0xD
-	mov	r0, #0x80
-	lsl	r0, r0, #9
-	and	r0, r1
-	bne	rizaia
-	b	buki
+
 @ltorg
 adr:
 	

@@ -8,21 +8,38 @@
         @dcw $F800
     cmp r0, #0
     beq return
-	
-	bl astra_impl ;流星
-	cmp r0, #0
-	bne return
-	bl tenku_impl ;天空・陽光
-	cmp r0, #0
-	bne return
-	bl impale_impl ;撃破
-	cmp r0, #0
-	bne return
-	bl ecripse_impl ;月食
-	cmp r0, #0
-	bne return
-	bl jihad_impl ;ジハド
-return:
+
+    bl astra_impl ;流星
+    cmp r0, #0
+    bne ef_hit
+    bl tenku_impl ;天空・陽光
+    cmp r0, #0
+    bne ef_hit
+    bl impale_impl ;撃破
+    cmp r0, #0
+    bne ef_hit
+    bl ecripse_impl ;月食
+    cmp r0, #0
+    bne ef_hit
+    bl jihad_impl ;ジハド
+    cmp r0, #0
+    bne ef_hit
+    b return
+ef_hit
+    ldr r3, [r6]
+    ldr r2, [r3]
+    lsl r1, r2, #13
+    lsr r1, r1, #13
+    ldr	r0, =$FFF80000
+    and r0, r2
+    orr r0, r1
+    
+    mov r1, #128
+    lsl r1, r1, #9
+    orr r0, r1
+    str r0, [r3, #0]
+
+return
 	mov	r1, #4
 	ldsh	r0, [r4, r1]
 	cmp	r0, #127
@@ -40,11 +57,11 @@ jihad_impl: ;ジハド
     lsl r1, r1, #1
     ldrb r0, [r7, #0x12] ;maxHP
     cmp r0, r1
-    blt false ;体力半分以上なら不発
+    blt falseJihad ;体力半分以上なら不発
     ldr r0, =$0203a4d2
     ldrb r0, [r0]
     cmp r0, #1
-    bne false ;近距離しか発動しない
+    bne falseJihad ;近距離しか発動しない
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -52,12 +69,12 @@ jihad_impl: ;ジハド
         mov lr, r1
         @dcw $F800
     cmp r0, #0
-    beq false
+    beq falseJihad
     ldrb r0, [r7, #8] ;レベル
     mov r1, #0
     bl random
     cmp r0, #0
-    beq false
+    beq falseJihad
 
 ;必殺減衰処理
     ldr r0, [r6]
@@ -69,37 +86,41 @@ jihad_impl: ;ジハド
     cmp r0, #0
     ble not_dec ;ノーダメ以下はなし
     mov r1, #0
-loop_three:
+loop_three
     add r1, #1
     sub r0, #3
     bgt loop_three
     strh r1, [r5, #4]
-not_dec:
+not_dec
     mov r0, #4
     ldsh r0, [r5, r0] ;ダメージ
     mov r1, #6
     ldsh r1, [r5, r1] ;攻撃力
     add r0, r0, r1
     strh r0, [r5, #4] ;ダメージ
-    b effect
+    b sol_crt
+falseJihad
+    mov r0, #0
+    pop {pc}
+
 
 ecripse_impl:
     push {lr};;;;月食チェック
     ldr r0, [r7, #76]
     lsl r0, r0, #24
-    bmi false ;反撃不可武器チェック
+    bmi falseEcripse ;反撃不可武器チェック
     mov r0, #4
     ldsh r0, [r5, r0]
     cmp r0, #0
-    ble false;ダメージがゼロなら発動しない
+    ble falseEcripse;ダメージがゼロなら発動しない
 
     mov r2, r8
     ldrb r1, [r2, #0x13] ;nowHP
     cmp r0, r1
-    bge false ;一撃なら不発
+    bge falseEcripse ;一撃なら不発
     ldrb r0, [r2, #0x12] ;maxHP
     cmp r0, r1
-    beq false ;体力最大なら不発
+    beq falseEcripse ;体力最大なら不発
     
     ldr r0, [r2]
     ldr r1, [r2, #4]
@@ -108,7 +129,7 @@ ecripse_impl:
     orr r0, r1
     ldr r1, =0x01008000
     and r0, r1
-    bne false ;敵将チェック
+    bne falseEcripse ;敵将チェック
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -116,18 +137,21 @@ ecripse_impl:
         mov lr, r1
         @dcw $F800
     cmp r0, #0
-    beq false
+    beq falseEcripse
     ldrb r0, [r7, #21]	;技
     mov r1, #0
     bl random
     cmp r0, #0
-    beq false
+    beq falseEcripse
 
     mov r0, r8
     ldrb r0, [r0, #0x13] ;nowHP
     sub r0, #1
     strh r0, [r5, #4]
     b effect
+falseEcripse
+    mov r0, #0
+    pop {pc}
 
 impale_impl:
     push {lr};;;;撃破チェック
@@ -135,7 +159,7 @@ impale_impl:
     mov r0, #4
     ldsh r0, [r5, r0]
     cmp r0, #0
-    ble false
+    ble falseImpale
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -143,12 +167,12 @@ impale_impl:
         mov lr, r1
         @dcw $F800
     cmp r0, #0
-    beq false
-	ldrb	r0, [r7, #21]	;技
-	mov	r1, #0
-		bl	random
-	cmp	r0, #0
-	beq	false
+    beq falseImpale
+    ldrb r0, [r7, #21]	;技
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq falseImpale
 
     mov r0, #6
     ldsh r0, [r5, r0] ;攻撃
@@ -161,22 +185,18 @@ impale_impl:
     add r0, r0, r1
     strh r0, [r5, #4]
     
-    ldr r3, [r6, #0]
-    ldr r2, [r3, #0]
-    lsl r1, r2, #13
-    lsr r1, r1, #13
-    b gekko
-    
-    
-false:
+    mov r0, #1
+    @dcw $E000
+falseImpale
     mov r0, #0
     pop {pc}
+
     
 astra_impl:
     push {lr};;;;流星チェック
 ;剣以外では発動しない
 	cmp	r1, #0
-	bne	false
+	bne	falseAstra
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -184,29 +204,29 @@ astra_impl:
         mov lr, r1
         @dcw $F800
     cmp r0, #0
-    beq false
+    beq falseAstra
 
-ouiAstra:
+ouiAstra
 ;ダメージがゼロなら発動しない
 	mov	r0, #4
 	ldsh	r0, [r5, r0]
 	cmp	r0, #0
-	ble	false
+	ble	falseAstra
 ;近距離しか発動しない
 	ldr	r0,	=$0203a4d2
 	ldrb	r0, [r0]
 	cmp	r0, #1
-	bne	false
+	bne	falseAstra
 ;必殺率がゼロなら発動しない
 	ldrh	r0, [r5, #12]	;必殺
 	cmp	r0, #0
-	beq	false
+	beq	falseAstra
 ;発動乱数
 	ldrb	r0, [r7, #8]	;レベル
 	mov	r1, #0
 bl	random
 	cmp	r0, #1
-	bne	false
+	bne	falseAstra
 ;必殺チェック
 	mov	r0, #4
 	ldsh	r2, [r5, r0]
@@ -233,8 +253,10 @@ waranai
 	mov	r0, #1
 nononon
 bl	RYUSEI
-	b	effect
-
+    b effect
+falseAstra
+    mov r0, #0
+    pop {pc}
 
 
 tenku_impl:
@@ -246,7 +268,7 @@ ldr	r1,	=$080174cc
 mov	lr, r1
 @dcw	$F800
 	cmp	r0, #2
-	beq	false
+	beq	falseTenku
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -256,10 +278,10 @@ mov	lr, r1
     cmp r0, #0
     bne YOUKOU
 ;必殺と重複しない
-	ldr	r0, [r6, #0]
-	ldr	r0, [r0, #0]
-	lsl r0, r0, #31
-	bmi	false
+    ldr r0, [r6, #0]
+    ldr r0, [r0, #0]
+    lsl r0, r0, #31
+    bmi falseTenku
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -268,12 +290,12 @@ mov	lr, r1
         @dcw $F800
     cmp r0, #0
     bne TENKU
-	b	false
+    b falseTenku
 TENKU:
 	ldr	r0,	=$0203a4d2
 	ldrb	r0, [r0]	;距離
 	cmp	r0, #1
-	bne	false
+	bne	falseTenku
 	mov	r0, r7
 	add	r0, #72
 	ldrh	r0, [r0, #0]
@@ -284,36 +306,38 @@ mov	lr,r3
 	cmp	r1, #2	;;斧
 	bne	jump
 	cmp	r0, #0x12
-	beq	false	;;手斧チェック
+	beq	falseTenku	;;手斧チェック
 jump
 	ldrb	r0, [r7, #8]	;レベル
 	mov	r1, #0
 		bl	random
 	cmp	r0, #0
-	beq	false
+	beq	falseTenku
     
     mov r0, r8
     ldrb r0, [r0, #0x17] ;守備
     lsl r0, r0, #2
     mov r1, #0
-loop_eight:
+loop_eight
     sub r0, #5
     blt eight
     add r1, #1
     b loop_eight
-eight:
+eight
     mov r0, r1
 	mov	r1, #4
 	ldsh	r1, [r5, r1] ;ダメージ
 	add	r0, r0, r1
 	strh	r0, [r5, #4]
-	b	effect
+    b sol_crt
+
+
 YOUKOU:
-	ldrb	r0, [r7, #21]	;技
-	mov	r1, #0
-		bl	random
+    ldrb r0, [r7, #21]	;技
+	mov r1, #0
+	bl random
 	cmp	r0, #0
-	beq	false
+	beq	falseTenku
 	mov	r0, #4
 	ldsh	r1, [r5, r0]
     mov r0, r8
@@ -321,34 +345,11 @@ YOUKOU:
 	asr	r0, r0, #1
 	add	r0, r0, r1
 	strh	r0, [r5, #4]
-	ldr	r3, [r6, #0]
-	ldr	r2, [r3, #0]
-	lsl	r1, r2, #13
-	lsr	r1, r1, #13
-	b	gekko
-	
 
-	
-effect:
-	ldr	r3, [r6, #0]
-	ldr	r2, [r3, #0]
-	lsl	r1, r2, #13
-	lsr	r1, r1, #13
-	mov	r0, #1
-	orr	r1, r0
-gekko:
-	ldr	r0, =$0007FFFF
-	and	r1, r0
-	ldr	r0, =$FFF80000
-	and	r0, r2
-	orr	r0, r1
-	mov	r1, #128
-	lsl	r1, r1, #9
-	orr	r0, r1
-	str	r0, [r3, #0]
-	
-	mov r0, #1
-	bx lr
+    b sol_ef
+falseTenku
+    pop {pc}
+
 random:
 	ldr	r3, =$0802a490
 	mov	pc, r3
@@ -383,6 +384,54 @@ ryuend
 	add	r7, #1
 	cmp	r7, #4
 	bne	ryuloop
-	pop	{pc, r6, r7}
+	pop	{r6, r7, pc}
+
+
+effect ;必殺
+    ldr r3, [r6]
+    ldr r2, [r3]
+    lsl r1, r2, #13
+    lsr r1, r1, #13
+    ldr	r0, =$FFF80000
+    and r0, r2
+    orr r0, r1
+    
+    mov r1, #1
+    orr r0, r1
+    str	r0, [r3, #0]
+    mov r0, #1
+    pop {pc}
+    
+sol_crt ;必殺吸収
+    ldr r3, [r6]
+    ldr r2, [r3]
+    lsl r1, r2, #13
+    lsr r1, r1, #13
+    ldr	r0, =$FFF80000
+    and r0, r2
+    orr r0, r1
+    
+    mov r1, #1
+    orr r0, r1
+    str r0, [r3]
+sol_ef ;吸収
+    ldr r3, [r6]
+    ldr r2, [r3]
+    lsl r1, r2, #13
+    lsr r1, r1, #13
+    ldr	r0, =$FFF80000
+    and r0, r2
+    orr r0, r1
+
+    mov r1, #128
+    lsl r1, r1, #1
+    orr r0, r1
+    str r0, [r3, #0]
+
+    mov r0, #1
+    pop {pc}
+
+
+
 @ltorg
 adr:
