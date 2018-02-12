@@ -80,16 +80,16 @@ SHORT SKL_HELP_26 SKL_COLOR_26
 POIN 0 waryFighterList waryFighterList_w
 
 SHORT SKL_HELP_27 SKL_COLOR_27 
-POIN 0 effective_class1 0
+POIN 0 effective_class1 effective_weapon1
 
 SHORT SKL_HELP_28 SKL_COLOR_28 
-POIN 0 effective_class2 0
+POIN 0 effective_class2 effective_weapon2
 
 SHORT SKL_HELP_29 SKL_COLOR_29 
-POIN 0 effective_class3 0
+POIN 0 effective_class3 effective_weapon3
 
 SHORT SKL_HELP_30 SKL_COLOR_30 
-POIN 0 effective_class4 0
+POIN 0 effective_class4 effective_weapon4
 
 SHORT SKL_HELP_31 SKL_COLOR_31 
 POIN 0 DistantDefList 0

@@ -8,7 +8,14 @@ PUSH
     ORG 0x06fc18
     jumpToHack(xeno_light)
     
+    ORG 0x05573c
+    jumpToHack(xeno_red)
+    ORG 0x059cda
+    SHORT $2108 //赤継続
 POP
+    
+xeno_red:
+    #incbin red.gba
     
 xeno_main:
     #incbin main.gba

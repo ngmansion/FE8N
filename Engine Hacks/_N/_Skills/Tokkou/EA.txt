@@ -3,36 +3,19 @@
 /////////////////////
 PUSH
 
-
-  ORG 0x02aa62
-    SHORT $2000
-    SHORT $5e2c
-    SHORT $0060
-    SHORT $1900
-    SHORT $0400
-    SHORT $1404
-
-#ifdef EFFECTIVE_TWICE
-  ORG 0x02aa62
-    SHORT $2000
-    SHORT $5e2c
-    SHORT $0060
+ORG 0x02aa5e
+    SHORT $2500
+    SHORT $2801
+    SHORT $D104
+    SHORT $250A //10
     SHORT $46C0
-    SHORT $0400
-    SHORT $1404
-#endif
+    SHORT $46C0
+    SHORT $46C0
+    SHORT $46C0
 
-#ifdef EFFECTIVE_TEN //+10
-  ORG 0x02aa62
-    SHORT $2000 
-    SHORT $5e2c
-    SHORT $240A
-    SHORT $1900
-    SHORT $0400
-    SHORT $1404
-#endif
-
-
+ORG 0x02aa7c
+    #incbin weapon.gba
+    WORD WEAPON_EFFECTIVE
 
   ORG 0x16A30
     jumpToHack(effective_main)
