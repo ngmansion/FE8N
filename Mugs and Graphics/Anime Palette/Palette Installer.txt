@@ -14,14 +14,14 @@ PalTable($6E)
 PalTable($6F)
 #incbin Kyle_yumi.dmp
 
-
+//////////////////////
+PalTable($70)
+#incbin pal_moulder.dmp
 
 
 ////////////////////ここまで
 
 
-PalTable($4B)
-#incbin pal_moulder.dmp
 
 PalTable($66)
 #incbin pal_tana.dmp
