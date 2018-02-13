@@ -80,9 +80,6 @@ taiyo4:
 	#incbin "taiyo44.gba"
     WORD SOL_WORK_ADDRESS
     POIN hasSOL
-    POIN hasTenku
-    POIN hasYoukoh
-    POIN hasJihad
     POIN judgeOccult
 
 hasSOL:

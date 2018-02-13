@@ -8,22 +8,26 @@
         @dcw $F800
     cmp r0, #0
     beq return
-
-    bl astra_impl ;流星
-    cmp r0, #0
-    bne ef_hit
-    bl tenku_impl ;天空・陽光
-    cmp r0, #0
-    bne ef_hit
-    bl impale_impl ;撃破
-    cmp r0, #0
-    bne ef_hit
-    bl ecripse_impl ;月食
-    cmp r0, #0
-    bne ef_hit
     bl jihad_impl ;ジハド
     cmp r0, #0
     bne ef_hit
+
+    bl tenku_impl ;天空・陽光
+    cmp r0, #0
+    bne ef_hit
+    
+    bl astra_impl ;流星
+    cmp r0, #0
+    bne ef_hit
+    
+    bl ecripse_impl ;月食
+    cmp r0, #0
+    bne ef_hit
+    
+    bl impale_impl ;撃破
+    cmp r0, #0
+    bne ef_hit
+    
     b return
 ef_hit
     ldr r3, [r6]

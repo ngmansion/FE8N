@@ -31,6 +31,14 @@ clear_loop
         
     mov r0, r5
         @align 4
+        ldr r1, [adr+8] ;奥義判定
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #0
+    beq buki ;奥義発動不可
+        
+    mov r0, r5
+        @align 4
         ldr r1, [adr+4] ;太陽
         mov lr, r1
         @dcw $F800
