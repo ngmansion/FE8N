@@ -6,7 +6,7 @@ POP
 ALIGN 4
 item_reverse_main:
   #incbin book.gba
-  WORD 10
+  WORD 20
   POIN item_reverse_table
 
 
