@@ -10,6 +10,13 @@
     ldrb r1, [r5, #11]
     cmp r0, r1
     beq normal ;攻撃者じゃ無い
+    
+    ldr r0, =$0203a4d0
+    ldrh r0, [r0]
+    mov r1, #0x20
+    and r0, r1
+    bne normal ;闘技場チェック
+    
 ;反撃者を確認している
     mov r0, r5
         @align 4

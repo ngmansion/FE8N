@@ -10,6 +10,12 @@
     cmp r0, r1
     bne normal ;攻撃者じゃ無い
     
+    ldr r0, =$0203a4d0
+    ldrh r0, [r0]
+    mov r1, #0x20
+    and r0, r1
+    bne normal ;闘技場チェック
+    
     ldr r0, [r7]
         @align 4
         ldr r1, [adr+0] ;見切り
