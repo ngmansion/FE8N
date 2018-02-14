@@ -30,7 +30,7 @@ finish
     @dcw $F800
     
     @align 4
-    ldr r2, [adr]
+    ldr r2, [adr+4]
     ldrb r4, [r2, r0]
 end
     pop {r0, r1}
