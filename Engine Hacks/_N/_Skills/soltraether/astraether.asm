@@ -57,11 +57,6 @@ nonmax
 jihad_impl: ;ジハド
     push {lr}
 
-    ldrb r1, [r7, #0x13] ;nowHP
-    lsl r1, r1, #1
-    ldrb r0, [r7, #0x12] ;maxHP
-    cmp r0, r1
-    blt falseJihad ;体力半分以上なら不発
     ldr r0, =$0203a4d2
     ldrb r0, [r0]
     cmp r0, #1
@@ -74,7 +69,10 @@ jihad_impl: ;ジハド
         @dcw $F800
     cmp r0, #0
     beq falseJihad
-    ldrb r0, [r7, #8] ;レベル
+    
+    ldrb r1, [r7, #0x13] ;nowHP
+    ldrb r0, [r7, #0x12] ;maxHP
+    sub r0, r1
     mov r1, #0
     bl random
     cmp r0, #0
