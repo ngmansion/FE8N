@@ -155,6 +155,7 @@ falseEcripse
     mov r0, #0
     pop {pc}
 
+
 impale_impl:
     push {lr};;;;撃破チェック
 ;ダメージがゼロなら発動しない
@@ -263,14 +264,13 @@ falseAstra
 
 tenku_impl:
     push {lr}
-;HP吸収武器では発動しない
-	mov	r0, #72
-	ldrh	r0, [r7, r0]
-ldr	r1,	=$080174cc
-mov	lr, r1
-@dcw	$F800
-	cmp	r0, #2
-	beq	falseTenku
+    mov r0, #72
+    ldrh r0, [r7, r0]
+        ldr r1, =$080174cc
+        mov lr, r1
+        @dcw $F800
+    cmp r0, #2
+    beq falseTenku ;HP吸収武器では発動しない
 ;ユニットチェック
     mov r0, r7
         @align 4
@@ -294,27 +294,27 @@ mov	lr, r1
     bne TENKU
     b falseTenku
 TENKU:
-	ldr	r0,	=$0203a4d2
-	ldrb	r0, [r0]	;距離
-	cmp	r0, #1
-	bne	falseTenku
-	mov	r0, r7
-	add	r0, #72
-	ldrh	r0, [r0, #0]
+    ldr r0,	=$0203a4d2
+    ldrb r0, [r0]	;距離
+    cmp r0, #1
+    bne falseTenku
+    mov r0, r7
+    add r0, #72
+    ldrh r0, [r0, #0]
 ldr	r3, =$08017448	;武器の射程
 mov	lr,r3
 @dcw	$F800
-	ldrb	r1, [r1, #7]
-	cmp	r1, #2	;;斧
-	bne	jump
-	cmp	r0, #0x12
-	beq	falseTenku	;;手斧チェック
+    ldrb r1, [r1, #7]
+    cmp r1, #2 ;;斧
+    bne jump
+    cmp r0, #0x11
+    bne falseTenku ;;手斧チェック
 jump
-	ldrb	r0, [r7, #8]	;レベル
-	mov	r1, #0
-		bl	random
-	cmp	r0, #0
-	beq	falseTenku
+    ldrb r0, [r7, #8]	;レベル
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq falseTenku
     
     mov r0, r8
     ldrb r0, [r0, #0x17] ;守備
@@ -327,30 +327,32 @@ loop_eight
     b loop_eight
 eight
     mov r0, r1
-	mov	r1, #4
-	ldsh	r1, [r5, r1] ;ダメージ
-	add	r0, r0, r1
-	strh	r0, [r5, #4]
+    mov r1, #4
+    ldsh r1, [r5, r1] ;ダメージ
+    add r0, r0, r1
+    strh r0, [r5, #4]
     b sol_crt
 
 
 YOUKOU:
     ldrb r0, [r7, #21]	;技
-	mov r1, #0
-	bl random
-	cmp	r0, #0
-	beq	falseTenku
-	mov	r0, #4
-	ldsh	r1, [r5, r0]
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq falseTenku
+    mov r0, #4
+    ldsh r1, [r5, r0]
     mov r0, r8
     ldrb r0, [r0, #0x18] ;魔防
-	asr	r0, r0, #1
-	add	r0, r0, r1
-	strh	r0, [r5, #4]
+    asr r0, r0, #1
+    add r0, r0, r1
+    strh r0, [r5, #4]
 
     b sol_ef
 falseTenku
+    mov r0, #0
     pop {pc}
+
 
 random:
 	ldr	r3, =$0802a490

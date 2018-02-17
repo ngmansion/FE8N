@@ -13,13 +13,13 @@ POP
 
 astron:
 #incbin "astraether.gba"
-POIN hasTenku
-POIN hasYoukoh
-POIN hasRyusei
-POIN hasImpale
-POIN hasEclipse
-POIN hasJihad
-POIN judgeOccult
+POIN hasTenku //0
+POIN hasYoukoh //4
+POIN hasRyusei //8
+POIN hasImpale //12
+POIN hasEclipse //16
+POIN hasJihad //20
+POIN judgeOccult //24
 
 ALIGN 4
 
