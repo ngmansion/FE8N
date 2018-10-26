@@ -1,9 +1,10 @@
 @thumb
-    push {r4, lr}
+    push {r4,r5, lr}
     mov r4, r0
     mov r2, r1
     lsl r2, r2, #24
     lsr r2, r2, #24
+    mov r5, r2
 ;書チェック
     ldrh r1, [r4, #0x3A]
     mov r0, #0x3F
@@ -46,6 +47,7 @@ jump9: ;自軍以外チェック
 jump0: ;リストチェック
 @align 4
     ldr r3, [adr]
+    ;ldr r3, =$11111111 ; goadload での [adr] は信用できない
     lsl r2, r2, #4
     add r3, r2, r3
 ;ユニット
@@ -94,9 +96,17 @@ loop3:
     b loop3
 jump3:
     mov r0, #0
-    @dcw $E000
+    b exit
 oui:
+	mov		r0,r4	 ; RAM上へのユニットポインタ
+	mov		r1,r5	 ; 持っているスキルID
+	ldr		r2, [adr+4]  ; record_skillanime_id 保持しているとされたスキルを記録 その後発動すれば、エフェクト付きで表示する.
+;    ldr r2, =$22222222  ; goadload での [adr+4] は信用できない
+	mov r14, r2
+	@dcw $F800
+
     mov r0, #1
-    pop {r4, pc}
+exit:
+    pop {r4,r5, pc}
 @ltorg
 adr:

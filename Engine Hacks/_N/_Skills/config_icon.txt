@@ -1,87 +1,87 @@
 //skill_detecter
 
-#define SKL_HELP_01 $05B5
+#define SKL_HELP_01 $0EB5
  #define SKL_COLOR_01 $FF
 
-#define SKL_HELP_02 $05AC
+#define SKL_HELP_02 $0EAC
  #define SKL_COLOR_02 $FF
 
-#define SKL_HELP_03 $05AB
+#define SKL_HELP_03 $0EAB
  #define SKL_COLOR_03 0
 
-#define SKL_HELP_04 $05C1
+#define SKL_HELP_04 $0EC1
  #define SKL_COLOR_04 0
 
-#define SKL_HELP_05 $05A9
+#define SKL_HELP_05 $0EA9
  #define SKL_COLOR_05 0
 
-#define SKL_HELP_06 $05A8
+#define SKL_HELP_06 $0EA8
  #define SKL_COLOR_06 $FF
 
-#define SKL_HELP_07 $05C0
+#define SKL_HELP_07 $0EC0
  #define SKL_COLOR_07 $FF
 
-#define SKL_HELP_08 $05AA
+#define SKL_HELP_08 $0EAA
  #define SKL_COLOR_08 $FF
 
-#define SKL_HELP_09 $05B0
+#define SKL_HELP_09 $0EB0
  #define SKL_COLOR_09 $FF
 
-#define SKL_HELP_10 $05A0
+#define SKL_HELP_10 $0EA0
  #define SKL_COLOR_10 0
 
-#define SKL_HELP_11 $05AD
+#define SKL_HELP_11 $0EAD
  #define SKL_COLOR_11 $FF
 
-#define SKL_HELP_12 $05BB
+#define SKL_HELP_12 $0EBB
  #define SKL_COLOR_12 $FF
 
-#define SKL_HELP_13 $05B1
+#define SKL_HELP_13 $0EB1
  #define SKL_COLOR_13 $FF
 
-#define SKL_HELP_14 $05AF
+#define SKL_HELP_14 $0EAF
  #define SKL_COLOR_14 $FF
 
-#define SKL_HELP_15 $05D3
+#define SKL_HELP_15 $0ED3
  #define SKL_COLOR_15 0
 
-#define SKL_HELP_16 $05B2
+#define SKL_HELP_16 $0EB2
  #define SKL_COLOR_16 0
 
-#define SKL_HELP_17 $05D4
+#define SKL_HELP_17 $0ED4
  #define SKL_COLOR_17 $FF
 
-#define SKL_HELP_18 $05C3
+#define SKL_HELP_18 $0EC3
  #define SKL_COLOR_18 $FF
 
-#define SKL_HELP_19 $05C6
+#define SKL_HELP_19 $0EC6
  #define SKL_COLOR_19 $FF
 
-#define SKL_HELP_20 $05C7
+#define SKL_HELP_20 $0EC7
  #define SKL_COLOR_20 $FF
 
-#define SKL_HELP_21 $05C8
+#define SKL_HELP_21 $0EC8
  #define SKL_COLOR_21 $FF
 
-#define SKL_HELP_22 $05C9
+#define SKL_HELP_22 $0EC9
  #define SKL_COLOR_22 $FF
 
-#define SKL_HELP_23 $05CA
+#define SKL_HELP_23 $0ECA
  #define SKL_COLOR_23 $FF
 
-#define SKL_HELP_24 $05CB
+#define SKL_HELP_24 $0ECB
  #define SKL_COLOR_24 $FF
 
-#define SKL_HELP_25 $05CC
+#define SKL_HELP_25 $0ECC
  #define SKL_COLOR_25 $FF
 
-#define SKL_HELP_26 $05CD
+#define SKL_HELP_26 $0ECD
  #define SKL_COLOR_26 $FF
 
-#define SKL_HELP_27 $05B4
+#define SKL_HELP_27 $0EB4
  #define SKL_COLOR_27 $FF
 
-#define SKL_HELP_28 $0561
+#define SKL_HELP_28 $0E61
  #define SKL_COLOR_28 $FF
 
 #define SKL_HELP_29 $0000
@@ -90,55 +90,55 @@
 #define SKL_HELP_30 $0000
  #define SKL_COLOR_30 0
 
-#define SKL_HELP_31 $05CE
+#define SKL_HELP_31 $0ECE
  #define SKL_COLOR_31 $FF
 
-#define SKL_HELP_32 $05CF
+#define SKL_HELP_32 $0ECF
  #define SKL_COLOR_32 $FF
 
-#define SKL_HELP_33 $05D0
+#define SKL_HELP_33 $0ED0
  #define SKL_COLOR_33 $FF
 
-#define SKL_HELP_34 $05D1
+#define SKL_HELP_34 $0ED1
  #define SKL_COLOR_34 $FF
 
-#define SKL_HELP_35 $05D2
+#define SKL_HELP_35 $0ED2
  #define SKL_COLOR_35 $FF
 
-#define SKL_HELP_36 $05D5
+#define SKL_HELP_36 $0ED5
  #define SKL_COLOR_36 $FF
 
-#define SKL_HELP_37 $0552
+#define SKL_HELP_37 $0E52
  #define SKL_COLOR_37 $FF
 
-#define SKL_HELP_38 $0553
+#define SKL_HELP_38 $0E53
  #define SKL_COLOR_38 $FF
 
-#define SKL_HELP_39 $055B
+#define SKL_HELP_39 $0E5B
  #define SKL_COLOR_39 $FF
 
-#define SKL_HELP_40 $055d
+#define SKL_HELP_40 $0E5d
  #define SKL_COLOR_40 0
 
-#define SKL_HELP_41 $055e
+#define SKL_HELP_41 $0E5e
  #define SKL_COLOR_41 $FF
 
-#define SKL_HELP_42 $055F
+#define SKL_HELP_42 $0E5F
  #define SKL_COLOR_42 $FF
 
-#define SKL_HELP_43 $0560
+#define SKL_HELP_43 $0E60
  #define SKL_COLOR_43 0
 
-#define SKL_HELP_44 $0562
+#define SKL_HELP_44 $0E62
  #define SKL_COLOR_44 $FF
 
-#define SKL_HELP_45 $0563
+#define SKL_HELP_45 $0E63
  #define SKL_COLOR_45 $FF
 
-#define SKL_HELP_46 $0564
+#define SKL_HELP_46 $0E64
  #define SKL_COLOR_46 $FF
 
-#define SKL_HELP_47 $0565
+#define SKL_HELP_47 $0E65
  #define SKL_COLOR_47 $FF
 
 #define SKL_HELP_48 $0000
@@ -190,91 +190,91 @@
  #define SKL_COLOR_63 0
 
 ////////////////////////////////////
-#define SKL_HELP_64 $05A3
+#define SKL_HELP_64 $0EA3
  #define SKL_COLOR_64 0
 
-#define SKL_HELP_65 $05A2
+#define SKL_HELP_65 $0EA2
  #define SKL_COLOR_65 0
 
-#define SKL_HELP_66 $05A1
+#define SKL_HELP_66 $0EA1
  #define SKL_COLOR_66 $FF
 
-#define SKL_HELP_67 $05A6
+#define SKL_HELP_67 $0EA6
  #define SKL_COLOR_67 0
 
-#define SKL_HELP_68 $05B3
+#define SKL_HELP_68 $0EB3
  #define SKL_COLOR_68 0
 
-#define SKL_HELP_69 $059F
+#define SKL_HELP_69 $0E9F
  #define SKL_COLOR_69 $FF
 
-#define SKL_HELP_70 $05AE
+#define SKL_HELP_70 $0EAE
  #define SKL_COLOR_70 0
 
-#define SKL_HELP_71 $05BC
+#define SKL_HELP_71 $0EBC
  #define SKL_COLOR_71 $FF
 
-#define SKL_HELP_72 $05A4
+#define SKL_HELP_72 $0EA4
  #define SKL_COLOR_72 $FF
 
-#define SKL_HELP_73 $05A5
+#define SKL_HELP_73 $0EA5
  #define SKL_COLOR_73 0
 
-#define SKL_HELP_74 $05B8
+#define SKL_HELP_74 $0EB8
  #define SKL_COLOR_74 $FF
 
-#define SKL_HELP_75 $05B9
+#define SKL_HELP_75 $0EB9
  #define SKL_COLOR_75 $FF
 
-#define SKL_HELP_76 $05BA
+#define SKL_HELP_76 $0EBA
  #define SKL_COLOR_76 $FF
 
-#define SKL_HELP_77 $05BF
+#define SKL_HELP_77 $0EBF
  #define SKL_COLOR_77 0
 
-#define SKL_HELP_78 $05B7
+#define SKL_HELP_78 $0EB7
  #define SKL_COLOR_78 0
 
-#define SKL_HELP_79 $0555
+#define SKL_HELP_79 $0E55
  #define SKL_COLOR_79 $FF
 
-#define SKL_HELP_80 $0554
+#define SKL_HELP_80 $0E54
  #define SKL_COLOR_80 $FF
 
-#define SKL_HELP_81 $05BE
+#define SKL_HELP_81 $0EBE
  #define SKL_COLOR_81 0
 
-#define SKL_HELP_82 $05BD
+#define SKL_HELP_82 $0EBD
  #define SKL_COLOR_82 0
 
-#define SKL_HELP_83 $055A
+#define SKL_HELP_83 $0E5A
  #define SKL_COLOR_83 $FF
 
-#define SKL_HELP_84 $05A7
+#define SKL_HELP_84 $0EA7
  #define SKL_COLOR_84 $FF
 
-#define SKL_HELP_85 $05B6
+#define SKL_HELP_85 $0EB6
  #define SKL_COLOR_85 0
 
 #define SKL_HELP_86 $0643
  #define SKL_COLOR_86 0
 
-#define SKL_HELP_87 $05C2
+#define SKL_HELP_87 $0EC2
  #define SKL_COLOR_87 $FF
 
-#define SKL_HELP_88 $05D6
+#define SKL_HELP_88 $0ED6
  #define SKL_COLOR_88 $FF
 
-#define SKL_HELP_89 $0556
+#define SKL_HELP_89 $0E56
  #define SKL_COLOR_89 $FF
 
-#define SKL_HELP_90 $0557
+#define SKL_HELP_90 $0E57
  #define SKL_COLOR_90 $FF
 
-#define SKL_HELP_91 $05C5
+#define SKL_HELP_91 $0EC5
  #define SKL_COLOR_91 $FF
 
-#define SKL_HELP_92 $0558
+#define SKL_HELP_92 $0E58
  #define SKL_COLOR_92 $FF
 
 #define SKL_HELP_93 $0000
@@ -286,7 +286,7 @@
 #define SKL_HELP_95 $5C4
  #define SKL_COLOR_95 $FF
 
-#define SKL_HELP_96 $0559
+#define SKL_HELP_96 $0E59
  #define SKL_COLOR_96 0
 
 #define SKL_HELP_97 $0000
@@ -295,7 +295,7 @@
 #define SKL_HELP_98 $0000
  #define SKL_COLOR_98 0
 
-#define SKL_HELP_99 $055C
+#define SKL_HELP_99 $0E5C
  #define SKL_COLOR_99 $FF
 
 #define SKL_HELP_100 $0000
