@@ -5,11 +5,13 @@
     push {r7}
     @dcw $b0ac ;sub sp, #176
     @dcw $b0ac ;sub sp, #176
-    
+    nop
+    nop
     mov r0, lr
     ldr r1, =$080a9abd
     cmp r0, r1
     beq normal
+    nop
     ldr r1, =$080a99c9
     cmp r0, r1
     beq start
@@ -27,9 +29,21 @@ merge:
     ldr r1, =0x160
     mul r0, r1
     ldr r1, =$0E007400
-    add r0, r0, r1
+    add r1, r0, r1
+    mov r8, r1
+;ここからスキル
+    mov r1, #0
+    cmp r0, #0
+    @dcw $D100
+    mov r1, #1
+
+    mov r0, r1
+        @align 4
+        ldr r1, [ADR]
+        mov lr, r1
+    @dcw $F800
     
-    mov r8, r0
+;ここまでスキル
         ldr r0, =$0803144c ;=輸送隊のベースアドレスロード
         mov lr, r0
     @dcw $F800
@@ -38,3 +52,6 @@ merge:
     add r5, #100
     ldr r0, =$080a7c3a
     mov pc, r0
+@align 4
+@ltorg
+    ADR:
