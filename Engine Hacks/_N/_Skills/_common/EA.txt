@@ -12,6 +12,7 @@ hasNihil:
 judgeSkill:
     #incbin judgeSkill.gba
     POIN skl_table
+    POIN getExpandSkill
     
 judgeOccult:
     #incbin judgeOccult.gba
@@ -23,3 +24,6 @@ hasOccult:
     WORD OccultID
     POIN judgeSkill
     
+getExpandSkill:
+#incbin get_expandSkill.gba
+ALIGN 4
