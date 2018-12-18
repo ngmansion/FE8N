@@ -1,19 +1,29 @@
+
+@define SKL_TBL ADR+0
+@define CONTAINS_SKILL ADR+4
+@define DEDUP_UNIT ADR+8
+
 @thumb
     push {r4, r5, lr}
     mov r4, r0
     lsl r1, r1, #24
     lsr r1, r1, #24
+    mov r5, r1
 ;書チェック
-    bl extendSkill
+    bl containsSkill
     cmp r0, #1
     beq oui
+    mov r0, r4
+    mov r1, r5
+    bl dedupUnit
+    cmp r0, #1
+    beq oui
+    
     mov r2, r5
-;ユニットチェック
-	
-	
-	bl 
-	
-jump2:
+@align 4
+    ldr r3, [SKL_TBL]
+    lsl r2, r2, #4
+    add r3, r2, r3
 ;武器
     ldr r2, [r3, #12]
     cmp r2, #0
@@ -37,8 +47,10 @@ oui:
 @align 4
 @ltorg
 
-extendSkill:
-    ldr r3, [adr+4]
+containsSkill:
+    ldr r3, [CONTAINS_SKILL]
     mov pc, r3
-
-adr:
+dedupUnit:
+    ldr r3, [DEDUP_UNIT]
+    mov pc, r3
+ADR:

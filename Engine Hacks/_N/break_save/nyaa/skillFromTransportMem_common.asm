@@ -11,9 +11,9 @@ get_saveBaseAdr:
 	cmp r0, #1
 	beq temp_save
 	
-;	ldr r0, =CHAPTER_BASE_ADR
-;	ldrb r0, [r0, 12]
-	mov r0, r9
+	ldr r0, =CHAPTER_BASE_ADR
+	ldrb r0, [r0, 12]
+;	mov r0, r9
         ldr r3, =BL_GET_SAVE_BASE_ADR ;セーブのベースアドレスロード
         mov lr, r3
     @dcw $F800

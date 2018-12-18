@@ -1,0 +1,25 @@
+hasNihil:
+	#incbin hasNihil.gba
+	WORD NihilID
+	POIN skl_table
+
+judgeSkill:
+	#incbin judgeSkill.gba
+	POIN skl_table
+	POIN getSkill
+	POIN judgeUnit
+    
+judgeOccult:
+	#incbin judgeOccult.gba
+	POIN hasOccult
+	WORD $080172f0
+    
+hasOccult:
+	HAS_SKILL
+	WORD OccultID
+	POIN judgeSkill
+
+judgeUnit:
+	#incbin judgeUnit.gba
+	POIN skl_table
+

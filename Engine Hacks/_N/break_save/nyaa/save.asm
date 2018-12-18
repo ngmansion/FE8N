@@ -1,3 +1,4 @@
+@define CHAPTER_BASE_ADR (0x0202bcec)
 @thumb
 ;000a7c28
     push {r4, r5, r6, r7, lr}
@@ -6,9 +7,8 @@
     @dcw $b0ac ;sub sp, #176
     @dcw $b0ac ;sub sp, #176
     nop
-    nop
-    mov r0, lr
     ldr r1, =$080a9abd
+    mov r0, lr
     cmp r0, r1
     beq normal
     nop
@@ -19,7 +19,9 @@
     mov r0, #0
     b merge
 start:
-    mov r0, r9
+	ldr r0, =CHAPTER_BASE_ADR
+	ldrb r0, [r0, 12]
+;	mov r0, r9
     add r0, #1
     b merge
 normal:

@@ -3,7 +3,7 @@
 @thumb
 get_extraSkill:
 ;I	r0 = ‘à—ñID
-;	r1 = 0 is Skill3, 1 is Skill2, ...
+;	r1 = 0 is Skill3, 1 is Skill4, ...
 ;O	r0 = skillID
 	push {lr}
 	cmp r0, #51
