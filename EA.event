@@ -8,14 +8,17 @@
 MESSAGE starts at CURRENTOFFSET
 
 	#include "Music and Sound\_Music Installer.txt"
-	#include "Animations\_Master Animation Installer.txt"
 	#include "Mugs and Graphics\Install Graphics Data.txt"
 	#include "Engine Hacks\_MasterHackInstaller.txt"
 	#include "Maps\Master Map Installer.txt"
-	#include "Spell Animations\EA.txt"
-//	#include "Tables\Table Installer.event"
 	
 MESSAGE ends at CURRENTOFFSET
+
+//	ORG $1000000
+//	#include "Spell Animations\EA.txt"
+//	#include "Animations\_Master Animation Installer.txt"	
+//	#include "Tables\Table Installer.event"
+//	MESSAGE ends at CURRENTOFFSET
 
 #else
     ERROR You are not assembling FE8 events!

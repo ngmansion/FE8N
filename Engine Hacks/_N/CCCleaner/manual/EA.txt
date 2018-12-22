@@ -25,10 +25,28 @@ POIN scroll_check
 POP
 scroll_check:
  #incbin "check.gba"
+ WORD MAX_MANUAL_SKILL_NUM
+ POIN getSkill
+ POIN containsSkill
+ POIN dedupSkill
+ POIN judgeUnit
 ALIGN 4
 s_scroll:
  #incbin "store.gba"
  WORD TEXT_ID_AFTER_USING_MANUAL
  WORD TEXT_ID_AFTER_USING_ERASER
+ WORD MAX_MANUAL_SKILL_NUM
+ POIN getSkill
+ POIN dedupSkill
+ POIN pushSkill
+ POIN popSkill
+ POIN removeSkill
+ 
 ALIGN 4
+
+dedupSkill:
+ #incbin "dedupSkill.gba"
+POIN getSkill
+POIN judgeUnit
+
 

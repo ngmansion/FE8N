@@ -40,21 +40,62 @@ loopE
 	str	r5, [r7, #8]
 @align 4
 	ldr	r5, [adr+16]	;skl_icon_table
-	ldr	r4, =$02003BFC
-	ldr	r0, [r4, #12]
-	ldrh	r4, [r0, #0x3A]
-    mov r0, %111111
-    and r4, r0
+	ldr r4, =$02003BFC
+	ldr r0, [r4, #12]
+	
+	mov r1, #0
+	bl get_Skill
+	mov r4, r0
 	bl	SKILL3 ;スキル書1
 @align 4
 	ldr	r5, [adr+16]	;skl_icon_table
-	ldr	r4, =$02003BFC
-	ldr	r0, [r4, #12]
-	ldrh	r4, [r0, #0x3A]
-	lsr r4, r4, #6
-    mov r0, %111111
-    and r4, r0
+	ldr r4, =$02003BFC
+	ldr r0, [r4, #12]
+	
+	mov r1, #1
+	bl get_Skill
+	mov r4, r0
 	bl	SKILL3 ;スキル書2
+;ここからEXPAND_SKILL
+
+@align 4
+	ldr	r5, [adr+16]	;skl_icon_table
+	ldr r4, =$02003BFC
+	ldr r0, [r4, #12]
+	
+	mov r1, #2
+	bl get_Skill
+	mov r4, r0
+	bl	SKILL3 ;スキル書3
+@align 4
+	ldr	r5, [adr+16]	;skl_icon_table
+	ldr r4, =$02003BFC
+	ldr r0, [r4, #12]
+	
+	mov r1, #3
+	bl get_Skill
+	mov r4, r0
+	bl	SKILL3 ;スキル書4
+@align 4
+	ldr	r5, [adr+16]	;skl_icon_table
+	ldr r4, =$02003BFC
+	ldr r0, [r4, #12]
+	
+	mov r1, #4
+	bl get_Skill
+	mov r4, r0
+	bl	SKILL3 ;スキル書5
+@align 4
+	ldr	r5, [adr+16]	;skl_icon_table
+	ldr r4, =$02003BFC
+	ldr r0, [r4, #12]
+	
+	mov r1, #5
+	bl get_Skill
+	mov r4, r0
+	bl	SKILL3 ;スキル書6
+
+;ここまでEXPAND_SKILL
 @align 4
 	ldr	r5, [adr+16]	;skl_icon_table
 	ldr	r4, =$02003BFC
@@ -403,6 +444,10 @@ next4:
 end4:
     pop {r3, r4, pc}
 
-
+get_Skill:
+@align4
+	ldr r2, [adr+32]
+	mov pc, r2
+	
 @ltorg
 adr:

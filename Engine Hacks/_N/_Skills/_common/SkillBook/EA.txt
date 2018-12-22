@@ -1,0 +1,42 @@
+
+
+pushSkill:
+#incbin "push_Skill.gba"
+POIN getSkill
+POIN commonSkill
+POIN commonSkill+4
+ALIGN 4
+
+popSkill:
+#incbin "pop_Skill.gba"
+POIN getSkill
+POIN commonSkill
+POIN commonSkill+4
+ALIGN 4
+
+getSkill:
+#incbin "get_Skill.gba"
+POIN commonSkill
+WORD 0x08019108
+POIN commonSkill+4
+ALIGN 4
+
+containsSkill:
+#incbin "contains_skill.gba"
+POIN getSkill
+POIN commonSkill+4
+ALIGN 4
+
+removeSkill:
+#incbin "remove_Skill.gba"
+POIN getSkill
+POIN pushSkill
+POIN popSkill
+POIN commonSkill+4
+ALIGN 4
+
+commonSkill:
+#incbin "_common.gba"
+ALIGN 4
+
+

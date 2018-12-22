@@ -19,7 +19,29 @@ ORG 0x0a7d16
     SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700
 
 POP
+
+
 yuso_save:
     #incbin save.gba
+    ALIGN 4
+POIN SAVE_EXTRA_SKILL
+
 yuso_load:
     #incbin load.gba
+    ALIGN 4
+POIN LOAD_EXTRA_SKILL
+
+SAVE_EXTRA_SKILL:
+#incbin "skillFromTransportMem_save.gba"
+ALIGN 4
+POIN COMMON_EXTRA_SKILL
+
+LOAD_EXTRA_SKILL:
+#incbin "skillFromTransportMem_load.gba"
+ALIGN 4
+POIN COMMON_EXTRA_SKILL
+
+COMMON_EXTRA_SKILL:
+#incbin "skillFromTransportMem_common.gba"
+ALIGN 4
+
