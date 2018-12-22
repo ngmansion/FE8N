@@ -21,6 +21,9 @@ ORG 0x018540
     WORD $46874800
     POIN kaze_back
 
+ORG 0x0185f4
+jumpToHack(pulse_impl)
+ 
 ORG 0x01cea8
     jumpToHack(odorero)
 
@@ -33,11 +36,15 @@ ALIGN 4
 
 kaze_back:
 #incbin reboot.gba
+ POIN hasQuickenedPulse
+ 
 
 canto_impl:
 #incbin jinrai_fix_ijou.gba
     POIN hasCantoPlus
 
+pulse_impl:
+#incbin pulse.gba
 
 #ifdef Debug_Mode
     odorero:

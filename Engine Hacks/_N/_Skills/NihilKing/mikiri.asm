@@ -114,26 +114,14 @@ pulse:
     ldr r0, [sp] ;r3
     cmp r0, #0
     beq toking
-    
-    mov r0, r4
-        @align 4
-        ldr r3, [adr+16] ;奥義の鼓動
-        mov lr, r3
-        @dcw $F800
-    cmp r0, #0
-    beq toking
-    
-    ldrb r0, [r4, #11]
-    cmp r0, #0x40
-    bge toking
-        ldr r1, =$08019108
+        ldr r1, =$08019108	;部隊表IDから変換
         mov lr, r1
         @dcw $F800
-    add r0, #67
+    add r0, #48
     ldrb r1, [r0]
-    cmp r1, #4
-    blt toking
-    mov r1, #0
+    cmp r1, 0x0C	;状態異常
+    bne toking
+    mov r1, 0x00
     strb r1, [r0]
     mov r0, #100
     str r0, [sp] ;r3
