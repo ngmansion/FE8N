@@ -1,57 +1,78 @@
+@define ATK ($0203a4e8)
+@define DEF ($0203a568)
+
+
+
+@define hasRemove (adr+0)
+@define hasGaleforce (adr+4)
+@define hasLifetaker (adr+8)
+@define hasCantoPlus (adr+12)
+@define hasGaleCause (adr+16)
+
+@define TARGET_UNIT ($03004df0)
+
+@define WEAPON_SP_ADR ($080172f0)
+;0x01cea8
 @thumb
     push {r4, r5, lr}
     mov r5, r0
-    ldr r4, =$0801cf00
-    ldr r4, [r4]
+	ldr r4 =TARGET_UNIT
+	ldr r4, [r4]
+;    ldr r4, =ATK
     
-    ldr r0, [r4, #0]
+    mov r0, r4
     ldrb	r1, [r0, #0x13]
-    cmp r1, #0
-    beq end ;死んだら終了
+    cmp r1, #0	;自分のHPゼロなら何もせずに終了
+    beq end		;
     ldr r0, [r0, #12]
     ldr r1, =$0801cf04
     ldr r1, [r1]
-    and	r0, r1
-    bne end ;再移動後はスキップ
-    ldr r0, =$0203a568
-    ldr r1, [r0, #4]
-    cmp r1, #0
-    beq next ;相手がいない
-    ldrb r1, [r0, #0xB]
-    cmp r1, #0
-    beq next ;相手がいない
-    bl kaifuku ;戻り値は未使用
+    and	r0, r1	;再移動後はスキップ
+    bne end		;
+
+    bl kaifuku
     
-    ldr r0, [r4, #0]
+    mov r0, r4
     ldrb r1, [r0, #11]
     mov r2, #192
     and r2, r1
     bne end ;自軍以外は終了
+    bl shippuJinrai
+    cmp r0, #0
+    bne Sound
     
-    bl kami
+    ldr r0, =DEF
+    ldr r1, [r0, #4]
+    cmp r1, #0		;相手がいない
+    beq next		;
+    ldrb r1, [r0, #0xB]
+    cmp r1, #0		;相手がいない_その2（不要？）
+    beq next		;
+    
+    bl jinpuShourai	;神風招来
     cmp r0, #0
     bne Sound
-    bl kaze
-    cmp r0, #0
-    bne Sound
+    
 next
     bl random
     cmp r0, #0
     bne Sound
 ;スキル再移動による再移動化
-    ldr r0, [r4]
+    mov r0, r4
         @align 4
         ldr r1, [adr+12] ;再移動
         mov lr, r1
         @dcw $F800
     cmp r0, #0
     bne Canto
-    mov r2, r4
+    ldr r2, =TARGET_UNIT
     ldr r3, [r2]
+    mov r4, r2
     ldr r0, =$0801ceb0 ;通常の再移動判定
     mov pc, r0
     
 Canto:
+    ldr r4, =TARGET_UNIT
     ldr r3, =$0801cece
     mov pc, r3
     
@@ -70,31 +91,30 @@ end:
     mov	r0, #0
     pop	{r4, r5, pc}
     
-kami:
+jinpuShourai:
     push {lr}
-    ldr	r0, [r4]
+    mov	r0, r4
         @align 4
-        ldr r2, [adr+16]
+        ldr r2, [hasGaleCause]
         mov lr, r2
         @dcw $F800
     cmp r0, #0
     beq dameda
     
-    ldr r0, [r4]
-    ldr r1, =$03004df0
-    ldr r1, [r1]
+    mov r0, r4
+    ldr r1, =ATK
     ldrb r0, [r0, #0xB]
     ldrb r2, [r1, #0xB]
     cmp r0, r2
     bne dameda
     add r1, #0x48
-    ldrh r0, [r1
-        ldr r2, =$080172f0
+    ldrh r0, [r1]
+        ldr r2, =WEAPON_SP_ADR
         mov lr, r2
         @dcw $F800
-    cmp r0, #4
+    cmp r0, #4		;杖
     bne dameda
-    ldr	r0, [r4]
+    mov	r0, r4
     add r0, #69
     
     ldrb	r1, [r0]
@@ -106,12 +126,9 @@ dameda
     pop	{lr}
     
     
-    
-    
-    
 kaifuku:
     push {lr}
-    ldr	r0, [r4, #0]
+    mov	r0, r4
         @align 4
         ldr r2, [adr+8]
         mov lr, r2
@@ -119,19 +136,18 @@ kaifuku:
     cmp r0, #0
     beq non_hp
     
-    ldr r0, [r4]
-    ldr r1, =$03004df0
-    ldr r1, [r1]
+    mov r0, r4
+    ldr r1, =ATK
     ldrb r0, [r0, #0xB]
     ldrb r1, [r1, #0xB]
     cmp r0, r1
     bne non_hp
-    ldr r1, =$0203a568
+    ldr r1, =DEF
     ldrb r1, [r1, #0x13] ;相手撃破
     cmp r1, #0
     bne non_hp
     
-    ldr	r2, [r4]
+    mov	r2, r4
     ldrb r0, [r2, #19] ;現在19
     ldrb r1, [r2, #18] ;最大18
     asr r1, r1, #1
@@ -157,29 +173,28 @@ non_hp:
     
     
     
-kaze:
+shippuJinrai:
     push {lr}
-    ldr	r0, [r4, #0]
+    mov	r0, r4
         @align 4
-        ldr r2, [adr+4]
+        ldr r2, [hasGaleforce]
         mov lr, r2
         @dcw $F800
     cmp r0, #0
     beq non_ka
     
-    ldr r0, [r4]
-    ldr r1, =$03004df0
-    ldr r1, [r1]
+    mov r0, r4
+    ldr r1, =ATK
     ldrb r0, [r0, #0xB]
     ldrb r1, [r1, #0xB]
     cmp r0, r1
     bne non_ka
-    ldr r1, =$0203a568
-    ldrb r1, [r1, #0x13] ;相手撃破
-    cmp r1, #0
-    bne non_ka
+    ldr r1, =DEF
+    ldrb r1, [r1, #0x13]
+    cmp r1, #0		;相手のHP
+    bne non_ka		;
     
-    ldr	r0, [r4, #0]
+    mov	r0, r4
     add r0, #69
     
     ldrb	r1, [r0]
@@ -191,8 +206,8 @@ gogot:
     mov r1, #0xFF
     strb r1, [r0] ;既成事実
     
-    ldr	r0, [r4, #0]
-    ldr	r1, [r0, #12]
+    mov	r0, r4
+    ldr	r1, [r0, #12]	;行動済み等の状態
     ldr	r2, =$fffffbbd
     and	r1, r2
     str	r1, [r0, #12]
@@ -205,7 +220,7 @@ non_ka:
     
 random
     push {lr}
-    ldr	r0, [r4, #0]
+    mov	r0, r4
         @align 4
         ldr r2, [adr]
         mov lr, r2
@@ -216,11 +231,11 @@ random
         ldr r2, =$08000c58
         mov lr, r2
         @dcw 0xf800
-    ldr	r1, [r4, #0]
+    mov	r1, r4
     ldrb	r1, [r1, #25]
     cmp	r1, r0
     ble	non
-    ldr	r0, [r4, #0]
+    mov	r0, r4
     ldr	r1, [r0, #12]
     ldr	r2, =$fffffbbd
     and	r1, r2

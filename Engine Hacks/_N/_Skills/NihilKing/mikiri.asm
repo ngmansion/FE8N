@@ -128,6 +128,7 @@ pulse:
     cmp r0, ORACLE_FLAG
     bne toking
 ;ゼロ
+    mov r0, #48
     mov r1, 0x00
     strb r1, [r4, r0] ;状態異常治癒
     mov r0, #100
