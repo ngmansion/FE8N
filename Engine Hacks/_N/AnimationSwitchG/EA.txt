@@ -1,4 +1,16 @@
+
 PUSH
-ORG 0x2c9a8
-#incbin "AnimeSwitchG.gba"
+ ORG 0x2c9a8
+  #incbin "reverseAnimation.gba"
+  
+ ORG 0x02c9d0
+  #incbin "AnimeSwitchLight.gba"
+ 
+// ORG 0x2ca2a	//flipへ飛ばす
+//  BYTE $FF $F7 $C4 $FF $00 $B0
+ 
+ ORG 0x07b90a
+  BYTE $09
+ 
 POP
+
