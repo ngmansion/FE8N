@@ -31,18 +31,24 @@ jumpToHack(pulse_impl)
  
 //病気のフキダシ表示
 ORG 0x08e6d8
-//WORD $0808e748
-WORD $0808e71c
+WORD $0808e748	//revert
 
 //病気のヘルプ
 ORG 0x08ad04
 //WORD $0808ad8a
 WORD $0808ad18
 
-//病気のヘルプ
+//病気のステータス画面文字
 ORG 0x05c2a3c
 //WORD $04a7
 WORD $0477
+
+//病気の文字
+ORG 0x08e694
+ #incbin pulse_word.gba
+ORG 0x08e6d8
+WORD $08411c80	//	真っ白を描写する為の適当な空き領域
+//WORD $0808e748	//revert用
 
 ORG 0x01cea8
     jumpToHack(odorero)
