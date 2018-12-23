@@ -1,6 +1,7 @@
-@define PULSE_ID 0x0C	;謎の状態異常
+@define PULSE_ID 0x19	;奥義の鼓動の状態異常
 ;000185f0
 @thumb
+;奥義の鼓動の状態異常を自然治癒しなくする
 pulse:
 @dcw $1c21
 @dcw $3130
@@ -22,5 +23,7 @@ pulse:
 	mov pc, r2
 
 dontHeal:
+	sub r3, 0x10
+	strb r3, [r1]
 	ldr r2 =$08018630
 	mov pc, r2

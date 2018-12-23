@@ -1,5 +1,7 @@
 #include config.txt
 
+
+//奥義の鼓動の状態異常指定は3ファイル。(確率系含む)
 PUSH
 
 //Revert
@@ -21,9 +23,27 @@ ORG 0x018540
     WORD $46874800
     POIN kaze_back
 
+
+
+//
 ORG 0x0185f4
 jumpToHack(pulse_impl)
  
+//病気のフキダシ表示
+ORG 0x08e6d8
+//WORD $0808e748
+WORD $0808e71c
+
+//病気のヘルプ
+ORG 0x08ad04
+//WORD $0808ad8a
+WORD $0808ad18
+
+//病気のヘルプ
+ORG 0x05c2a3c
+//WORD $04a7
+WORD $0477
+
 ORG 0x01cea8
     jumpToHack(odorero)
 

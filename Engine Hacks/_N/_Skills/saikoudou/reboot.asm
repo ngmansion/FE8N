@@ -1,4 +1,4 @@
-@define PULSE_ID 0x3C
+@define PULSE_ID 0x39
 
 @define PULSE_ADR ADR+0 ;奥義の鼓動
 

@@ -1,6 +1,9 @@
+@define PULSE_ID 0x09	;奥義の鼓動の状態異常
+
+@define RETURN_ADR $0802a4a6
+
 ;0x2A490
 @thumb
-@define RETURN_ADR $0802a4a6
 	lsl	r0, r0, #16
 	lsr	r3, r0, #16
 	lsl	r1, r1, #24
@@ -110,21 +113,26 @@ goneGeno:
     beq pulse
     mov r0, #0
     str r0, [sp]
+    b toking
 pulse:
-    ldr r0, [sp] ;r3
-    cmp r0, #0
-    beq toking
+    mov r0, #48
+    ldrb r1, [r4, r0]
+    cmp r1, PULSE_ID
+    bne toking
+;ゼロ
+    mov r1, 0x00
+    strb r1, [r4, r0] ;状態異常治癒
+    mov r0, #100
+    str r0, [sp] ;r3
+;状態異常治癒
+    mov r0, 0xB
+    ldrb r0, [r4, r0]
         ldr r1, =$08019108	;部隊表IDから変換
         mov lr, r1
         @dcw $F800
     add r0, #48
-    ldrb r1, [r0]
-    cmp r1, 0x0C	;状態異常
-    bne toking
-    mov r1, 0x00
+    mov r1, 0
     strb r1, [r0]
-    mov r0, #100
-    str r0, [sp] ;r3
     b end
     
 toking: ;王の器チェック

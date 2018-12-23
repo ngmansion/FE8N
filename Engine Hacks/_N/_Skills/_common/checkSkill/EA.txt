@@ -6,7 +6,7 @@ hasNihil:
 judgeSkill:
 	#incbin judgeSkill.gba
 	POIN skl_table
-	POIN getSkill
+	POIN containsSkill
 	POIN judgeUnit
     
 judgeOccult:
