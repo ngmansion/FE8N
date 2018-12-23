@@ -1,4 +1,8 @@
-@define PULSE_ID 0x09	;奥義の鼓動の状態異常
+@define PULSE_ID (0x09)	;奥義の鼓動の状態異常
+
+@define ORACLE_FLAG (0xDD) ;奥義目印
+@define DEFENSE_FLAG (0xDF) ;防御目印
+
 
 @define RETURN_ADR $0802a4a6
 
@@ -20,7 +24,7 @@ start:
     mov r0, lr ;戻りアドレス確認
 ;除外判定
     cmp r2, #0
-    bne return ;r2は謎。通常は0が入る筈。気味が悪いから0なら除外
+    bne return ;r2は謎。通常は0が入る筈。気味が悪いから0以外なら除外
     ldr r1, =$0802b40B ;必殺は対象外
     cmp r0, r1
     beq return
@@ -63,9 +67,9 @@ check:
 	ldr	r1, =$0802B3B9	;;(元の)大盾は専用
 	cmp	r0, r1
 	beq	Reverse
-;独自チェック
+;独自のディフェンスチェック
     mov r0, r10
-    cmp r0, #0xDF
+    cmp r0, DEFENSE_FLAG
     beq Reverse
     b nonTATE
 Reverse
@@ -118,6 +122,10 @@ pulse:
     mov r0, #48
     ldrb r1, [r4, r0]
     cmp r1, PULSE_ID
+    bne toking
+;独自の奥義チェック
+    mov r0, r10
+    cmp r0, ORACLE_FLAG
     bne toking
 ;ゼロ
     mov r1, 0x00

@@ -1,3 +1,5 @@
+@define ORACLE_FLAG 0xDD ;奥義目印
+
 @thumb
 ;@org	$0802b484
 ;武器レベルチェック
@@ -54,7 +56,10 @@ nonmax
     ldr r0, =$0802b48e
     mov pc, r0
 
-jihad_impl: ;ジハド
+jihad_impl:
+;ジハド
+;
+;
     push {lr}
 
     ldr r0, =$0203a4d2
@@ -69,6 +74,9 @@ jihad_impl: ;ジハド
         @dcw $F800
     cmp r0, #0
     beq falseJihad
+;奥義目印
+    mov r1, ORACLE_FLAG
+    mov r10, r1
     
     ldrb r1, [r7, #0x13] ;nowHP
     ldrb r0, [r7, #0x12] ;maxHP
@@ -107,7 +115,10 @@ falseJihad
 
 
 ecripse_impl:
-    push {lr};;;;月食チェック
+;月食
+;
+;
+    push {lr}
     ldr r0, [r7, #76]
     lsl r0, r0, #24
     bmi falseEcripse ;反撃不可武器チェック
@@ -140,6 +151,9 @@ ecripse_impl:
         @dcw $F800
     cmp r0, #0
     beq falseEcripse
+;奥義目印
+    mov r1, ORACLE_FLAG
+    mov r10, r1
     ldrb r0, [r7, #21]	;技
     mov r1, #0
     bl random
@@ -157,7 +171,10 @@ falseEcripse
 
 
 impale_impl:
-    push {lr};;;;撃破チェック
+;撃破
+;
+;
+    push {lr}
 ;ダメージがゼロなら発動しない
     mov r0, #4
     ldsh r0, [r5, r0]
@@ -171,6 +188,9 @@ impale_impl:
         @dcw $F800
     cmp r0, #0
     beq falseImpale
+;奥義目印
+    mov r1, ORACLE_FLAG
+    mov r10, r1
     ldrb r0, [r7, #21]	;技
     mov r1, #0
     bl random
@@ -196,7 +216,10 @@ falseImpale
 
     
 astra_impl:
-    push {lr};;;;流星チェック
+;流星
+;
+;
+    push {lr}
 ;剣以外では発動しない
 	cmp	r1, #0
 	bne	falseAstra
@@ -224,6 +247,9 @@ ouiAstra
 	ldrh	r0, [r5, #12]	;必殺
 	cmp	r0, #0
 	beq	falseAstra
+;奥義目印
+    mov r1, ORACLE_FLAG
+    mov r10, r1
 ;発動乱数
 	ldrb	r0, [r7, #8]	;レベル
 	mov	r1, #0
@@ -309,7 +335,10 @@ mov	lr,r3
     bne jump
     cmp r0, #0x11
     bne falseTenku ;;手斧チェック
-jump
+jump:
+;奥義目印
+    mov r1, ORACLE_FLAG
+    mov r10, r1
     ldrb r0, [r7, #8]	;レベル
     mov r1, #0
     bl random
@@ -363,6 +392,9 @@ RYUSEI
 	mov	r6, r0
 	mov	r7, #0
 ryuloop
+;奥義目印
+    mov r1, ORACLE_FLAG
+    mov r10, r1
 	ldrh	r0, [r5, #10]	;命中
 	mov	r1, #1
 ldr	r2, =$0802a4c0
