@@ -9,6 +9,8 @@ ALIGN 4
     jumpToHack(staff_mastery_print1)
     ORG 0x01704c
     jumpToHack(staff_mastery_print2)
+    ORG 0x0170cc
+    jumpToHack(staff_mastery_print3)	;ユニット選択時
     ORG 0x028a38
     jumpToHack(staff_mastery_usability)
     ORG 0x028f40
@@ -28,7 +30,11 @@ staff_mastery_print1:
 staff_mastery_print2:
     #incbin print2.gba
     POIN staff_mastery_hasSkill
-
+    
+staff_mastery_print3:
+    #incbin print3.gba
+    POIN staff_mastery_hasSkill
+    
 staff_mastery_usability:
     #incbin usability.gba
     POIN staff_mastery_hasSkill
