@@ -236,6 +236,11 @@ newPray:
     b effectPray
 
 originalPray:
+	ldrb r0, [r3, #18]
+	ldrb r1, [r3, #19]
+	cmp r0, r1
+	beq effectPray	;即死ダメージなら確定発動
+	
 	ldrb	r0, [r3, #25]	;幸運
 	lsl	r1, r0, #1
 	add	r0, r0, r1
