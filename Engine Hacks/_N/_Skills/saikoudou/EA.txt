@@ -1,10 +1,12 @@
 #include config.txt
+ALIGN 4
+
+//奥義の鼓動の状態異常指定は3ファイル。(別フォルダの確率関連にもある)
+//
 
 
-//奥義の鼓動の状態異常指定は3ファイル。(確率系含む)
+////Revert
 PUSH
-
-//Revert
 
 ORG 0x01cefc
 SHORT $2000 $E02E
@@ -15,17 +17,41 @@ SHORT $DD04
 
 POP
 
-//main
 
+
+////main
 PUSH
 
 ORG 0x018540
     WORD $46874800
-    POIN kaze_back
+    POIN kaze_reboot
+POP
+
+kaze_reboot:
+#incbin reboot.gba
+ POIN hasQuickenedPulse
 
 
 
-//
+
+////撃破系
+//0xFF 撃破一回目
+//0xFE 撃破処理済
+//0x7F 撃破二回目以降
+//0x7E 二回目以降処理済み
+PUSH
+ORG 0x02b808
+jumpToHack(defeatEnemy)
+POP
+
+defeatEnemy:
+#incbin defeatEnemy.gba
+ALIGN 4
+
+
+
+////未整理
+PUSH
 ORG 0x0185f4
 jumpToHack(pulse_impl)
  
@@ -58,12 +84,8 @@ ORG 0x1CED4
     POIN canto_impl
 
 POP
-ALIGN 4
 
-kaze_back:
-#incbin reboot.gba
- POIN hasQuickenedPulse
- 
+
 
 canto_impl:
 #incbin jinrai_fix_ijou.gba

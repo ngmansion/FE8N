@@ -1,8 +1,14 @@
 @define PULSE_ID 0x39
 
+@define DEFEAT (0xFF)
+@define DEFEATED (0xFE)
+@define DEFEAT2 (0x7F)
+@define DEFEATED2 (0x7E)
+
 @define PULSE_ADR ADR+0 ;奥義の鼓動
 
 @thumb
+;0x018540
     ldr r0, [r1]
     cmp r0, #0
     beq end
@@ -18,8 +24,11 @@ end:
 jinrai:
     add r1, #69
     ldrb r0, [r1]
-    cmp r0, #0xFF
+    cmp r0, DEFEATED
+    beq not_jump
+    cmp r0, DEFEATED2
     bne jump
+not_jump:
     mov r0, #0
     strb r0, [r1]
 jump:

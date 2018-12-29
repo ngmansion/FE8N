@@ -1,7 +1,10 @@
 @define ATK ($0203a4e8)
 @define DEF ($0203a568)
 
-
+@define DEFEAT (0xFF)
+@define DEFEATED (0xFE)
+@define DEFEAT2 (0x7F)
+@define DEFEATED2 (0x7E)
 
 @define hasRemove (adr+0)
 @define hasGaleforce (adr+4)
@@ -21,6 +24,12 @@
 ;    ldr r4, =ATK
     
     mov r0, r4
+    ldrb r1, [r0, #11]
+    mov r2, #192
+    and r2, r1
+    bne end ;自軍以外は終了
+    
+    mov r0, r4
     ldrb	r1, [r0, #0x13]
     cmp r1, #0	;自分のHPゼロなら何もせずに終了
     beq end		;
@@ -29,18 +38,45 @@
     ldr r1, [r1]
     and	r0, r1	;再移動後はスキップ
     bne end		;
-
-    bl kaifuku
+    
     
     mov r0, r4
-    ldrb r1, [r0, #11]
-    mov r2, #192
-    and r2, r1
-    bne end ;自軍以外は終了
+    add r0, 69
+    ldrb r1, [r0]
+    cmp r1, DEFEAT
+    beq pattern1
+    cmp r1, DEFEATED
+    beq pattern0
+    cmp r1, DEFEAT2
+    beq pattern2
+    cmp r1, DEFEATED2
+    beq pattern0
+    b pattern3
+pattern1:
+;再行動なし撃破
+;
+    mov r1, DEFEATED
+    strb r1, [r0] ;撃破済み
+
+	bl kaifuku
+	
     bl shippuJinrai
     cmp r0, #0
-    bne Sound
+    bne Sound	;再行動
+    b next
+
+pattern2:
+;再行動済み撃破
+;
+    mov r1, DEFEATED2
+    strb r1, [r0] ;撃破済み
     
+    bl kaifuku
+	b next
+
+pattern3:
+;再行動なし未撃破
+;
     ldr r0, =DEF
     ldr r1, [r0, #4]
     cmp r1, #0		;相手がいない
@@ -51,8 +87,17 @@
     
     bl jinpuShourai	;神風招来
     cmp r0, #0
-    bne Sound
+    beq next
+;一回目撃破(再行動済みフラグ)をオン
+    mov r0, 69
+    mov r1, DEFEATED
+    strb r1, [r4, r0] ;撃破済み
     
+    b Sound	;再行動
+    
+pattern0:
+;再行動済み未撃破
+;
 next
     bl random
     cmp r0, #0
@@ -77,7 +122,7 @@ Canto:
     mov pc, r3
     
     
-Sound:
+Sound:	;再行動
     ldr	r0, =$0202bcec
     add	r0, #65
     ldrb	r0, [r0, #0]
@@ -99,54 +144,57 @@ jinpuShourai:
         mov lr, r2
         @dcw $F800
     cmp r0, #0
-    beq dameda
+    beq non_ka
     
     mov r0, r4
     ldr r1, =ATK
     ldrb r0, [r0, #0xB]
     ldrb r2, [r1, #0xB]
     cmp r0, r2
-    bne dameda
+    bne non_ka
     add r1, #0x48
     ldrh r0, [r1]
         ldr r2, =WEAPON_SP_ADR
         mov lr, r2
         @dcw $F800
     cmp r0, #4		;杖
-    bne dameda
-    mov	r0, r4
-    add r0, #69
-    
-    ldrb	r1, [r0]
-    cmp r1, #0xFF
-    beq dameda
+    bne non_ka
     b gogot ;待機チェック
-dameda
+    
+shippuJinrai:
+    push {lr}
+    mov r0, r4
+        @align 4
+        ldr r2, [hasGaleforce]
+        mov lr, r2
+        @dcw $F800
+    cmp r0, #0
+    beq non_ka
+gogot:
+    mov	r0, r4
+    ldr	r1, [r0, #12]	;行動済み等の状態
+    ldr	r2, =$fffffbbd
+    and	r1, r2
+    str	r1, [r0, #12]
+    
+    mov	r0, #1
+    @dcw $E000
+non_ka:
     mov	r0, #0
     pop	{lr}
     
     
+    
 kaifuku:
     push {lr}
-    mov	r0, r4
+    mov r0, r4
         @align 4
         ldr r2, [adr+8]
         mov lr, r2
         @dcw $F800
     cmp r0, #0
     beq non_hp
-    
-    mov r0, r4
-    ldr r1, =ATK
-    ldrb r0, [r0, #0xB]
-    ldrb r1, [r1, #0xB]
-    cmp r0, r1
-    bne non_hp
-    ldr r1, =DEF
-    ldrb r1, [r1, #0x13] ;相手撃破
-    cmp r1, #0
-    bne non_hp
-    
+
     mov	r2, r4
     ldrb r0, [r2, #19] ;現在19
     ldrb r1, [r2, #18] ;最大18
@@ -168,52 +216,6 @@ jump_hp:
     mov	r0, #1
     @dcw $E000
 non_hp:
-    mov	r0, #0
-    pop	{lr}
-    
-    
-    
-shippuJinrai:
-    push {lr}
-    mov	r0, r4
-        @align 4
-        ldr r2, [hasGaleforce]
-        mov lr, r2
-        @dcw $F800
-    cmp r0, #0
-    beq non_ka
-    
-    mov r0, r4
-    ldr r1, =ATK
-    ldrb r0, [r0, #0xB]
-    ldrb r1, [r1, #0xB]
-    cmp r0, r1
-    bne non_ka
-    ldr r1, =DEF
-    ldrb r1, [r1, #0x13]
-    cmp r1, #0		;相手のHP
-    bne non_ka		;
-    
-    mov	r0, r4
-    add r0, #69
-    
-    ldrb	r1, [r0]
-    cmp r1, #0xFF
-    bne gogot
-    b non_ka ;待機チェック
-    
-gogot:
-    mov r1, #0xFF
-    strb r1, [r0] ;既成事実
-    
-    mov	r0, r4
-    ldr	r1, [r0, #12]	;行動済み等の状態
-    ldr	r2, =$fffffbbd
-    and	r1, r2
-    str	r1, [r0, #12]
-    mov	r0, #1
-    @dcw $E000
-non_ka:
     mov	r0, #0
     pop	{lr}
     
