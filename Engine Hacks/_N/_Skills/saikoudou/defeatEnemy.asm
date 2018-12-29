@@ -13,7 +13,7 @@
 	mov r0, #2
 	and r0, r1
 	cmp r0, #0
-	bne RETURN
+	bne RETURN	;戦闘予測時はスキップ
 	
 	ldr r3, =$03004df0
 	ldr r3, [r3]
