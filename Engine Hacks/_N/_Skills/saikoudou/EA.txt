@@ -21,17 +21,19 @@ POP
 
 ////main
 PUSH
+ORG 0x01858c
+jumpToHack(kaze_reboot)
 
-ORG 0x018540
-    WORD $46874800
-    POIN kaze_reboot
+ORG 0x018540	//revert(ターン終了時じゃ遅いので)
+SHORT $6808
+SHORT $2800
+SHORT $d002
+SHORT $68c8
 POP
 
 kaze_reboot:
-#incbin reboot.gba
+#incbin reboot2.gba
  POIN hasQuickenedPulse
-
-
 
 
 ////撃破系

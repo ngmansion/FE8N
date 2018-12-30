@@ -8,20 +8,25 @@
 @define PULSE_ADR ADR+0 ;奥義の鼓動
 
 @thumb
-;0x018540
-    ldr r0, [r1]
-    cmp r0, #0
-    beq end
-    ldr r0, [r1, #12]
-    and r0, r4
-    str r0, [r1, #12]
+;0x01858c
+	ldr	r1, =$08018664
+	ldr r1, [r1]
+	mov	r0, #255
+	and	r0, r6
+	lsl	r0, r0, #2
+	add	r0, r0, r1
+	ldr	r4, [r0]
+	mov	r5, r4
+
     bl jinrai
     bl pulse
-end:
-    ldr r0, =$0801854c
+RETURN:
+    ldr r0, =$0801859a
     mov pc, r0
     
+    
 jinrai:
+	mov r1, r4
     add r1, #69
     ldrb r0, [r1]
     cmp r0, DEFEATED
@@ -32,12 +37,12 @@ not_jump:
     mov r0, #0
     strb r0, [r1]
 jump:
-    sub r1, #69
     bx lr
     
+    
 pulse:
-	push {r1, r2, r3, r4, lr}
-	mov r4, r1
+	push {lr}
+	mov r1, r4
 	
 	add r1, #48
 	ldrb r1, [r1]
@@ -55,7 +60,10 @@ pulse:
 	mov r1, #48
     strb r0, [r4, r1]
 teki:
-    pop {r1, r2, r3, r4, pc}
+    pop {pc}
+    
+    
+    
 @align 4
 @ltorg
 ADR:

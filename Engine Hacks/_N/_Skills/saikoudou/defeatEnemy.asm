@@ -5,9 +5,8 @@
 @define DEFEAT2 (0x7F)
 @define DEFEATED2 (0x7E)
 
+;ORG 0x02b808
 @thumb
-	
-	
 	ldr r0, =$0203a4d0
 	ldrh r1, [r0, #0]
 	mov r0, #2
