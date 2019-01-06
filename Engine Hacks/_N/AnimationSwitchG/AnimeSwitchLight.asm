@@ -3,13 +3,13 @@
 @org	$0802c9d0
 	push {lr}
 	ldr r1, [(ADR+12)+4]
-	ldrh r1, [r1, #4]
+	ldrh r1, [r1, #12]	;最後に押したボタン格納
 	lsl r1, r1, #28
 	bpl non_off
 	mov	r0, #1
 	pop {pc}
 non_off:
-;押していない
+;スタートボタン以外
 ;
 	ldr	r0, [(ADR+0)+4]	;$0202bcec
 	add	r0, #66

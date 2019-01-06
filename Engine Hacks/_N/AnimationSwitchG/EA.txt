@@ -10,7 +10,10 @@ PUSH
 //  BYTE $FF $F7 $C4 $FF $00 $B0
  
  ORG 0x07b90a
-  BYTE $09
+  #incbin "skipMov.gba"
+  
+ ORG 0x039f14
+  #incbin "skipTarget.gba"
  
 POP
 
