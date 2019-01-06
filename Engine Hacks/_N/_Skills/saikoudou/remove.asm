@@ -32,7 +32,7 @@ random
         mov lr, r2
         @dcw $F800
     cmp r0, #0
-;    beq non
+    beq non
         mov r0, #99
         ldr r2, =$08000c58
         mov lr, r2
@@ -40,7 +40,7 @@ random
     mov	r1, r4
     ldrb	r1, [r1, #25]
     cmp	r1, r0
-;    ble	non
+    ble	non
     mov	r0, r4
     ldr	r1, [r0, #12]
     ldr	r2, =$fffffbbd

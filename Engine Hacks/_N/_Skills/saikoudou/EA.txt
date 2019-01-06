@@ -84,10 +84,26 @@ ORG 0x01cea8
 ORG 0x1CED4
     BYTE $00 $48 $87 $46
     POIN canto_impl
-
+    
+ORG 0x01cefa
+    SHORT $d107	//revert
+    jumpToHack(remove_impl)
 POP
 
 
+#ifndef Debug_Mode
+
+remove_impl:
+#incbin remove.gba
+POIN hasRemove
+
+#else
+
+remove_impl:
+#incbin debug.gba
+POIN hasRemove
+
+#endif
 
 canto_impl:
 #incbin jinrai_fix_ijou.gba
@@ -96,23 +112,14 @@ canto_impl:
 pulse_impl:
 #incbin pulse.gba
 
-#ifdef Debug_Mode
     odorero:
         #incbin "debug.gba"
-        POIN hasRemove
+        POIN 0
         POIN hasGaleforce
         POIN hasLifetaker
         POIN hasCantoPlus
         POIN hasGaleCause
-#else
-    odorero:
-        #incbin main.gba
-        POIN hasRemove
-        POIN hasGaleforce
-        POIN hasLifetaker
-        POIN hasCantoPlus
-        POIN hasGaleCause
-#endif
+        
     hasRemove:
         HAS_SKILL
         WORD RemoveID
@@ -129,9 +136,9 @@ pulse_impl:
         HAS_SKILL
         WORD GaleCauseID
         POIN judgeSkill
-hasCantoPlus:
-    HAS_SKILL
-    WORD CantoPlusID
-    POIN judgeSkill
+    hasCantoPlus:
+        HAS_SKILL
+        WORD CantoPlusID
+        POIN judgeSkill
 
 ALIGN 4

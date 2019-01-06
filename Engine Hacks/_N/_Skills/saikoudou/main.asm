@@ -27,17 +27,17 @@
     ldrb r1, [r0, #11]
     mov r2, #192
     and r2, r1
-    bne end ;自軍以外は終了
+    bne FALSE ;自軍以外は終了
     
     mov r0, r4
     ldrb	r1, [r0, #0x13]
     cmp r1, #0	;自分のHPゼロなら何もせずに終了
-    beq end		;
+    beq FALSE		;
     ldr r0, [r0, #12]
     ldr r1, =$0801cf04
     ldr r1, [r1]
     and	r0, r1	;再移動後はスキップ
-    bne checkRondom		;
+    bne FALSE
     
     
     mov r0, r4
@@ -117,14 +117,6 @@ Canto:
     ldr r4, =TARGET_UNIT
     ldr r3, =$0801cece
     mov pc, r3
-    
-checkRondom:
-;スキル再行動
-;
-    bl random
-    cmp r0, #0
-    beq end
-    
 Sound:	;再行動
     ldr	r0, =$0202bcec
     add	r0, #65
@@ -136,8 +128,14 @@ Sound:	;再行動
     mov	lr, r2
     @dcw 0xf800
 end:
-    mov	r0, #0
-    pop	{r4, r5, pc}
+	mov	r0, #0
+	pop	{r4, r5}
+	pop	{r1}
+	bx	r1
+
+FALSE:
+    ldr r3, =$0801cefc
+    mov pc, r3
     
 jinpuShourai:
     push {lr}
