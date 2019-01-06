@@ -98,7 +98,12 @@ pulse_impl:
 
 #ifdef Debug_Mode
     odorero:
-        #incbin "debug.dmp"
+        #incbin "debug.gba"
+        POIN hasRemove
+        POIN hasGaleforce
+        POIN hasLifetaker
+        POIN hasCantoPlus
+        POIN hasGaleCause
 #else
     odorero:
         #incbin main.gba
@@ -107,6 +112,7 @@ pulse_impl:
         POIN hasLifetaker
         POIN hasCantoPlus
         POIN hasGaleCause
+#endif
     hasRemove:
         HAS_SKILL
         WORD RemoveID
@@ -119,14 +125,13 @@ pulse_impl:
         HAS_SKILL
         WORD LifetakerID
         POIN judgeSkill
+    hasGaleCause:
+        HAS_SKILL
+        WORD GaleCauseID
+        POIN judgeSkill
 hasCantoPlus:
     HAS_SKILL
     WORD CantoPlusID
     POIN judgeSkill
-hasGaleCause:
-    HAS_SKILL
-    WORD GaleCauseID
-    POIN judgeSkill
-#endif
 
 ALIGN 4
