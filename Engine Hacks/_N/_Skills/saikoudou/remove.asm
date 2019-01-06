@@ -1,7 +1,6 @@
 @define hasRemove (adr+0)
 ;0x01cefc
 @thumb
-    mov r0, r4
     bl random
     cmp r0, #0
     beq RETURN
@@ -26,7 +25,7 @@ RETURN:
 
 random
     push {lr}
-    mov	r0, r4
+    ldr r0, [r4]
         @align 4
         ldr r2, [hasRemove]
         mov lr, r2
@@ -37,11 +36,11 @@ random
         ldr r2, =$08000c58
         mov lr, r2
         @dcw 0xf800
-    mov	r1, r4
+    ldr r1, [r4]
     ldrb	r1, [r1, #25]
     cmp	r1, r0
     ble	non
-    mov	r0, r4
+    ldr r0, [r4]
     ldr	r1, [r0, #12]
     ldr	r2, =$fffffbbd
     and	r1, r2

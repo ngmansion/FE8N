@@ -134,6 +134,7 @@ end:
 	bx	r1
 
 FALSE:
+	ldr r4 =TARGET_UNIT
     ldr r3, =$0801cefc
     mov pc, r3
     
