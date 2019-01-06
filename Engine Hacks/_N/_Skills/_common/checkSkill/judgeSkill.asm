@@ -9,6 +9,11 @@
     lsl r1, r1, #24
     lsr r1, r1, #24
     mov r5, r1
+;ダミーユニットチェック
+    ldr r2, [r0, #4]
+    cmp r2, #0
+    beq jump3
+
 ;書チェック
     bl containsSkill
     cmp r0, #1

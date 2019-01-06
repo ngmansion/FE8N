@@ -1,7 +1,11 @@
 hasNihil:
-	#incbin hasNihil.gba
+	HAS_SKILL
 	WORD NihilID
-	POIN skl_table
+	POIN judgeSkill
+	
+//	#incbin hasNihil.gba
+//	WORD NihilID
+//	POIN skl_table
 
 judgeSkill:
 	#incbin judgeSkill.gba
