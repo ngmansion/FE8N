@@ -1,4 +1,6 @@
 ;0x02ad3c
+;ステータス画面にも影響がある
+;相手が存在するとは限らない(ダミーかもしれない)
 @thumb
     mov	r0, r5
         @align 4
@@ -6,13 +8,19 @@
         mov lr, r1
         @dcw $F800
     cmp r0, #0
-    bne Return
-    
+    bne RETURN
+;闘技場チェック
     ldr r0, =$0203a4d0
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
-    bne Return ;闘技場チェック
+    bne RETURN
+    
+    bl shishi
+;相手の存在をチェック
+    ldr r0, [r5, #4]
+    cmp r0, #0
+    beq RETURN
     
     bl kishin
     
@@ -24,9 +32,7 @@
     
     bl CloseDef
     
-    bl shishi
-    
-Return:
+RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
@@ -37,7 +43,7 @@ Return:
         ldr r0, =$0203a4d2
         ldrb r0, [r0] ;距離
         cmp r0, #1
-        beq endDistantDef
+        ble endDistantDef
         
         mov r0, r4
         ldrb r0, [r0, #11]
