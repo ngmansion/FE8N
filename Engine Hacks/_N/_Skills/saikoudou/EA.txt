@@ -113,7 +113,7 @@ pulse_impl:
 #incbin pulse.gba
 
     odorero:
-        #incbin "debug.gba"
+        #incbin "main.gba"
         POIN 0
         POIN hasGaleforce
         POIN hasLifetaker
