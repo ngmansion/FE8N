@@ -25,13 +25,16 @@
 	lsr r0, r0, #30
 	bne RETURN	;攻撃者が敵である
 	
-	mov r2, DEFEAT
+    mov r2, DEFEAT2
+	
 	mov r0, r3
     add r0, #69
     ldrb	r1, [r0]
     cmp r1, DEFEATED
-    bne normal
-    mov r2, DEFEAT2	;疾風迅雷用
+    beq normal
+    cmp r1, DEFEATED2
+    beq normal
+    mov r2, DEFEAT	;疾風迅雷用
 normal:
     strb	r2, [r0]
 ;	b RETURN
