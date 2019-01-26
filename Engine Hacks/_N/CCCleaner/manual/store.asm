@@ -45,16 +45,20 @@ manual:
     
 not_eraser:
     mov r6, r0
-    
 @align 4
 	ldr r1 [MAX_NUM]
 	sub r1, 1
+	mov r0, r4
 	bl ex_getSkill
 	cmp r0, #0
 	beq go_normal	;まだ余裕があるから使える
     
     mov r0, r4
     bl ex_dedupSkill
+@align 4
+	ldr r1 [MAX_NUM]
+	cmp r0, r1
+	beq return	;重複も存在しない場合はreturnへ
     
     mov r1, r0
     mov r0, r4
@@ -93,21 +97,37 @@ Eraser:
 ;削除したスキルを書にする
 ;
 	push {lr}
-    @align 4
+;重複チェック
+    mov r0, r4
+    bl ex_dedupSkill
+@align 4
+	ldr r1 [MAX_NUM]
+	cmp r0, r1
+	bne dedup	;重複が存在する場合は最優先で抽出
+;ボタンチェック
+@align 4
     ldr r0, =PRESS_INPUT_ADR
 	ldr	r0, [r0]
 	ldrh	r1, [r0, #4]
 	mov	r0, #4
 	and	r0, r1
 	bne reverse
-    
+;末尾のスキルを抽出
     mov r0, r4
     bl ex_popSkill
     b merge
 reverse:
+;第一スキルを抽出
     mov r0, r4
     mov r1, #0
     bl ex_removeSkill
+    b merge
+dedup:
+;重複スキルを削除
+	mov r1, r0
+    mov r0, r4
+    bl ex_removeSkill
+	
 merge:
 	mov r6, r0
     ldr r3, =$080172d4	;アイテムのテーブル格納アドレス
