@@ -1,7 +1,7 @@
 
 @define SKL_TBL ADR+0
 @define CONTAINS_SKILL ADR+4
-@define DEDUP_UNIT ADR+8
+@define JUDGE_UNIT ADR+8
 
 @thumb
     push {r4, r5, lr}
@@ -20,7 +20,7 @@
     beq oui
     mov r0, r4
     mov r1, r5
-    bl dedupUnit
+    bl judgeUnit
     cmp r0, #1
     beq oui
     
@@ -55,7 +55,7 @@ oui:
 containsSkill:
     ldr r3, [CONTAINS_SKILL]
     mov pc, r3
-dedupUnit:
-    ldr r3, [DEDUP_UNIT]
+judgeUnit:
+    ldr r3, [JUDGE_UNIT]
     mov pc, r3
 ADR:

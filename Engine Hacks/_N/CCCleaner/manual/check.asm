@@ -7,7 +7,7 @@
 @define MAX_NUM ADR+0
 @define GETSKILL ADR+4
 @define CONTAINSKILL ADR+8
-@define DEDUPUNIT ADR+12
+@define DEDUPSKILL ADR+12
 @define JUDGEUNIT ADR+16
 
 @thumb
@@ -76,7 +76,7 @@ not_eraser:
 	mov r0, r4
 @align 4
 	ldr r1 [MAX_NUM]
-	bl ex_dedupUnit
+	bl ex_dedupSkill
 	@align 4
 	ldr r1 [MAX_NUM]
 	cmp r0, r1
@@ -96,8 +96,8 @@ ex_containsSkill:
 ex_getSkill:
 	ldr r3, [GETSKILL]
 	mov pc, r3
-ex_dedupUnit:
-	ldr r3, [DEDUPUNIT]
+ex_dedupSkill:
+	ldr r3, [DEDUPSKILL]
 	mov pc, r3
 ex_judgeUnit:
 	ldr r3, [JUDGEUNIT]
