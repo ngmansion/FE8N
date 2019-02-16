@@ -1,0 +1,28 @@
+
+#include config.txt
+
+ALIGN 4
+///////////////
+PUSH
+	ORG 0x2aa04
+	jumpToHack(SOCERYBLADE)
+	
+	
+POP
+	SOCERYBLADE:
+	#incbin "main.gba"
+	POIN hasNihil
+	POIN hasSorceryBlade
+	
+	
+hasSorceryBlade:
+ HAS_SKILL
+ WORD SorceryBladeID
+ POIN judgeSkill
+	
+ALIGN 4
+//////////////
+	
+	
+	
+	

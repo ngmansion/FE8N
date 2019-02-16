@@ -1,7 +1,7 @@
 #ifdef _FE8_
 
 	#define Free_Space 0xEFB2E0
-//	#define Debug_Mode
+	#define Debug_Mode
 	
 	ORG Free_Space
 

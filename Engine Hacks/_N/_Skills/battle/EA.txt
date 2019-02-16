@@ -18,7 +18,7 @@ ORG 0x02bfd8
 POP
 
 battle_before:
-    #incbin before.gba
+    #incbin before.dmp
     POIN hasNihil
     POIN hasFury
     POIN hasDeathBlow
@@ -30,10 +30,11 @@ battle_before:
     POIN breaker_hasSkill5 //32
     POIN hasCloseDef
     POIN hasDistantDef
+    POIN hasDefender
 
 
 battle_after:
-    #incbin main.gba
+    #incbin main.dmp
     POIN hasDistantGuard
     POIN hasLightBless
     POIN hasDarkBless
@@ -84,5 +85,11 @@ hasDistantDef:
  HAS_SKILL
  WORD DistantDefID
  POIN judgeSkill
+
+hasDefender:
+ HAS_SKILL
+ WORD DefenderID
+ POIN judgeSkill
+
 
 
