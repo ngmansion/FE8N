@@ -39,16 +39,12 @@ cancel:
     lsl r0, r0, #29
 ;   bmi false ;追撃チェック
 
-    mov r0, #0x15
-    ldsb r0, [r7, r0] ;技％
-    lsl r0, r0, #16
-    lsr r0, r0, #16
-    mov r1, #0
-    bl random ;r0=確率, r1=#0で乱数
-    lsl r0, r0, #24
-    asr r0, r0, #24
-    cmp r0, #0
-    beq false
+;キャンセル発動条件
+	ldrb r0, [r7, #0x13] ;現在HP
+	ldrb r1, [r7, #0x12] ;最大HP
+	cmp r0, r1
+	blt false
+
 ;キャンセル発動
     mov r0, #0
     mov r1, r8
