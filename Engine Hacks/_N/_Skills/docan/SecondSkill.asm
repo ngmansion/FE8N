@@ -25,6 +25,13 @@ endwo:
     
 cancel:
     push {lr}
+;除外条件
+    ldr r0, =$03004df0
+    ldr r0, [r0]
+    ldrb r0, [r0, #11]
+    ldrb r1, [r7, #11]
+    cmp r0, r1
+    bne false ;攻撃者じゃ無い
     mov r0, r7
         @align 4
         ldr r1, [adr] ;キャンセル
