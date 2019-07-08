@@ -190,9 +190,13 @@ shishi:
     ldr r1, adr+4
     _blr r1
     cmp r0, #0
-    .short 0xD000
-    b gotKoroshi
-    b false
+    beq false
+    
+	ldrb r1, [r4, #18] @;最大HP
+	ldrb r0, [r4, #19] @;現在HP
+	cmp r0, r1
+	blt false @;現在が最大よりも小さい場合
+	b gotKoroshi
     
 kishin:
     push {lr}

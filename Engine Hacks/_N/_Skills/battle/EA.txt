@@ -42,9 +42,10 @@ battle_after:
     POIN hasNihil
     
 battle_down:
-  #incbin down.gba
+  #incbin down.dmp
   POIN hasNihil
   POIN hasFury
+  POIN hasAdept
     
 hasFury:
     HAS_SKILL
