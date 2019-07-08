@@ -49,19 +49,6 @@ got:
 	ldrb r1, [r6, #0x12] @;最大HP
 	cmp r0, r1
 	blt endRenzoku
-	
-	ldr	r0, =0x0203a604
-	ldr	r3, [r0, #0]
-	ldr	r2, [r3, #0]
-	lsl	r1, r2, #13
-	lsr	r1, r1, #13
-	mov	r0, #0x80
-	lsl	r0, r0, #7
-	orr	r1, r0
-	ldr	r0, =0xFFF80000
-	and	r0, r2
-	orr	r0, r1
-	str	r0, [r3, #0]		@;必的発動の処理（エフェクトの為）
 	add r4, #1				@;攻撃回数加算
 endRenzoku:
     pop {pc}

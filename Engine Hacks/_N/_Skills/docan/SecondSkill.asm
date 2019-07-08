@@ -71,19 +71,6 @@ cancel:
     add r1, #72
     strh r0, [r1]	@;相手装備消去
     strb r0, [r1, #10]	@;相手武器消滅防止
-effect:
-    ldr r0, A_EFFECT
-    ldr r3, [r0]
-    ldr r2, [r3]
-    lsl r1, r2, #13
-    lsr r1, r1, #13
-    mov r0, #0x80
-    lsl r0, r0, #7
-    orr r1, r0
-    ldr r0, =0xFFF80000
-    and r0, r2
-    orr r0, r1
-    str r0, [r3] @;必的発動の処理（エフェクト用）
     pop {pc}
     
     
