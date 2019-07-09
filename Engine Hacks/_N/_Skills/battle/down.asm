@@ -87,6 +87,6 @@ false:
 ret:
 	pop	{r4, pc}
 
-.align 4
+.align
 .ltorg
 ADR:
