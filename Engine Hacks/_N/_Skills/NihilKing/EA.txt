@@ -15,7 +15,7 @@ PUSH
  POIN	mirikiri
 POP
 mirikiri:
- #incbin "mikiri.gba"
+ #incbin "mikiri.dmp"
  POIN hasNihil
  POIN hasRightfulKing
  POIN hasResolve

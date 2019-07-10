@@ -66,10 +66,10 @@ distance
 	cmp r1, #0x03	;; カリスマ範囲
 	bgt next
 	ldrb r0,[r6, #3]  ;; 命中
-	add r0, #20
+	add r0, #15
 	strb r0, [r6, #3]
 	ldrb r0,[r6, #4]  ;; 回避
-	add r0, #20
+	add r0, #15
 	strb r0, [r6, #4]
 	b next	
 end
