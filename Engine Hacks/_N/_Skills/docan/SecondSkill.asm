@@ -39,14 +39,11 @@ endwo:
     mov pc, r3
     
 cancel:
+@
+@
+@
     push {lr}
 @;除外条件
-    ldr r0, A_ATTACKER
-    ldr r0, [r0]
-    ldrb r0, [r0, #11]
-    ldrb r1, [r7, #11]
-    cmp r0, r1
-    bne false @;攻撃者じゃ無い
     mov r0, r7
 		ldr r1, ADDRESS @;キャンセル
 		_blr r1
@@ -57,7 +54,7 @@ cancel:
     ldr r0, [r0]
     ldr r0, [r0]
     lsl r0, r0, #29
-@;   bmi false @;追撃チェック
+    bmi false @;追撃時は無意味なので不発
 
 @;キャンセル発動条件
 	ldrb r0, [r7, #0x13] @;現在HP
@@ -108,7 +105,7 @@ random:
     ldr r3, RETURN_ADR
     mov pc, r3
 
-
+.align
 RETURN_ADR:
 .long 0x0802a490
 RETURN_ADR_2:
@@ -117,8 +114,6 @@ B_WEAPON_ABILITY:
 .long 0x080174cc
 A_EFFECT:
 .long 0x0203a604
-A_ATTACKER:
-.long 0x03004df0
 A_ALINA:
 .long 0x0203a4d0
 

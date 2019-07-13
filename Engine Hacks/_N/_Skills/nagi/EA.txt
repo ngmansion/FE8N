@@ -8,7 +8,7 @@ PUSH
 POP
 
 nagi_kaze:
-  #incbin kaze.gba
+  #incbin kaze.dmp
   POIN hasNihil
   POIN hasWindsweep
 

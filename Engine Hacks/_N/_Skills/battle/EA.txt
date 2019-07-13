@@ -46,6 +46,7 @@ battle_down:
   POIN hasNihil
   POIN hasFury
   POIN hasAdept
+  POIN hasCancel
     
 hasFury:
     HAS_SKILL
