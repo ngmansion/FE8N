@@ -22,7 +22,7 @@ POIN commonSkill+4
 ALIGN 4
 
 containsSkill:
-#incbin "contains_skill.gba"
+#incbin "contains_skill.dmp"
 POIN getSkill
 POIN commonSkill+4
 ALIGN 4
