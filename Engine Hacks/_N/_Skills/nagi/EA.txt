@@ -1,10 +1,20 @@
 #include config.txt
 
 PUSH
-  ORG 0x02a834
-    jumpToHack(nagi_kaze)
-  ORG 0x02af60
-    jumpToHack(nagi_tome)
+
+ORG 0x02a834
+	jumpToHack(nagi_kaze)
+//revert
+ORG 0x02af60
+    SHORT $6820
+    SHORT $304a
+    SHORT $8800
+    SHORT $f7ec
+    SHORT $fab1
+
+//  ORG 0x02af60
+//    jumpToHack(nagi_tome)
+
 POP
 
 nagi_kaze:
@@ -12,10 +22,11 @@ nagi_kaze:
   POIN hasNihil
   POIN hasWindsweep
 
-nagi_tome:
-  #incbin tome.gba
-  POIN hasNihil
-  POIN hasWindsweep
+//追撃なし
+//nagi_tome:
+//  #incbin tome.gba
+//  POIN hasNihil
+//  POIN hasWindsweep
 
 hasWindsweep:
  HAS_SKILL

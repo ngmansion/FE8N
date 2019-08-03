@@ -29,22 +29,25 @@
         ldr r1, adr+4 @;風薙ぎ
         mov lr, r1
         .short 0xF800
-    bne cancel @;スキル無し
+    beq normal @;スキル無し
+    
+    ldr r0, =0x0203a4e8
+    add r0, #0x16 @速さ　攻速(0x5E)は未計算なので使えない
+    ldrb r0, [r0]
+    mov r1, r5
+    add r1, #0x16 @速さ
+    ldrb r1, [r1]
+    add r1, #8
+    cmp r0, r1
+    bge cancel @;速ければキャンセル
+    
 normal:
     mov r1, r8
     ldrb r0, [r1, #0]
     cmp r0, #255
     bne end @;アイテム無し？？
-    
-    ldr r0, =0x0203a4e8
-    mov r0, r5
-    ldrb r0, [r0, #0x16] @速さ
-    mov r1, r5
-    ldrb r1, [r1, #0x16] @速さ
-    cmp r0, r1
-    ble end @;速さが足りない
 cancel:
-    ldr r0, =0x0802a840
+    ldr r0, =0x0802a840	@;反撃不可
     mov pc, r0
 end:
     ldr r0, =0x0802a84a
