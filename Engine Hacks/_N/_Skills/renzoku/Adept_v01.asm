@@ -1,4 +1,6 @@
 .thumb
+.equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
+.equ FLAG, (0xFF)	@フラグ
 @;@org	$0802b004
     push {r4, lr}
     mov r4, #0
@@ -40,15 +42,18 @@ renzoku:
     cmp r0, #0
     beq endRenzoku
 got:
-	mov	r0, #0x15
-	ldsb	r0, [r6, r0]
-	lsl	r0, r0, #16
-	lsr	r0, r0, #16
-	
-	ldrb r0, [r6, #0x13] @;現在HP
-	ldrb r1, [r6, #0x12] @;最大HP
+    mov r0, r6
+	add r0, #STR_ADR
+	ldrb r0, [r0]
+	mov r1, #FLAG
 	cmp r0, r1
-	blt endRenzoku
+	bne endRenzoku
+	
+	mov r1, #90
+	ldrh r0, [r6, r1]
+	sub r0, #5	@;威力減少
+	strh r0, [r6, r1]
+	
 	add r4, #1				@;攻撃回数加算
 endRenzoku:
     pop {pc}

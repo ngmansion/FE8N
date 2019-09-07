@@ -31,7 +31,14 @@ battle_before:
     POIN hasCloseDef
     POIN hasDistantDef
     POIN hasDefender
-
+    POIN hasSwordfaire
+    POIN hasLancefaire
+    POIN hasAxefaire
+    POIN hasBowfaire
+    POIN hasTomefaire
+    POIN hasGrounder
+    POIN hasHelmSplitter
+    POIN hasKnightkneeler
 
 battle_after:
     #incbin main.dmp
@@ -39,7 +46,6 @@ battle_after:
     POIN hasLightBless
     POIN hasDarkBless
     POIN hasLifeAndDeath
-    POIN hasNihil
     
 battle_down:
   #incbin down.dmp
@@ -93,5 +99,37 @@ hasDefender:
  WORD DefenderID
  POIN judgeSkill
 
+hasSwordfaire:
+ HAS_SKILL
+ WORD SwordfaireID
+ POIN judgeSkill
+hasLancefaire:
+ HAS_SKILL
+ WORD LancefaireID
+ POIN judgeSkill
+hasAxefaire:
+ HAS_SKILL
+ WORD AxefaireID
+ POIN judgeSkill
+hasBowfaire:
+ HAS_SKILL
+ WORD BowfaireID
+ POIN judgeSkill
+hasTomefaire:
+ HAS_SKILL
+ WORD TomefaireID
+ POIN judgeSkill
 
+hasGrounder:
+ HAS_SKILL
+ WORD GrounderID
+ POIN judgeSkill
+hasHelmSplitter:
+ HAS_SKILL
+ WORD HelmSplitterID
+ POIN judgeSkill
+hasKnightkneeler:
+ HAS_SKILL
+ WORD KnightkneelerID
+ POIN judgeSkill
 

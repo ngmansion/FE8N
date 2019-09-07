@@ -33,7 +33,7 @@ POP
 
 ALIGN 4
 origin_third:
-#incbin "Third.gba"
+#incbin "Third.dmp"
 POIN	listDragon
 POIN	listMeido
 POIN	listRevenge

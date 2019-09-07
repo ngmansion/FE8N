@@ -1,50 +1,37 @@
-@thumb
-;0002af60
-;’ÇŒ‚•s‰Âˆ—
-    
-    
-    ldr r0, =$03004df0
-    ldr r0, [r0]
-    ldrb r0, [r0, #11]
-    ldr r1, [r4]
-    ldrb r1, [r1, #11]
-    cmp r0, r1
-    bne normal ;UŒ‚Ò‚¶‚á–³‚¢
-    
-    ldr r0, =$0203a4d0
-    ldrh r0, [r0]
-    mov r1, #0x20
-    and r0, r1
-    bne normal ;“¬‹Zêƒ`ƒFƒbƒN
-    
-    ldr r0, [r7]
-        @align 4
-        ldr r1, [adr+0] ;Œ©Ø‚è
-        mov lr, r1
-        @dcw $F800
-    cmp r0, #0
-    bne normal ;Œ©Ø‚è
+.thumb
+@;0002af60
+@;è¿½æ’ƒä¸å¯å‡¦ç†
+	
+.equ STR_ADR, (67)	@æ›¸ãè¾¼ã¿å…ˆ(AI1ã‚«ã‚¦ãƒ³ã‚¿)
+.equ FLAG, (0xFE)	@ãƒ•ãƒ©ã‚°
+	
+	ldr r0, =0x0203a4d0
+	ldrh r0, [r0]
+	mov r1, #0x20
+	and r0, r1
+	bne normal	@é—˜æŠ€å ´ãƒã‚§ãƒƒã‚¯
+	
+	ldr r0, [r4]
+	add r0, #STR_ADR
+	ldrb r0, [r0]
+@	ldr r0, [r0, #76]	@;ãƒ«ãƒŠé–‹å§‹
+	mov r1, #FLAG
+	and r0, r1
+	cmp r0, r1
+	beq cancel
+normal:
+	ldr r0, [r4]
+	add r0, #74
+	ldrh r0, [r0]
+		ldr r1, =0x080174cc
+		mov lr, r1
+		.short 0xF800
+	ldr r1, =0x0802af6a
+	mov pc, r1
+	
+@è¿½æ’ƒä¸å¯
+cancel:
+	ldr r0, =0x0802af80
+	mov pc, r0
+.ltorg
 
-    ldr r0, [r4]
-        @align 4
-        ldr r1, [adr+4] ;•—“ã‚¬
-        mov lr, r1
-        @dcw $F800
-    bne cancel ;ƒXƒLƒ‹–³‚µ
-normal
-    ldr r0, [r4]
-    add r0, #74
-    ldrh r0, [r0]
-        ldr r1, =$080174cc
-        mov lr, r1
-        @dcw $F800
-    ldr r0, =$0802af6a
-    mov pc, r0
-    
-cancel
-    ldr r0, =$0802af80
-    mov pc, r0
-    
-@ltorg
-adr
-    

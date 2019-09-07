@@ -1,5 +1,7 @@
 .thumb
 @;0002a834
+.equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
+.equ FLAG, (0xFE)	@フラグ
 
     cmp r0, #0
     beq cancel @;射程外
@@ -31,16 +33,13 @@
         .short 0xF800
     beq normal @;スキル無し
     
-    ldr r0, =0x0203a4e8
-    add r0, #0x16 @速さ　攻速(0x5E)は未計算なので使えない
-    ldrb r0, [r0]
-    mov r1, r5
-    add r1, #0x16 @速さ
-    ldrb r1, [r1]
-    add r1, #8
-    cmp r0, r1
-    bge cancel @;速ければキャンセル
-    
+	ldr r0, =0x0203a4e8
+	add r0, #STR_ADR
+	ldrb r0, [r0]
+	mov r1, #FLAG
+	and r0, r1
+	cmp r0, r1
+	beq cancel
 normal:
     mov r1, r8
     ldrb r0, [r1, #0]

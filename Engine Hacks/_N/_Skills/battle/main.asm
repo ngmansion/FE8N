@@ -1,5 +1,6 @@
 .thumb
 
+
 @;0x02ad3c
 @;イクリプス等の直前(自分の数値と相手の数値の計算後)
 @;ステータス画面では呼ばれない
@@ -59,7 +60,6 @@ endZero:
     pop {r4, r5, r6}
     pop {r0}
     bx r0
-
 
 
 DistantGuard:

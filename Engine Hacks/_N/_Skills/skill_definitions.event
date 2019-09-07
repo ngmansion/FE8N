@@ -94,4 +94,7 @@
 #define AxefaireID 105 //0x69 斧の達人
 #define BowfaireID 106 //0x6A 弓の達人
 #define TomefaireID 107 //0x6B 魔の達人
+#define GrounderID 108 //0x6C つばめ返し
+#define HelmSplitterID 109 // 0x6D 兜割り
+#define KnightkneelerID 110 // 0x6E 葬騎
 
