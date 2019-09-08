@@ -307,18 +307,11 @@ endFaire:
         mov r0, #0
         pop {pc}
 
-true:
-    mov r0, #1
-    pop {pc}
-false:
-    mov r0, #0
-    pop {pc}
-
 koroshi:
     push {lr}
     bl breaker_impl
     cmp r0, #0
-    beq false
+    beq falseKoroshi
 gotKoroshi:
     mov r1, #90
     ldrh r0, [r4, r1]
@@ -344,7 +337,13 @@ gotKoroshi:
     ldrh r0, [r4, r1]
     add r0, #20
     strh r0, [r4, r1] @;自分
-    b true
+    mov r0, #1
+    b endKoroshi
+falseKoroshi:
+    mov r0, #0
+endKoroshi:
+	pop {pc}
+    
 
 shishi:
     push {lr}
@@ -352,13 +351,16 @@ shishi:
     ldr r1, adr+4
     _blr r1
     cmp r0, #0
-    beq false
+    beq falseShishi
     
 	ldrb r1, [r4, #18] @;最大HP
 	ldrb r0, [r4, #19] @;現在HP
 	cmp r0, r1
-	blt false @;現在が最大よりも小さい場合
+	blt falseShishi @;現在が最大よりも小さい場合
 	b gotKoroshi
+falseShishi:
+	mov r0, #0
+	pop {pc}
     
 kishin:
     push {lr}
@@ -366,7 +368,7 @@ kishin:
     ldr r1, adr+8	@;鬼神
     _blr r1
     cmp r0, #0
-    beq false
+    beq falseKishin
     
     ldr r0, Attacker_Adr
     ldr r0, [r0]
@@ -374,7 +376,7 @@ kishin:
     
     ldrb r1, [r4, #0xB]
     cmp r0, r1
-    bne false
+    bne falseKishin
     mov r1, #90
     ldrh r0, [r4, r1]
     add r0, #5 @;威力
@@ -384,7 +386,15 @@ kishin:
     ldrh r0, [r4, r1]
     add r0, #15 @;必殺
     strh r0, [r4, r1] @;自分
-    b true
+    mov r0, #1
+    b endKishin
+falseKishin:
+	mov r0, #0
+endKishin:
+	pop {pc}
+
+    
+    
 
 kongou:
     push {lr}
@@ -392,7 +402,7 @@ kongou:
     ldr r1, adr+12 @;金剛
     _blr r1
     cmp r0, #0
-    beq false
+    beq falseKongou
     
     ldr r0, Attacker_Adr
     ldr r0, [r0]
@@ -400,12 +410,17 @@ kongou:
     
     ldrb r1, [r4, #0xB]
     cmp r0, r1
-    bne false
+    bne falseKongou
     mov r1, #92
     ldrh r0, [r4, r1]
     add r0, #10
     strh r0, [r4, r1]
-    b true
+    mov r0, #1
+    b endKongou
+falseKongou:
+	mov r0, #0
+endKongou:
+	pop {pc}
 
 faire_impl:
     push {lr}

@@ -112,7 +112,7 @@ shisen:
     ldr r1, adr+12 @;死線
     _blr r1
     cmp r0, #0
-    beq false
+    beq falseShisen
     
     mov r1, r4
     mov r0, #90
@@ -127,13 +127,11 @@ shisen:
     add r0, #10
     add r1, #90
     strh r0, [r1] @;相手
-    b true
-
-true:
     mov r0, #1
-    pop {pc}
-false:
+    b endShisen
+falseShisen:
     mov r0, #0
+endShisen:
     pop {pc}
 
 .ltorg
