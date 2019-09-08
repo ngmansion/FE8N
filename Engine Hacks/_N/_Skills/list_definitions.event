@@ -302,7 +302,7 @@ SHORT SKL_HELP_100 SKL_COLOR_100
 POIN 0 GenocideList GenocideList_w
 
 SHORT SKL_HELP_101 SKL_COLOR_101 
-POIN OccultList_u 0 0
+POIN OccultList_u OccultList_c 0
 
 SHORT SKL_HELP_102 SKL_COLOR_102 
 POIN 0 SorceryBladeList SorceryBladeList_w

@@ -307,28 +307,28 @@
 #define SKL_HELP_102 $0566
  #define SKL_COLOR_102 $FF
 
-#define SKL_HELP_103 $0000
- #define SKL_COLOR_103 0
+#define SKL_HELP_103 $0568
+ #define SKL_COLOR_103 $FF
 
-#define SKL_HELP_104 $0000
- #define SKL_COLOR_104 0
+#define SKL_HELP_104 $0569
+ #define SKL_COLOR_104 $FF
 
-#define SKL_HELP_105 $0000
- #define SKL_COLOR_105 0
+#define SKL_HELP_105 $056A
+ #define SKL_COLOR_105 $FF
 
-#define SKL_HELP_106 $0000
- #define SKL_COLOR_106 0
+#define SKL_HELP_106 $056B
+ #define SKL_COLOR_106 $FF
 
-#define SKL_HELP_107 $0000
- #define SKL_COLOR_107 0
+#define SKL_HELP_107 $056C
+ #define SKL_COLOR_107 $FF
 
-#define SKL_HELP_108 $0000
+#define SKL_HELP_108 $056D //つばめ返し
  #define SKL_COLOR_108 0
 
-#define SKL_HELP_109 $0000
+#define SKL_HELP_109 $056E //かぶと割り
  #define SKL_COLOR_109 0
 
-#define SKL_HELP_110 $0000
+#define SKL_HELP_110 $056F //葬騎の一撃
  #define SKL_COLOR_110 0
 
 #define SKL_HELP_111 $0000
