@@ -1,16 +1,17 @@
-@define TRANSPORT_DATA_ADR ($0203a818)
-@define MAX_UNIT 51
+.equ TRANSPORT_DATA_ADR, (0x0203a818)
+.equ MAX_UNIT, 51
 
-@thumb
+.thumb
 b common1
 nop
 b common2
 nop
 
 common1:
-;I      r0 = 隊列ID
-;O      r0 = ユニットのセーブベースアドレス
-        ldrb r0, [r0, #11]
+@;I      r0 = 隊列ID
+@;O      r0 = ユニットのセーブベースアドレス
+        ldr r0, [r0]
+        ldrb r0, [r0, #4]
         sub r0, #1
         lsl r1, r0, #1
         add r0, r0, r1
@@ -19,13 +20,13 @@ common1:
         bx lr
 
 common2:
-        cmp r0, MAX_UNIT
+        cmp r0, #MAX_UNIT
         bgt false
         mov r0, #1
         b true
-false
+false:
         mov r0, #0
-true
+true:
         bx lr
 
 

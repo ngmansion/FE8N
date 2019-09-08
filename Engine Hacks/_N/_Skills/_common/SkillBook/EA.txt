@@ -1,14 +1,14 @@
 
 
 pushSkill:
-#incbin "push_Skill.gba"
+#incbin "push_Skill.dmp"
 POIN getSkill
 POIN commonSkill
 POIN commonSkill+4
 ALIGN 4
 
 popSkill:
-#incbin "pop_Skill.gba"
+#incbin "pop_Skill.dmp"
 POIN getSkill
 POIN commonSkill
 POIN commonSkill+4
@@ -28,7 +28,7 @@ POIN commonSkill+4
 ALIGN 4
 
 removeSkill:
-#incbin "remove_Skill.gba"
+#incbin "remove_Skill.dmp"
 POIN getSkill
 POIN pushSkill
 POIN popSkill
@@ -36,7 +36,7 @@ POIN commonSkill+4
 ALIGN 4
 
 commonSkill:
-#incbin "_common.gba"
+#incbin "_common.dmp"
 ALIGN 4
 
 

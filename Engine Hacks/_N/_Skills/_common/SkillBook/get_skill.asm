@@ -24,7 +24,7 @@ expand:
 	bl common_skill2
 	cmp r0, #0
 	beq false   @Exスキルは自軍のみ
-	
+	mov r0, r2
 	bl get_saveExSkill_ex
 	mov r1, r4
 	bl get_unitSkillEx
