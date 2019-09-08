@@ -18,7 +18,7 @@ ORG 0x02bfd8
 POP
 
 battle_before:
-    #incbin before.gba
+    #incbin before.dmp
     POIN hasNihil
     POIN hasFury
     POIN hasDeathBlow
@@ -30,20 +30,29 @@ battle_before:
     POIN breaker_hasSkill5 //32
     POIN hasCloseDef
     POIN hasDistantDef
-
+    POIN hasDefender
+    POIN hasSwordfaire
+    POIN hasLancefaire
+    POIN hasAxefaire
+    POIN hasBowfaire
+    POIN hasTomefaire
+    POIN hasGrounder
+    POIN hasHelmSplitter
+    POIN hasKnightkneeler
 
 battle_after:
-    #incbin main.gba
+    #incbin main.dmp
     POIN hasDistantGuard
     POIN hasLightBless
     POIN hasDarkBless
     POIN hasLifeAndDeath
-    POIN hasNihil
     
 battle_down:
-  #incbin down.gba
+  #incbin down.dmp
   POIN hasNihil
   POIN hasFury
+  POIN hasAdept
+  POIN hasCancel
     
 hasFury:
     HAS_SKILL
@@ -85,4 +94,42 @@ hasDistantDef:
  WORD DistantDefID
  POIN judgeSkill
 
+hasDefender:
+ HAS_SKILL
+ WORD DefenderID
+ POIN judgeSkill
+
+hasSwordfaire:
+ HAS_SKILL
+ WORD SwordfaireID
+ POIN judgeSkill
+hasLancefaire:
+ HAS_SKILL
+ WORD LancefaireID
+ POIN judgeSkill
+hasAxefaire:
+ HAS_SKILL
+ WORD AxefaireID
+ POIN judgeSkill
+hasBowfaire:
+ HAS_SKILL
+ WORD BowfaireID
+ POIN judgeSkill
+hasTomefaire:
+ HAS_SKILL
+ WORD TomefaireID
+ POIN judgeSkill
+
+hasGrounder:
+ HAS_SKILL
+ WORD GrounderID
+ POIN judgeSkill
+hasHelmSplitter:
+ HAS_SKILL
+ WORD HelmSplitterID
+ POIN judgeSkill
+hasKnightkneeler:
+ HAS_SKILL
+ WORD KnightkneelerID
+ POIN judgeSkill
 

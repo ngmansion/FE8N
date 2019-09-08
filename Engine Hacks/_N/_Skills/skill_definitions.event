@@ -47,7 +47,7 @@
 #define CloseDefID 45 //0x2D 近距離防御
 #define FuryID 46 //0x2E 獅子奮迅
 #define TriangleAdeptID 47 //0x2F 相性激化
-
+#define DefenderID 48 //0x30 護り手
 
 
 #define AstraID 64 //0x40流星
@@ -88,4 +88,13 @@
 #define ProminenceID 99 //0x63プロミネンス
 #define GenocideID 100 //0x64ジェノサイド
 #define OccultID 101 //0x65 奥義の書
+#define SorceryBladeID 102 //0x66 魔道の刃
+#define SwordfaireID 103 //0x67 剣の達人
+#define LancefaireID 104 //0x68 槍の達人
+#define AxefaireID 105 //0x69 斧の達人
+#define BowfaireID 106 //0x6A 弓の達人
+#define TomefaireID 107 //0x6B 魔の達人
+#define GrounderID 108 //0x6C つばめ返し
+#define HelmSplitterID 109 // 0x6D 兜割り
+#define KnightkneelerID 110 // 0x6E 葬騎
 

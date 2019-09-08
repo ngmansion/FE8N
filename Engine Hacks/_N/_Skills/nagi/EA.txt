@@ -1,23 +1,56 @@
 #include config.txt
 
 PUSH
-  ORG 0x02a834
-    jumpToHack(nagi_kaze)
-  ORG 0x02af60
-    jumpToHack(nagi_tome)
+
+ORG 0x2a2bc //setFlag
+BYTE	$00 $49 $8F $46
+POIN	nagi_setFlag
+
+ORG 0x02a834
+	jumpToHack(nagi_kaze)
+
+//追撃なし
+ORG 0x02af60
+  jumpToHack(nagi_tome)
+
 POP
 
+////攻撃後
+PUSH
+	ORG 0x02b866
+	SHORT $46C0
+	SHORT $2000
+//統合
+	SHORT $46C0
+	jumpToHack(afterAttack)
+POP
+
+afterAttack:
+	#incbin afterAttack.dmp
+	ALIGN 4
+////攻撃終了
+PUSH
+	ORG 0x01858c
+	jumpToHack(afterBattle)
+POP
+afterBattle:
+	#incbin afterBattle.dmp
+	POIN hasQuickenedPulse
+
+
 nagi_kaze:
-  #incbin kaze.gba
+  #incbin kaze.dmp
   POIN hasNihil
   POIN hasWindsweep
 
+//追撃なし
 nagi_tome:
-  #incbin tome.gba
-  POIN hasNihil
-  POIN hasWindsweep
+  #incbin tome.dmp
 
 hasWindsweep:
  HAS_SKILL
  WORD WindsweepID
  POIN judgeSkill
+
+nagi_setFlag:
+  #incbin setFlag.dmp
