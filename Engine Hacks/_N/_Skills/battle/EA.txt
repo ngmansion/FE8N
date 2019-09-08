@@ -46,6 +46,7 @@ battle_after:
     POIN hasLightBless
     POIN hasDarkBless
     POIN hasLifeAndDeath
+    POIN hasNihil
     
 battle_down:
   #incbin down.dmp
