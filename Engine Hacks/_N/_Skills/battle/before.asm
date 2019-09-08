@@ -100,6 +100,8 @@ EffectiveBonus:
 	mov r1, r4
 	add r1, #72
 	ldrh r0, [r1]
+	cmp r0, #0
+	beq endEffective
 	mov r1, r5
 	ldr r2, =0x08016994 @特効判定
 	_blr r2
@@ -408,8 +410,10 @@ kongou:
 faire_impl:
     push {lr}
     mov r0, r4
-    add r0, #74
+    add r0, #72
     ldrh r0, [r0]
+    cmp r0, #0
+    beq faire_merge
     ldr r1, Equipment_Adr
     _blr r1
     mov r1, r0
