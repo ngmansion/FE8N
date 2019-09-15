@@ -16,7 +16,7 @@
 	mov	r0, #0
 none
 	ldrb	r1, [r4, #26]	;体格
-	ldrb	r2, [r4, #21]	;技
+	ldrb	r2, [r4, #20]	;力
 	lsr	r2, r2, #2
 	add	r1, r1, r2
 	sub	r0, r0, r1
