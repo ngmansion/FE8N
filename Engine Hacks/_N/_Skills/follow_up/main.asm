@@ -7,10 +7,6 @@
     and r0, r1
     bne normal @;闘技場なら終了
     
-    bl isCancel
-    cmp r0, #0
-    bne checkCancel
-    
     bl waryFighter_judgeActivate
     push {r0}
     bl followup_skill
@@ -41,13 +37,7 @@ no_active:
     ldr r0, =0x0802af80 @;追撃無し
     mov pc, r0
     
-checkCancel:
-	bl waryFighter_judgeActivat
-	cmp r0, #0
-	bne 
-	ldr r0, =0x0802af3c @;r2側のみ追撃可能性あり
-	mov pc, r0
-    
+
     
     
 normal: @;通常追撃判定
