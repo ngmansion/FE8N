@@ -1,11 +1,15 @@
-@thumb
-;@org 0002af18
+.thumb
+@;.org 0002af18
     mov r5, r0
-    ldr r0, =$0203a4d0
+    ldr r0, =0x0203a4d0
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
-    bne normal ;闘技場なら終了
+    bne normal @;闘技場なら終了
+    
+    bl isCancel
+    cmp r0, #0
+    bne checkCancel
     
     bl waryFighter_judgeActivate
     push {r0}
@@ -16,37 +20,46 @@
     beq	no_active
     cmp r0, #0x11
     beq	no_active
-;絶対追撃発動
+@;絶対追撃発動
     cmp r1, #0
-    bne normal ;1なら守備隊形発動
+    bne normal @;1なら守備隊形発動
     cmp r0, #0x01
     beq active1
     cmp r0, #0x10
     beq active2
     b normal
 active1:
-    ldr r0, =$0802af56
+    ldr r0, =0x0802af56
     mov pc, r0
 active2:
-    ldr r0, =$0802af5c
+    ldr r0, =0x0802af5c
     mov pc, r0
 
 no_active:
     cmp r1, #0
     beq normal
-    ldr r0, =$0802af80 ;追撃無し
+    ldr r0, =0x0802af80 @;追撃無し
     mov pc, r0
     
-normal: ;通常追撃判定
+checkCancel:
+	bl waryFighter_judgeActivat
+	cmp r0, #0
+	bne 
+	ldr r0, =0x0802af3c @;r2側のみ追撃可能性あり
+	mov pc, r0
+    
+    
+    
+normal: @;通常追撃判定
     mov r0, r5
     mov r1, #94
     ldsh r2, [r6, r1]
     ldsh r3, [r5, r1]
-    ldr r1, =$0802af24
+    ldr r1, =0x0802af24
     mov pc, r1
 
 
-    waryFighter_judgeActivate:
+waryFighter_judgeActivate:
     push {r7, lr}
         mov r0, r6
         mov r1, r5
@@ -59,29 +72,27 @@ normal: ;通常追撃判定
         orr r0, r7
     pop {r7, pc}
         
-        waryFighter_impl:
+    waryFighter_impl:
         push {r4, r5, lr}
             mov r4, r0
             mov r5, r1
             
             mov r0, r5
-                @align 4
-                ldr r1, [Adr+20] ;見切り
+                ldr r1, Adr+20 @;見切り
                 mov lr, r1
-                @dcw $F800
+                .short 0xF800
             cmp r0, #0
             bne	non_waryFighter_impl
             
             mov r0, r4
-                @align 4
-                ldr r1, [Adr+24] ;守備隊形
+                ldr r1, Adr+24 @;守備隊形
                 mov lr, r1
-                @dcw $F800
+                .short 0xF800
             cmp r0, #0
             beq	non_waryFighter_impl
             
             mov r0, #1
-            @dcw $E000
+            .short 0xE000
         non_waryFighter_impl:
             mov r0, #0
         pop {r4, r5, pc}
@@ -89,116 +100,120 @@ normal: ;通常追撃判定
 
     followup_skill:
     push {r7, lr}
-        bl formation_judgeActivate ;隊形スキル
+        bl formation_judgeActivate @;隊形スキル
         mov r7, r0
-        bl breaker_judgeActivate ;殺しスキル
+        bl breaker_judgeActivate @;殺しスキル
         orr r0, r7
     pop {r7, pc}
 
-        formation_judgeActivate:
+    formation_judgeActivate:
         push {r7, lr}
             mov r0, r5
             mov r1, r6
-            bl boldFighter ;攻撃隊形
+            bl boldFighter @;攻撃隊形
             mov r7, r0
             
             mov r0, r6
             mov r1, r5
-            bl vengefulFighter ;迎撃隊形
+            bl vengefulFighter @;迎撃隊形
             lsl r0, r0, #4
             orr r0, r7
         pop {r7, pc}
 
 
-            boldFighter: ;攻撃隊形
+        boldFighter: @;攻撃隊形
             push {r4, r5, lr}
                 mov r4, r0
                 mov r5, r1
                 
                 mov r0, r5
-                    @align 4
-                    ldr r1, [Adr+20] ;見切り
+                    ldr r1, Adr+20 @;見切り
                     mov lr, r1
-                    @dcw $F800
+                    .short 0xF800
                 cmp r0, #0
                 bne	non_bold
                 
                 mov r0, r4
-                    @align 4
-                    ldr r1, [Adr+28] ;攻撃隊形
+                    ldr r1, Adr+28 @;攻撃隊形
                     mov lr, r1
-                    @dcw $F800
+                    .short 0xF800
                 cmp r0, #0
                 beq	non_bold
+
+                mov r0, #72
+                ldrh r0, [r4, r0]	@反撃されないなら不可
+                cmp r0, #0
+                beq non_bold
+                mov r0, #72
+                ldrh r0, [r5, r0]	@反撃されないなら不可
+                cmp r0, #0
+                beq non_bold
                 mov r0, #1
-                @dcw $E000
+                .short 0xE000
             non_bold:
                 mov r0, #0
             pop {r4, r5, pc}
 
-            vengefulFighter: ;迎撃隊形
+        vengefulFighter: @;迎撃隊形
             push {r4, r5, lr}
                 mov r4, r0
                 mov r5, r1
                 
                 mov r0, r5
-                    @align 4
-                    ldr r1, [Adr+20] ;見切り
+                    ldr r1, Adr+20 @;見切り
                     mov lr, r1
-                    @dcw $F800
+                    .short 0xF800
                 cmp r0, #0
                 bne	non_vengeful
                 
                 mov r0, r4
-                    @align 4
-                    ldr r1, [Adr+32] ;迎撃隊形
+                    ldr r1, Adr+32 @;迎撃隊形
                     mov lr, r1
-                    @dcw $F800
+                    .short 0xF800
                 cmp r0, #0
                 beq	non_vengeful
                 mov r0, #1
-                @dcw $E000
+                .short 0xE000
             non_vengeful:
                 mov r0, #0
             pop {r4, r5, pc}
 
 
 
-        breaker_judgeActivate:
+    breaker_judgeActivate:
         push {r7,lr}
             mov r7, #0
             mov r0, r5
             mov r1, r6
-            bl breaker_impl ;殺しスキル攻め側判定
+            bl breaker_impl @;殺しスキル攻め側判定
             orr r7, r0
             
             mov r0, r6
             mov r1, r5
-            bl breaker_impl ;殺しスキル受け側判定
+            bl breaker_impl @;殺しスキル受け側判定
             lsl r0, r0, #4
             orr r0, r7
         pop {r7,pc}
 
 
-            breaker_impl:
+        breaker_impl:
             push {r4, r5, lr}
-                b end ;殺しスキルはダミー
+                b end @;殺しスキルはダミー
                 mov r4, r0
                 mov r5, r1
                 
                 mov r0, r5
-                    @align 4
-                    ldr r1, [Adr+20] ;見切り
+                    ldr r1, Adr+20 @;見切り
                     mov lr, r1
-                    @dcw $F800
+                    .short 0xF800
                 cmp r0, #0
                 bne	end
-                    ldr r0, =$080172f0
+                    ldr r0, =0x080172f0
                     mov lr, r0
                     mov r0, r5
                     add	r0, #74
                     ldrh r0, [r0]
-                    @dcw $F800
+                    .short 0xF800
                 cmp r0, #0
                 beq sword
                 cmp r0, #1
@@ -214,39 +229,34 @@ normal: ;通常追撃判定
                 b end
                 
             sword:
-                @align 4
-                ldr r0, [Adr]
+                ldr r0, Adr
                 mov lr, r0
                 mov r0, r4
-                @dcw $F800
+                .short 0xF800
                 b merge
             lance:
-                @align 4
-                ldr r0, [Adr+4]
+                ldr r0, Adr+4
                 mov lr, r0
                 mov r0, r4
-                @dcw $F800
+                .short 0xF800
                 b merge
             axe:
-                @align 4
-                ldr r0, [Adr+8]
+                ldr r0, Adr+8
                 mov lr, r0
                 mov r0, r4
-                @dcw $F800
+                .short 0xF800
                 b merge
             bow:
-                @align 4
-                ldr r0, [Adr+12]
+                ldr r0, Adr+12
                 mov lr, r0
                 mov r0, r4
-                @dcw $F800
+                .short 0xF800
                 b merge
             magic:
-                @align 4
-                ldr r0, [Adr+16]
+                ldr r0, Adr+16
                 mov lr, r0
                 mov r0, r4
-                @dcw $F800
+                .short 0xF800
             merge:
                 cmp r0, #0
                 beq end
@@ -256,7 +266,7 @@ normal: ;通常追撃判定
             end:
                 mov r0, #0
             pop {r4, r5, pc}
-    
-    
-@ltorg
+
+.align
+.ltorg
 Adr:

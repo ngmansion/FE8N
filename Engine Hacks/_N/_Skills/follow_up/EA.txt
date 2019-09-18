@@ -11,7 +11,7 @@ POP
 ALIGN 4
 
 breaker_main:
-    #incbin main.gba
+    #incbin main.dmp
     POIN breaker_hasSkill1
     POIN breaker_hasSkill2
     POIN breaker_hasSkill3
