@@ -255,15 +255,6 @@ nihil_check:
 	strh	r0, [r4, #4]
 	b	endOracle
 Nihil:
-	ldrh	r0, [r4, #4]
-	lsl	r0, r0, #1
-	mov	r1, #0
-division:
-	add	r1, #1
-	sub	r0, #3
-	bgt	division
-	sub	r1, #1
-	strh	r1, [r4, #4]
 endOracle:
 	pop	{pc}
 	
