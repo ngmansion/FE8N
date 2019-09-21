@@ -39,9 +39,6 @@ endwo:
     mov pc, r3
     
 cancel:
-@
-@
-@
     push {lr}
 @;除外条件
     mov r0, r7
@@ -50,25 +47,25 @@ cancel:
     cmp r0, #0
     beq false
 
-    ldr r0, A_EFFECT
-    ldr r0, [r0]
-    ldr r0, [r0]
-    lsl r0, r0, #29
-    bmi false @;追撃時は無意味なので不発
+@	ldr r0, A_EFFECT
+@	ldr r0, [r0]
+@	ldr r0, [r0]
+@	lsl r0, r0, #29
+@	bmi false @;追撃時は無意味なので不発
 
 @;キャンセル発動条件
-	ldrb r0, [r7, #0x13] @;現在HP
-	ldrb r1, [r7, #0x12] @;最大HP
+	mov r0, #94
+	ldrh r0, [r7, r0]
+	mov r1, r8
+	add r1, #94
+	ldrh r1, [r1]
 	cmp r0, r1
-	blt false
-
+	bgt false	@;自分の方が速い
 @;キャンセル発動
-    mov r0, #0
-    mov r1, r8
-    add r1, #72
-    strh r0, [r1]	@;相手装備消去
-    strb r0, [r1, #10]	@;相手武器消滅防止
-    pop {pc}
+	mov r1, r8
+	add r1, #94
+	strh r0, [r1]
+	pop {pc}
     
     
 ikari: @;怒り

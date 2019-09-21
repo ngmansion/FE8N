@@ -1,32 +1,32 @@
-@define ORACLE_FLAG 0xDD ;奥義目印
+.define ORACLE_FLAG 0xDD @;奥義目印
 
-@thumb
-;@org	$0802b484
-;武器レベルチェック
+.thumb
+@;.org	0x0802b484
+@;武器レベルチェック
     mov r0, r7
-        @align 4
-        ldr r1, [adr+24] ;奥義判定
+        .align 4
+        ldr r1, [adr+24] @;奥義判定
         mov lr, r1
-        @dcw $F800
+        .dcw 0xF800
     cmp r0, #0
     beq return
-    bl jihad_impl ;ジハド
+    bl jihad_impl @;ジハド
     cmp r0, #0
     bne ef_hit
 
-    bl tenku_impl ;天空・陽光
+    bl tenku_impl @;天空・陽光
     cmp r0, #0
     bne ef_hit
     
-    bl astra_impl ;流星
+    bl astra_impl @;流星
     cmp r0, #0
     bne ef_hit
     
-    bl ecripse_impl ;月食
+    bl ecripse_impl @;月食
     cmp r0, #0
     bne ef_hit
     
-    bl impale_impl ;撃破
+    bl impale_impl @;撃破
     cmp r0, #0
     bne ef_hit
     
@@ -36,7 +36,7 @@ ef_hit
     ldr r2, [r3]
     lsl r1, r2, #13
     lsr r1, r1, #13
-    ldr	r0, =$FFF80000
+    ldr	r0, =0xFFF80000
     and r0, r2
     orr r0, r1
     
@@ -53,48 +53,48 @@ return
 	mov	r0, #127
 	strh	r0, [r4, #4]
 nonmax
-    ldr r0, =$0802b48e
+    ldr r0, =0x0802b48e
     mov pc, r0
 
 jihad_impl:
-;ジハド
-;
-;
+@;ジハド
+@;
+@;
     push {lr}
 
-    ldr r0, =$0203a4d2
+    ldr r0, =0x0203a4d2
     ldrb r0, [r0]
     cmp r0, #1
-    bne falseJihad ;近距離しか発動しない
-;ユニットチェック
+    bne falseJihad @;近距離しか発動しない
+@;ユニットチェック
     mov r0, r7
-        @align 4
-        ldr r1, [adr+20] ;ジハド
+        .align 4
+        ldr r1, [adr+20] @;ジハド
         mov lr, r1
-        @dcw $F800
+        .dcw 0xF800
     cmp r0, #0
     beq falseJihad
-;奥義目印
+@;奥義目印
     mov r1, ORACLE_FLAG
     mov r10, r1
     
-    ldrb r1, [r7, #0x13] ;nowHP
-    ldrb r0, [r7, #0x12] ;maxHP
+    ldrb r1, [r7, #0x13] @;nowHP
+    ldrb r0, [r7, #0x12] @;maxHP
     sub r0, r1
     mov r1, #0
     bl random
     cmp r0, #0
     beq falseJihad
 
-;必殺減衰処理
+@;必殺減衰処理
     ldr r0, [r6]
     ldr r0, [r0]
     lsl r0, r0, #31
-    bpl not_dec ;無必殺はなし
+    bpl not_dec @;無必殺はなし
     mov r0, #4
     ldsh r0, [r5, r0]
     cmp r0, #0
-    ble not_dec ;ノーダメ以下はなし
+    ble not_dec @;ノーダメ以下はなし
     mov r1, #0
 loop_three
     add r1, #1
@@ -103,11 +103,11 @@ loop_three
     strh r1, [r5, #4]
 not_dec
     mov r0, #4
-    ldsh r0, [r5, r0] ;ダメージ
+    ldsh r0, [r5, r0] @;ダメージ
     mov r1, #6
-    ldsh r1, [r5, r1] ;攻撃力
+    ldsh r1, [r5, r1] @;攻撃力
     add r0, r0, r1
-    strh r0, [r5, #4] ;ダメージ
+    strh r0, [r5, #4] @;ダメージ
     b sol_crt
 falseJihad
     mov r0, #0
@@ -115,25 +115,25 @@ falseJihad
 
 
 ecripse_impl:
-;月食
-;
-;
+@;月食
+@;
+@;
     push {lr}
     ldr r0, [r7, #76]
     lsl r0, r0, #24
-    bmi falseEcripse ;反撃不可武器チェック
+    bmi falseEcripse @;反撃不可武器チェック
     mov r0, #4
     ldsh r0, [r5, r0]
     cmp r0, #0
-    ble falseEcripse;ダメージがゼロなら発動しない
+    ble falseEcripse@;ダメージがゼロなら発動しない
 
     mov r2, r8
-    ldrb r1, [r2, #0x13] ;nowHP
+    ldrb r1, [r2, #0x13] @;nowHP
     cmp r0, r1
-    bge falseEcripse ;一撃なら不発
-    ldrb r0, [r2, #0x12] ;maxHP
+    bge falseEcripse @;一撃なら不発
+    ldrb r0, [r2, #0x12] @;maxHP
     cmp r0, r1
-    beq falseEcripse ;体力最大なら不発
+    beq falseEcripse @;体力最大なら不発
     
     ldr r0, [r2]
     ldr r1, [r2, #4]
@@ -142,26 +142,26 @@ ecripse_impl:
     orr r0, r1
     ldr r1, =0x01008000
     and r0, r1
-    bne falseEcripse ;敵将チェック
-;ユニットチェック
+    bne falseEcripse @;敵将チェック
+@;ユニットチェック
     mov r0, r7
-        @align 4
-        ldr r1, [adr+16] ;月食
+        .align 4
+        ldr r1, [adr+16] @;月食
         mov lr, r1
-        @dcw $F800
+        .dcw 0xF800
     cmp r0, #0
     beq falseEcripse
-;奥義目印
+@;奥義目印
     mov r1, ORACLE_FLAG
     mov r10, r1
-    ldrb r0, [r7, #21]	;技
+    ldrb r0, [r7, #21]	@;技
     mov r1, #0
     bl random
     cmp r0, #0
     beq falseEcripse
 
     mov r0, r8
-    ldrb r0, [r0, #0x13] ;nowHP
+    ldrb r0, [r0, #0x13] @;nowHP
     sub r0, #1
     strh r0, [r5, #4]
     b effect
@@ -171,92 +171,92 @@ falseEcripse
 
 
 impale_impl:
-;撃破
-;
-;
+@;撃破
+@;
+@;
     push {lr}
-;ダメージがゼロなら発動しない
+@;ダメージがゼロなら発動しない
     mov r0, #4
     ldsh r0, [r5, r0]
     cmp r0, #0
     ble falseImpale
-;ユニットチェック
+@;ユニットチェック
     mov r0, r7
-        @align 4
-        ldr r1, [adr+12] ;撃破
+        .align 4
+        ldr r1, [adr+12] @;撃破
         mov lr, r1
-        @dcw $F800
+        .dcw 0xF800
     cmp r0, #0
     beq falseImpale
-;奥義目印
+@;奥義目印
     mov r1, ORACLE_FLAG
     mov r10, r1
-    ldrb r0, [r7, #21]	;技
+    ldrb r0, [r7, #21]	@;技
     mov r1, #0
     bl random
     cmp r0, #0
     beq falseImpale
 
     mov r0, #6
-    ldsh r0, [r5, r0] ;攻撃
+    ldsh r0, [r5, r0] @;攻撃
     mov r1, #8
-    ldsh r1, [r5, r1] ;防御
+    ldsh r1, [r5, r1] @;防御
     sub r0, r0, r1
 
     mov r1, #4
-    ldsh r1, [r5, r1] ; ダメージ
+    ldsh r1, [r5, r1] @; ダメージ
     add r0, r0, r1
     strh r0, [r5, #4]
     
     mov r0, #1
-    @dcw $E000
+    .dcw 0xE000
 falseImpale
     mov r0, #0
     pop {pc}
 
     
 astra_impl:
-;流星
-;
-;
+@;流星
+@;
+@;
     push {lr}
-;剣以外では発動しない
+@;剣以外では発動しない
 	cmp	r1, #0
 	bne	falseAstra
-;ユニットチェック
+@;ユニットチェック
     mov r0, r7
-        @align 4
-        ldr r1, [adr+8] ;流星
+        .align 4
+        ldr r1, [adr+8] @;流星
         mov lr, r1
-        @dcw $F800
+        .dcw 0xF800
     cmp r0, #0
     beq falseAstra
 
 ouiAstra
-;ダメージがゼロなら発動しない
+@;ダメージがゼロなら発動しない
 	mov	r0, #4
 	ldsh	r0, [r5, r0]
 	cmp	r0, #0
 	ble	falseAstra
-;近距離しか発動しない
-	ldr	r0,	=$0203a4d2
+@;近距離しか発動しない
+	ldr	r0,	=0x0203a4d2
 	ldrb	r0, [r0]
 	cmp	r0, #1
 	bne	falseAstra
-;必殺率がゼロなら発動しない
-	ldrh	r0, [r5, #12]	;必殺
+@;必殺率がゼロなら発動しない
+	ldrh	r0, [r5, #12]	@;必殺
 	cmp	r0, #0
 	beq	falseAstra
-;奥義目印
+@;奥義目印
     mov r1, ORACLE_FLAG
     mov r10, r1
-;発動乱数
-	ldrb	r0, [r7, #8]	;レベル
+@;発動乱数
+	ldrb	r0, [r7, #8]	@;レベル
 	mov	r1, #0
 bl	random
 	cmp	r0, #1
 	bne	falseAstra
-;必殺チェック
+@;必殺チェック
 	mov	r0, #4
 	ldsh	r2, [r5, r0]
 	cmp	r2, #1
@@ -268,7 +268,7 @@ nobon
 	ldr	r0, [r0]
 	lsl r0, r0, #31
 	bpl	waranai
-;必殺の場合
+@;必殺の場合
 	mov	r1, r2
 	mov	r2, #0
 loop
@@ -292,61 +292,61 @@ tenku_impl:
     push {lr}
     mov r0, #72
     ldrh r0, [r7, r0]
-        ldr r1, =$080174cc
+        ldr r1, =0x080174cc
         mov lr, r1
-        @dcw $F800
+        .dcw 0xF800
     cmp r0, #2
-    beq falseTenku ;HP吸収武器では発動しない
-;ユニットチェック
+    beq falseTenku @;HP吸収武器では発動しない
+@;ユニットチェック
     mov r0, r7
-        @align 4
-        ldr r1, [adr+4] ;陽光
+        .align 4
+        ldr r1, [adr+4] @;陽光
         mov lr, r1
-        @dcw $F800
+        .dcw 0xF800
     cmp r0, #0
     bne YOUKOU
-;必殺と重複しない
+@;必殺と重複しない
     ldr r0, [r6, #0]
     ldr r0, [r0, #0]
     lsl r0, r0, #31
     bmi falseTenku
-;ユニットチェック
+@;ユニットチェック
     mov r0, r7
-        @align 4
-        ldr r1, [adr] ;天空
+        .align 4
+        ldr r1, [adr] @;天空
         mov lr, r1
-        @dcw $F800
+        .dcw 0xF800
     cmp r0, #0
     bne TENKU
     b falseTenku
 TENKU:
-    ldr r0,	=$0203a4d2
-    ldrb r0, [r0]	;距離
+    ldr r0,	=0x0203a4d2
+    ldrb r0, [r0]	@;距離
     cmp r0, #1
     bne falseTenku
     mov r0, r7
     add r0, #72
     ldrh r0, [r0, #0]
-ldr	r3, =$08017448	;武器の射程
+ldr	r3, =0x08017448	@;武器の射程
 mov	lr,r3
-@dcw	$F800
+.dcw	0xF800
     ldrb r1, [r1, #7]
-    cmp r1, #2 ;;斧
+    cmp r1, #2 @;@;斧
     bne jump
     cmp r0, #0x11
-    bne falseTenku ;;手斧チェック
+    bne falseTenku @;@;手斧チェック
 jump:
-;奥義目印
+@;奥義目印
     mov r1, ORACLE_FLAG
     mov r10, r1
-    ldrb r0, [r7, #8]	;レベル
+    ldrb r0, [r7, #8]	@;レベル
     mov r1, #0
     bl random
     cmp r0, #0
     beq falseTenku
     
     mov r0, r8
-    ldrb r0, [r0, #0x17] ;守備
+    ldrb r0, [r0, #0x17] @;守備
     lsl r0, r0, #2
     mov r1, #0
 loop_eight
@@ -357,14 +357,14 @@ loop_eight
 eight
     mov r0, r1
     mov r1, #4
-    ldsh r1, [r5, r1] ;ダメージ
+    ldsh r1, [r5, r1] @;ダメージ
     add r0, r0, r1
     strh r0, [r5, #4]
     b sol_crt
 
 
 YOUKOU:
-    ldrb r0, [r7, #21]	;技
+    ldrb r0, [r7, #21]	@;技
     mov r1, #0
     bl random
     cmp r0, #0
@@ -372,7 +372,7 @@ YOUKOU:
     mov r0, #4
     ldsh r1, [r5, r0]
     mov r0, r8
-    ldrb r0, [r0, #0x18] ;魔防
+    ldrb r0, [r0, #0x18] @;魔防
     asr r0, r0, #1
     add r0, r0, r1
     strh r0, [r5, #4]
@@ -384,7 +384,7 @@ falseTenku
 
 
 random:
-	ldr	r3, =$0802a490
+	ldr	r3, =0x0802a490
 	mov	pc, r3
 	
 RYUSEI
@@ -392,21 +392,21 @@ RYUSEI
 	mov	r6, r0
 	mov	r7, #0
 ryuloop
-;奥義目印
+@;奥義目印
     mov r1, ORACLE_FLAG
     mov r10, r1
-	ldrh	r0, [r5, #10]	;命中
+	ldrh	r0, [r5, #10]	@;命中
 	mov	r1, #1
-ldr	r2, =$0802a4c0
+ldr	r2, =0x0802a4c0
 mov	lr, r2
-@dcw	$F800
+.dcw	0xF800
 	lsl	r0, r0, #24
 	cmp	r0, #0
 	beq	ryuend
-	ldrh	r0, [r5, #12]	;必殺
-ldr	r1, =$08000C78
+	ldrh	r0, [r5, #12]	@;必殺
+ldr	r1, =0x08000C78
 mov	lr, r1
-@dcw	$F800
+.dcw	0xF800
 	mov	r1, #4
 	ldsh	r1, [r5, r1]
 	cmp	r0, #0
@@ -423,12 +423,12 @@ ryuend
 	pop	{r6, r7, pc}
 
 
-effect ;必殺
+effect @;必殺
     ldr r3, [r6]
     ldr r2, [r3]
     lsl r1, r2, #13
     lsr r1, r1, #13
-    ldr	r0, =$FFF80000
+    ldr	r0, =0xFFF80000
     and r0, r2
     orr r0, r1
     
@@ -438,24 +438,24 @@ effect ;必殺
     mov r0, #1
     pop {pc}
     
-sol_crt ;必殺吸収
+sol_crt @;必殺吸収
     ldr r3, [r6]
     ldr r2, [r3]
     lsl r1, r2, #13
     lsr r1, r1, #13
-    ldr	r0, =$FFF80000
+    ldr	r0, =0xFFF80000
     and r0, r2
     orr r0, r1
     
     mov r1, #1
     orr r0, r1
     str r0, [r3]
-sol_ef ;吸収
+sol_ef @;吸収
     ldr r3, [r6]
     ldr r2, [r3]
     lsl r1, r2, #13
     lsr r1, r1, #13
-    ldr	r0, =$FFF80000
+    ldr	r0, =0xFFF80000
     and r0, r2
     orr r0, r1
 
@@ -469,5 +469,5 @@ sol_ef ;吸収
 
 
 
-@ltorg
+.ltorg
 adr:
