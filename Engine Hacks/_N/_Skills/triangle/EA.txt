@@ -9,7 +9,7 @@ POP
 
 
 skill_triangle:
-  #incbin main.gba
+  #incbin main.dmp
   POIN hasNihil
   POIN hasTriangleAdept
   

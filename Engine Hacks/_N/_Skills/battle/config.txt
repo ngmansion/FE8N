@@ -65,6 +65,8 @@ HelmSplitterList: //兜割
  BYTE $00 0
 KnightkneelerList: //葬騎の一撃
  BYTE $00 0
+MonsterBlastList: //魔物撃ち
+ BYTE $00 0
     
     
     

@@ -177,7 +177,7 @@ toking: @;■王の器チェック
 	cmp r0, #0
 	beq togod
 	ldr r0, [sp] @;r3
-	add r0, #10
+	add r0, #20
 	str r0, [sp] @;r3
 	
 togod: @;■神の器チェック
@@ -188,7 +188,7 @@ togod: @;■神の器チェック
 	cmp r0, #0
 	beq toace
 	ldr r0, [sp] @;r3
-	add r0, #30
+	add r0, #40
 	str r0, [sp] @;r3
 	
 toace: @;■勇将チェック

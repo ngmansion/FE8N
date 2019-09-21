@@ -1,5 +1,5 @@
-;0802c754
-@thumb
+@;0802c754
+.thumb
     
     bl triangle
     cmp r0, #0
@@ -10,28 +10,28 @@
     add r1, #83
     mov r0, #0
     ldsb r0, [r1, r0]
-    lsl r0, r2
+    mul r0, r2
     strb r0, [r1, #0]
     
     add r1, #1
     mov r0, #0
     ldsb r0, [r1, r0]
-    lsl r0, r2
+    mul r0, r2
     strb r0, [r1, #0]
     
     mov r1, r5
     add r1, #83
     mov r0, #0
     ldsb r0, [r1, r0]
-    lsl r0, r2
+    mul r0, r2
     strb r0, [r1, #0]
     
     add r1, #1
     mov r0, #0
     ldsb r0, [r1, r0]
-    lsl r0, r2
+    mul r0, r2
     strb r0, [r1, #0]
-jump
+jump:
     ldr r0, [r4, #76]
     mov r6, #128
     lsl r6, r6, #1
@@ -39,10 +39,10 @@ jump
     cmp r0, #0
     beq ret2
 
-    ldr r0, =$0802c75e
+    ldr r0, =0x0802c75e
     mov pc, r0
-ret2
-    ldr r0, =$0802c766
+ret2:
+    ldr r0, =0x0802c766
     mov pc, r0
 
 
@@ -69,26 +69,25 @@ triangle:
 triangle_impl:
     push {lr}
     mov r0, r5
-        @align 4
-        ldr r1, [adr]
+        ldr r1, adr
         mov lr, r1
-        @dcw $F800
+        .short 0xF800
     cmp r0, #0
     bne falseTri
     mov r0, r4
-        @align 4
-        ldr r1, [adr+4] ;zeno
+        ldr r1, adr+4 @;zeno
         mov lr, r1
-        @dcw $F800
+        .short 0xF800
     cmp r0, #0
     beq falseTri
-    mov r0, #1
-    @dcw $E000
-falseTri
+    mov r0, #3	@3倍
+    .short 0xE000
+falseTri:
     mov r0, #0
     pop {pc}
-@ltorg
-adr
+.align
+.ltorg
+adr:
 
 
 

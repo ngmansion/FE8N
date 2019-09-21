@@ -23,13 +23,13 @@
 #define AxebreakerID 21 //0x15斧殺し
 #define BowbreakerID 22 //0x16弓殺し
 #define TomebreakerID 23 //0x17魔殺し
-#define BoldFighterID 24 //0x18攻撃隊形
-#define VengefulFighterID 25 //0x19迎撃隊形
+#define BoldFighterID 24 //0x18差し違え
+#define VengefulFighterID 25 //0x19切り返し
 #define WaryFighterID 26 //0x1a守備隊形
-#define Effective1ID 27 //0x1b特効1
-#define Effective2ID 28 //0x1c特効2
-#define Effective3ID 29 //0x1d特効3
-#define Effective4ID 30 //0x1e特効4
+#define GrounderID 27 //0x1B つばめ返し
+#define HelmSplitterID 28 // 0x1C 兜割り
+#define KnightkneelerID 29 // 0x1D 葬騎の一撃
+#define MonsterBlastID 30 // 0x1E 魔物撃ち
 #define DistantDefID 31 //0x1f遠距離防御
 #define DeflectID 32  //0x20連撃防御
 #define DesperationID 33 //0x21攻め立て
@@ -94,7 +94,8 @@
 #define AxefaireID 105 //0x69 斧の達人
 #define BowfaireID 106 //0x6A 弓の達人
 #define TomefaireID 107 //0x6B 魔の達人
-#define GrounderID 108 //0x6C つばめ返し
-#define HelmSplitterID 109 // 0x6D 兜割り
-#define KnightkneelerID 110 // 0x6E 葬騎
+#define Effective1ID 108 //0x6C特効1
+#define Effective2ID 109 //0x6D特効2
+#define Effective3ID 110 //0x6E特効3
+#define Effective4ID 111 //0x6F特効4
 
