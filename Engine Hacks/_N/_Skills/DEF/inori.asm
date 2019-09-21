@@ -271,30 +271,31 @@ endOracle:
 Amulet:
 	push {r5, lr}
 	mov	r5, #0x1C
-	mov	r3, r8
 loopAmulet:
 	add	r5, #2
 	cmp	r5, #40
 	beq	endAmulet
-	
+	mov	r3, r8
 	ldrh	r0, [r3, r5]
 	cmp	r0, #0
 	beq	loopAmulet
-	ldr	r1, =0x08017314
-	mov	lr, r1
-	.short 0xF800
-	mov	r2, r1
-	mov	r1, r0
-	lsl	r0, r1, #5	@;盾パッチの下の下
+		ldr	r1, =0x08017314
+		mov	lr, r1
+		.short 0xF800
+	mov r2, r0
+	lsl	r0, r2, #5	@;盾パッチの下の下
 	bmi	ouiAmulet
 	b	loopAmulet
 	
 ouiAmulet:
+	mov	r3, r8
 	ldrb	r1, [r3, #19]	@;現在HP
 @;一撃で死ぬか
 	ldrh	r0, [r4, #4]	@;ダメージ
 	cmp	r0, r1
 	blt	endAmulet
+	lsl	r0, r2, #27	@;特殊・売却不可
+	bmi	gotElixir
 	
 	ldrh	r0, [r3, r5]
 	mov		r2, #0xFF
@@ -304,7 +305,7 @@ ouiAmulet:
 	mov		r2, #0xFF
 	and	r0, r2
 	strh	r0, [r3, r5]	@;破損処理
-	
+gotElixir:
 	ldrb	r0, [r3, #19]
 	sub	r0, #1
 	strh	r0, [r4, #4]
