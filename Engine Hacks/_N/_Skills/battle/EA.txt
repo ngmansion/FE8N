@@ -39,6 +39,7 @@ battle_before:
     POIN hasGrounder
     POIN hasHelmSplitter
     POIN hasKnightkneeler
+    POIN hasMonsterBlast
 
 battle_after:
     #incbin main.dmp
@@ -83,6 +84,11 @@ hasDeathBlow:
 hasArmoredBlow:
     HAS_SKILL
     WORD ArmoredBlowID
+    POIN judgeSkill
+
+hasMonsterBlast:
+    HAS_SKILL
+    WORD MonsterBlastID
     POIN judgeSkill
     
 hasCloseDef:

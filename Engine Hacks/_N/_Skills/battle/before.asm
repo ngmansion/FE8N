@@ -11,11 +11,12 @@
 .equ FLY_E_ADR, (adr+68)
 .equ ARMOR_E_ADR, (adr+72)
 .equ HORSE_E_ADR, (adr+76)
+.equ MONSTER_E_ADR, (adr+80)
 
 .equ FLY_E2_ADR, (0x89024B6)
 .equ ARMOR_E2_ADR, (0x890244B)
 .equ HORSE_E2_ADR, (0x890246C)
-
+.equ MONSTER_E2_ADR, (0x89024C5)
 
 
 .macro _blh to, reg=r3
@@ -131,6 +132,13 @@ EffectiveBonus:
 @@@@@
 	ldr r0, =HORSE_E2_ADR
 	ldr r1, HORSE_E_ADR
+	mov r2, #0x01	@ダミー武器アドレス
+	bl effective_impl
+	cmp r0, #0
+	bne getEffective
+@@@@@
+	ldr r0, =MONSTER_E2_ADR
+	ldr r1, MONSTER_E_ADR
 	mov r2, #0x01	@ダミー武器アドレス
 	bl effective_impl
 	cmp r0, #0

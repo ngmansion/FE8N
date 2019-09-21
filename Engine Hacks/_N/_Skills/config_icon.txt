@@ -87,7 +87,7 @@
 #define SKL_HELP_29 $056F //葬騎の一撃
  #define SKL_COLOR_29 $FF
 
-#define SKL_HELP_30 $0000
+#define SKL_HELP_30 $0570 //魔物撃ち
  #define SKL_COLOR_30 $FF
 
 #define SKL_HELP_31 $05CE
