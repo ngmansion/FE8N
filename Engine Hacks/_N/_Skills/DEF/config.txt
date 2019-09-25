@@ -7,7 +7,7 @@ HolyShieldList:
  BYTE $00 0
 
 GodShieldList:
- BYTE $66 0
+ BYTE $00 0
  
 PrayList:
  BYTE $00 0
