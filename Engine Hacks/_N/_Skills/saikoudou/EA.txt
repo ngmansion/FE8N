@@ -88,7 +88,7 @@ POP
 #ifndef Debug_Mode
 
 remove_impl:
-#incbin remove.gba
+#incbin remove.dmp
 POIN hasRemove
 
 #else
@@ -107,12 +107,13 @@ pulse_impl:
 #incbin pulse.gba
 
     odorero:
-        #incbin "main.gba"
+        #incbin "main.dmp"
         POIN 0
         POIN hasGaleforce
         POIN hasLifetaker
         POIN hasCantoPlus
         POIN hasGaleCause
+        POIN hasPoisonStrike
         
     hasRemove:
         HAS_SKILL
@@ -133,6 +134,10 @@ pulse_impl:
     hasCantoPlus:
         HAS_SKILL
         WORD CantoPlusID
+        POIN judgeSkill
+    hasPoisonStrike:
+        HAS_SKILL
+        WORD PoisonStrikeID
         POIN judgeSkill
 
 ALIGN 4

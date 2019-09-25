@@ -48,6 +48,7 @@
 #define FuryID 46 //0x2E 獅子奮迅
 #define TriangleAdeptID 47 //0x2F 相性激化
 #define DefenderID 48 //0x30 護り手
+#define PoisonStrikeID 49 //0x31 蛇毒
 
 
 #define AstraID 64 //0x40流星
