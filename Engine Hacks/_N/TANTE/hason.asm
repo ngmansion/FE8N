@@ -1,3 +1,4 @@
+.equ BREAK_NUM, (0xFF)
 .thumb
 @;0002aec0
 
@@ -44,14 +45,20 @@ HASON_loop:
 	ldrb r0, [r5, #18]
 	strb r0, [r5, #19]	@最大HPをストア
 	
-	ldrh	r0, [r5, r4]
-	sub r0, #0xFF
-	sub r0, #1	@マイナス0x100
-	strh	r0, [r5, r4]
+	add r1, r4, #1
+	ldrb	r0, [r5, r1]
+
+	sub r0, #1	@1回減少
+	cmp r0, #0x00
+	bne notBreak
+	mov r0, #BREAK_NUM
+notBreak:
+	strb	r0, [r5, r1]
 notElixir:
 	ldrh	r0, [r5, r4]
 	lsr	r1, r0, #8
-	bne	HASON_loop	@回数00以外はジャンプ
+	cmp r1, #BREAK_NUM
+	bne	HASON_loop	@回数0xFF以外はジャンプ
 	mov	r0, #0
 	strh	r0, [r5, r4]
 	b	HASON_loop

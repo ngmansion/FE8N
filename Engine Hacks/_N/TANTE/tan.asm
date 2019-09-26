@@ -1,4 +1,5 @@
 .equ INVARID_ITEM, (0xFF)
+.equ BREAK_NUM, (0xFF)
 
 .thumb
 	
@@ -31,19 +32,23 @@ osoba:
 	
 	add	r1, r8
 	ldrb r2, [r1, #1]
-	cmp	r2,	#0
+	cmp	r2,	#BREAK_NUM	@この回数なら破損状態
 	beq	KOWARE
-	sub	r2, #1
+	sub	r2, #1		@耐久減少
+	cmp r2, #0
+	bne non_zero
+	mov r2, #BREAK_NUM
+non_zero:
 	strb r2, [r1, #1]
 	b	RETURN
 BREAK:
 	add	r1, r8
 	ldrb r2, [r1, #1]
-	mov	r2, #0
+	mov	r2, #BREAK_NUM
 	strb r2, [r1, #1]
 	
 KOWARE:
-	sub	r4, r4, r0	@壊れるので、ボーナス分を減算
+	sub	r4, r4, r0	@壊れてるので、ボーナス分を減算
 RETURN:
 	ldr	r0, =0x0802b3b8
 	mov	pc, r0
