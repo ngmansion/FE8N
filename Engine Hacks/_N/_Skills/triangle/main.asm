@@ -1,6 +1,6 @@
 @;0802c754
 .thumb
-    
+    bl CancelAffinity
     bl triangle
     cmp r0, #0
     beq jump
@@ -45,18 +45,72 @@ ret2:
     ldr r0, =0x0802c766
     mov pc, r0
 
+CancelAffinity:
 
-
-triangle:
     push {r6, lr}
     mov r6, #0
-    bl triangle_impl
+    
+    bl hasCancelAffinity
+    add r6, r0
+    eor r4, r5
+    eor r4, r5
+    eor r4, r5
+    bl hasCancelAffinity
     add r6, r0
     eor r4, r5
     eor r4, r5
     eor r4, r5
     
-    bl triangle_impl
+    cmp r6, #0
+    beq endCancelAffinity
+    mov r1, r4
+    add r1, #83
+    mov r0, #0
+    strb r0, [r1, #0]
+    add r1, #1
+    mov r0, #0
+    strb r0, [r1, #0]
+    
+    mov r1, r5
+    add r1, #83
+    mov r0, #0
+    strb r0, [r1, #0]
+    add r1, #1
+    mov r0, #0
+    strb r0, [r1, #0]
+endCancelAffinity:
+    pop {r6, pc}
+
+hasCancelAffinity:
+    push {lr}
+    mov r0, r5
+        ldr r1, adr+0
+        mov lr, r1
+        .short 0xF800
+    cmp r0, #0
+    bne falseCancelAffinity
+    mov r0, r4
+        ldr r1, adr+8 @;tri
+        mov lr, r1
+        .short 0xF800
+    cmp r0, #0
+    beq falseCancelAffinity
+    mov r0, #1
+    .short 0xE000
+falseCancelAffinity:
+    mov r0, #0
+    pop {pc}
+ 
+triangle:
+    push {r6, lr}
+    mov r6, #0
+    bl hasTriangle
+    add r6, r0
+    eor r4, r5
+    eor r4, r5
+    eor r4, r5
+    
+    bl hasTriangle
     add r6, r0
     eor r4, r5
     eor r4, r5
@@ -66,7 +120,7 @@ triangle:
     pop {r6, pc}
 
 
-triangle_impl:
+hasTriangle:
     push {lr}
     mov r0, r5
         ldr r1, adr
@@ -75,7 +129,7 @@ triangle_impl:
     cmp r0, #0
     bne falseTri
     mov r0, r4
-        ldr r1, adr+4 @;zeno
+        ldr r1, adr+4 @;tri
         mov lr, r1
         .short 0xF800
     cmp r0, #0

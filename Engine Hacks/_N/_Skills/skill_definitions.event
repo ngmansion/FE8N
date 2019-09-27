@@ -99,4 +99,5 @@
 #define Effective2ID 109 //0x6D特効2
 #define Effective3ID 110 //0x6E特効3
 #define Effective4ID 111 //0x6F特効4
+#define CancelAffinityID 112 //0x70相性相殺
 
