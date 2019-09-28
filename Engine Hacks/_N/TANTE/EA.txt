@@ -45,4 +45,4 @@ POP
 
 TANTE_tan:
 #incbin "tan.dmp"
-
+ALIGN 4

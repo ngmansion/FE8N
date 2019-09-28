@@ -29,7 +29,7 @@
 	#include "break_save\EA.txt"
 	#include "SortWin\EA.txt"
 	#include "CCCleaner\EA.txt"
-	#include "gacha\EA.txt"
+	#include "DOWNLOAD\EA.txt"
 	#include "TANTE\EA.txt"
 
 
