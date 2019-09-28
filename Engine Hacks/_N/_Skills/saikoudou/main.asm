@@ -26,7 +26,7 @@
     ldr r0, [r0, #12]
     ldr r1, =0x0801cf04
     ldr r1, [r1]
-    and	r0, r1	@;再移動後はスキップ
+    and	r0, r1	@;何らかの行動後の状態ならスキップ(最行動組が何もせずに待機してもここ)
     bne FALSE
     
     bl Jadoku_impl
@@ -41,6 +41,13 @@
     mov r2, #192
     and r2, r1
     bne FALSE @;自軍以外は終了
+    
+    ldr r0, =0x0203a954
+    ldrb r0, [r0, #17]
+    cmp r0, #1
+    beq FALSE @;待機選択なら終了
+    cmp r0, #17
+    beq FALSE @;制圧選択なら終了
     
     mov r0, r4
     add r0, #69

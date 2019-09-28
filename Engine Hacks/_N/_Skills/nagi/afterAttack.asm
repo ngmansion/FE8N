@@ -64,7 +64,7 @@ WarSkill:
 	ldr r1, [r1, #16]	@;r8が相手のアドレス
 	add	r1, #72	@;装備中(74はトップアイテム)
 	ldrh	r0, [r1]
-	cmp r0, #0
+	lsr r2, r0, #8
 	beq breakWar	@;もう壊れている
 loop_top_break:
 	bl func_break
@@ -72,7 +72,7 @@ loop_top_break:
 	ldr r1, [r1, #16]	@;r8が相手のアドレス
 	add	r1, #72
 	strh	r0, [r1]
-	cmp r0, #0
+	lsr r2, r0, #8
 	beq breakWar
 	add r3, #1
 	cmp r3, #4		@;4回壊す(通常合わせて5減る)
