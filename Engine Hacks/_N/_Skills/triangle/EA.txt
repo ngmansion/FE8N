@@ -1,4 +1,4 @@
-
+#include config.txt
 
 PUSH
 
@@ -6,7 +6,6 @@ ORG 0x02c754
   jumpToHack(skill_triangle)
 
 POP
-
 
 skill_triangle:
   #incbin main.dmp

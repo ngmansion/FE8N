@@ -334,8 +334,8 @@
 #define SKL_HELP_111 $0000 //effective4
  #define SKL_COLOR_111 $FF
 
-#define SKL_HELP_112 $0000
- #define SKL_COLOR_112 0
+#define SKL_HELP_112 $0572
+ #define SKL_COLOR_112 $FF
 
 #define SKL_HELP_113 $0000
  #define SKL_COLOR_113 0

@@ -335,7 +335,7 @@ SHORT SKL_HELP_111 SKL_COLOR_111
 POIN 0 effective_class4 effective_weapon4
 
 SHORT SKL_HELP_112 SKL_COLOR_112 
-POIN 0 0 0
+POIN CancelAffinity_unit CancelAffinity_class CancelAffinity_weapon
 
 SHORT SKL_HELP_113 SKL_COLOR_113 
 POIN 0 0 0
