@@ -1,7 +1,8 @@
 #ifdef _FE8_
 
 	#define Free_Space 0xEFB2E0
-//	#define Debug_Mode
+//	#define Debug_Mode	/* デバッグモード有効化 */
+//	#define DOWNLOAD	/* ダウンロードデータ有効化 */
 	
 	ORG Free_Space
 

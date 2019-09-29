@@ -1,5 +1,3 @@
-#include config.txt
-
 #ifdef DOWNLOAD
 
 PUSH

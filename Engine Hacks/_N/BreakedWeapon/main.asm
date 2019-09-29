@@ -7,7 +7,7 @@
 	cmp	r2, #255
 	bgt nonBreak
 check:
-	mov r1, #5
+	mov r1, #5	@ñ‚Ü‚½‚Í•¨—
 	and r0, r1
 	beq adr+8
 nonBreak:
