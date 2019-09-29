@@ -26,7 +26,8 @@ ALIGN 4
 ///////////破損
 
 PUSH
-ORG 0x2aec0
+//ORG 0x2aec0 突撃パッチと被ったのでずらす
+ORG 0x02aec8
 WORD	$46874800
 POIN	TANTE_hasso
 POP

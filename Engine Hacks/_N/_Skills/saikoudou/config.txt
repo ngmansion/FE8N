@@ -8,7 +8,7 @@ PoisonStrike_list:
     BYTE $00 0
 
 PoisonStrike_list_w:
-    BYTE $00 0
+    BYTE $48 0
 
 //以下は敵に付けても動作しません
 

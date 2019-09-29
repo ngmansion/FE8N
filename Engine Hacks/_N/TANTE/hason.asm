@@ -1,17 +1,23 @@
 .equ BREAK_NUM, (0xFF)
 .thumb
-@;0002aec0
+@;0002aec8
 
 	ldr	r0, [sp, #0]
 	bl HASON
 	ldr	r0, [sp, #4]
 	bl HASON
-	
+retrun:
 	ldr	r0, =0x0203a604
 	ldr	r3, [r0, #0]
 	ldr	r1, [r3, #0]
 	lsl	r1, r1, #8
-	ldr	r0, =0x0802aec8
+	
+	lsr	r1, r1, #27
+	mov	r0, #16
+	orr	r1, r0
+	lsl	r1, r1, #3
+	
+	ldr	r0, =0x0802aed0
 	mov	pc, r0
 	
 HASON:
