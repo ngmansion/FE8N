@@ -31,6 +31,8 @@
 	#include "CCCleaner\EA.txt"
 	#include "DOWNLOAD\EA.txt"
 	#include "TANTE\EA.txt"
+	#include "BreakedWeapon\EA.txt"
+	
 
 
 
