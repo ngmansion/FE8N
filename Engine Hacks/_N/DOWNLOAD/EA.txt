@@ -1,4 +1,5 @@
-#define DOWNLOAD
+#include config.txt
+
 #ifdef DOWNLOAD
 
 PUSH
