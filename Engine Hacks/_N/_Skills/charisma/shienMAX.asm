@@ -76,49 +76,49 @@ end
 
 	ldrb	r0, [r6, #1]
 	lsr	r0, r0, #1
-	cmp	r0, #3
+	cmp	r0, #5
 	ble	tobi1
-	mov	r0, #3
+	mov	r0, #5
 tobi1
 	strb	r0, [r6, #1]
 	
 	ldrb	r0, [r6, #2]
 	lsr	r0, r0, #1
-	cmp	r0, #3
+	cmp	r0, #5
 	ble	tobi2
-	mov	r0, #3
+	mov	r0, #5
 tobi2
 	strb	r0, [r6, #2]
 	
 	ldrb	r0, [r6, #3]
 	lsr	r0, r0, #1
-	cmp	r0, #15
+	cmp	r0, #25
 	ble	tobi3
-	mov	r0, #15
+	mov	r0, #25
 tobi3
 	strb	r0, [r6, #3]
 	
 	ldrb	r0, [r6, #4]
 	lsr	r0, r0, #1
-	cmp	r0, #15
+	cmp	r0, #25
 	ble	tobi4
-	mov	r0, #15
+	mov	r0, #25
 tobi4
 	strb	r0, [r6, #4]
 	
 	ldrb	r0, [r6, #5]
 	lsr	r0, r0, #1
-	cmp	r0, #15
+	cmp	r0, #25
 	ble	tobi5
-	mov	r0, #15
+	mov	r0, #25
 tobi5
 	strb	r0, [r6, #5]
 	
 	ldrb	r0, [r6, #6]
 	lsr	r0, r0, #1
-	cmp	r0, #15
+	cmp	r0, #25
 	ble	tobi6
-	mov	r0, #15
+	mov	r0, #25
 tobi6
 	strb	r0, [r6, #6]
 	
