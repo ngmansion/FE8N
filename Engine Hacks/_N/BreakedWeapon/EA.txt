@@ -21,5 +21,15 @@ ORG 0x02b764	//0回の武器でも破損扱い
 ORG 0x02cbec	//0回の杖でも破損扱い
 	BYTE $00 $0A
 	
+	
+	
+	
+ORG 0x0aefdc
+//	SHORT $b500 $1c02 $4805 $7901
+	jumpToHack(BreakedWeapon)
+	
 POP
+BreakedWeapon:
+	#incbin repair_sys.dmp
+ALIGN 4
 
