@@ -5,9 +5,14 @@
 	push {lr}
 	push {r0}
 	
+	ldr r0, =0x0202BCFC
+	ldrb r0, [r0]
+	cmp r0, #0
+	beq RETURN	@0ターン目なら終了
+	
 	bl Unit
 	bl TransPort
-	
+RETURN:
 	pop {r2}
 	ldr	r0, =0x080aeff8
 	ldr r0, [r0]
