@@ -14,7 +14,9 @@ ALIGN 4
     ORG 0x028a38
     jumpToHack(staff_mastery_usability)
     ORG 0x028f40
-    jumpToHack(staff_mastery_effect)
+    jumpToHack(staff_mastery_target)
+//	ORG 0x02fb98
+//	jumpToHack(staff_mastery_effect)
     ORG 0x03fb40
     jumpToHack(staff_mastery_intelligence)
     POP
@@ -39,7 +41,7 @@ staff_mastery_usability:
     #incbin usability.gba
     POIN staff_mastery_hasSkill
 
-staff_mastery_effect:
+staff_mastery_target:
     #incbin effect.gba
     POIN staff_mastery_hasSkill
 

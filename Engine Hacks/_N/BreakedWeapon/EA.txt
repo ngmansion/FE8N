@@ -27,9 +27,15 @@ ORG 0x02cbec	//0回の杖でも破損扱い
 ORG 0x0aefdc
 //	SHORT $b500 $1c02 $4805 $7901
 	jumpToHack(BreakedWeapon)
-	
+
+ORG 0x025f8c
+	jumpToHack(a_restore)
+
 POP
 BreakedWeapon:
 	#incbin repair_sys.dmp
+ALIGN 4
+a_restore:
+	#incbin a_restore.dmp
 ALIGN 4
 
