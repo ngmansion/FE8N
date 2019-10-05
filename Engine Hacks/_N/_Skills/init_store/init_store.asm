@@ -76,6 +76,17 @@ Ok:
 	beq Retry
 	cmp r0, #0x29	@杖スキル
 	beq Retry
+	
+	cmp r0, #0x1a	@守備隊形
+	beq Retry
+	cmp r0, #0x2a	@突撃
+	beq Retry
+	cmp r0, #0x24	@死線
+	beq Retry
+	cmp r0, #0x22	@電撃戦闘
+	beq Retry
+	cmp r0, #0x2F	@相性激化
+	beq Retry
 
 	ldr r2, [r4]
 	mov r1, #0x26
