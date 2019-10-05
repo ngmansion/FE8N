@@ -90,6 +90,7 @@ POP
 remove_impl:
 #incbin remove.dmp
 POIN hasRemove
+POIN hasGoodyBasket
 
 #else
 
@@ -138,6 +139,10 @@ pulse_impl:
     hasPoisonStrike:
         HAS_SKILL
         WORD PoisonStrikeID
+        POIN judgeSkill
+    hasGoodyBasket:
+        HAS_SKILL
+        WORD 0
         POIN judgeSkill
 
 ALIGN 4

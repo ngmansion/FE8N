@@ -23,11 +23,12 @@
 	ldr r4, [r4]
 @;    ldr r4, =ATK
 ;
-    ldr r0, [r0, #12]
+    ldr r0, [r4, #12]
     ldr r1, =0x0801cf04
     ldr r1, [r1]
-    and	r0, r1	@;何らかの行動後の状態ならスキップ(最行動組が何もせずに待機してもここ)
-    bne FALSE
+    and r0, r1
+    cmp r0, #0
+    bne FALSE	@死亡・待機(or再行動済)・??状態
     
     bl Jadoku_impl
     
