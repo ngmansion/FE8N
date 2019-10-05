@@ -30,8 +30,6 @@
     cmp r0, #0
     bne FALSE	@死亡・待機(or再行動済)・??状態
     
-    bl Jadoku_impl
-    
     mov r0, r4
     ldrb	r1, [r0, #0x13]
     cmp r1, #0
@@ -229,70 +227,6 @@ non_hp:
     mov	r0, #0
     pop	{pc}
     
-@●●●●
-Jadoku_impl:
-    push {lr}
-    ldr r0, =DEF
-    ldrb r0, [r0, #0x13]
-    cmp r0, #0
-    beq falseJadoku		@;HP0なら終了
-    
-    ldrb r0, [r4, #0xB]
-    lsl r0, r0, #24
-    bmi isRed
-
-    ldr r0, =DEF
-    ldrb r0, [r0, #0xB]
-    lsl r0, r0, #24
-    bmi startJadoku
-    b falseJadoku	@相手チェック失敗
-    
-isRed:
-    ldr r0, =DEF
-    ldrb r0, [r0, #0xB]
-    lsl r0, r0, #24
-    bpl startJadoku
-    b falseJadoku	@相手チェック失敗
-    
-@攻撃を命中させたなら判定？可能？
-startJadoku:
-    mov r0, r4
-        ldr r2, adr+20
-        mov lr, r2
-        .short 0xF800
-    cmp r0, #0
-    beq falseJadoku	@蛇毒未所持なら終了
-
-    ldr r0, =DEF
-        ldr r2, adr+8
-        mov lr, r2
-        .short 0xF800
-    cmp r0, #0
-    bne falseJadoku	@見切り持ちなら終了
-@蛇毒on
-    ldr r0, =DEF
-    ldrb r0, [r0, #0xB]
-      ldr r1, =0x08019108
-      mov lr, r1
-      .short 0xF800
-    mov	r2, r0
-    ldrb r0, [r2, #19] @;現在19
-    sub r0, #10
-    bgt hpOk
-    mov r0, #1
-hpOk:
-    strb r0, [r2, #19] @;現在19
-    
-	mov r0, #0xB7	@妥当な音のIDが分からん
-	mov r1, #0xB8
-		ldr r2, =0x08014B50 @;音
-		mov lr, r2
-		.short 0xF800
-    mov	r0, #1
-    .short 0xE000
-falseJadoku:
-    mov	r0, #0
-    pop	{pc}
 
 .align
 .ltorg

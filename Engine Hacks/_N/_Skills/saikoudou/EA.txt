@@ -114,7 +114,6 @@ pulse_impl:
         POIN hasLifetaker
         POIN hasCantoPlus
         POIN hasGaleCause
-        POIN hasPoisonStrike
         
     hasRemove:
         HAS_SKILL
@@ -136,10 +135,7 @@ pulse_impl:
         HAS_SKILL
         WORD CantoPlusID
         POIN judgeSkill
-    hasPoisonStrike:
-        HAS_SKILL
-        WORD PoisonStrikeID
-        POIN judgeSkill
+
     hasGoodyBasket:
         HAS_SKILL
         WORD 0

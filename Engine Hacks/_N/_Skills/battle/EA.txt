@@ -53,7 +53,7 @@ battle_down:
   #incbin down.dmp
   POIN hasNihil
   POIN hasFury
-  POIN hasAdept
+  POIN hasPoisonStrike
     
 hasFury:
     HAS_SKILL
@@ -138,4 +138,9 @@ hasKnightkneeler:
  HAS_SKILL
  WORD KnightkneelerID
  POIN judgeSkill
+
+hasPoisonStrike:
+   HAS_SKILL
+   WORD PoisonStrikeID
+   POIN judgeSkill
 

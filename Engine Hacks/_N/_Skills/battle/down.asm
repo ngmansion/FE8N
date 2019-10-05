@@ -10,6 +10,9 @@
 	mov	r0, r7
 	mov	r1, r6
 	bl Fury
+	mov	r0, r7
+	mov	r1, r6
+	bl Jadoku
 	
 @;裏側
 	mov	r0, r6
@@ -22,6 +25,62 @@
 RETURN:
 	ldr	r0, =0x0802bfec
 	mov	pc, r0
+
+Jadoku:
+	push	{r4, lr}
+	mov r3, r0
+	mov r4, r1
+    ldrb r0, [r4, #0x13]
+    cmp r0, #0
+    beq falseJadoku		@;相手撃破なら終了
+    
+    ldrb r0, [r3, #0xB]
+    lsl r0, r0, #24
+    bmi isRed
+
+    ldrb r0, [r4, #0xB]
+    lsl r0, r0, #24
+    bmi startJadoku
+    b falseJadoku	@相手チェック失敗
+    
+isRed:
+    ldrb r0, [r4, #0xB]
+    lsl r0, r0, #24
+    bpl startJadoku
+    b falseJadoku	@相手チェック失敗
+    
+startJadoku:
+    mov r0, r3
+        ldr r2, ADR+8
+        mov lr, r2
+        .short 0xF800
+    cmp r0, #0
+    beq falseJadoku	@蛇毒未所持なら終了
+    
+    mov r0, r4
+        ldr r2, ADR+0
+        mov lr, r2
+        .short 0xF800
+    cmp r0, #0
+    bne falseJadoku	@見切り持ちなら終了
+@蛇毒on
+    ldrb r0, [r4, #19] @;現在19
+    sub r0, #10
+    bgt hpOk
+    mov r0, #1
+hpOk:
+    strb r0, [r4, #19] @;現在19
+    
+	mov r0, #0xB7	@妥当な音のIDが分からん
+	mov r1, #0xB8
+		ldr r2, =0x08014B50 @;音
+		mov lr, r2
+		.short 0xF800
+    mov	r0, #1
+    .short 0xE000
+falseJadoku:
+    mov	r0, #0
+	pop	{r4, pc}
 	
 Fury:
 	push	{r4, lr}
