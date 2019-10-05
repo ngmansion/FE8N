@@ -68,11 +68,9 @@ Ok:
 	
 	cmp r0, r5	@1個目と同じ
 	beq Retry
-	cmp r0, #0x7	@奥義
-	beq Retry
 	cmp r0, #0x12	@杖スキル
 	beq Retry
-	cmp r0, #0x28	@奥義
+	cmp r0, #0x28	@奥義(奥義の律動)
 	beq Retry
 	cmp r0, #0x29	@杖スキル
 	beq Retry
