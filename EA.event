@@ -1,8 +1,11 @@
 #ifdef _FE8_
 
 	#define Free_Space 0xEFB2E0
+
+//以下は必要に応じて有効化させる
 //	#define Debug_Mode	/* デバッグモード有効化 */
 //	#define DOWNLOAD	/* ダウンロードデータ有効化 */
+// #define RANDOM_SKILL /* ランダムスキル有効化 */
 	
 	ORG Free_Space
 
@@ -14,7 +17,7 @@ MESSAGE starts at CURRENTOFFSET
 	#include "Maps\Master Map Installer.txt"
 	
 MESSAGE ends at CURRENTOFFSET
-
+//以下は必要に応じて有効化させる
 //	ORG $1000000
 //	#include "Spell Animations\EA.txt"
 //	#include "Animations\_Master Animation Installer.txt"	
