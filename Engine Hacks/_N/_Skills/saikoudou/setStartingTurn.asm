@@ -20,7 +20,6 @@
 	mov	r5, r4
     bl Jinrai_back
     bl Pulse_back
-    bl WarSkill_back
 RETURN:
     ldr r0, =0x0801859a
     mov pc, r0
