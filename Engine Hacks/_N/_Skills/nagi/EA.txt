@@ -38,6 +38,14 @@ afterBattle:
 	POIN hasQuickenedPulse
 
 
+PUSH
+	ORG 0x01e684
+	jumpToHack(grafix_ws)
+POP
+grafix_ws:
+	#incbin grafix.dmp
+ALIGN 4
+
 nagi_kaze:
   #incbin kaze.dmp
   POIN hasNihil
