@@ -8,10 +8,6 @@
 
 .equ PULSE_ADR, (ADR+0)	@;奥義の鼓動
 
-.equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
-.equ WAR_FLAG, (0xFF)	@フラグ
-.equ WAR_FLAG2, (0xFE)	@フラグ
-
 .thumb
 @;0x01858c
 	ldr	r1, =0x08018664
@@ -28,23 +24,6 @@
 RETURN:
     ldr r0, =0x0801859a
     mov pc, r0
-
-WarSkill_back:
-	mov r1, r4
-	add r1, #STR_ADR
-	ldrb r0, [r1]
-	cmp r0, #WAR_FLAG
-	beq war_jump
-	cmp r0, #WAR_FLAG2
-	bne war_end
-war_jump:
-	mov r0, #0
-	strb r0, [r1]
-war_end:
-    bx lr
-	
-	
-	
 
 Jinrai_back:
 	mov r1, r4

@@ -44,6 +44,13 @@ defeatEnemy:
 #incbin defeatEnemy.gba
 ALIGN 4
 
+PUSH
+ORG 0x01858c
+	jumpToHack(setStartingTurn)
+POP
+setStartingTurn:
+	#incbin setStartingTurn.dmp
+	POIN hasQuickenedPulse
 
 
 ////未整理

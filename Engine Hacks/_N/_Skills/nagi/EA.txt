@@ -29,13 +29,6 @@ afterAttack:
 	#incbin afterAttack.dmp
 	ALIGN 4
 ////攻撃終了
-PUSH
-	ORG 0x01858c
-	jumpToHack(afterBattle)
-POP
-afterBattle:
-	#incbin afterBattle.dmp
-	POIN hasQuickenedPulse
 
 
 PUSH
