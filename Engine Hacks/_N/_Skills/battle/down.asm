@@ -3,6 +3,9 @@
 .equ WAR_FLAG2, (0xFE)	@フラグ
 
 .thumb
+
+@ 0x02bfd8
+
 	cmp	r6, #0
 	beq	RETURN
 	mov	r0, r6

@@ -38,6 +38,7 @@ loopE:
 	str	r5, [r7]
 	str	r5, [r7, #4]
 	str	r5, [r7, #8]
+	str	r5, [r7, #12]
 
 	ldr	r5, adr+16	@;skl_icon_table
 	ldr r4, =0x02003BFC

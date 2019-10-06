@@ -33,15 +33,11 @@ RETURN:
 
 WarSkill:
 	push {lr}
-	mov r3, r13
-	ldr r3, [r3, #16]	@;r8が相手のアドレス
+@	mov r3, r13
+@	ldr r3, [r3, #16]	@;r8が相手のアドレス
 	
 	ldr r0, =0x03004df0
-	ldr r0, [r0]
-	ldrb r1, [r3, #11]
-	ldrb r0, [r0, #11]
-	cmp r0, r1
-	bne endWar @;攻め者と攻撃者が違う
+	ldr r3, [r0]
 	mov r1, #STR_ADR
 	ldrb r0, [r3, r1]
 	cmp r0, #0xFF
