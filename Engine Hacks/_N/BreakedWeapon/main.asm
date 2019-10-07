@@ -1,9 +1,7 @@
 .thumb
 	
 	push {lr}
-	lsr r1, r0, #8
-	beq nonBreak
-	
+
 	mov r1, #255
 	and r1, r0
 	lsl	r2, r1, #3
@@ -13,6 +11,8 @@
 	add	r2, r2, r1
 	ldr	r2, [r2, #8]
 	
+	lsr r1, r0, #8
+	beq check
 
 	lsl r1, r2, #28
 	bmi nonBreak
