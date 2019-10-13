@@ -84,9 +84,12 @@ ikari: @怒り
     beq false @HP1武器は無視
     
     mov r0, #0x13
-    ldsb r0, [r7, r0]
-    cmp r0, #10
-    bge false @HP分岐
+    ldrb r0, [r7, r0]	@現在HP
+    mov r1, #0x12
+    ldrb r1, [r7, r0]	@最大HP
+    asr r1, r1, #1
+    cmp r0, r1
+    bgt false @HP分岐
     
     mov r0, r7
 		ldr r1, ADDRESS+4 @怒り
@@ -94,7 +97,7 @@ ikari: @怒り
     cmp r0, #0
     beq false
     ldrh r0, [r5, #12]
-    add r0, #100
+    add r0, #50
     strh r0, [r5, #12]
 false:
     pop {pc}
