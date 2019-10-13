@@ -38,6 +38,14 @@ WarSkill:
 	
 	ldr r0, =0x03004df0
 	ldr r3, [r0]
+	
+	ldrb r0, [r3, #0xB]
+	mov r1, r13
+	ldr r1, [r1, #16]
+	ldrb r1, [r1, #0xB]
+	cmp r0, r1
+	bne endWar	@選択者と攻撃者が違う
+	
 	mov r1, #STR_ADR
 	ldrb r0, [r3, r1]
 	cmp r0, #0xFF
