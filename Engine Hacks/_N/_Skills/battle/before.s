@@ -12,6 +12,7 @@
 .equ ARMOR_E_ADR, (adr+72)
 .equ HORSE_E_ADR, (adr+76)
 .equ MONSTER_E_ADR, (adr+80)
+.equ HIEN_ADR, (adr+84)
 
 .equ FLY_E2_ADR, (0x89024B6)
 .equ ARMOR_E2_ADR, (0x890244B)
@@ -36,11 +37,11 @@
 	.short 0xF800
 .endm
 
-@;0x02a90c
-@;ステータス画面にも影響がある
-@;相手が存在するとは限らない(ダミーかもしれない)
+@0x02a90c
+@ステータス画面にも影響がある
+@相手が存在するとは限らない(ダミーかもしれない)
 .thumb
-@;闘技場チェック
+@闘技場チェック
     ldr r0, Alina_Adr
     ldrh r0, [r0]
     mov r1, #0x20
@@ -51,16 +52,16 @@
 	bl Faire
 
     mov	r0, r5
-    ldr r1, adr	@;見切り
+    ldr r1, adr	@見切り
     _blr r1
     cmp r0, #0
     bne endNoEnemy
     
     bl shishi
-    bl Savior	@;護り手
+    bl Savior	@護り手
     
 endNoEnemy:
-@;相手の存在をチェック
+@相手の存在をチェック
     ldr r0, [r5, #4]
     cmp r0, #0
     beq endNeedEnemy
@@ -68,7 +69,7 @@ endNoEnemy:
     bl EffectiveBonus
     
     mov	r0, r5
-    ldr r1, adr	@;見切り
+    ldr r1, adr	@見切り
     _blr r1
     cmp r0, #0
     bne endNeedEnemy
@@ -76,6 +77,8 @@ endNoEnemy:
     bl kishin
     
     bl kongou
+    
+    bl Hien
     
     bl koroshi
     
@@ -181,7 +184,7 @@ WarSkill:
 	add r1, #96
 	ldrh r0, [r1]
 	add r0, #20
-	strh r0, [r1] @;命中増加
+	strh r0, [r1] @命中増加
 endWar:
 	pop {pc}
 
@@ -224,7 +227,7 @@ Faire:
     mov r1, #90
     ldrh r0, [r4, r1]
     add r0, #5
-    strh r0, [r4, r1] @;自分
+    strh r0, [r4, r1] @自分
 endFaire:
 	pop {pc}
 
@@ -255,7 +258,7 @@ endFaire:
     DistantDef:
         push {lr}
         ldr r0, Range_Adr
-        ldrb r0, [r0] @;距離
+        ldrb r0, [r0] @距離
         cmp r0, #1
         ble endDistantDef
         
@@ -265,10 +268,10 @@ endFaire:
         ldr r1, [r1]
         ldrb r1, [r1, #11]
         cmp r0, r1
-        beq endDistantDef	@;攻撃者と一致
+        beq endDistantDef	@攻撃者と一致
         
         mov r0, r4
-        ldr r1, adr+40	@;遠距離防御
+        ldr r1, adr+40	@遠距離防御
         _blr r1
         cmp r0, #0
         beq endDistantDef
@@ -287,7 +290,7 @@ endFaire:
     CloseDef:
         push {lr}
         ldr r0, Range_Adr
-        ldrb r0, [r0] @;距離
+        ldrb r0, [r0] @距離
         cmp r0, #1
         bne endCloseDef
         
@@ -297,10 +300,10 @@ endFaire:
         ldr r1, [r1]
         ldrb r1, [r1, #11]
         cmp r0, r1
-        beq endCloseDef	@;攻撃者と一致
+        beq endCloseDef	@攻撃者と一致
         
         mov r0, r4
-        ldr r1, adr+36 @;近距離防御
+        ldr r1, adr+36 @近距離防御
         _blr r1
         cmp r0, #0
         beq endCloseDef
@@ -324,27 +327,27 @@ gotKoroshi:
     mov r1, #90
     ldrh r0, [r4, r1]
     add r0, #3
-    strh r0, [r4, r1] @;自分
+    strh r0, [r4, r1] @自分
     
     mov r1, #92
     ldrh r0, [r4, r1]
     add r0, #3
-    strh r0, [r4, r1] @;自分
+    strh r0, [r4, r1] @自分
     
     mov r1, #94
     ldrh r0, [r4, r1]
     add r0, #3
-    strh r0, [r4, r1] @;自分
+    strh r0, [r4, r1] @自分
     
     mov r1, #96
     ldrh r0, [r4, r1]
     add r0, #20
-    strh r0, [r4, r1] @;自分
+    strh r0, [r4, r1] @自分
     
     mov r1, #98
     ldrh r0, [r4, r1]
     add r0, #20
-    strh r0, [r4, r1] @;自分
+    strh r0, [r4, r1] @自分
     mov r0, #1
     b endKoroshi
 falseKoroshi:
@@ -361,10 +364,10 @@ shishi:
     cmp r0, #0
     beq falseShishi
     
-	ldrb r1, [r4, #18] @;最大HP
-	ldrb r0, [r4, #19] @;現在HP
+	ldrb r1, [r4, #18] @最大HP
+	ldrb r0, [r4, #19] @現在HP
 	cmp r0, r1
-	blt falseShishi @;現在が最大よりも小さい場合
+	blt falseShishi @現在が最大よりも小さい場合
 	b gotKoroshi
 falseShishi:
 	mov r0, #0
@@ -373,7 +376,7 @@ falseShishi:
 kishin:
     push {lr}
     mov r0, r4
-    ldr r1, adr+8	@;鬼神
+    ldr r1, adr+8	@鬼神
     _blr r1
     cmp r0, #0
     beq falseKishin
@@ -387,13 +390,13 @@ kishin:
     bne falseKishin
     mov r1, #90
     ldrh r0, [r4, r1]
-    add r0, #5 @;威力
-    strh r0, [r4, r1] @;自分
+    add r0, #5 @威力
+    strh r0, [r4, r1] @自分
 
     mov r1, #102
     ldrh r0, [r4, r1]
-    add r0, #15 @;必殺
-    strh r0, [r4, r1] @;自分
+    add r0, #15 @必殺
+    strh r0, [r4, r1] @自分
     mov r0, #1
     b endKishin
 falseKishin:
@@ -407,7 +410,7 @@ endKishin:
 kongou:
     push {lr}
     mov r0, r4
-    ldr r1, adr+12 @;金剛
+    ldr r1, adr+12 @金剛
     _blr r1
     cmp r0, #0
     beq falseKongou
@@ -429,6 +432,33 @@ falseKongou:
 	mov r0, #0
 endKongou:
 	pop {pc}
+	
+Hien:
+    push {lr}
+    mov r0, r4
+    ldr r1, HIEN_ADR
+    _blr r1
+    cmp r0, #0
+    beq falseHien
+    
+    ldr r0, Attacker_Adr
+    ldr r0, [r0]
+    ldrb r0, [r0, #0xB]
+    
+    ldrb r1, [r4, #0xB]
+    cmp r0, r1
+    bne falseHien
+    mov r1, #94
+    ldrh r0, [r4, r1]
+    add r0, #5
+    strh r0, [r4, r1]
+    mov r0, #1
+    b endHien
+falseHien:
+	mov r0, #0
+endHien:
+	pop {pc}
+	
 
 faire_impl:
     push {lr}
