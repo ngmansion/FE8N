@@ -1,4 +1,4 @@
-.equ SKILL_MAX, (0x31)	@蛇毒
+.equ SKILL_MAX, (0x32)	@飛燕
 
 
 .thumb
