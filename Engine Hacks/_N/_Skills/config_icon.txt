@@ -114,7 +114,7 @@
 #define SKL_HELP_38 $0553
  #define SKL_COLOR_38 $FF
 
-#define SKL_HELP_39 $055B
+#define SKL_HELP_39 $0574	//応撃
  #define SKL_COLOR_39 $FF
 
 #define SKL_HELP_40 $055d
@@ -337,8 +337,8 @@
 #define SKL_HELP_112 $0572
  #define SKL_COLOR_112 $FF
 
-#define SKL_HELP_113 $0000
- #define SKL_COLOR_113 0
+#define SKL_HELP_113 $055B //持ち替え
+ #define SKL_COLOR_113 $FF
 
 #define SKL_HELP_114 $0000
  #define SKL_COLOR_114 0

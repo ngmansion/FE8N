@@ -38,9 +38,9 @@
 #define LifeAndDeathID 36 //0x24死線
 #define DeathBlowID 37 //0x25鬼神の一撃
 #define ArmoredBlowID 38 //0x26金剛の一撃
-#define CounterID 39 //0x27 持ち替え
-#define QuickenedPulseID 40 //0x28 奥義の律動
-#define GaleCauseID 41 //0x29神風招来
+#define CounterID 39 //0x27 応撃
+#define QuickenedPulseID 40 //0x28奥義の鼓動
+#define GaleCauseID 41 //0x29 神風招来
 #define ChargeID 42 //0x2A 突撃
 #define ImbueID 43 //0x2B 治癒
 #define WindsweepID 44 //0x2C 風薙ぎ
@@ -101,4 +101,5 @@
 #define Effective3ID 110 //0x6E特効3
 #define Effective4ID 111 //0x6F特効4
 #define CancelAffinityID 112 //0x70相性相殺
+#define QuickChangeID 113 //0x71 持ち替え
 

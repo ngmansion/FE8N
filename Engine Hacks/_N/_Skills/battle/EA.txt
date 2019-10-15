@@ -147,4 +147,7 @@ hasPoisonStrike:
    HAS_SKILL
    WORD PoisonStrikeID
    POIN judgeSkill
-
+hasCounter:
+    HAS_SKILL
+    WORD CounterID
+    POIN judgeSkill
