@@ -13,7 +13,7 @@
 		ldr	r2, =0x0802c134
 		mov	lr, r2
 		.short 0xF800
-@;表側
+@表側
 	mov	r0, r7
 	mov	r1, r6
 	bl Fury
@@ -21,9 +21,12 @@
 	mov	r1, r6
 	bl Jadoku
 	mov	r0, r7
+	mov	r1, r6
+	bl Counter
+	mov	r0, r7
 	bl WarSkill_back
 	
-@;裏側
+@裏側
 	mov	r0, r6
 	mov	r1, r7
 	bl Fury
@@ -49,13 +52,83 @@ war_jump:
 war_end:
     bx lr
 
+Counter:
+	push	{r4, lr}
+	mov r4, r0
+	mov r3, r1
+    ldrb r0, [r4, #0x13]
+    cmp r0, #0
+    beq falseCounter		@撃破なら終了
+    ldrb r0, [r3, #0x13]
+    cmp r0, #0
+    beq falseCounter		@撃破なら終了
+    
+    ldr r0, =0x0203a568
+    add r0, #72
+    ldrh r0, [r0]
+    cmp r0, #0
+    bne falseCounter		@武器所持なら終了
+    
+    
+    ldrb r0, [r3, #0xB]
+    lsl r0, r0, #24
+    bmi isRedCounter
+
+    ldrb r0, [r4, #0xB]
+    lsl r0, r0, #24
+    bmi startCounter
+    b falseCounter	@相手チェック失敗
+    
+isRedCounter:
+    ldrb r0, [r4, #0xB]
+    lsl r0, r0, #24
+    bpl startCounter
+    b falseCounter	@相手チェック失敗
+    
+startCounter:
+    mov r0, r3
+        ldr r2, ADR+12
+        mov lr, r2
+        .short 0xF800
+    cmp r0, #0
+    beq falseCounter	@相手応撃未所持なら終了
+    
+    mov r0, r4
+        ldr r2, ADR+0
+        mov lr, r2
+        .short 0xF800
+    cmp r0, #0
+    bne falseCounter	@自分見切り持ちなら終了
+    
+    ldr r1, =0x0203a4d0
+    ldrb	r1, [r1, #4]
+    
+@on
+    ldrb r0, [r4, #19] @現在19
+    sub r0, r1
+    bgt hpOkCounter
+    mov r0, #1
+hpOkCounter:
+    strb r0, [r4, #19] @現在19
+    
+	mov r0, #0xD2	@妥当な音のIDが分からん
+	mov r1, #0xB8
+		ldr r2, =0x08014B50 @音
+		mov lr, r2
+		.short 0xF800
+    mov	r0, #1
+    .short 0xE000
+falseCounter:
+    mov	r0, #0
+	pop	{r4, pc}
+
 Jadoku:
 	push	{r4, lr}
 	mov r3, r0
 	mov r4, r1
     ldrb r0, [r4, #0x13]
     cmp r0, #0
-    beq falseJadoku		@;相手撃破なら終了
+    beq falseJadoku		@相手撃破なら終了
     
     ldrb r0, [r3, #0xB]
     lsl r0, r0, #24
@@ -87,16 +160,16 @@ startJadoku:
     cmp r0, #0
     bne falseJadoku	@見切り持ちなら終了
 @蛇毒on
-    ldrb r0, [r4, #19] @;現在19
+    ldrb r0, [r4, #19] @現在19
     sub r0, #10
     bgt hpOk
     mov r0, #1
 hpOk:
-    strb r0, [r4, #19] @;現在19
+    strb r0, [r4, #19] @現在19
     
 	mov r0, #0xB7	@妥当な音のIDが分からん
 	mov r1, #0xB8
-		ldr r2, =0x08014B50 @;音
+		ldr r2, =0x08014B50 @音
 		mov lr, r2
 		.short 0xF800
     mov	r0, #1
@@ -120,10 +193,10 @@ Fury:
 		.short 0xF800
 	cmp	r0, #0
 	beq false
-	ldrb r2, [r4, #18] @;最大HP
-	ldrb r0, [r4, #19] @;現在HP
+	ldrb r2, [r4, #18] @最大HP
+	ldrb r0, [r4, #19] @現在HP
 	cmp r0, r2
-	blt jump @;現在が最大よりも小さい場合
+	blt jump @現在が最大よりも小さい場合
 	sub	r0, #1
 	strb	r0, [r4, #19]
 jump:
