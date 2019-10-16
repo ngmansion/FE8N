@@ -6,23 +6,8 @@
     and r0, r1
     cmp r0, #0
     bne got
-    mov r0, r4
-    ldr r1, =0x0203a568
-    cmp r0, r1
-    bne non_change1
-    ldr r1, =0x0203a4e8
-non_change1:
-        ldr r3, adr @bolt
-        mov lr, r3
-        .short 0xF800
-    cmp r0, #0
-    bne got
-    ldr r0, =0x0203a568
-    mov r1, r4
-    cmp r0, r1
-    bne non_change2
     ldr r0, =0x0203a4e8
-non_change2:
+    ldr r1, =0x0203a568
         ldr r3, adr @bolt
         mov lr, r3
         .short 0xF800

@@ -1,14 +1,14 @@
 .thumb
 .equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
 .equ FLAG, (0xFF)	@フラグ
-@;@org	$0802b004
+@@org	$0802b004
     push {r4, lr}
     mov r4, #0
     ldr r0, [r0, #76]
     mov r1, #32
     and r0, r1
     cmp r0, #0
-    bne Brave @;x勇者武器持ってるなら
+    bne Brave @x勇者武器持ってるなら
 
     bl dengeki
     cmp r4, #0
@@ -25,7 +25,7 @@ Brave:
     and r0, r2
     orr r0, r1
     str r0, [r3, #0]
-    mov r4, #1				@;攻撃回数加算
+    mov r4, #1				@攻撃回数加算
 endBrave:
     bl renzoku
     
@@ -36,7 +36,7 @@ endBrave:
 renzoku:
     push {lr}
     mov r0, r6
-        ldr r1, ADDRESS @;連続
+        ldr r1, ADDRESS @連続
         mov lr, r1
         .short 0xF800
     cmp r0, #0
@@ -51,10 +51,10 @@ got:
 	
 	mov r1, #90
 	ldrh r0, [r6, r1]
-	sub r0, #5	@;威力減少
+	sub r0, #5	@威力減少
 	strh r0, [r6, r1]
 	
-	add r4, #1				@;攻撃回数加算
+	add r4, #1				@攻撃回数加算
 endRenzoku:
     pop {pc}
 
@@ -64,18 +64,11 @@ dengeki:
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
-    bne end_bolt
+    bne end_bolt	@闘技場は無効
 
-    mov r0, r6
-    mov r1, r8
-        ldr r3, ADDRESS+4 @;bolt
-        mov lr, r3
-        .short 0xF800
-    orr r4, r0
-    
-    mov r0, r8
-    mov r1, r6
-        ldr r3, ADDRESS+4 @;bolt
+    ldr r0, =0x0203a4e8
+    ldr r1, =0x0203a568
+        ldr r3, ADDRESS+4 @bolt
         mov lr, r3
         .short 0xF800
     orr r4, r0

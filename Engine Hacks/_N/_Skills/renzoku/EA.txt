@@ -23,7 +23,7 @@ POIN hasAdept
 POIN bolting_impl
 
 yosoku:
-    #incbin "yosoku.gba"
+    #incbin "yosoku.dmp"
     POIN bolting_impl
 
 
