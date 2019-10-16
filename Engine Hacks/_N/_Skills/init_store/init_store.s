@@ -121,8 +121,6 @@ emOk:
 	
 	cmp r0, r5	@1個目と同じ
 	beq emRetry
-	cmp r0, #0x7	@奥義
-	beq emRetry
 	cmp r0, #0x9	@戦技
 	beq emRetry
 	cmp r0, #0xA	@エリート
