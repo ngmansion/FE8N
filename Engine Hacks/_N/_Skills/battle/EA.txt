@@ -41,6 +41,7 @@ battle_before:
     POIN hasKnightkneeler
     POIN hasMonsterBlast
     POIN hasDartingBlow
+    POIN hasResolve
 
 battle_after:
     #incbin main.dmp
@@ -55,6 +56,7 @@ battle_down:
   POIN hasNihil
   POIN hasFury
   POIN hasPoisonStrike
+  POIN hasCounter
     
 hasFury:
     HAS_SKILL

@@ -102,7 +102,8 @@ startCounter:
     
     ldr r1, =0x0203a4d0
     ldrb	r1, [r1, #4]
-    
+    cmp r1, #0
+    beq falseCounter	@ノーダメージなら終了
 @on
     ldrb r0, [r4, #19] @現在19
     sub r0, r1

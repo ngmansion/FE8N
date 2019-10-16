@@ -13,6 +13,7 @@
 .equ HORSE_E_ADR, (adr+76)
 .equ MONSTER_E_ADR, (adr+80)
 .equ HIEN_ADR, (adr+84)
+.equ ACE_ADR, (adr+88)
 
 .equ FLY_E2_ADR, (0x89024B6)
 .equ ARMOR_E2_ADR, (0x890244B)
@@ -51,14 +52,18 @@
 
 	bl Faire
 
+    ldr r0, [r5, #4]
+    cmp r0, #0
+    beq gotSkill
     mov	r0, r5
     ldr r1, adr	@見切り
     _blr r1
     cmp r0, #0
     bne endNoEnemy
-    
+gotSkill:
     bl shishi
     bl Savior	@護り手
+    bl Ace
     
 endNoEnemy:
 @相手の存在をチェック
@@ -91,6 +96,40 @@ RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+
+Ace:
+	push {lr}
+	mov r0, r4
+		ldr r3, ACE_ADR
+		mov lr, r3
+		.short 0xF800
+	cmp	r0, #0
+	beq	endAce
+
+	ldrb	r0, [r4, #0x13]	@NOW
+	ldrb	r1, [r4, #0x12]	@MAX
+	lsl	r0, r0, #1
+	cmp	r0, r1
+	bgt	endAce
+    mov r1, #90
+    ldrh r0, [r4, r1]
+    add r0, #8
+    strh r0, [r4, r1] @自分
+    
+    mov r1, #92
+    ldrh r0, [r4, r1]
+    add r0, #8
+    strh r0, [r4, r1] @自分
+    
+    mov r1, #94
+    ldrh r0, [r4, r1]
+    add r0, #8
+    strh r0, [r4, r1] @自分
+	
+endAce:
+	pop {pc}
+	
 
 EffectiveBonus:
     push {lr}
