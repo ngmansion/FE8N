@@ -79,7 +79,7 @@ WarSkill:
 	strh r0, [r1] @攻撃増加
 	
 	mov r1, r4
-	add r1, #96
+	add r1, #100
 	ldrh r0, [r1]
 	add r0, #20
 	cmp r0, #100
