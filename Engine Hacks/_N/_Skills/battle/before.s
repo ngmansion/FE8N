@@ -17,7 +17,7 @@
 
 .equ FLY_E2_ADR, (0x89024B6)
 .equ ARMOR_E2_ADR, (0x890244B)
-.equ HORSE_E2_ADR, (0x890246C)
+.equ HORSE_E2_ADR, (0x8902458)
 .equ MONSTER_E2_ADR, (0x89024C5)
 
 
@@ -206,25 +206,6 @@ getEffective:
 	strh	r0, [r2]
 	
 endEffective:
-	pop {pc}
-
-WarSkill:
-    push {lr}
-	mov r0, #67
-	ldrb r0, [r4, r0]
-	mov r1, #0xFE
-	and r0, r1
-	cmp r0, r1
-	bne endWar
-
-
-	
-	mov r1, r4
-	add r1, #96
-	ldrh r0, [r1]
-	add r0, #20
-	strh r0, [r1] @命中増加
-endWar:
 	pop {pc}
 
 effective_impl:

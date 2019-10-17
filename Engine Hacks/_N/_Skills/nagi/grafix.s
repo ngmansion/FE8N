@@ -10,7 +10,7 @@
 	add r0, #0x20
 	add r0, #0x80
 	add r0, #0x80
-	mov r1, #0xFE
+	mov r1, #0xFD
 	mov	r2, #0x60
 	lsl	r2, r2, #7
 	bl	Icon
@@ -20,7 +20,7 @@
 	add r0, #0x20
 	add r0, #0x80
 	add r0, #0x80
-	mov r1, #0xFF
+	mov r1, #0xFE
 	mov	r2, #0x60
 	lsl	r2, r2, #7
 	bl	Icon

@@ -30,6 +30,7 @@
     bl DistantGuard
     cmp r0, #0
     bne endZero
+    bl WarSkill
     
     mov	r0, r6
     ldr r1, adr+16 @見切り
@@ -61,6 +62,33 @@ endZero:
     pop {r0}
     bx r0
 
+
+WarSkill:
+    push {lr}
+	mov r0, #67
+	ldrb r0, [r4, r0]
+	mov r1, #0xFE
+	and r0, r1
+	cmp r0, r1
+	bne endWar
+
+	mov r1, r4
+	add r1, #90
+	ldrh r0, [r1]
+	add r0, #8
+	strh r0, [r1] @攻撃増加
+	
+	mov r1, r4
+	add r1, #96
+	ldrh r0, [r1]
+	add r0, #20
+	cmp r0, #100
+	ble jumpWar
+	mov r0, #100
+jumpWar:
+	strh r0, [r1] @命中増加
+endWar:
+	pop {pc}
 
 DistantGuard:
     push {lr}
