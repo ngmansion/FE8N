@@ -2,6 +2,7 @@
 .equ WAR_FLAG, (0xFF)	@フラグ
 .equ WAR_FLAG2, (0xFE)	@フラグ
 .equ PULSE_ID, (0x09) @奥義の鼓動
+.equ PULSE_START, (0x39)
 
 .thumb
 
@@ -46,19 +47,30 @@ RETURN:
 	mov	pc, r0
 
 QuickenedPulse_back:
+@装備ありで0ならリセット
+@装備関係なく、鼓動なら減算
+	mov r2, r0
+	add r2, #48
+	ldrb r0, [r2]
+	cmp r0, #PULSE_ID
+	beq zeroQuickenedPulse	@鼓動発動中
+	mov r1, #0x0F
+	and r1, r0
+	cmp r1, #PULSE_ID
+	bne endPusle	@鼓動ではない
+@減算
+	sub r0, #0x10
+	b setPulse
+	
+zeroQuickenedPulse:
 	add r1, #72
 	ldrh r1, [r1]
 	cmp r1, #0
 	beq endPusle @装備なしなら終了
-	
-	mov r1, r0
-	add r1, #48
-	ldrb r0, [r1]
-	cmp r0, #PULSE_ID
-	bne endPusle
-
-	mov r0, #0
-	strb r0, [r1]
+@リセット
+	mov r0, #PULSE_START
+setPulse:
+	strb r0, [r2]
 endPusle:
 	bx lr
 

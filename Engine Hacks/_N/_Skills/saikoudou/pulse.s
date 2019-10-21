@@ -23,7 +23,7 @@ pulse:
 	mov pc, r2
 
 dontHeal:
-	sub r3, #0x10
-	strb r3, [r1]
+@	sub r3, #0x10
+@	strb r3, [r1]
 	ldr r2, =0x08018630
 	mov pc, r2
