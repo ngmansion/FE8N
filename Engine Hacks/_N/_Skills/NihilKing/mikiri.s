@@ -4,6 +4,7 @@
 .equ ORACLE_FLAG, (0xDD) @奥義目印
 .equ DEFENSE_FLAG, (0xDF) @防御目印
 .equ WAR_ADR, (67)	@書き込み先(AI1カウンタ)
+.equ WAR_FLAG, (0xFE)	@フラグ
 
 
 .equ RETURN_ADR, 0x0802a4a6
@@ -94,8 +95,14 @@ nonTri:
 @■しゅんころ判定
 	mov r0, r10
 	cmp r0, #KORO_FLAG
-	beq checkZero
-	
+	bne goneDeath	@瞬殺ではない
+	ldr r0, [sp] @r3
+	bl isDeath
+	cmp r0, #1
+	beq isMikiri	@ジェノサイド・戦技はスキップして次へ
+	b FALSE
+
+goneDeath:
 @■ジェノサイド判定
 	ldrb r0, [r3, #11]
 	ldr r1, =0x0203a5e8 @ゲノ
@@ -113,9 +120,9 @@ nonGeno:
 	mov r0, #100
 	str r0, [sp] @r3
 	b end
+
 goneGeno:
 @■戦技判定
-
 	mov r1, #WAR_ADR
 	ldrb r0, [r2, r1]
 	cmp r0, #0xFF
@@ -126,12 +133,7 @@ goneGeno:
 	str r0, [sp] @r3
 	b end
 goneWarSkill:
-checkZero:
-@■ゼロチェック
-	ldr r0, [sp] @r3
-	cmp r0, #0
-	beq end
-
+isMikiri:
 @■見切りチェック
 	mov r0, r3
 	mov r4, r2
@@ -140,9 +142,8 @@ checkZero:
 		.short 0xF800
 	cmp r0, #0
 	beq pulse
-	mov r0, #0
-	str r0, [sp]
-	b toking
+	b FALSE
+
 pulse:	@■奥義の鼓動
 	mov r0, #48
 	ldrb r1, [r4, r0]
@@ -207,12 +208,35 @@ gotAC:
 	ldr	r0, [sp] @r3
 	add	r0, #50
 	str	r0, [sp] @r3
+	b end
+FALSE:
+	mov r0, #0
+	str r0, [sp]
 end:
 	mov r2, #0
 	pop {r3, r4}
 	ldr r0, =RETURN_ADR
 	mov pc, r0
-
+	
+isDeath:
+@戦技チェック
+	cmp r0, #0
+	beq falseDeath	@0なら不発
+	mov r1, #WAR_ADR
+	ldrb r0, [r2, r1]
+	
+	mov r1, #WAR_FLAG
+	and r0, r1
+	cmp r0, r1
+	bne falseDeath	@戦技ではないなら不発
+	
+	mov r0, #1
+	b endDeath
+falseDeath:
+	mov r0, #0
+endDeath:
+	bx lr
+	
 @non
 @	pop	{r3}
 @	mov	r0, #0

@@ -27,6 +27,7 @@
 	mov	r0, r7
 	bl WarSkill_back
 	mov	r0, r7
+	ldr r1, =0x0203a4e8
 	bl QuickenedPulse_back
 	
 @裏側
@@ -34,6 +35,7 @@
 	mov	r1, r7
 	bl Fury
 	mov	r0, r6
+	ldr r1, =0x0203a568
 	bl QuickenedPulse_back
 	
 	pop	{r4, r5, r6, r7}
@@ -44,6 +46,11 @@ RETURN:
 	mov	pc, r0
 
 QuickenedPulse_back:
+	add r1, #72
+	ldrh r1, [r1]
+	cmp r1, #0
+	beq endPusle @装備なしなら終了
+	
 	mov r1, r0
 	add r1, #48
 	ldrb r0, [r1]
