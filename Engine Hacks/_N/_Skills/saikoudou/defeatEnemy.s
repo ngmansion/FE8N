@@ -43,7 +43,12 @@ Alina_back:
 	ldrh r0, [r0]
 	mov r1, #0x20
 	and r0, r1
-	beq falseAlina	@闘技場チェック
+	beq falseAlina	@闘技場以外は終了
+	
+	ldrb r0, [r6, #11]	@部隊表ID
+	lsl r0, r0, #24
+	bmi falseAlina	@敵は無視
+	
 	mov r0, #1
 	strb r0, [r6, #19]	@現在HP
 	b endAlina
