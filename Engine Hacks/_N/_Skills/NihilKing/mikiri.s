@@ -1,4 +1,5 @@
 .equ PULSE_ID, (0x09)	@奥義の鼓動の状態異常
+.equ PULSE_RESET, (0x49)	@奥義の鼓動の状態異常
 
 .equ KORO_FLAG, (0xDC) @瞬殺目印
 .equ ORACLE_FLAG, (0xDD) @奥義目印
@@ -153,9 +154,9 @@ pulse:	@■奥義の鼓動
 	mov r0, r10
 	cmp r0, #ORACLE_FLAG
 	bne toking
-@ゼロ
+@鼓動リセット
 	mov r0, #48
-	mov r1, #0x00
+	mov r1, #PULSE_RESET
 	strb r1, [r4, r0] @状態異常治癒
 	mov r0, #100
 	str r0, [sp] @r3
@@ -166,7 +167,7 @@ pulse:	@■奥義の鼓動
 		mov lr, r1
 		.short 0xF800
 	add r0, #48
-	mov r1, #0
+	mov r1, #PULSE_RESET
 	strb r1, [r0]
 	b end
 	
