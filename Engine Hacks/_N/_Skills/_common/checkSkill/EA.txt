@@ -8,7 +8,7 @@ hasNihil:
 //	POIN skl_table
 
 judgeSkill:
-	#incbin judgeSkill.gba
+	#incbin judgeSkill.dmp
 	POIN skl_table
 	POIN containsSkill
 	POIN judgeUnit

@@ -1,20 +1,20 @@
 
-@define SKL_TBL ADR+0
-@define CONTAINS_SKILL ADR+4
-@define JUDGE_UNIT ADR+8
+.equ SKL_TBL, ADR+0
+.equ CONTAINS_SKILL, ADR+4
+.equ JUDGE_UNIT, ADR+8
 
-@thumb
+.thumb
     push {r4, r5, lr}
     mov r4, r0
     lsl r1, r1, #24
     lsr r1, r1, #24
     mov r5, r1
-;ダミーユニットチェック
+@ダミーユニットチェック
     ldr r2, [r0, #4]
     cmp r2, #0
     beq jump3
 
-;書チェック
+@書チェック
     bl containsSkill
     cmp r0, #1
     beq oui
@@ -25,11 +25,10 @@
     beq oui
     
     mov r2, r5
-@align 4
-    ldr r3, [SKL_TBL]
+    ldr r3, SKL_TBL
     lsl r2, r2, #4
     add r3, r2, r3
-;武器
+@武器
     ldr r2, [r3, #12]
     cmp r2, #0
     beq jump3
@@ -45,17 +44,18 @@ loop3:
     b loop3
 jump3:
     mov r0, #0
-    @dcw $E000
+    .short 0xE000
 oui:
     mov r0, #1
     pop {r4, r5, pc}
-@align 4
-@ltorg
+.align
+.ltorg
 
 containsSkill:
-    ldr r3, [CONTAINS_SKILL]
+    ldr r3, CONTAINS_SKILL
     mov pc, r3
 judgeUnit:
-    ldr r3, [JUDGE_UNIT]
+    ldr r3, JUDGE_UNIT
     mov pc, r3
 ADR:
+
