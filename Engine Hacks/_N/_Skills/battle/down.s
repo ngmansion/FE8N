@@ -1,6 +1,7 @@
 .equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
 .equ WAR_FLAG, (0xFF)	@フラグ
 .equ WAR_FLAG2, (0xFE)	@フラグ
+.equ PULSE_ID, (0x09) @奥義の鼓動
 
 .thumb
 
@@ -25,11 +26,15 @@
 	bl Counter
 	mov	r0, r7
 	bl WarSkill_back
+	mov	r0, r7
+	bl QuickenedPulse_back
 	
 @裏側
 	mov	r0, r6
 	mov	r1, r7
 	bl Fury
+	mov	r0, r6
+	bl QuickenedPulse_back
 	
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
@@ -37,6 +42,18 @@
 RETURN:
 	ldr	r0, =0x0802bfec
 	mov	pc, r0
+
+QuickenedPulse_back:
+	mov r1, r0
+	add r1, #48
+	ldrb r0, [r1]
+	cmp r0, #PULSE_ID
+	bne endPusle
+
+	mov r0, #0
+	strb r0, [r1]
+endPusle:
+	bx lr
 
 WarSkill_back:
 	mov r1, r0

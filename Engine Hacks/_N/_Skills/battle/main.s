@@ -1,6 +1,8 @@
+.equ PULSE_ID, (0x09) @奥義の鼓動
+
+
+
 .thumb
-
-
 @0x02ad3c
 @イクリプス等の直前(自分の数値と相手の数値の計算後)
 @ステータス画面では呼ばれない
@@ -39,11 +41,11 @@
     bne next
     
     bl shisen
+    bl QuickenedPulse
     
 next:
-    
     bl godBless
-
+	
 Return:
     ldr r5, [r4, #76]
     ldr r0, =0x0802ad44
@@ -88,6 +90,20 @@ WarSkill:
 jumpWar:
 	strh r0, [r1] @命中増加
 endWar:
+	pop {pc}
+
+QuickenedPulse:
+	push {lr}
+	mov r0, #48
+	ldrb r1, [r4, r0]
+	cmp r1, #PULSE_ID
+	bne endPulse
+	
+	mov r1, r4
+	add r1, #100
+	mov r0, #100
+	strh r0, [r1]
+endPulse:
 	pop {pc}
 
 DistantGuard:
