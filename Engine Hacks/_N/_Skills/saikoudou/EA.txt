@@ -41,7 +41,7 @@ jumpToHack(defeatEnemy)
 POP
 
 defeatEnemy:
-#incbin defeatEnemy.gba
+#incbin defeatEnemy.dmp
 ALIGN 4
 
 PUSH
