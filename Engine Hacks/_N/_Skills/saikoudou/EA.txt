@@ -112,7 +112,7 @@ canto_impl:
     POIN hasCantoPlus
 
 pulse_impl:
-#incbin pulse.gba
+#incbin pulse.dmp
 
     odorero:
         #incbin "main.dmp"
