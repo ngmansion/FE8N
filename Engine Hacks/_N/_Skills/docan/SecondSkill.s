@@ -22,11 +22,11 @@
     and r0, r1
     bne endwo @闘技場チェック
     
-    mov r0, r8
+	mov r0, r8
 		ldr r1, ADDRESS+8 @見切り
 		_blr r1
-    cmp r0, #0
-    bne endwo
+	cmp r0, #0
+	bne endwo
     
     bl cancel
     
@@ -82,7 +82,25 @@ ikari: @怒り
 		_blr r1
     cmp r0, #3
     beq false @HP1武器は無視
-    
+	
+	mov r0, r7
+		ldr r1, ADDRESS+4 @怒り
+		_blr r1
+	cmp r0, #0
+	beq false
+	
+	mov r0, r8
+		ldr r1, ADDRESS+12 @強運
+		_blr r1
+	cmp r0, #0
+	beq gotWarth	@強運なし
+	
+	mov r0, r7
+		ldr r1, ADDRESS+8 @見切り
+		_blr r1
+	cmp r0, #0
+	beq false	@強運無効化失敗
+gotWarth:
     mov r0, #0x13
     ldrb r0, [r7, r0]	@現在HP
     mov r1, #0x12
@@ -91,11 +109,7 @@ ikari: @怒り
     cmp r0, r1
     bgt false @HP分岐
     
-    mov r0, r7
-		ldr r1, ADDRESS+4 @怒り
-		_blr r1
-    cmp r0, #0
-    beq false
+
     ldrh r0, [r5, #12]
     add r0, #50
     strh r0, [r5, #12]

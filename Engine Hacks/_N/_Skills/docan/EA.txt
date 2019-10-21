@@ -14,6 +14,7 @@ docan:
 POIN hasCancel
 POIN hasWrath
 POIN hasNihil
+POIN hasFortune
 
 hasCancel:
     HAS_SKILL
