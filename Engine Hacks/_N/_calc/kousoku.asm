@@ -13,7 +13,7 @@
 	ldrb	r1, [r1, r4]
 	cmp	r1, #250
 	bls	none
-	mov	r0, #0
+	nop;mov	r0, #0
 none
 	ldrb	r1, [r4, #26]	;体格
 	ldrb	r2, [r4, #20]	;力

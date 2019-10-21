@@ -1,3 +1,5 @@
+#include WP_LV_SKL_TABLE.txt
+
 hasNihil:
 	HAS_SKILL
 	WORD NihilID
@@ -12,6 +14,7 @@ judgeSkill:
 	POIN skl_table
 	POIN containsSkill
 	POIN judgeUnit
+	POIN WP_LV_SKL_TABLE
     
 judgeOccult:
 	#incbin judgeOccult.gba

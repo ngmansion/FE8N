@@ -9,11 +9,13 @@ ORG	0x2a9c6
 #incbin "mahoken.gba"
 
 ///////////////Sランク補正
-ORG	0x2acea
-BYTE	90
-ORG	0x2acee
-BYTE	1
-ORG	0x2acf6
-BYTE	10
+ORG	0x02acd6
+	SHORT $46C0
+	jumpToHack(weapon_bonus)
 
 POP
+
+weapon_bonus:
+	#incbin weapon_bonus.dmp
+
+
