@@ -70,11 +70,8 @@ Ok:
 	beq Retry
 	cmp r0, #0x12	@杖スキル
 	beq Retry
-	cmp r0, #0x28	@奥義(奥義の律動)
-	beq Retry
 	cmp r0, #0x29	@杖スキル
 	beq Retry
-	
 	cmp r0, #0x1a	@守備隊形
 	beq Retry
 	cmp r0, #0x2a	@突撃
@@ -140,8 +137,6 @@ emOk:
 	cmp r0, #0x1E	@戦技
 	beq emRetry
 	cmp r0, #0x23	@生命吸収
-	beq emRetry
-	cmp r0, #0x28	@奥義
 	beq emRetry
 	cmp r0, #0x29	@杖スキル
 	beq emRetry
