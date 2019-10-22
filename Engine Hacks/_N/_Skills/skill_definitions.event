@@ -50,6 +50,8 @@
 #define DefenderID 48 //0x30 護り手
 #define PoisonStrikeID 49 //0x31 蛇毒
 #define DartingBlowID 50 //0x32 飛燕の一撃
+#define PushID 51 //0x33 渾身
+
 
 
 #define AstraID 64 //0x40流星

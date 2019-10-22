@@ -1,6 +1,7 @@
 .equ SAVIOR_ADR, (adr+44)
 .equ SAVIOR_DAMAGE, (10)
 
+.equ SHISHI_ADR, (adr+4)
 
 .equ SWORD_F_ADR, (adr+48)
 .equ LANCE_F_ADR, (adr+52)
@@ -14,6 +15,7 @@
 .equ MONSTER_E_ADR, (adr+80)
 .equ HIEN_ADR, (adr+84)
 .equ ACE_ADR, (adr+88)
+.equ KONSHIN_ADR, (adr+92)
 
 .equ FLY_E2_ADR, (0x89024B6)
 .equ ARMOR_E2_ADR, (0x890244B)
@@ -61,7 +63,8 @@
     cmp r0, #0
     bne endNoEnemy
 gotSkill:
-    bl shishi
+    bl Shishi
+    bl Konshin
     bl Savior	@護り手
     bl Ace
     
@@ -375,21 +378,32 @@ falseKoroshi:
 endKoroshi:
 	pop {pc}
     
+Shishi:
+	push {lr}
+	mov r0, r4
+	ldr r1, SHISHI_ADR
+	_blr r1
+	cmp r0, #0
+	beq falseShishi
+	b gotKoroshi
+falseShishi:
+	mov r0, #0
+	pop {pc}
 
-shishi:
+Konshin:
     push {lr}
     mov r0, r4
-    ldr r1, adr+4
+    ldr r1, KONSHIN_ADR
     _blr r1
     cmp r0, #0
-    beq falseShishi
+    beq falseKonshin
     
 	ldrb r1, [r4, #18] @最大HP
 	ldrb r0, [r4, #19] @現在HP
 	cmp r0, r1
-	blt falseShishi @現在が最大よりも小さい場合
+	blt falseKonshin @現在が最大よりも小さい場合
 	b gotKoroshi
-falseShishi:
+falseKonshin:
 	mov r0, #0
 	pop {pc}
     

@@ -42,6 +42,7 @@ battle_before:
     POIN hasMonsterBlast
     POIN hasDartingBlow
     POIN hasResolve
+    POIN hasPush
 
 battle_after:
     #incbin main.dmp
@@ -153,3 +154,8 @@ hasCounter:
     HAS_SKILL
     WORD CounterID
     POIN judgeSkill
+hasPush:
+    HAS_SKILL
+    WORD PushID
+    POIN judgeSkill
+

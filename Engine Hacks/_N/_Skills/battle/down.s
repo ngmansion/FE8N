@@ -230,13 +230,12 @@ Fury:
 		.short 0xF800
 	cmp	r0, #0
 	beq false
-	ldrb r2, [r4, #18] @最大HP
 	ldrb r0, [r4, #19] @現在HP
-	cmp r0, r2
-	blt jump @現在が最大よりも小さい場合
-	sub	r0, #1
-	strb	r0, [r4, #19]
+	sub	r0, #3
+	bgt jump
+	mov	r0, #1
 jump:
+	strb	r0, [r4, #19]
 	mov	r0, #1
 	b	ret
 false:
