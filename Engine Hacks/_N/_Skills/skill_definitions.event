@@ -51,7 +51,7 @@
 #define PoisonStrikeID 49 //0x31 蛇毒
 #define DartingBlowID 50 //0x32 飛燕の一撃
 #define PushID 51 //0x33 渾身
-
+#define SoloID 52 //0x34 孤軍
 
 
 #define AstraID 64 //0x40流星
