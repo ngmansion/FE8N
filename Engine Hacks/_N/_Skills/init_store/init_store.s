@@ -1,4 +1,4 @@
-.equ SKILL_MAX, (0x32)	@飛燕
+.equ SKILL_MAX, (0x35)	@城塞
 
 
 .thumb
@@ -81,6 +81,8 @@ Ok:
 	cmp r0, #0x22	@電撃戦闘
 	beq Retry
 	cmp r0, #0x2F	@相性激化
+	beq Retry
+	cmp r0, #0x35	@城塞
 	beq Retry
 
 	ldr r2, [r4]

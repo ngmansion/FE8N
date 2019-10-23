@@ -44,13 +44,15 @@ battle_before:
     POIN hasResolve
     POIN hasPush
     POIN hasSolo
-
+    POIN hasLifeAndDeath
+    POIN hasFort
+    
 battle_after:
     #incbin main.dmp
     POIN hasDistantGuard
     POIN hasLightBless
     POIN hasDarkBless
-    POIN hasLifeAndDeath
+    POIN 0
     POIN hasNihil
     
 battle_down:
@@ -163,7 +165,9 @@ hasSolo:
     HAS_SKILL
     WORD SoloID
     POIN judgeSkill
-    
-    
+hasFort:
+    HAS_SKILL
+    WORD FortID
+    POIN judgeSkill
     
     

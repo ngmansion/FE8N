@@ -40,7 +40,6 @@
     cmp r0, #0
     bne next
     
-    bl shisen
     bl QuickenedPulse
     
 next:
@@ -150,39 +149,7 @@ endBless:
     mov r0, #0
     pop {pc}
 
-shisen:
-    push {lr}
-    mov r0, r4
-    ldr r1, adr+12 @死線
-    _blr r1
-    cmp r0, #0
-    beq falseShisen
-    
-    mov r1, r4
-    mov r0, #90
-    ldrh r0, [r1, r0]
-    add r0, #10
-    add r1, #90
-    strh r0, [r1] @自分
-    mov r1, r4
-    mov r0, #94
-    ldrh r0, [r1, r0]
-    add r0, #10
-    add r1, #94
-    strh r0, [r1] @自分
-    
-    mov r1, r6
-    mov r0, #90
-    ldrh r0, [r1, r0]
-    add r0, #10
-    add r1, #90
-    strh r0, [r1] @相手
-    mov r0, #1
-    b endShisen
-falseShisen:
-    mov r0, #0
-endShisen:
-    pop {pc}
+
 
 .ltorg
 adr:

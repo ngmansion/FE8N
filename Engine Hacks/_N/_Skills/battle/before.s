@@ -17,6 +17,9 @@
 .equ ACE_ADR, (adr+88)
 .equ KONSHIN_ADR, (adr+92)
 .equ SOLO_ADR, (adr+96)
+.equ SHISEN_ADR, (adr+100)
+.equ FORT_ADR, (adr+104)
+
 
 
 .equ FLY_E2_ADR, (0x89024B6)
@@ -58,43 +61,41 @@
 
     ldr r0, [r5, #4]
     cmp r0, #0
-    beq gotSkill
+    beq gotSkill	@相手いない
 	mov	r0, r5
 
 	bl isMikiri
 	
 	cmp r0, #0
-	bne endNoEnemy
+	bne endNoEnemy	@見切り持ちなら終了
 gotSkill:
 	bl Shishi
 	bl Konshin
 	bl Savior	@護り手
 	bl Ace
-@	bl Solo
+	bl shisen_A
+	bl Solo
+	bl Fort
 
 endNoEnemy:
 @相手の存在をチェック
     ldr r0, [r5, #4]
     cmp r0, #0
-    beq endNeedEnemy
+    beq endNeedEnemy	@相手いない
     
     bl EffectiveBonus
-    
+	bl shisen_B
+	
     mov	r0, r5
 	bl isMikiri
     cmp r0, #0
     bne endNeedEnemy
     
     bl kishin
-    
     bl kongou
-    
     bl Hien
-    
     bl koroshi
-    
     bl DistantDef
-    
     bl CloseDef
     
 endNeedEnemy:
@@ -105,6 +106,181 @@ RETURN:
 .align
 Alina_Adr:
 .long 0x0203a4d0
+
+
+Fort:
+	push {lr}
+	mov r0, r4
+
+	bl isFort
+
+	cmp r0, #0
+	beq falseFort
+
+	mov r1, r4
+	add r1, #90
+	ldrh r0, [r1]
+	sub r0, #3
+	strh r0, [r1] @自分
+	
+	mov r1, r4
+	add r1, #92
+	ldrh r0, [r1]
+	add r0, #3
+	strh r0, [r1] @自分
+	
+	mov r1, r4
+	add r1, #98
+	ldrh r0, [r1]
+	add r0, #20
+	strh r0, [r1] @自分
+	
+	mov r0, #1
+	b endFort
+falseFort:
+	mov r0, #0
+endFort:
+	pop {pc}
+
+shisen_A:	@自分死線
+    push {lr}
+    mov r0, r4
+    
+    bl isShisen
+    
+    cmp r0, #0
+    beq falseShisen
+    
+    mov r1, r4
+    mov r0, #90
+    ldrh r0, [r1, r0]
+    add r0, #10
+    add r1, #90
+    strh r0, [r1] @自分
+    mov r1, r4
+    mov r0, #94
+    ldrh r0, [r1, r0]
+    add r0, #10
+    add r1, #94
+    strh r0, [r1] @自分
+    mov r0, #1
+    b endShisen
+falseShisen:
+    mov r0, #0
+endShisen:
+    pop {pc}
+
+shisen_B:	@相手死線
+    push {lr}
+    mov r0, r5
+    bl isShisen
+    cmp r0, #0
+    beq falseShisen
+    mov r0, r4
+    bl isMikiri
+    cmp r0, #0
+    bne falseShisen	@見切り持ちなら終了
+    
+    mov r1, r4
+    mov r0, #90
+    ldrh r0, [r1, r0]
+    add r0, #10
+    add r1, #90
+    strh r0, [r1] @自分
+    mov r0, #1
+    b endShisen
+
+
+Solo:
+	push {r4, r5, r6, lr}
+	ldrb r6, [r4, #0xB]
+	mov r0, #0xC0
+	and r6, r0	@r6に部隊表ID
+	
+	mov r0, r4
+	bl isSolo
+	cmp r0, #0
+	beq falseSolo
+	
+loopSolo:
+	add r6, #1
+	mov r0, r6
+	bl Get_Status
+	mov r5, r0
+	cmp r0, #0
+	beq trueSolo	@リスト末尾
+	
+	ldrb r0, [r4, #0xB]
+	ldrb r1, [r5, #0xB]
+	cmp r0, r1
+	beq loopSolo	@自分
+	ldr r0, [r5, #0xC]
+	mov r1, #0x0C
+	and r0, r1
+	bne loopSolo	@死亡または非出撃
+	ldrb r0, [r5, #19]
+	cmp r0, #0
+	beq loopSolo	@HPゼロ
+	
+	mov r0, r4
+	mov r1, r5
+	bl CheckXY
+	cmp r0, #1
+	beq falseSolo
+	b loopSolo
+trueSolo:
+	mov r1, #90
+	ldrh r0, [r4, r1]
+	add r0, #3
+	strh r0, [r4, r1] @自分
+	mov r1, #94
+	ldrh r0, [r4, r1]
+	add r0, #3
+	strh r0, [r4, r1] @自分
+	mov r1, #96
+	ldrh r0, [r4, r1]
+	add r0, #20
+	strh r0, [r4, r1] @自分
+falseSolo:
+	pop {r4, r5, r6, pc}
+
+CheckXY:
+@r5とr4が2マス以内に居るならr0=1
+	mov	r2, #16
+	ldsb	r2, [r4, r2]
+	mov	r0, #16
+	ldsb	r0, [r5, r0]
+	sub	r1, r2, r0
+	cmp	r1, #0
+	bge	jump1CheckXY
+	sub	r1, r0, r2
+
+jump1CheckXY:
+	mov	r3, #17
+	ldsb	r3, [r4, r3]
+	mov	r2, #17
+	ldsb	r2, [r5, r2]
+	sub	r0, r3, r2
+	cmp	r0, #0
+	bge	jump2CheckXY
+	sub	r0, r2, r3
+
+jump2CheckXY:
+	add	r0, r1, r0
+	cmp	r0, #2
+	bgt	falseCheckXY	@2マス以内に居ない
+	mov r0, #1
+	b endCheckXY
+falseCheckXY:
+	mov r0, #0
+endCheckXY:
+	bx lr
+
+Get_Status:
+	ldr r1, =0x08019108
+	mov pc, r1
+
+
 
 Ace:
 	push {lr}
@@ -244,83 +420,6 @@ falseEffective_impl:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-
-Solo:
-	push {r4, r5, r6, lr}
-	ldrb r6, [r4, #0xB]
-	mov r0, #0xC0
-	and r6, r0	@r6に部隊表ID
-	
-	mov r0, r4
-	bl isSolo
-	cmp r0, #0
-	beq falseSolo
-	
-loopSolo:
-	add r0, r6, #1
-	bl Get_Status
-	mov r5, r0
-	cmp r0, #0
-	beq trueSolo	@リスト末尾
-	
-	ldrb r0, [r4, #0xB]
-	ldrb r1, [r5, #0xB]
-	cmp r0, r1
-	beq loopSolo	@自分
-	ldr r0, [r5, #0xC]
-	mov r1, #0x0C
-	and r0, r1
-	bne loopSolo	@死亡または非出撃
-	ldrb r0, [r5, #19]
-	cmp r0, #0
-	beq loopSolo	@HPゼロ
-	
-	mov r0, r4
-	mov r1, r5
-	bl CheckXY
-	cmp r0, #1
-	beq falseSolo
-	b loopSolo
-trueSolo:
-	bl setKoroshi
-falseSolo:
-	pop {r4, r5, r6, pc}
-
-CheckXY:
-@r5とr4が2マス以内に居るならr0=1
-	mov	r2, #16
-	ldsb	r2, [r4, r2]
-	mov	r0, #16
-	ldsb	r0, [r5, r0]
-	sub	r1, r2, r0
-	cmp	r1, #0
-	bge	jump1CheckXY
-	sub	r1, r0, r2
-
-jump1CheckXY:
-	mov	r3, #17
-	ldsb	r3, [r4, r3]
-	mov	r2, #17
-	ldsb	r2, [r5, r2]
-	sub	r0, r3, r2
-	cmp	r0, #0
-	bge	jump2CheckXY
-	sub	r0, r2, r3
-
-jump2CheckXY:
-	add	r0, r1, r0
-	cmp	r0, #2
-	bgt	falseCheckXY	@2マス以内に居ない
-	mov r0, #1
-	b endCheckXY
-falseCheckXY:
-	mov r0, #0
-endCheckXY:
-	bx lr
-
-Get_Status:
-	ldr r1, =0x0801913c
-	mov pc, r1
 
 Faire:
     push {lr}
@@ -704,6 +803,13 @@ isAce:
 isSolo:
 	ldr r3, SOLO_ADR
 	mov pc, r3
+isShisen:
+	ldr r3, SHISEN_ADR
+	mov pc, r3
+isFort:
+	ldr r3, FORT_ADR
+	mov pc, r3
+	
 	
 .align
 adr:
