@@ -50,14 +50,14 @@
 @相手が存在するとは限らない(ダミーかもしれない)
 .thumb
 @闘技場チェック
+	bl Faire
+	
     ldr r0, Alina_Adr
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
     bne RETURN
 @相手が必要ない処理
-
-	bl Faire
 
     ldr r0, [r5, #4]
     cmp r0, #0
