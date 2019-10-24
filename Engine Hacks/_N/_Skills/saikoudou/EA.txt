@@ -47,6 +47,11 @@ ALIGN 4
 PUSH
 ORG 0x01858c
 	jumpToHack(setStartingTurn)
+	
+	
+ORG	0x1860A //自然回復なし
+	BYTE $09 $2A $02 $D0 $58 $1E $FF $38
+	
 POP
 setStartingTurn:
 	#incbin setStartingTurn.dmp

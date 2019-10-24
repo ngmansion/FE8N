@@ -1,6 +1,6 @@
 
 
-.equ PULSE_ID, (0x39)
+.equ PULSE_ID, (0x29)
 .equ DEFEAT, (0xFF)
 .equ DEFEATED, (0xFE)
 .equ DEFEAT2, (0x7F)

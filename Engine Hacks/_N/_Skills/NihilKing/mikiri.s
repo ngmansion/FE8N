@@ -1,5 +1,5 @@
 .equ PULSE_ID, (0x09)	@奥義の鼓動の状態異常
-.equ PULSE_RESET, (0x49)	@奥義の鼓動の状態異常
+.equ PULSE_RESET, (0x39)	@奥義の鼓動の状態異常
 
 .equ KORO_FLAG, (0xDC) @瞬殺目印
 .equ ORACLE_FLAG, (0xDD) @奥義目印
