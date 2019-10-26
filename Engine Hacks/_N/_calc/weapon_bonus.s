@@ -1,25 +1,39 @@
-.equ LEVEL_E, (1)
-.equ LEVEL_D, (2)
-.equ LEVEL_C, (3)
-.equ LEVEL_B, (4)
-.equ LEVEL_A, (5)
-.equ LEVEL_S, (6)
+SWORD = (0)
+LANCE = (1)
+AXE = (2)
+BOW = (3)
+STAFF = (4)
+ANIMA = (5)
+LIGHT = (6)
+DARK = (7)
 
-@0002acd6
+LEVEL_E = (1)
+LEVEL_D = (2)
+LEVEL_C = (3)
+LEVEL_B = (4)
+LEVEL_A = (5)
+LEVEL_S = (6)
+
+@0802acc8
 .thumb
-	cmp r0, #0
+	
+	mov r0, #0x50
+	ldrb r0, [r4, r0]
+	cmp r0, #SWORD
 	beq typeA
-	cmp r0, #1
+	cmp r0, #LANCE
 	beq typeB
-	cmp r0, #2
+	cmp r0, #AXE
 	beq typeC
-	cmp r0, #3
+	cmp r0, #BOW
 	beq typeB
-	cmp r0, #5
-	beq typeC
-	cmp r0, #6
+	cmp r0, #STAFF
 	beq typeA
-	cmp r0, #7
+	cmp r0, #ANIMA
+	beq typeC
+	cmp r0, #LIGHT
+	beq typeA
+	cmp r0, #DARK
 	beq typeC
 	b end
 @åïÅEåı

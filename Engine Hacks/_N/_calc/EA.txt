@@ -9,8 +9,7 @@ ORG	0x2a9c6
 #incbin "mahoken.gba"
 
 ///////////////Sランク補正
-ORG	0x02acd6
-	SHORT $46C0
+ORG	0x02acc8
 	jumpToHack(weapon_bonus)
 
 POP
