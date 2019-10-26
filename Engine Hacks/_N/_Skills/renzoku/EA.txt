@@ -21,6 +21,7 @@ renzokua:
 #incbin "Adept_v01.dmp"
 POIN hasAdept
 POIN bolting_impl
+POIN hasNihil
 
 yosoku:
     #incbin "yosoku.dmp"

@@ -41,6 +41,12 @@ renzoku:
         .short 0xF800
     cmp r0, #0
     beq endRenzoku
+	mov r0, r8
+		ldr r1, ADDRESS+8 @見切り
+		mov lr, r1
+		.short 0xF800
+	cmp r0, #1
+	beq endRenzoku
 got:
     mov r0, r6
 	add r0, #STR_ADR
