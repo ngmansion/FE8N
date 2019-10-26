@@ -1,11 +1,12 @@
 .thumb
 @org	0x08E4B3C0
-@@;月光処理を独立
+@@月光処理を独立
 
-.equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
-.equ WAR_FLAG, (0xFF)	@フラグ
-.equ WAR_FLAG2, (0xFE)	@フラグ
+STR_ADR = (67)	@書き込み先(AI1カウンタ)
+WAR_FLAG = (0xFF)	@フラグ
+WAR_FLAG2 = (0xFE)	@フラグ
 
+NIHIL = (adr+28)	@見切りアドレス
 
 	
 	ldr	r2, [r6, #0]
@@ -15,7 +16,7 @@
 	mov	r1, #128
 	lsl	r1, r1, #9
 	and	r0, r1
-	beq	start	@;月光なしで開始
+	beq	start	@月光なしで開始
 	b	retrun
 start:
 	ldr	r0, [r7, #4]
@@ -103,7 +104,7 @@ magicMeido:
 Flower:
 	bl	Gecko
 	mov	r0, #0x50
-	ldrb	r0, [r7, r0]	@;物理判定
+	ldrb	r0, [r7, r0]	@物理判定
 	cmp	r0, #7
 	beq	addStrength
 	cmp	r0, #6
@@ -129,17 +130,24 @@ Stan:	@戦技化
 	mov	r2, r8
 	ldr	r1, [r2, #4]
 	ldrb	r0, [r1, #4]
-	cmp	r0, #0x66	@@;魔王に無効
+	cmp	r0, #0x66	@@魔王に無効
 	beq	retrun
 	ldr	r2, [r2]
 	ldr	r2, [r2, #40]
 	ldr	r1, [r1, #40]
 	orr	r1, r2
 	lsl	r1, r1, #16
-	bmi	retrun	@;敵将に無効
+	bmi	retrun	@敵将に無効
+	mov r0, r8
+		ldr r1, NIHIL
+		mov lr, r1
+		.short 0xF800
+	cmp r0, #1
+	beq false @見切り持ち
+	
 	mov	r1, r8
 	add	r1, #111
-	mov	r0, #0x24		@@;状態異常(2スリプ,3サイレス,4バサク,Bストン)
+	mov	r0, #0x24		@@状態異常(2スリプ,3サイレス,4バサク,Bストン)
 	strb	r0, [r1, #0]
 	b	Effect
 Stone:	@戦技化
@@ -153,20 +161,27 @@ Stone:	@戦技化
 	mov	r2, r8
 	ldr	r1, [r2, #4]
 	ldrb	r0, [r1, #4]
-	cmp	r0, #0x66	@@;魔王に無効
+	cmp	r0, #0x66	@@魔王に無効
 	beq	retrun
 	ldr	r2, [r2]
 	ldr	r2, [r2, #40]
 	ldr	r1, [r1, #40]
 	orr	r1, r2
 	lsl	r1, r1, #16
-	bmi	retrun		@;敵将に無効
+	bmi	retrun		@敵将に無効
+	mov r0, r8
+		ldr r1, NIHIL
+		mov lr, r1
+		.short 0xF800
+	cmp r0, #1
+	beq false @見切り持ち
+	
 	mov	r1, r8
 	add	r1, #111
-	mov	r0, #0x2B		@@;状態異常(2スリプ,3サイレス,4バサク,Bストン)
+	mov	r0, #0x2B		@@状態異常(2スリプ,3サイレス,4バサク,Bストン)
 	strb	r0, [r1, #0]
-Effect:	@;状態異常特殊エフェクト
-@@;	ldr	r3, =0x0203A604
+Effect:	@状態異常特殊エフェクト
+@@	ldr	r3, =0x0203A604
 	ldr	r3, [r6]
 	ldr	r2, [r3]
 	lsl	r1, r2, #13
@@ -203,15 +218,15 @@ retrun:
 Gecko:
 	push	{lr}
     mov r0, r7
-        ldr r1, adr+24 @;奥義判定
+        ldr r1, adr+24 @奥義判定
         mov lr, r1
         .short 0xF800
     cmp r0, #0
-    beq false @;奥義無し
+    beq false @奥義無し
 
-	ldrb	r0, [r7, #0x15]	@@;奥義発動率
+	ldrb	r0, [r7, #0x15]	@奥義発動率
 	mov	r1, #0
-	ldr	r2, =0x0802a490 @@;r0=確率, r1=#0 乱数
+	ldr	r2, =0x0802a490 @r0=確率, r1=#0 乱数
 	mov	lr, r2
 	.short	0xF800
 	

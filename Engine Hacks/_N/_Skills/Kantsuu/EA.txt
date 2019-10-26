@@ -41,5 +41,5 @@ POIN	listStan
 POIN	listStone
 POIN	listFlower
 POIN judgeOccult
-
+POIN hasNihil
 
