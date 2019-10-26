@@ -136,7 +136,7 @@ WARS_CANCEL_ALT:
 ALIGN	4
 
 Hamidashi_Kiken_Jogai:
-	#incbin "Hamidashi_Kiken_Jogai.gba"
+	#incbin "Hamidashi_Kiken_Jogai.dmp"
 ALIGN	4
 
 Kiken1234_80:
