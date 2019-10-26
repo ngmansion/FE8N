@@ -209,7 +209,12 @@ loopSolo:
 	mov r5, r0
 	cmp r0, #0
 	beq trueSolo	@リスト末尾
-	
+	ldr r0, [r5]
+	cmp r0, #0
+	beq loopSolo	@死亡判定1
+	ldrb r0, [r5, #19]
+	cmp r0, #0
+	beq loopSolo	@死亡判定2
 	ldrb r0, [r4, #0xB]
 	ldrb r1, [r5, #0xB]
 	cmp r0, r1
@@ -217,10 +222,7 @@ loopSolo:
 	ldr r0, [r5, #0xC]
 	mov r1, #0x0C
 	and r0, r1
-	bne loopSolo	@死亡または非出撃
-	ldrb r0, [r5, #19]
-	cmp r0, #0
-	beq loopSolo	@HPゼロ
+	bne loopSolo	@死亡フラグまたは非出撃フラグ
 	
 	mov r0, r4
 	mov r1, r5

@@ -9,42 +9,61 @@
 @ 0x02bfd8
 
 	cmp	r6, #0
-	beq	RETURN
+	bne	START
+	ldr	r0, =0x0802bfec
+	mov	pc, r0
+START:
 	mov	r0, r6
 	mov	r1, r4
 		ldr	r2, =0x0802c134
 		mov	lr, r2
 		.short 0xF800
 @表側
-	mov	r0, r7
-	mov	r1, r6
-	bl Fury
-	mov	r0, r7
-	mov	r1, r6
-	bl Jadoku
-	mov	r0, r7
-	mov	r1, r6
-	bl Counter
+	ldrb r0, [r7, #19]
+	cmp r0, #0
+	beq negative	@自分のHP0
+	
 	mov	r0, r7
 	bl WarSkill_back
 	mov	r0, r7
 	ldr r1, =0x0203a4e8
 	bl QuickenedPulse_back
 	
-@裏側
-	mov	r0, r6
-	mov	r1, r7
+	mov	r0, r7
+	mov	r1, r6
 	bl Fury
+	
+	ldrb r0, [r6, #19]
+	cmp r0, #0
+	beq negative	@相手のHP0
+
+	mov	r0, r7
+	mov	r1, r6
+	bl Jadoku
+
+	mov	r0, r7
+	mov	r1, r6
+	bl Counter
+
+negative:
+@裏側
+	ldrb r0, [r6, #19]
+	cmp r0, #0
+	beq END	@自分のHP0
+	
 	mov	r0, r6
 	ldr r1, =0x0203a568
 	bl QuickenedPulse_back
 	
+	mov	r0, r6
+	mov	r1, r7
+	bl Fury
+	
+END:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-RETURN:
-	ldr	r0, =0x0802bfec
-	mov	pc, r0
+
 
 QuickenedPulse_back:
 @装備ありで0ならリセット
@@ -92,12 +111,12 @@ Counter:
 	push	{r4, lr}
 	mov r4, r0
 	mov r3, r1
-    ldrb r0, [r4, #0x13]
-    cmp r0, #0
-    beq falseCounter		@撃破なら終了
-    ldrb r0, [r3, #0x13]
-    cmp r0, #0
-    beq falseCounter		@撃破なら終了
+@	ldrb r0, [r4, #0x13]
+@	cmp r0, #0
+@	beq falseCounter		@撃破なら終了
+@	ldrb r0, [r3, #0x13]
+@	cmp r0, #0
+@	beq falseCounter		@撃破なら終了
     
     ldr r0, =0x0203a568
     add r0, #72
@@ -163,10 +182,7 @@ Jadoku:
 	push	{r4, lr}
 	mov r3, r0
 	mov r4, r1
-    ldrb r0, [r4, #0x13]
-    cmp r0, #0
-    beq falseJadoku		@相手撃破なら終了
-    
+
     ldrb r0, [r3, #0xB]
     lsl r0, r0, #24
     bmi isRed
