@@ -59,7 +59,7 @@
     bne RETURN
 @相手が必要ない処理
 
-    ldr r0, [r5, #4]
+    ldr r0, [r5]
     cmp r0, #0
     beq gotSkill	@相手いない
 	mov	r0, r5
@@ -79,11 +79,10 @@ gotSkill:
 
 endNoEnemy:
 @相手の存在をチェック
-    ldr r0, [r5, #4]
+    ldr r0, [r5]
     cmp r0, #0
     beq endNeedEnemy	@相手いない
     
-    bl EffectiveBonus
 	bl shisen_B
 	
     mov	r0, r5
@@ -91,6 +90,7 @@ endNoEnemy:
     cmp r0, #0
     bne endNeedEnemy
     
+    bl EffectiveBonus
     bl kishin
     bl kongou
     bl Hien
