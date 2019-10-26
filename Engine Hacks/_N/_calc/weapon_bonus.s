@@ -36,7 +36,7 @@ LEVEL_S = (6)
 	cmp r0, #DARK
 	beq typeC
 	b end
-@Œ•EŒõ
+@Œ•EñEŒõ
 typeA:
 	add	r0, r4
 	add	r0, #40
