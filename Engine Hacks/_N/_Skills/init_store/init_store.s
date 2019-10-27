@@ -11,7 +11,7 @@
 	bgt RETURN
 	cmp r0, #0x2C   @味方ユニット判定
 	bgt notAlly
-@	b RETURN
+	b RETURN
 @;味方
 	mov r5, #0
 	bl GetSkill
