@@ -67,19 +67,19 @@ skipVantage:
 	
 @待ち伏せチェック
 @	lsl	r2, r2, #7	@元待ち伏せ武器チェック
-@	bmi	end100
+@	bmi	end
 	bl	hasVantage
 	cmp	r2, #0
-	beq	end100
+	beq	end
 true:
 	ldr	r0, =0x0203A4D0		@??????????
 	ldrh	r0, [r0]
 	mov	r4, #1
 	and	r4, r0
-	
+	b end
 false:
 	mov r4, #0
-end100:
+end:
 	mov	r0, r4
 	pop	{r4, pc}
 	
