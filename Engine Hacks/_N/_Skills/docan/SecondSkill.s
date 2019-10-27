@@ -105,7 +105,7 @@ gotWarth:
     ldrb r0, [r7, r0]	@現在HP
     mov r1, #0x12
     ldrb r1, [r7, r0]	@最大HP
-    asr r1, r1, #1
+    lsl r0, r0, #1
     cmp r0, r1
     bgt false @HP分岐
     

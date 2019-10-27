@@ -18,7 +18,7 @@ PUSH
 
 POP
 ski_vantage:
- #incbin "vantageBE8J.gba"
+ #incbin "vantageBE8J.dmp"
  POIN hasVantage
  POIN hasNihil
 
