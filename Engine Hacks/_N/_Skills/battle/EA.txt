@@ -52,7 +52,6 @@ battle_after:
     POIN hasDistantGuard
     POIN hasLightBless
     POIN hasDarkBless
-    POIN 0
     POIN hasNihil
     
 battle_down:

@@ -1,5 +1,6 @@
-.equ PULSE_ID, (0x09) @奥義の鼓動
+PULSE_ID = (0x09) @奥義の鼓動
 
+NIHIL_ADR = (adr+12)
 
 
 .thumb
@@ -35,7 +36,7 @@
     bl WarSkill
     
     mov	r0, r6
-    ldr r1, adr+16 @見切り
+    ldr r1, NIHIL_ADR
     _blr r1
     cmp r0, #0
     bne next
@@ -148,9 +149,7 @@ godBless:
 endBless:
     mov r0, #0
     pop {pc}
-
-
-
 .ltorg
+.align
 adr:
 
