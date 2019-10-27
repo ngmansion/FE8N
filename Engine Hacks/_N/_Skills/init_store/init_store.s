@@ -11,13 +11,15 @@
 	bgt RETURN
 	cmp r0, #0x2C   @味方ユニット判定
 	bgt notAlly
-	b RETURN
+@	b RETURN
 @;味方
 	mov r5, #0
 	bl GetSkill
 	mov r5, r0
+ret:
 	bl GetSkill
-	
+	cmp r0, r5
+	beq ret
 	lsl r5, r5, #6
 	orr r0, r0, r5
 	strh r0, [r4, #0x3A]
@@ -32,8 +34,10 @@ notAlly:
 	mov r5, #0
 	bl GetSkill_em
 	mov r5, r0
+ret_em:
 	bl GetSkill_em
-	
+	cmp r0, r5
+	beq ret_em
 	lsl r5, r5, #6
 	orr r0, r0, r5
 	strh r0, [r4, #0x3A]
@@ -46,7 +50,15 @@ RETURN:
 
 
 GetSkill:
-	push {lr}
+	push {r5, r6, r7, lr}
+	ldr r0, [r4]
+	mov r5, #0x26
+	mov r6, #0x27
+	mov r7, #0x31
+	ldrb r5, [r0, r5]
+	ldrb r6, [r0, r6]
+	ldrb r7, [r0, r7]
+	
 Retry:
 	mov r0, #SKILL_MAX-1  
 	ldr r2, =0x08000c58
@@ -66,7 +78,11 @@ loop:
 Ok:
 	add r0, #1   @IDに補正
 	
-	cmp r0, r5	@1個目と同じ
+	cmp r0, r5	@同じ
+	beq Retry
+	cmp r0, r6	@同じ
+	beq Retry
+	cmp r0, r7	@同じ
 	beq Retry
 	cmp r0, #0x12	@杖スキル
 	beq Retry
@@ -94,11 +110,18 @@ Ok:
 	ldrb r1, [r2, r1]
 	cmp r0, r1
 	beq Retry
-	pop {pc}
+	pop {r5, r6, r7, pc}
 
 
 GetSkill_em:
-	push {lr}
+	push {r5, r6, r7, lr}
+	ldr r0, [r4]
+	mov r5, #0x26
+	mov r6, #0x27
+	mov r7, #0x31
+	ldrb r5, [r0, r5]
+	ldrb r6, [r0, r6]
+	ldrb r7, [r0, r7]
 emRetry:
 	mov r0, #SKILL_MAX-1  
 	ldr r2, =0x08000c58
@@ -118,7 +141,11 @@ emloop:
 emOk:
 	add r0, #1   @IDに補正
 	
-	cmp r0, r5	@1個目と同じ
+	cmp r0, r5	@同じ
+	beq emRetry
+	cmp r0, r6	@同じ
+	beq emRetry
+	cmp r0, r7	@同じ
 	beq emRetry
 	cmp r0, #0x9	@戦技
 	beq emRetry
@@ -156,6 +183,6 @@ emOk:
 	ldrb r1, [r2, r1]
 	cmp r0, r1
 	beq emRetry
-	pop {pc}
+	pop {r5, r6, r7, pc}
 
 
