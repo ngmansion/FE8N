@@ -50,7 +50,7 @@ ORG 0x01858c
 	
 	
 ORG	0x1860A //自然回復なし
-	BYTE $09 $2A $02 $D0 $58 $1E $FF $38
+	BYTE $09 $2A $02 $D0 $18 $1C $10 $38
 	
 POP
 setStartingTurn:
