@@ -57,7 +57,7 @@ got:
 	
 	mov r1, #90
 	ldrh r0, [r6, r1]
-	sub r0, #5	@威力減少
+	sub r0, #6	@威力減少
 	strh r0, [r6, r1]
 	
 	add r4, #1				@攻撃回数加算
