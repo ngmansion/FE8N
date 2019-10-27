@@ -76,7 +76,7 @@ end:
 	ldrh	r0, [r7, #0x3A]	@
 	strb	r0, [r3, #25]	@
 	lsl r0, r0, #20
-	lsr r0, r0, #27
+	lsr r0, r0, #28
 	orr r6, r0
 	strh	r6, [r3, #18]	@
 	
