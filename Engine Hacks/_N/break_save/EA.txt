@@ -77,7 +77,7 @@ ALIGN 4
 PUSH
 
 ORG 0xaa8a6
-#incbin "break_save_c.gba"
+#incbin "break_save_c.dmp"
 
 
 ORG 0xaaa90

@@ -1,5 +1,5 @@
-@thumb
-;000aa8a6
+.thumb
+@000aa8a6
 	mov	r3, r12
 	ldr	r1, [r3, #36]
 	lsl	r1, r1, #15
@@ -22,8 +22,8 @@
 	lsl	r0, r0, #9
 	orr	r1, r0
 	str	r1, [r3, #40]
-	ldrb	r0, [r7, #25]	;幸運
-	ldrb	r2, [r7, #26]	;体格
+	ldrb	r0, [r7, #25]	@幸運
+	ldrb	r2, [r7, #26]	@体格
 	lsr	r1, r2, #5
 	lsl	r1, r1, #7
 	orr	r0, r1
@@ -35,54 +35,54 @@
 	mov r6, #0
 	add	r7, #40
 	str	r2, [r3, #20]
-loop
+loop:
 	ldrb	r0, [r7, r2]
 	cmp	r0, #0
-	beq	test
+	beq	skip
 	cmp	r4, #1
 	beq	one
 	cmp	r4, #2
 	beq	two
 	cmp	r4, #3
 	beq	three
-zero
+zero:
 	strb	r0, [r3, #20]
 	lsl r6, r2, #13
-	add	r4, #1
-	b	test
-one
+	b	next
+one:
 	strb	r0, [r3, #21]
 	lsl	r1, r2, #10
 	orr r6, r1
-	add	r4, #1
-	b	test
-two
+	b	next
+two:
 	strb	r0, [r3, #22]
 	lsl	r1, r2, #7
 	orr r6, r1
-	add	r4, #1
-	b	test
-
-three
+	b	next
+three:
 	strb	r0, [r3, #23]
 	lsl	r1, r2, #4
 	orr r6, r1
 	b	end
-test
+next:
+	add	r4, #1
+skip:
 	add	r2, #1
 	cmp	r2, #8
-	bne	loop
-end
+	ble	loop
+end:
 	sub	r7, #40
 	
-	ldrh	r0, [r7, #0x3A]	;
-	strb	r0, [r3, #25]	;
-	lsr r0, r0, #8
+	ldrh	r0, [r7, #0x3A]	@
+	strb	r0, [r3, #25]	@
+	lsl r0, r0, #20
+	lsr r0, r0, #27
 	orr r6, r0
-	strh	r6, [r3, #18]	;
-	
+	strh	r6, [r3, #18]	@
 	
 	mov	r6, #7
 	ldrb	r2, [r7, #26]
+@next 000aa932
 	mov	r4, #31
-;000aa936
+	and	r2, r4
+
