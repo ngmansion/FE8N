@@ -10,7 +10,7 @@
  #define SKL_COLOR_03 0
 
 #define SKL_HELP_04 $05C1
- #define SKL_COLOR_04 0
+ #define SKL_COLOR_04 $FF
 
 #define SKL_HELP_05 $05A9
  #define SKL_COLOR_05 0
@@ -43,7 +43,7 @@
  #define SKL_COLOR_14 $FF
 
 #define SKL_HELP_15 $05D3
- #define SKL_COLOR_15 0
+ #define SKL_COLOR_15 $FF
 
 #define SKL_HELP_16 $05B2
  #define SKL_COLOR_16 0
