@@ -65,7 +65,7 @@ Jinrai:
 	cmp r0, r1
 	beq endJinrai @やられている？
 	
-	lsl r0, r0, #25
+	lsl r0, r0, #24
 	lsr r0, r0, #30
 	bne endJinrai	@攻撃者が敵である
 	
