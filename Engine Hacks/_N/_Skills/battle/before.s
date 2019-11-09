@@ -22,11 +22,12 @@
 
 
 
-.equ FLY_E2_ADR, (0x89024B6)
-.equ ARMOR_E2_ADR, (0x890244B)
-.equ HORSE_E2_ADR, (0x8902458)
-.equ MONSTER_E2_ADR, (0x89024C5)
+FLY_E2_ID = (0x2D)	@てつのゆみ
+ARMOR_E2_ID = (0x26)	@ハンマー
+HORSE_E2_ID = (0x1B)	@ホースキラー
+MONSTER_E2_ID = (0xAA)	@竜石
 
+BL_GETITEMEFFECTIVE = (0x08017478)
 
 .macro _blh to, reg=r3
 	ldr \reg, =\to
@@ -342,30 +343,28 @@ EffectiveBonus:
 	cmp r0, #1
 	beq endEffective
 @Grounder
-	ldr r0, =FLY_E2_ADR
+	mov r0, #FLY_E2_ID
 	ldr r1, FLY_E_ADR
-	mov r2, #0x2D	@てつのゆみ
+
 	bl effective_impl
 	cmp r0, #0
 	bne getEffective
 @HelmSplitter
-	ldr r0, =ARMOR_E2_ADR
+	mov r0, #ARMOR_E2_ID
 	ldr r1, ARMOR_E_ADR
-	mov r2, #0x01	@ダミー武器アドレス
+
 	bl effective_impl
 	cmp r0, #0
 	bne getEffective
 @@@@@
-	ldr r0, =HORSE_E2_ADR
+	mov r0, #HORSE_E2_ID
 	ldr r1, HORSE_E_ADR
-	mov r2, #0x01	@ダミー武器アドレス
 	bl effective_impl
 	cmp r0, #0
 	bne getEffective
 @@@@@
-	ldr r0, =MONSTER_E2_ADR
+	mov r0, #MONSTER_E2_ID
 	ldr r1, MONSTER_E_ADR
-	mov r2, #0x01	@ダミー武器アドレス
 	bl effective_impl
 	cmp r0, #0
 	bne getEffective
@@ -398,16 +397,18 @@ effective_impl:
 @r2に装備武器
     push {r4, r5, r6, lr}
     
-    mov r6, r0
+    mov r4, r0
     mov r0, r4
-    mov r4, r2
     
     _blr r1
     cmp r0, #0
     beq falseEffective_impl
+	mov r0, r4
+	bl getItemEffective
 @r4に装備武器
 @r5に相手アドレス
 @r6に特効リスト
+	mov r6, r0
     mov r3, r4
     mov r1, r6
     mov r4, r5
@@ -811,7 +812,9 @@ isShisen:
 isFort:
 	ldr r3, FORT_ADR
 	mov pc, r3
-	
+getItemEffective:
+	ldr r1, =BL_GETITEMEFFECTIVE
+	mov pc, r1
 	
 .align
 adr:
