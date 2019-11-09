@@ -53,7 +53,7 @@ BL_GETITEMEFFECTIVE = (0x08017478)
 @闘技場チェック
 	bl Faire
 	
-    ldr r0, Alina_Adr
+	bl getAlinaAdr
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
@@ -104,10 +104,6 @@ RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
-.align
-Alina_Adr:
-.long 0x0203a4d0
-
 
 Fort:
 	push {lr}
@@ -794,8 +790,6 @@ Attacker_Adr:
 .long 0x03004df0
 Equipment_Adr:
 .long 0x080172f0
-.ltorg
-.align
 
 isMikiri:
 	ldr r1, adr	@見切り
@@ -815,7 +809,9 @@ isFort:
 getItemEffective:
 	ldr r1, =BL_GETITEMEFFECTIVE
 	mov pc, r1
-	
-.align
+getAlinaAdr:
+	ldr r0, =0x0203a4d0
+	bx lr
+.ltorg
 adr:
 
