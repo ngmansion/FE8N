@@ -30,7 +30,8 @@ hotaru_semi:
 #incbin "semibreak.dmp"
 ALIGN 4
 
-////////////////音
+////////////////音(スキルアニメに統合)
+/*
 PUSH
 
 ORG	0x70A26
@@ -45,3 +46,5 @@ hotaru_oto:
     WORD $3D1 //貫通の音
     WORD $3D1 //必的の音
 ALIGN 4
+*/
+///////////////////////////
