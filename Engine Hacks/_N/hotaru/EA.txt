@@ -30,18 +30,14 @@ hotaru_semi:
 #incbin "semibreak.dmp"
 ALIGN 4
 
-////////////////音
+////////////////音(revert)
 PUSH
 
 ORG	0x70A26
-SHORT	$4687
+SHORT	$2180
 ORG	0x70a48
-POIN	hotaru_oto
+WORD $03d1
 
 POP
-
-hotaru_oto:
-#incbin "kyuin2.gba"
-    WORD $3D1 //貫通の音
-    WORD $3D1 //必的の音
 ALIGN 4
+
