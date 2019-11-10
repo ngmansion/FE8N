@@ -1,0 +1,7 @@
+//config
+
+SorceryBladeList:
+ BYTE	$4F 0
+SorceryBladeList_w:
+ BYTE	$00 0
+

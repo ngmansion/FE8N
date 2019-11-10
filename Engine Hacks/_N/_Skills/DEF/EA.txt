@@ -14,13 +14,13 @@ POP
 
 
 shikkokunori:
- #incbin "inori.gba"
+ #incbin "inori.dmp"
  POIN BigShield_hasSkill
  POIN HolyShield_hasSkill
  POIN GodShield_hasSkill
  POIN Pray_hasSkill
  POIN hasNihil
- WORD ADVANCED_MIRACLE
+ WORD 0
  POIN hasDistantGuard
  POIN 0
  POIN hasDeflect

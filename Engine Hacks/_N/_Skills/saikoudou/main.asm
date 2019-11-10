@@ -1,234 +1,233 @@
-@thumb
+.equ ATK, (0x0203a4e8)
+.equ DEF, (0x0203a568)
+
+.equ DEFEAT, 0xFF
+.equ DEFEATED, 0xFE
+.equ DEFEAT2, 0x7F
+.equ DEFEATED2, 0x7E
+
+.equ hasRemove, (adr+0)
+.equ hasGaleforce, (adr+4)
+.equ hasLifetaker, (adr+8)
+.equ hasCantoPlus, (adr+12)
+.equ hasGaleCause, (adr+16)
+
+.equ TARGET_UNIT, (0x03004df0)
+
+.equ WEAPON_SP_ADR, (0x080172f0)
+@;0x01cea8
+.thumb
     push {r4, r5, lr}
     mov r5, r0
-    ldr r4, =$0801cf00
-    ldr r4, [r4]
+	ldr r4, =TARGET_UNIT
+	ldr r4, [r4]
+@;    ldr r4, =ATK
+;
+    ldr r0, [r4, #12]
+    ldr r1, =0x0801cf04
+    ldr r1, [r1]
+    and r0, r1
+    cmp r0, #0
+    bne FALSE	@死亡・待機(or再行動済)・??状態
     
-    ldr r0, [r4, #0]
+    mov r0, r4
     ldrb	r1, [r0, #0x13]
     cmp r1, #0
-    beq end ;死んだら終了
-    ldr r0, [r0, #12]
-    ldr r1, =$0801cf04
-    ldr r1, [r1]
-    and	r0, r1
-    bne end ;再移動後はスキップ
-    ldr r0, =$0203a568
-    ldr r1, [r0, #4]
-    cmp r1, #0
-    beq next ;相手がいない
-    ldrb r1, [r0, #0xB]
-    cmp r1, #0
-    beq next ;相手がいない
-    bl kaifuku ;戻り値は未使用
+    beq FALSE	@;自分のHPゼロなら何もせずに終了
     
-    ldr r0, [r4, #0]
+    mov r0, r4
     ldrb r1, [r0, #11]
     mov r2, #192
     and r2, r1
-    bne end ;自軍以外は終了
+    bne FALSE @;自軍以外は終了
     
-    bl kami
+    ldr r0, =0x0203a954
+    ldrb r0, [r0, #17]
+    cmp r0, #1
+    beq FALSE @;待機選択なら終了
+    cmp r0, #17
+    beq FALSE @;制圧選択なら終了
+    
+    mov r0, r4
+    add r0, #69
+    ldrb r1, [r0]
+    cmp r1, #DEFEAT
+    beq pattern1
+    cmp r1, #DEFEATED
+    beq pattern0
+    cmp r1, #DEFEAT2
+    beq pattern2
+    cmp r1, #DEFEATED2
+    beq pattern0
+    b pattern3
+pattern1:
+@;再行動なし撃破
+@;
+    mov r1, #DEFEATED
+    strb r1, [r0] @;撃破済み
+
+	bl kaifuku
+	
+    bl shippuJinrai
     cmp r0, #0
-    bne Sound
-    bl kaze
+    bne Sound	@;再行動
+    b next
+
+pattern2:
+@;再行動済み撃破
+@;
+    mov r1, #DEFEATED2
+    strb r1, [r0] @;撃破済み
+    
+    bl kaifuku
+	b next
+
+pattern3:
+@;再行動なし未撃破
+@;
+    ldr r0, =DEF
+    ldr r1, [r0, #4]
+    cmp r1, #0		@;相手がいない
+    beq next		@;
+    
+
+    
+    bl jinpuShourai	@;神風招来
     cmp r0, #0
-    bne Sound
-next
-    bl random
-    cmp r0, #0
-    bne Sound
-;スキル再移動による再移動化
-    ldr r0, [r4]
-        @align 4
-        ldr r1, [adr+12] ;再移動
+    beq next
+@;一回目撃破(再行動済みフラグ)をオン
+    mov r0, #69
+    mov r1, #DEFEATED
+    strb r1, [r4, r0] @;撃破済み
+    
+    b Sound	@;再行動
+    
+pattern0:
+@;再行動済み未撃破
+@;
+next:
+@;スキル再移動による再移動化
+    mov r0, r4
+        ldr r1, adr+12 @;再移動
         mov lr, r1
-        @dcw $F800
+        .short 0xF800
     cmp r0, #0
     bne Canto
-    mov r2, r4
+    ldr r2, =TARGET_UNIT
     ldr r3, [r2]
-    ldr r0, =$0801ceb0 ;通常の再移動判定
+    mov r4, r2
+    ldr r0, =0x0801ceb0 @;通常の再移動判定
     mov pc, r0
-    
 Canto:
-    ldr r3, =$0801cece
+    ldr r4, =TARGET_UNIT
+    ldr r3, =0x0801cece
     mov pc, r3
-    
-    
-Sound:
-    ldr	r0, =$0202bcec
+
+
+Sound:	@;再行動
+    ldr	r0, =0x0202bcec
     add	r0, #65
     ldrb	r0, [r0, #0]
     lsl	r0, r0, #30
     bmi	end
     mov	r0, #97
-    ldr	r2, =$080d4ef4
+    ldr	r2, =0x080d4ef4
     mov	lr, r2
-    @dcw 0xf800
+    .short 0xf800
 end:
-    mov	r0, #0
-    pop	{r4, r5, pc}
+	mov	r0, #0
+	pop	{r4, r5}
+	pop	{r1}
+	bx	r1
+
+FALSE:
+	ldr r4, =TARGET_UNIT
+    ldr r3, =0x0801cefc
+    mov pc, r3
     
-kami:
+    
+    
+@●●●●
+jinpuShourai:
     push {lr}
-    ldr	r0, [r4]
-        @align 4
-        ldr r2, [adr+16]
+    mov	r0, r4
+        ldr r2, hasGaleCause
         mov lr, r2
-        @dcw $F800
+        .short 0xF800
     cmp r0, #0
-    beq dameda
+    beq non_ka
     
-    ldr r0, [r4]
-    ldr r1, =$03004df0
-    ldr r1, [r1]
+    mov r0, r4
+    ldr r1, =ATK
     ldrb r0, [r0, #0xB]
     ldrb r2, [r1, #0xB]
     cmp r0, r2
-    bne dameda
+    bne non_ka
     add r1, #0x48
-    ldrh r0, [r1
-        ldr r2, =$080172f0
+    ldrh r0, [r1]
+        ldr r2, =WEAPON_SP_ADR
         mov lr, r2
-        @dcw $F800
-    cmp r0, #4
-    bne dameda
-    ldr	r0, [r4]
-    add r0, #69
+        .short 0xF800
+    cmp r0, #4		@;杖
+    bne non_ka
+    b gogot @;待機チェック
+@●●●●
+shippuJinrai:
+    push {lr}
+    mov r0, r4
+        ldr r2, hasGaleforce
+        mov lr, r2
+        .short 0xF800
+    cmp r0, #0
+    beq non_ka
+gogot:
+    mov	r0, r4
+    ldr	r1, [r0, #12]	@;行動済み等の状態
+    ldr	r2, =0xfffffbbd
+    and	r1, r2
+    str	r1, [r0, #12]
     
-    ldrb	r1, [r0]
-    cmp r1, #0xFF
-    beq dameda
-    b gogot ;待機チェック
-dameda
+    mov	r0, #1
+    .short 0xE000
+non_ka:
     mov	r0, #0
-    pop	{lr}
+    pop	{pc}
     
-    
-    
-    
-    
+@●●●●
 kaifuku:
     push {lr}
-    ldr	r0, [r4, #0]
-        @align 4
-        ldr r2, [adr+8]
+    mov r0, r4
+        ldr r2, adr+8
         mov lr, r2
-        @dcw $F800
+        .short 0xF800
     cmp r0, #0
     beq non_hp
-    
-    ldr r0, [r4]
-    ldr r1, =$03004df0
-    ldr r1, [r1]
-    ldrb r0, [r0, #0xB]
-    ldrb r1, [r1, #0xB]
-    cmp r0, r1
-    bne non_hp
-    ldr r1, =$0203a568
-    ldrb r1, [r1, #0x13] ;相手撃破
-    cmp r1, #0
-    bne non_hp
-    
-    ldr	r2, [r4]
-    ldrb r0, [r2, #19] ;現在19
-    ldrb r1, [r2, #18] ;最大18
+
+    mov	r2, r4
+    ldrb r0, [r2, #19] @;現在19
+    ldrb r1, [r2, #18] @;最大18
     asr r1, r1, #1
     add r0, r0, r1
     
-    ldrb r1, [r2, #18] ;最大18
+    ldrb r1, [r2, #18] @;最大18
     cmp r0, r1
     ble jump_hp
     mov r0, r1
 jump_hp:
-    strb r0, [r2, #19] ;現在19
+    strb r0, [r2, #19] @;現在19
     
     mov r0, #0x89
     mov r1, #0xB8
-        ldr r2, =$08014B50 ;音
+        ldr r2, =0x08014B50 @;音
         mov lr, r2
-        @dcw $F800
+        .short 0xF800
     mov	r0, #1
-    @dcw $E000
+    .short 0xE000
 non_hp:
     mov	r0, #0
-    pop	{lr}
+    pop	{pc}
     
-    
-    
-kaze:
-    push {lr}
-    ldr	r0, [r4, #0]
-        @align 4
-        ldr r2, [adr+4]
-        mov lr, r2
-        @dcw $F800
-    cmp r0, #0
-    beq non_ka
-    
-    ldr r0, [r4]
-    ldr r1, =$03004df0
-    ldr r1, [r1]
-    ldrb r0, [r0, #0xB]
-    ldrb r1, [r1, #0xB]
-    cmp r0, r1
-    bne non_ka
-    ldr r1, =$0203a568
-    ldrb r1, [r1, #0x13] ;相手撃破
-    cmp r1, #0
-    bne non_ka
-    
-    ldr	r0, [r4, #0]
-    add r0, #69
-    
-    ldrb	r1, [r0]
-    cmp r1, #0xFF
-    bne gogot
-    b non_ka ;待機チェック
-    
-gogot:
-    mov r1, #0xFF
-    strb r1, [r0] ;既成事実
-    
-    ldr	r0, [r4, #0]
-    ldr	r1, [r0, #12]
-    ldr	r2, =$fffffbbd
-    and	r1, r2
-    str	r1, [r0, #12]
-    mov	r0, #1
-    @dcw $E000
-non_ka:
-    mov	r0, #0
-    pop	{lr}
-    
-    
-random
-    push {lr}
-    ldr	r0, [r4, #0]
-        @align 4
-        ldr r2, [adr]
-        mov lr, r2
-        @dcw $F800
-    cmp r0, #0
-    beq non
-        mov r0, #99
-        ldr r2, =$08000c58
-        mov lr, r2
-        @dcw 0xf800
-    ldr	r1, [r4, #0]
-    ldrb	r1, [r1, #25]
-    cmp	r1, r0
-    ble	non
-    ldr	r0, [r4, #0]
-    ldr	r1, [r0, #12]
-    ldr	r2, =$fffffbbd
-    and	r1, r2
-    str	r1, [r0, #12]
-    mov	r0, #1
-    @dcw $E000
-non:
-    mov	r0, #0
-    pop	{lr}
-@ltorg
+
+.align
+.ltorg
 adr:

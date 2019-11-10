@@ -14,7 +14,7 @@ PUSH
     #incext Png2Dmp "_common\Equipment7.png" --lz77
 ORG 0x089348
     WORD $020040ee //アイコン開始位置
-    WORD 6 //アイコンの間隔
+    WORD 4 //アイコンの間隔(4 -> 8, 6 -> 6)
     WORD $02003DAC //Ability文字位置1
     
 #endif
@@ -26,11 +26,13 @@ POIN Skills_Icon
 POP
 
 Skills_Icon:
-#incbin "_common\iconEX.gba"
+#incbin "_common\iconEX.dmp"
 POIN	SIcon_U SIcon_C SIcon_W SIcon_A skl_table
 WORD $08089350 //Ability文字位置2
-WORD $08089348 //ICON_GAP
-WORD $0808934C //ICONPOSITION
+WORD $08089348 //ICONPOSITION
+WORD $0808934C //ICON_GAP
+POIN getSkill
+POIN WP_LV_SKL_TABLE
 SIcon_U:
     #incbin "_common\UNIT.bin"
 SIcon_C:
@@ -39,5 +41,6 @@ SIcon_W:
     #incbin "_common\WEAPON.bin"
 SIcon_A:
     #incbin "_common\ABILITY.bin"
+    
 ALIGN 4
     

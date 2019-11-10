@@ -1,0 +1,16 @@
+PUSH
+
+#ifdef RANDOM_SKILL
+
+ORG 0x017bd4
+	jumpToHack(init_store)
+#else
+	SHORT $bc30 $bc01 $4700 $0000
+#endif
+
+POP
+
+init_store:
+	#incbin init_store.dmp
+
+ALIGN 4

@@ -19,8 +19,7 @@
 	orr	r0, r1
 	lsl	r0, r0, #22	;輸送隊
 	bmi	end
-	lsl	r0, r0,	#6	;敵将
-	bmi	end
+
 	mov	r6, #0
 	mov	r4, r5
 	add	r4, #30

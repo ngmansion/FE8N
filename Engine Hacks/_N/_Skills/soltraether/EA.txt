@@ -12,7 +12,7 @@ POIN	astron
 POP
 
 astron:
-#incbin "astraether.gba"
+#incbin "astraether.dmp"
 POIN hasTenku //0
 POIN hasYoukoh //4
 POIN hasRyusei //8

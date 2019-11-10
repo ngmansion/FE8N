@@ -7,7 +7,7 @@ HolyShieldList:
  BYTE $00 0
 
 GodShieldList:
- BYTE $66 0
+ BYTE $00 0
  
 PrayList:
  BYTE $00 0
@@ -18,4 +18,3 @@ DistantGuardList: //遠距離無効
 DeflectList: //連撃防御
  BYTE $00 0
 
-#define ADVANCED_MIRACLE 0 //0以外にすると「祈り」の効果が変わります

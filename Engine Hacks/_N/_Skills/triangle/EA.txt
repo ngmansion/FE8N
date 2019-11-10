@@ -1,4 +1,4 @@
-
+#include config.txt
 
 PUSH
 
@@ -7,19 +7,21 @@ ORG 0x02c754
 
 POP
 
-
 skill_triangle:
-  #incbin main.gba
+  #incbin main.dmp
   POIN hasNihil
   POIN hasTriangleAdept
+  POIN hasCancelAffinity
   
 
 hasTriangleAdept:
   HAS_SKILL
   WORD TriangleAdeptID
   POIN judgeSkill
-  
-
+hasCancelAffinity:
+  HAS_SKILL
+  WORD CancelAffinityID
+  POIN judgeSkill
 
 
 

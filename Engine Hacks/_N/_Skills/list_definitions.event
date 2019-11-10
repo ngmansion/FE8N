@@ -79,17 +79,17 @@ POIN 0 vengefulFighterList vengefulFighterList_w
 SHORT SKL_HELP_26 SKL_COLOR_26 
 POIN 0 waryFighterList waryFighterList_w
 
-SHORT SKL_HELP_27 SKL_COLOR_27 
-POIN 0 effective_class1 effective_weapon1
+SHORT SKL_HELP_27 SKL_COLOR_27
+POIN 0 GrounderList 0
 
 SHORT SKL_HELP_28 SKL_COLOR_28 
-POIN 0 effective_class2 effective_weapon2
+POIN 0 HelmSplitterList 0
 
 SHORT SKL_HELP_29 SKL_COLOR_29 
-POIN 0 effective_class3 effective_weapon3
+POIN 0 KnightkneelerList 0
 
 SHORT SKL_HELP_30 SKL_COLOR_30 
-POIN 0 effective_class4 effective_weapon4
+POIN 0 MonsterBlastList 0
 
 SHORT SKL_HELP_31 SKL_COLOR_31 
 POIN 0 DistantDefList 0
@@ -146,7 +146,7 @@ SHORT SKL_HELP_48 SKL_COLOR_48
 POIN 0 0 0
 
 SHORT SKL_HELP_49 SKL_COLOR_49 
-POIN 0 0 0
+POIN 0 PoisonStrike_list PoisonStrike_list_w
 
 SHORT SKL_HELP_50 SKL_COLOR_50 
 POIN 0 0 0
@@ -302,40 +302,40 @@ SHORT SKL_HELP_100 SKL_COLOR_100
 POIN 0 GenocideList GenocideList_w
 
 SHORT SKL_HELP_101 SKL_COLOR_101 
-POIN OccultList_u 0 0
+POIN OccultList_u OccultList_c 0
 
 SHORT SKL_HELP_102 SKL_COLOR_102 
-POIN 0 0 0
+POIN 0 SorceryBladeList SorceryBladeList_w
 
 SHORT SKL_HELP_103 SKL_COLOR_103 
-POIN 0 0 0
+POIN 0 SwordfaireList 0
 
 SHORT SKL_HELP_104 SKL_COLOR_104 
-POIN 0 0 0
+POIN 0 LancefaireList 0
 
 SHORT SKL_HELP_105 SKL_COLOR_105 
-POIN 0 0 0
+POIN 0 AxefaireList 0
 
 SHORT SKL_HELP_106 SKL_COLOR_106 
-POIN 0 0 0
+POIN 0 BowfaireList 0
 
 SHORT SKL_HELP_107 SKL_COLOR_107 
-POIN 0 0 0
+POIN 0 TomefaireList 0
 
-SHORT SKL_HELP_108 SKL_COLOR_108 
-POIN 0 0 0
+SHORT SKL_HELP_108 SKL_COLOR_108
+POIN 0 effective_class1 effective_weapon1
 
-SHORT SKL_HELP_109 SKL_COLOR_109 
-POIN 0 0 0
+SHORT SKL_HELP_109 SKL_COLOR_109
+POIN 0 effective_class2 effective_weapon2
 
-SHORT SKL_HELP_110 SKL_COLOR_110 
-POIN 0 0 0
+SHORT SKL_HELP_110 SKL_COLOR_110
+POIN 0 effective_class3 effective_weapon3
 
-SHORT SKL_HELP_111 SKL_COLOR_111 
-POIN 0 0 0
+SHORT SKL_HELP_111 SKL_COLOR_111
+POIN 0 effective_class4 effective_weapon4
 
 SHORT SKL_HELP_112 SKL_COLOR_112 
-POIN 0 0 0
+POIN CancelAffinity_unit CancelAffinity_class CancelAffinity_weapon
 
 SHORT SKL_HELP_113 SKL_COLOR_113 
 POIN 0 0 0

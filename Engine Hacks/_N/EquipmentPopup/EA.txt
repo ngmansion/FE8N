@@ -40,8 +40,8 @@ power_view:
 #incbin "power_view.gba"
 ALIGN 4
 have_two:
- #incbin "have_two.gba"
- POIN hasQuickenedPulse
+#incbin "have_two.gba"
+ALIGN 4
 
 POP
 

@@ -1,3 +1,4 @@
+@define ORACLE_FLAG 0xDD ;奥義目印
 @thumb
 ;;@org	$08E48BB0
 
@@ -20,6 +21,9 @@
         pop {r2}
     cmp r0, #0
     beq end
+;奥義目印
+    mov r1, ORACLE_FLAG
+    mov r10, r1
 
 	ldrb	r0, [r2, #0x15]	;;月光発動率
 	mov	r1, #0

@@ -3,17 +3,19 @@ PUSH
 ORG	0x59e80
 #incbin "59e80.gba"
 ORG	0x59e6a
-SHORT	$46C0
+SHORT	$46C0	//必的発動しても他のエフェクト処理を読む
 ORG	0x59eb0
-SHORT	$46C0
+SHORT	$46C0	//大楯発動しても他のエフェクト処理を読む
+
 ORG	0x70b72
-SHORT	$4687
+SHORT	$4687	//hotaruにジャンプ
 ORG	0x70bc4
 POIN	hotaru_main
 
 POP
 hotaru_main:
-#incbin "hotaru.gba"
+#incbin hotaru.dmp
+#incbin break.bin
 ALIGN 4
 
 ///////////////遠距離バグ
@@ -25,7 +27,7 @@ POIN	hotaru_semi
 
 POP
 hotaru_semi:
-#incbin "semibreak.gba"
+#incbin "semibreak.dmp"
 ALIGN 4
 
 ////////////////音

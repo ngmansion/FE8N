@@ -1,6 +1,10 @@
+@define ORACLE_FLAG 0xDD ;奥義目印
+
 @thumb
 @define MAX_BATTLE_NUM 24
 ;(2B666 > )
+	mov	r0, r10
+	push	{r0}
 ;フラグ初期化
     mov r0, #0
     mov r2, #0
@@ -52,9 +56,15 @@ buki:
     cmp r0, #2
     beq rizaia
 ;hazure
+	pop	{r0}
+	mov	r10, r0
     ldr r0, =$0802b6a2
     mov pc, r0
-taiyo
+taiyo:
+;奥義目印
+    mov r1, ORACLE_FLAG
+    mov r10, r1
+    
     mov r0, #21 ;技(発動率)
     ldsb r0, [r5, r0]
     mov r1, #0
@@ -76,6 +86,8 @@ mov lr, r2
     orr r0, r1
     str r0, [r3]
 rizaia
+	pop	{r0}
+	mov	r10, r0
     ldr r0, =$0802B670
     mov pc, r0
 

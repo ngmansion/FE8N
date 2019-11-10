@@ -24,7 +24,7 @@
 #include "xeno\EA.txt"
 #include "nagi\EA.txt"
 #include "triangle\EA.txt"
-
-
+#include "SorceryBlade\EA.txt"
+#include "init_store\EA.txt"
 
 //#include "my_skill\EA.txt"

@@ -1,0 +1,59 @@
+#ifdef DOWNLOAD
+
+PUSH
+//アイテム指定？
+ORG 0xA8350
+	BYTE $09 $78 $40 $5C $A8 $70 $01 $20 $28 $70 $00 $00 $00 $00 $00 $00 $00 $00
+ORG 0xA8380
+	WORD $03000008 //乱数用
+	POIN DownloadItem
+
+//アイテム無限？
+ORG 0xA976C
+	BYTE $00 $00 $00 $20
+
+//ダウンロードデータ出現
+ORG 0xB0416
+	BYTE $C0 $46
+
+//アイテム出現？
+ORG 0xB53B2
+	BYTE $C0 $46
+
+POP
+
+DownloadItem:
+#incbin ItemList.bin
+ALIGN 4
+
+#else
+//戻し用
+PUSH
+//アイテム指定？
+ORG 0xA8350
+	BYTE $00 $68 $0D $4A $80 $18 $A2 $22 $52 $00 $0B $68 $29 $1C $2E $F0 $33 $F9
+ORG 0xA8380
+	WORD $03006790
+	WORD $08a9ca20
+
+//アイテム無限？
+ORG 0xA976C
+	BYTE $01 $48 $00 $68
+
+//ダウンロードデータ出現
+ORG 0xB0416
+	BYTE $03 $D0
+
+//アイテム出現？
+ORG 0xB53B2
+	BYTE $68 $D0
+POP
+
+
+#endif
+
+PUSH //魔物スキルガチャシステムを削除
+ORG 0x0178c8
+	BYTE $01 $73 $44 $73 $85 $73 $C5 $73
+POP
+

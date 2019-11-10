@@ -2,19 +2,24 @@
 
  ALIGN 4
 
-//////////////////見切りと王の器と勇将
+//奥義の鼓動は、再行動系スキルに関連処理がある。
+//奥義扱いは以下
+//・貫通系
+//・天空系
+//・太陽
+//・瞬殺
+//////////////////見切りと王の器と勇将と奥義の鼓動
 PUSH
  ORG	0x2A490
  BYTE	$00 $4A $97 $46
  POIN	mirikiri
 POP
 mirikiri:
- #incbin "mikiri.gba"
+ #incbin "mikiri.dmp"
  POIN hasNihil
  POIN hasRightfulKing
  POIN hasResolve
  POIN hasRightfulGod
- POIN hasQuickenedPulse
  
 hasRightfulKing:
  HAS_SKILL
