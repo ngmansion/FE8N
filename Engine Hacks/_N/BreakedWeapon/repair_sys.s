@@ -1,5 +1,5 @@
 
-.equ UNIT_MAX_NUM, (51)
+UNIT_MAX_NUM = (51)
 
 .thumb
 	push {lr}
