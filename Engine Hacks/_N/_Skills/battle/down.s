@@ -4,6 +4,9 @@
 .equ PULSE_ID, (0x09) @奥義の鼓動
 .equ PULSE_START, (0x39)
 
+
+DOUBLE_LION_ADR = (ADR+16)
+
 .thumb
 
 @ 0x02bfd8
@@ -18,7 +21,7 @@ START:
 		ldr	r2, =0x0802c134
 		mov	lr, r2
 		.short 0xF800
-@表側
+@攻め側スキル→受け
 	ldrb r0, [r7, #19]
 	cmp r0, #0
 	beq negative	@自分のHP0
@@ -33,6 +36,10 @@ START:
 	mov	r1, r6
 	bl Fury
 	
+	mov	r0, r7
+	mov	r1, r6
+	bl DoubleLion	@HP満タンの時だけなので最後
+	
 	ldrb r0, [r6, #19]
 	cmp r0, #0
 	beq negative	@相手のHP0
@@ -45,8 +52,10 @@ START:
 	mov	r1, r6
 	bl Counter
 
+
+
 negative:
-@裏側
+@受け側スキル→攻め
 	ldrb r0, [r6, #19]
 	cmp r0, #0
 	beq END	@自分のHP0
@@ -59,10 +68,42 @@ negative:
 	mov	r1, r7
 	bl Fury
 	
+	mov	r0, r6
+	mov	r1, r7
+	bl DoubleLion	@HP満タンの時だけなので最後
+	
+
 END:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
+
+DoubleLion:
+	push	{r4, lr}
+	mov	r4, r0
+	
+	mov	r0, r1
+	bl hasNihil
+	cmp	r0, #1
+	beq	falseDouble
+	
+	mov	r0, r4
+	bl hasDoubleLion
+	cmp	r0, #0
+	beq falseDouble
+	
+	ldrb r1, [r4, #18]	@最大HP
+	ldrb r0, [r4, #19]	@現在HP
+	cmp r0, r1
+	blt falseDouble
+	sub r0, #1
+	strb	r0, [r4, #19]
+	mov	r0, #1
+	b	retDouble
+falseDouble:
+	mov	r0, #0
+retDouble:
+	pop	{r4, pc}
 
 
 QuickenedPulse_back:
@@ -149,9 +190,7 @@ startCounter:
     beq falseCounter	@相手応撃未所持なら終了
     
     mov r0, r4
-        ldr r2, ADR+0
-        mov lr, r2
-        .short 0xF800
+    bl hasNihil
     cmp r0, #0
     bne falseCounter	@自分見切り持ちなら終了
     
@@ -207,9 +246,7 @@ startJadoku:
     beq falseJadoku	@蛇毒未所持なら終了
     
     mov r0, r4
-        ldr r2, ADR+0
-        mov lr, r2
-        .short 0xF800
+    bl hasNihil
     cmp r0, #0
     bne falseJadoku	@見切り持ちなら終了
 @蛇毒on
@@ -235,9 +272,7 @@ Fury:
 	push	{r4, lr}
 	mov	r4, r0
 	mov	r0, r1
-		ldr	r1, ADR+0
-		mov	lr, r1
-		.short 0xF800
+	bl hasNihil
 	cmp	r0, #0
 	bne	false
 	mov	r0, r4
@@ -258,6 +293,14 @@ false:
 	mov	r0, #0
 ret:
 	pop	{r4, pc}
+
+hasNihil:
+	ldr	r1, ADR+0
+	mov pc, r1
+
+hasDoubleLion:
+	ldr r1, DOUBLE_LION_ADR
+	mov pc, r1
 
 .align
 .ltorg

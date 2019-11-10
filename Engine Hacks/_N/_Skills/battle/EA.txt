@@ -60,6 +60,7 @@ battle_down:
   POIN hasFury
   POIN hasPoisonStrike
   POIN hasCounter
+  POIN hasDoubleLion
     
 hasFury:
     HAS_SKILL
