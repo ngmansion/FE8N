@@ -16,7 +16,7 @@ ski_kaifuku:
 POIN hasRenewal
 
 tiyu_main:
-  #incbin tiyu.gba
+  #incbin tiyu.dmp
   POIN hasImbue
 
 hasRenewal:

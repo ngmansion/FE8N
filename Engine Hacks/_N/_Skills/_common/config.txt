@@ -3,5 +3,6 @@ NihilList:	//見切り
 
 OccultList_u:	//奥義の書
     BYTE $00 0
-
+OccultList_c:
+    BYTE $00 0
 

@@ -1,0 +1,32 @@
+#include WP_LV_SKL_TABLE.txt
+
+hasNihil:
+	HAS_SKILL
+	WORD NihilID
+	POIN judgeSkill
+	
+//	#incbin hasNihil.gba
+//	WORD NihilID
+//	POIN skl_table
+
+judgeSkill:
+	#incbin judgeSkill.dmp
+	POIN skl_table
+	POIN containsSkill
+	POIN judgeUnit
+	POIN WP_LV_SKL_TABLE
+    
+judgeOccult:
+	#incbin judgeOccult.gba
+	POIN hasOccult
+	WORD $080172f0
+    
+hasOccult:
+	HAS_SKILL
+	WORD OccultID
+	POIN judgeSkill
+
+judgeUnit:
+	#incbin judgeUnit.gba
+	POIN skl_table
+

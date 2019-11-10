@@ -73,14 +73,14 @@ distance
 charisma_fear			;; 恐怖
 	mov r1, #0x66		;必殺
 	ldrb r0,[r5, r1]
-	sub r0, #0x0A
+	sub r0, #15
 	bge str_hit
 	mov r0, #0x00
 str_hit
 	strb r0, [r5, r1]
 	mov r1, #0x62		;回避
 	ldrb r0,[r5, r1]
-	sub r0, #0x0A
+	sub r0, #15
 	bge str_avo
 	mov r0, #0x00
 str_avo

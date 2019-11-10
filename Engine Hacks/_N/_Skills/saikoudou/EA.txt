@@ -1,8 +1,12 @@
 #include config.txt
+ALIGN 4
 
+//奥義の鼓動の状態異常指定は3ファイル。(別フォルダの確率関連にもある)
+//
+
+
+////Revert
 PUSH
-
-//Revert
 
 ORG 0x01cefc
 SHORT $2000 $E02E
@@ -13,13 +17,72 @@ SHORT $DD04
 
 POP
 
-//main
+
+
+////main
 
 PUSH
+ORG 0x018540	//revert(ターン終了時じゃ遅いので)
+SHORT $6808
+SHORT $2800
+SHORT $d002
+SHORT $68c8
+POP
 
-ORG 0x018540
-    WORD $46874800
-    POIN kaze_back
+
+////撃破系
+//0xFF 撃破一回目
+//0xFE 撃破処理済
+//0x7F 撃破二回目以降
+//0x7E 二回目以降処理済み
+PUSH
+ORG 0x02b808
+jumpToHack(defeatEnemy)
+POP
+
+defeatEnemy:
+#incbin defeatEnemy.dmp
+ALIGN 4
+
+PUSH
+ORG 0x01858c
+	jumpToHack(setStartingTurn)
+	
+	
+ORG	0x1860A //自然回復なし
+	BYTE $09 $2A $02 $D0 $18 $1C $10 $38
+	
+POP
+setStartingTurn:
+	#incbin setStartingTurn.dmp
+	POIN hasQuickenedPulse
+
+
+////未整理
+PUSH
+ORG 0x0185f4
+jumpToHack(pulse_impl)
+ 
+//病気のフキダシ表示
+ORG 0x08e6d8
+WORD $0808e748	//revert
+
+//病気のヘルプ
+ORG 0x08ad04
+//WORD $0808ad8a
+WORD $0808ad18
+
+//病気のステータス画面文字
+ORG 0x05c2a3c
+//WORD $04a7
+WORD $0477
+
+//病気の文字
+ORG 0x08e694
+ #incbin pulse_word.gba
+ORG 0x08e6d8
+WORD $08411c80	//	真っ白を描写する為の適当な空き領域
+//WORD $0808e748	//revert用
 
 ORG 0x01cea8
     jumpToHack(odorero)
@@ -27,29 +90,43 @@ ORG 0x01cea8
 ORG 0x1CED4
     BYTE $00 $48 $87 $46
     POIN canto_impl
-
+    
+ORG 0x01cefa
+    SHORT $d107	//revert
+    jumpToHack(remove_impl)
 POP
-ALIGN 4
 
-kaze_back:
-#incbin reboot.gba
+
+#ifndef Debug_Mode
+
+remove_impl:
+#incbin remove.dmp
+POIN hasRemove
+POIN hasGoodyBasket
+
+#else
+
+remove_impl:
+#incbin debug.gba
+POIN hasRemove
+
+#endif
 
 canto_impl:
 #incbin jinrai_fix_ijou.gba
     POIN hasCantoPlus
 
+pulse_impl:
+#incbin pulse.dmp
 
-#ifdef Debug_Mode
     odorero:
-        #incbin "debug.dmp"
-#else
-    odorero:
-        #incbin main.gba
-        POIN hasRemove
+        #incbin "main.dmp"
+        POIN 0
         POIN hasGaleforce
         POIN hasLifetaker
         POIN hasCantoPlus
         POIN hasGaleCause
+        
     hasRemove:
         HAS_SKILL
         WORD RemoveID
@@ -62,14 +139,18 @@ canto_impl:
         HAS_SKILL
         WORD LifetakerID
         POIN judgeSkill
-hasCantoPlus:
-    HAS_SKILL
-    WORD CantoPlusID
-    POIN judgeSkill
-hasGaleCause:
-    HAS_SKILL
-    WORD GaleCauseID
-    POIN judgeSkill
-#endif
+    hasGaleCause:
+        HAS_SKILL
+        WORD GaleCauseID
+        POIN judgeSkill
+    hasCantoPlus:
+        HAS_SKILL
+        WORD CantoPlusID
+        POIN judgeSkill
+
+    hasGoodyBasket:
+        HAS_SKILL
+        WORD 0
+        POIN judgeSkill
 
 ALIGN 4

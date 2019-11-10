@@ -9,7 +9,7 @@ POP
 motikae_main:
     #incbin main.gba
     POIN hasNihil
-    POIN hasCounter
+    POIN hasQuickChange
 
 /*
 PUSH
@@ -19,12 +19,12 @@ POP
 motikae_test:
     #incbin motikae.gba
     POIN hasNihil
-    POIN hasCounter
+    POIN hasQuickChange
 */
     
-hasCounter:
+hasQuickChange:
     HAS_SKILL
-    WORD CounterID
+    WORD QuickChangeID
     POIN judgeSkill
     
     //16540

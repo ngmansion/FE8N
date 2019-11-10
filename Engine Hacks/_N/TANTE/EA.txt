@@ -1,0 +1,49 @@
+
+
+PUSH
+//////////守備age
+
+ORG 0x18f7a
+SHORT	$2200
+WORD	$469F4B00
+POIN	TANTE_hose
+
+
+//////////魔防age
+
+ORG	0x18fa2
+SHORT	$2201
+WORD	$469F4B00
+POIN	TANTE_hose
+
+POP
+
+TANTE_hose:
+#incbin "hose.dmp"
+ALIGN 4
+
+
+///////////破損
+
+PUSH
+//ORG 0x2aec0 突撃パッチと被ったのでずらす
+ORG 0x02aec8
+WORD	$46874800
+POIN	TANTE_hasso
+POP
+
+TANTE_hasso:
+#incbin "hason.dmp"
+ALIGN 4
+
+
+//////////盾計算
+PUSH
+ORG 0x2b3b0
+WORD	$46874800
+POIN	TANTE_tan
+POP
+
+TANTE_tan:
+#incbin "tan.dmp"
+ALIGN 4

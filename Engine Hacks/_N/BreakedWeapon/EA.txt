@@ -1,0 +1,41 @@
+
+PUSH
+
+ORG 0x016550	//回数0の杖は使えない！
+	BYTE $08 $0A	//@lsr r0, r1, #8
+
+ORG 0x016894	//武器を壊さない
+	#incbin main.dmp
+
+ORG 0x016322	//0回の武器は装備できない
+	BYTE $28 $0A
+ORG 0x02af96	//0回の武器は攻撃中断
+	BYTE $00 $0A
+	
+ORG 0x01630c	//耐久無限でも回数をストア
+	BYTE $01 $20
+	
+ORG 0x02b764	//0回の武器でも破損扱い
+	BYTE $00 $0E
+	
+ORG 0x02cbec	//0回の杖でも破損扱い
+	BYTE $00 $0A
+	
+	
+	
+	
+ORG 0x0aefdc
+//	SHORT $b500 $1c02 $4805 $7901
+	jumpToHack(BreakedWeapon)
+
+ORG 0x025f8c
+	jumpToHack(a_restore)
+
+POP
+BreakedWeapon:
+	#incbin repair_sys.dmp
+ALIGN 4
+a_restore:
+	#incbin a_restore.dmp
+ALIGN 4
+

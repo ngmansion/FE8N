@@ -48,8 +48,31 @@ CloseDefList: //近距離防御
 DistantDefList: //遠距離防御
  BYTE $00 0
     
+SwordfaireList: //剣の達人
+ BYTE $15 $16 0
+LancefaireList: //槍の達人
+ BYTE $00 0
+AxefaireList: //斧の達人
+ BYTE $00 0
+BowfaireList: //弓の達人
+ BYTE $00 0
+TomefaireList: //魔の達人
+ BYTE $00 0
 
-    
-    
-    
-    
+GrounderList: //つばめ返し
+ BYTE $00 0
+HelmSplitterList: //兜割
+ BYTE $00 0
+KnightkneelerList: //葬騎の一撃
+ BYTE $00 0
+MonsterBlastList: //魔物撃ち
+ BYTE $00 0
+
+CounterList_class:	//応撃
+ BYTE $00 0
+
+
+
+
+
+

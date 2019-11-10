@@ -18,14 +18,14 @@ xeno_red:
     #incbin red.gba
     
 xeno_main:
-    #incbin main.gba
+    #incbin main.dmp
     POIN hasNihil
     POIN hasXeno
     POIN hasCharge
 xeno_light:
     #incbin light.gba
 xeno_back:
-    #incbin back.gba
+    #incbin back.dmp
 hasXeno:
     HAS_SKILL
     WORD GenocideID

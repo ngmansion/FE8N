@@ -11,7 +11,7 @@
 	beq	$0802b836
 	cmp	r0, #13
 	bne	$0802b860
-	ldr	r4, [$0802b870]
+	ldr	r4, [$0802b85c]
 	ldr	r3, [r4, #0]
 	ldr	r1, [r3, #0]
 	lsl	r1, r1, #8
@@ -29,5 +29,3 @@
 	str	r0, [r4, #0]
 	mov	r0, #1
 	b	$0802b86a
-	lsl	r0, r0, #0
-	lsl	r0, r0, #0
