@@ -33,8 +33,10 @@ POIN	SIcon_U SIcon_C SIcon_W SIcon_A skl_table
 WORD $08089350 //Ability文字位置2
 WORD $08089348 //ICONPOSITION
 WORD $0808934C //ICON_GAP
+POIN skl_anime_table
 POIN getSkill
 POIN WP_LV_SKL_TABLE
+
 SIcon_U:
     #incbin "_common\UNIT.bin"
 SIcon_C:

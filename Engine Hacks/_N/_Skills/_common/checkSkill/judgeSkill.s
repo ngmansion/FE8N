@@ -3,7 +3,7 @@ SKL_TBL = ADR+0
 CONTAINS_SKILL = ADR+4
 JUDGE_UNIT = ADR+8
 WP_LV_SKL_TABLE = ADR+12
-RECORD_SKILLANIME_ID = ADR+16	@record_skillanime_id 保持しているとされたスキルを記録 その後発動すれば、エフェクト付きで表示する.
+RECORD_SKILLANIME_ID_FUNC = ADR+16	@record_skillanime_id 保持しているとされたスキルを記録 その後発動すれば、エフェクト付きで表示する.
 
 .thumb
     push {r4, r5, lr}
@@ -144,7 +144,7 @@ judgeUnit:
     ldr r3, JUDGE_UNIT
     mov pc, r3
 record_skillanime_id:
-	ldr r2, RECORD_SKILLANIME_ID
+	ldr r2, RECORD_SKILLANIME_ID_FUNC
 	mov pc, r2
 .align
 .ltorg

@@ -1,9 +1,10 @@
 .thumb
 
-.equ ICON_LIST_SIZE, (16)
-.equ ICON_NUM_LIMIT, (16) @上限数*2
+ICON_LIST_SIZE = (16)
+ICON_NUM_LIMIT = (16) @上限数*2
 
-.equ WP_LV_SKL_TABLE, (adr+36)
+GET_SKILL_FUNC = (adr+36)
+WP_LV_SKL_TABLE = (adr+40)
 
 @.org	0x08089268
 	
@@ -554,7 +555,7 @@ Get_WpLv:
 	mov pc, r1
 
 get_Skill:
-	ldr r2, adr+32
+	ldr r2, GET_SKILL_FUNC
 	mov pc, r2
 .align
 .ltorg
