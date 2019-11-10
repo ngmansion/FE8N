@@ -15,6 +15,7 @@ judgeSkill:
 	POIN containsSkill
 	POIN judgeUnit
 	POIN WP_LV_SKL_TABLE
+    POIN record_skillanime_id //発動したスキルIDを保存する関数
     
 judgeOccult:
 	#incbin judgeOccult.gba

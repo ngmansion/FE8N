@@ -1,8 +1,9 @@
 
-.equ SKL_TBL, ADR+0
-.equ CONTAINS_SKILL, ADR+4
-.equ JUDGE_UNIT, ADR+8
-.equ WP_LV_SKL_TABLE, ADR+12
+SKL_TBL = ADR+0
+CONTAINS_SKILL = ADR+4
+JUDGE_UNIT = ADR+8
+WP_LV_SKL_TABLE = ADR+12
+RECORD_SKILLANIME_ID = ADR+16	@record_skillanime_id 保持しているとされたスキルを記録 その後発動すれば、エフェクト付きで表示する.
 
 .thumb
     push {r4, r5, lr}
@@ -50,9 +51,13 @@ loop3:
     b loop3
 jump3:
     mov r0, #0
-    .short 0xE000
+    b end
 oui:
+	mov r0, r4	 @RAM上へのユニットポインタ
+	mov r1, r5	 @持っているスキルID
+	bl record_skillanime_id
     mov r0, #1
+end:
     pop {r4, r5, pc}
 
 JudgeWpLv:
@@ -138,6 +143,9 @@ containsSkill:
 judgeUnit:
     ldr r3, JUDGE_UNIT
     mov pc, r3
+record_skillanime_id:
+	ldr r2, RECORD_SKILLANIME_ID
+	mov pc, r2
 .align
 .ltorg
 ADR:
