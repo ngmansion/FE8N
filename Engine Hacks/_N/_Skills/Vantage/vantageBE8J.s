@@ -31,19 +31,13 @@ routine1:
 	ldrh	r2, [r2]
 
 	cmp	r2, #0
-	beq	false
-@反撃不可武器チェック
+	beq	false	@装備なしなら不発
 	ldr	r2, [r0, #76]
 	lsl	r3, r2, #24
-	bmi	false
-@待ち伏せチェック
-@	lsl	r2, r2, #7	@待ち伏せ武器チェック
-@	bmi	jump100
+	bmi	false	@反撃不可武器なら不発
 	bl	hasVantage
 	cmp	r2, #0
-	beq	false
-jump100:
-@見切りチェック
+	beq	false	@待ち伏せ未所持なら不発
 	bl	hasNihil
 	cmp	r2, #0
 	beq	skipVantage	@見切り未所持
@@ -54,23 +48,18 @@ jump100:
 	and	r4, r2
 skipVantage:
 
+	bl	routine2	@攻め側のアドレス取得
 @@@@@@@@@@@@攻め側チェック
-	bl	routine2
-@反撃不可武器チェック
 	ldr	r2, [r0, #76]
 	lsl	r3, r2, #24
-	bmi	false
-@見切りチェック
+	bmi	false	@反撃不可武器なら不発
 	bl	hasNihil
 	cmp	r2, #1
-	beq	false
+	beq	false	@攻め側が見切りを持っているなら不発
 	
-@待ち伏せチェック
-@	lsl	r2, r2, #7	@元待ち伏せ武器チェック
-@	bmi	end
 	bl	hasVantage
-	cmp	r2, #0
-	beq	end
+	cmp	r2, #1
+	beq	end	@攻め側が待ち伏せを持っているならスキップ
 true:
 	ldr	r0, =0x0203A4D0		@??????????
 	ldrh	r0, [r0]
