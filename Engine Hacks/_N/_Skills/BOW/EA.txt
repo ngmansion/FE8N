@@ -12,6 +12,7 @@ PUSH
 ORG	0x16e7c
 BYTE	$00 $4B $9F $46
 POIN	yumi_myturn
+BYTE    $00 $00 $00 $00 $00 $00 $00 $00 $00 $00 //残骸に利用しない参照があるので消しておく
 POP
 yumi_myturn:
 #incbin select_player_func.gba
