@@ -46,6 +46,8 @@ inLoopUnit:
 		.short 0xF800
 	lsl r1, r0, #21
 	bmi isUnit	@竜石
+	lsl r1, r0, #28
+	bmi isUnit	@回数無限
 	mov r1, #0x6	@魔法または杖
 	and r0, r1
 	beq isnotUnit
@@ -84,6 +86,8 @@ loopTransPort:
 		.short 0xF800
 	lsl r1, r0, #21
 	bmi isTransport	@竜石
+	lsl r1, r0, #28
+	bmi isTransport	@回数無限
 	mov r1, #0x6	@魔法または杖
 	and r0, r1
 	beq isnotTransPort
@@ -107,7 +111,14 @@ Repair:
 		.short 0xF800
 	cmp r0, #255
 	beq falseRepair
+	cmp r0, #0
+	beq falseRepair
+trueRepair:
 	strb r0, [r4, #1]
+	b endRepair
 falseRepair:
+	mov r0, #1
+	strb r0, [r4, #1]
+endRepair:
 	pop {r4, pc}
 
