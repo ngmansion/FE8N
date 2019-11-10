@@ -2,6 +2,8 @@
 STR_ADR = (67)	@書き込み先(AI1カウンタ)
 FLAG = (0xFF)	@フラグ
 
+ALINA_ADR = (0x0203a4d0)
+
 DOUBLE_LION_ADR = ADDRESS+12
 
 @@org	$0802b004
@@ -37,11 +39,17 @@ endBrave:
     pop {pc}
 
 DoubleLion:
-    push {lr}
-    mov r0, r6
-    bl hasDoubleLion
-    cmp r0, #0
-    beq endDouble
+	push {lr}
+	ldr r0, =ALINA_ADR
+	ldrh r0, [r0]
+	mov r1, #0x20
+	and r0, r1
+	bne endDouble	@闘技場は無効
+	
+	mov r0, r6
+	bl hasDoubleLion
+	cmp r0, #0
+	beq endDouble
 	mov r0, r8
 		ldr r1, ADDRESS+8 @見切り
 		mov lr, r1
@@ -89,7 +97,7 @@ endRenzoku:
 
 dengeki:
     push {lr}
-    ldr r0, =0x0203a4d0
+    ldr r0, =ALINA_ADR
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
