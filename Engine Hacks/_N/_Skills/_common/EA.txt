@@ -1,0 +1,26 @@
+#include config.txt
+
+
+ALIGN 4
+#define HAS_SKILL "BYTE $01 $49 $02 $4A $97 $46 $00 $00"
+
+hasNihil:
+    #incbin hasNihil.gba
+    WORD NihilID
+    POIN skl_table
+
+judgeSkill:
+    #incbin judgeSkill.gba
+    POIN skl_table            //+0 スキルテーブル
+    POIN record_skillanime_id //+4 発動したスキルIDを保存する関数
+
+judgeOccult:
+    #incbin judgeOccult.gba
+    POIN hasOccult
+    WORD $080172f0
+
+hasOccult:
+    HAS_SKILL
+    WORD OccultID
+    POIN judgeSkill
+

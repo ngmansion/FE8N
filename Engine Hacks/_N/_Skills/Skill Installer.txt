@@ -1,0 +1,76 @@
+#ifndef HACK_INSTALLATION
+#define HACK_INSTALLATION
+
+#define BLRange(pointer) "(pointer - CURRENTOFFSET - 4)>>1"
+#define BL(pointer) "SHORT (((BLRange(pointer)>>11)&0x7ff)|0xf000) ((BLRange(pointer)&0x7ff)|0xf800);"
+
+//#define AlignWithNop "MESSAGE attempting alignwithnop; Switch((currentOffset>>1)&0x1+1, "BYTE 0x00 0x00")"
+
+//These all must be 4-aligned
+//New names
+//Takes 0x14 bytes
+#define replaceWithHack(offset) "BYTE 0x10 0xB5 0x03 0x4C 0x00 0xF0 0x03 0xF8 0x10 0xBC 0x02 0xBC 0x08 0x47 0x20 0x47; POIN (offset|0x1)"
+//Takes 0xC bytes
+#define callHack_r3(offset) "SHORT 0x4B01; BL(0xD65C8); SHORT 0xE001; POIN (offset|0x1)"
+//Takes 0x8 bytes
+#define jumpToHack(offset) "BYTE 0x00 0x4B 0x18 0x47; POIN (offset|0x1)"
+
+//Old names
+#define gotoHack(offset) "replaceWithHack(offset)"
+#define gotoHackWithR3(offset) "callHack_r3(offset)"
+
+#define setTableByte(tableOffset, entrySize, entryNumber, entryOffset, byte) "ORG (tableOffset+entrySize*entryNumber+entryOffset); BYTE byte"
+#define setTableShort(tableOffset, entrySize, entryNumber, entryOffset, short) "ORG (tableOffset+entrySize*entryNumber+entryOffset); SHORT short"
+#define setTableWord(tableOffset, entrySize, entryNumber, entryOffset, word) "ORG (tableOffset+entrySize*entryNumber+entryOffset); WORD word"
+#define setTablePointer(tableOffset, entrySize, entryNumber, entryOffset, poin) "ORG (tableOffset+entrySize*entryNumber+entryOffset); POIN poin"
+
+#define setPointerTableEntry(tableOffset, entryNumber, poin) "setTablePointer(tableOffset, 0x4, entryNumber, poin)"
+
+#endif
+
+//header
+#define SKILL_PATCH
+  #include config_icon.txt
+  #include skill_definitions.event
+  #include list_definitions.event
+  #include "skl_anime_table.event"  //スキルアニメーションテーブル
+  #include "_anime\EA.txt"          //スキルアニメーションプログラム
+  #include "_help\EA.txt"
+  #include "_common\EA.txt"
+  #include index.event
+PUSH
+
+#ifndef MAGIC_PATCH //魔力パッチなし、もしくは以降
+
+    ORG 0xA741A8
+    #incext Png2Dmp "_common\Equipment7.png" --lz77
+ORG 0x089348
+    WORD $020040ee //アイコン開始位置
+    WORD 6 //アイコンの間隔
+    WORD $02003DAC //Ability文字位置1
+
+#endif
+
+
+ORG	0x89268
+BYTE	$00 $4B $9F $46
+POIN Skills_Icon
+POP
+
+Skills_Icon:
+#incbin "_common\iconEX.gba"
+POIN	SIcon_U SIcon_C SIcon_W SIcon_A skl_table
+WORD $08089350 //Ability文字位置2
+WORD $08089348 //ICON_GAP
+WORD $0808934C //ICONPOSITION
+POIN skl_anime_table	//スキルアニメーションテーブル
+
+SIcon_U:
+    #incbin "_common\UNIT.bin"
+SIcon_C:
+    #incbin "_common\CLASS.bin"
+SIcon_W:
+    #incbin "_common\WEAPON.bin"
+SIcon_A:
+    #incbin "_common\ABILITY.bin"
+ALIGN 4
