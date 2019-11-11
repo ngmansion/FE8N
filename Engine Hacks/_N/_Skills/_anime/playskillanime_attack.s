@@ -6,7 +6,7 @@
 	ldr		r1, adr  @ get_skillanime_data 発動しているスキルの取得
 	mov		r14, r1
 	.short 0xf800
-	
+
 	cmp		r0,#0x00
 	beq		exit	@不明 ディフォルトアニメをそのまま利用
 
