@@ -106,4 +106,5 @@
 #define Effective4ID 111 //0x6F特効4
 #define CancelAffinityID 112 //0x70相性相殺
 #define QuickChangeID 113 //0x71 持ち替え
+#define SunderID 114 //0x72 両断
 

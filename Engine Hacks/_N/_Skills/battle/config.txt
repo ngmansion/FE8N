@@ -71,7 +71,8 @@ MonsterBlastList: //魔物撃ち
 CounterList_class:	//応撃
  BYTE $00 0
 
-
+HeavyDrawList_unit:	//両断
+ BYTE $00 0
 
 
 

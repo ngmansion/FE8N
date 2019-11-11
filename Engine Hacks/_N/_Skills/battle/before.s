@@ -1,24 +1,25 @@
-.equ SAVIOR_ADR, (adr+44)
-.equ SAVIOR_DAMAGE, (10)
+SAVIOR_ADR = (adr+44)
+SAVIOR_DAMAGE = (10)
 
-.equ SHISHI_ADR, (adr+4)
+SHISHI_ADR = (adr+4)
 
-.equ SWORD_F_ADR, (adr+48)
-.equ LANCE_F_ADR, (adr+52)
-.equ AXE_F_ADR, (adr+56)
-.equ BOW_F_ADR, (adr+60)
-.equ MAGIC_F_ADR, (adr+64)
+SWORD_F_ADR = (adr+48)
+LANCE_F_ADR = (adr+52)
+AXE_F_ADR = (adr+56)
+BOW_F_ADR = (adr+60)
+MAGIC_F_ADR = (adr+64)
 
-.equ FLY_E_ADR, (adr+68)
-.equ ARMOR_E_ADR, (adr+72)
-.equ HORSE_E_ADR, (adr+76)
-.equ MONSTER_E_ADR, (adr+80)
-.equ HIEN_ADR, (adr+84)
-.equ ACE_ADR, (adr+88)
-.equ KONSHIN_ADR, (adr+92)
-.equ SOLO_ADR, (adr+96)
-.equ SHISEN_ADR, (adr+100)
-.equ FORT_ADR, (adr+104)
+FLY_E_ADR = (adr+68)
+ARMOR_E_ADR = (adr+72)
+HORSE_E_ADR = (adr+76)
+MONSTER_E_ADR = (adr+80)
+HIEN_ADR = (adr+84)
+ACE_ADR = (adr+88)
+KONSHIN_ADR = (adr+92)
+SOLO_ADR = (adr+96)
+SHISEN_ADR = (adr+100)
+FORT_ADR = (adr+104)
+WAR_ADR = (adr+108)
 
 
 
@@ -29,17 +30,7 @@ MONSTER_E2_ID = (0xAA)	@竜石
 
 BL_GETITEMEFFECTIVE = (0x08017478)
 
-.macro _blh to, reg=r3
-	ldr \reg, =\to
-	mov lr, \reg
-	.short 0xF800
-.endm
 
-.macro _bldr reg, dest
-	ldr \reg, =\dest
-	mov lr, \reg
-	.short 0xF800
-.endm
 
 .macro _blr reg
 	mov lr, \reg
@@ -65,7 +56,7 @@ BL_GETITEMEFFECTIVE = (0x08017478)
     beq gotSkill	@相手いない
 	mov	r0, r5
 
-	bl isMikiri
+	bl hasMikiri
 	
 	cmp r0, #0
 	bne endNoEnemy	@見切り持ちなら終了
@@ -83,11 +74,12 @@ endNoEnemy:
     ldr r0, [r5, #4]
     cmp r0, #0
     beq endNeedEnemy	@相手いない
-    
+
+	bl WarSkill
 	bl shisen_B
 	
     mov	r0, r5
-	bl isMikiri
+	bl hasMikiri
     cmp r0, #0
     bne endNeedEnemy
     
@@ -105,11 +97,37 @@ RETURN:
     pop {r0}
     bx r0
 
+
+WarSkill:
+    push {lr}
+	mov r0, #67
+	ldrb r0, [r4, r0]
+	mov r1, #0xFE
+	and r0, r1
+	cmp r0, r1
+	bne endWar
+	
+	mov r0, r4
+	bl hasWarSkill
+	cmp r0, #0
+	beq endWar
+	
+	mov r1, #90
+	ldrh r0, [r4, r1]
+	add r0, #8
+	strh r0, [r4, r1] @自分
+	mov r1, #96
+	ldrh r0, [r4, r1]
+	add r0, #20
+	strh r0, [r4, r1] @自分
+endWar:
+	pop {pc}
+
 Fort:
 	push {lr}
 	mov r0, r4
 
-	bl isFort
+	bl hasFort
 
 	cmp r0, #0
 	beq falseFort
@@ -143,7 +161,7 @@ shisen_A:	@自分死線
     push {lr}
     mov r0, r4
     
-    bl isShisen
+    bl hasShisen
     
     cmp r0, #0
     beq falseShisen
@@ -170,11 +188,11 @@ endShisen:
 shisen_B:	@相手死線
     push {lr}
     mov r0, r5
-    bl isShisen
+    bl hasShisen
     cmp r0, #0
     beq falseShisen
     mov r0, r4
-    bl isMikiri
+    bl hasMikiri
     cmp r0, #0
     bne falseShisen	@見切り持ちなら終了
     
@@ -195,7 +213,7 @@ Solo:
 	and r6, r0	@r6に部隊表ID
 	
 	mov r0, r4
-	bl isSolo
+	bl hasSolo
 	cmp r0, #0
 	beq falseSolo
 	
@@ -284,7 +302,7 @@ Get_Status:
 Ace:
 	push {lr}
 	mov r0, r4
-	bl isAce
+	bl hasAce
 	cmp	r0, #0
 	beq	endAce
 
@@ -791,21 +809,25 @@ Attacker_Adr:
 Equipment_Adr:
 .long 0x080172f0
 
-isMikiri:
+hasMikiri:
 	ldr r1, adr	@見切り
 	mov pc, r1
-isAce:
+hasAce:
 	ldr r3, ACE_ADR
 	mov pc, r3
-isSolo:
+hasSolo:
 	ldr r3, SOLO_ADR
 	mov pc, r3
-isShisen:
+hasShisen:
 	ldr r3, SHISEN_ADR
 	mov pc, r3
-isFort:
+hasFort:
 	ldr r3, FORT_ADR
 	mov pc, r3
+hasWarSkill:
+	ldr r3, WAR_ADR
+	mov pc, r3
+
 getItemEffective:
 	ldr r1, =BL_GETITEMEFFECTIVE
 	mov pc, r1

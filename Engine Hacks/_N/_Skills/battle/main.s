@@ -8,17 +8,6 @@ NIHIL_ADR = (adr+12)
 @イクリプス等の直前(自分の数値と相手の数値の計算後)
 @ステータス画面では呼ばれない
 @相手の数値に影響を与える処理群
-.macro _blh to, reg=r3
-	ldr \reg, =\to
-	mov lr, \reg
-	.short 0xF800
-.endm
-
-.macro _bldr reg, dest
-	ldr \reg, =\dest
-	mov lr, \reg
-	.short 0xF800
-.endm
 
 .macro _blr reg
 	mov lr, \reg
@@ -33,7 +22,6 @@ NIHIL_ADR = (adr+12)
     bl DistantGuard
     cmp r0, #0
     bne endZero
-    bl WarSkill
     
     mov	r0, r6
     ldr r1, NIHIL_ADR
@@ -65,32 +53,7 @@ endZero:
     bx r0
 
 
-WarSkill:
-    push {lr}
-	mov r0, #67
-	ldrb r0, [r4, r0]
-	mov r1, #0xFE
-	and r0, r1
-	cmp r0, r1
-	bne endWar
 
-	mov r1, r4
-	add r1, #90
-	ldrh r0, [r1]
-	add r0, #8
-	strh r0, [r1] @攻撃増加
-	
-	mov r1, r4
-	add r1, #100
-	ldrh r0, [r1]
-	add r0, #20
-	cmp r0, #100
-	ble jumpWar
-	mov r0, #100
-jumpWar:
-	strh r0, [r1] @命中増加
-endWar:
-	pop {pc}
 
 QuickenedPulse:
 	push {lr}
