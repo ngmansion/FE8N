@@ -1,5 +1,8 @@
 ALIGN 4
 
+//このほかに、xeno/main.asm で、
+//スキルアニメの記録領域を消去する必要がある.
+
 //発動したスキルがアニメを保持していたら記録する r0=発動したスキルID
 record_skillanime_id:
     #incbin    record_skillanime_id.dmp
