@@ -43,3 +43,13 @@ PUSH
  ORG	0x2b2fc
  #incbin "King_Shunsatsu_fix.gba"
 POP
+
+////////////////////瞬殺ダメージ
+PUSH
+ORG 0x2B448
+	SHORT 0x46C0
+	SHORT 0x46C0
+	SHORT 0x207F	//ダメージ
+	SHORT 0xE016
+POP
+
