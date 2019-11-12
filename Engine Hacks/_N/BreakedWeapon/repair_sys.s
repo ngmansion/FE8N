@@ -1,10 +1,12 @@
 
 UNIT_MAX_NUM = (51)
 
+
+REPAIR_SYSTEM_FUNC = (ADR+0)
+
 .thumb
 	push {lr}
 	push {r0}
-	
 	ldr r0, =0x0202BCFC
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -44,14 +46,9 @@ inLoopUnit:
 		ldr r2, =0x08017314
 		mov lr, r2
 		.short 0xF800
-	lsl r1, r0, #21
-	bmi isUnit	@竜石
-	lsl r1, r0, #28
-	bmi isUnit	@回数無限
-	mov r1, #0x6	@魔法または杖
-	and r0, r1
+	bl needsRepair
+	cmp r0, #0
 	beq isnotUnit
-isUnit:
 	lsl r0, r5, #1
 	add r0, r4
 	bl Repair
@@ -84,14 +81,9 @@ loopTransPort:
 		ldr r2, =0x08017314
 		mov lr, r2
 		.short 0xF800
-	lsl r1, r0, #21
-	bmi isTransport	@竜石
-	lsl r1, r0, #28
-	bmi isTransport	@回数無限
-	mov r1, #0x6	@魔法または杖
-	and r0, r1
+	bl needsRepair
+	cmp r0, #0
 	beq isnotTransPort
-isTransport:
 	lsl r0, r4, #1
 	add r0, r5
 	bl Repair
@@ -121,4 +113,11 @@ falseRepair:
 	strb r0, [r4, #1]
 endRepair:
 	pop {r4, pc}
+	
+needsRepair:
+	ldr r1, REPAIR_SYSTEM_FUNC
+	mov pc, r1
+.align
+.ltorg
+ADR:
 
