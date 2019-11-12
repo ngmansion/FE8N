@@ -46,6 +46,7 @@ battle_before:
     POIN hasSolo
     POIN hasLifeAndDeath
     POIN hasFort
+    POIN hasSunder
     
 battle_after:
     #incbin main.dmp
@@ -60,6 +61,7 @@ battle_down:
   POIN hasFury
   POIN hasPoisonStrike
   POIN hasCounter
+  POIN hasDoubleLion
     
 hasFury:
     HAS_SKILL
@@ -168,5 +170,9 @@ hasFort:
     HAS_SKILL
     WORD FortID
     POIN judgeSkill
-    
-    
+hasSunder:
+    HAS_SKILL
+    WORD SunderID
+    POIN judgeSkill
+
+

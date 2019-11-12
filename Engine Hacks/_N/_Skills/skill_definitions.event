@@ -33,7 +33,7 @@
 #define DistantDefID 31 //0x1f遠距離防御
 #define DeflectID 32  //0x20連撃防御
 #define DesperationID 33 //0x21攻め立て
-#define BlitzkriegID 34 //0x22電撃戦闘
+#define BlitzkriegID 34 //0x22電撃戦
 #define LifetakerID 35 //0x23生命吸収
 #define LifeAndDeathID 36 //0x24死線
 #define DeathBlowID 37 //0x25鬼神の一撃
@@ -53,6 +53,7 @@
 #define PushID 51 //0x33 渾身
 #define SoloID 52 //0x34 孤軍
 #define FortID 53 //0x35 城塞
+#define DoubleLionID 54 //0x36 獅子連斬
 
 
 #define AstraID 64 //0x40流星
@@ -105,4 +106,5 @@
 #define Effective4ID 111 //0x6F特効4
 #define CancelAffinityID 112 //0x70相性相殺
 #define QuickChangeID 113 //0x71 持ち替え
+#define SunderID 114 //0x72 両断
 

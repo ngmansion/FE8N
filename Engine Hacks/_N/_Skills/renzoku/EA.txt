@@ -22,6 +22,7 @@ renzokua:
 POIN hasAdept
 POIN bolting_impl
 POIN hasNihil
+POIN hasDoubleLion
 
 yosoku:
     #incbin "yosoku.dmp"
@@ -42,6 +43,11 @@ POIN hasBlitzkrieg
 hasBlitzkrieg:
     HAS_SKILL
     WORD BlitzkriegID
+    POIN judgeSkill
+
+hasDoubleLion:
+    HAS_SKILL
+    WORD DoubleLionID
     POIN judgeSkill
 
 ////////////////必的の後処理
