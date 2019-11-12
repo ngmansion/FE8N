@@ -6,6 +6,13 @@
 .thumb
     push {lr}
 
+	@発動した場所を正確に測定する.
+	ldr r2, =0x03004F9C @gCurrentUnitIndex
+	ldr r3, =0x02000000 @WRAM 
+	lsl r1 ,r2 ,#0x2
+	add r1 ,r1, r3
+	ldr r1, [r1, #0x0]  @ pointer:02000000 (WRAM )
+
 	ldr r3, =0x0203AB40		@発動したスキルアニメを記録している場所
 							@Player 攻撃スキル	0203AB40
 							@Player 防衛スキル	0203AB41
@@ -13,8 +20,8 @@
 							@Enemy  防衛スキル	0203AB43
 							@攻撃スキルと防衛スキルが同時に発動することがあるので分ける.
 
-	LDR r1, =0x02029000
-	CMP r7, r1
+	LDR r2, =0x02029000
+	CMP r1, r2
 	BLS Player
 
 Enemy:

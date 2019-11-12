@@ -21,8 +21,7 @@ exit:
 	mov r1, #0x80			@フック時に壊してしまう命令の再送
 	lsl r1 ,r1 ,#0x1
 	ldr r2, [r4, #0x5c]
-	
-	
+
 	ldr	r3,=0x08070BF8+1	@元に戻す
 	mov pc,r3
 .align 4
