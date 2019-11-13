@@ -32,7 +32,7 @@ scroll_check:
  POIN judgeUnit
 ALIGN 4
 s_scroll:
- #incbin "store.gba"
+ #incbin "store.dmp"
  WORD TEXT_ID_AFTER_USING_MANUAL
  WORD TEXT_ID_AFTER_USING_ERASER
  WORD MAX_MANUAL_SKILL_NUM
