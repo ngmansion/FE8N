@@ -34,8 +34,17 @@ ORG 0x025f8c
 POP
 BreakedWeapon:
 	#incbin repair_sys.dmp
+	POIN needRepair_func
 ALIGN 4
 a_restore:
 	#incbin a_restore.dmp
+ALIGN 4
+
+needRepair_func:
+#ifdef REPAIR_SYSTEM
+	#incbin needsRepair_new.dmp
+#else
+	#incbin needsRepair_old.dmp
+#endif
 ALIGN 4
 
