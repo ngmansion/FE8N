@@ -69,7 +69,7 @@ next:
 skip:
 	add	r2, #1
 	cmp	r2, #8
-	ble	loop
+	blt	loop
 end:
 	sub	r7, #40
 	
