@@ -1,20 +1,13 @@
 .thumb
 extendSkill:
-@;I	r0 = ベースアドレス
-@;	r1 = チェックしたいスキル
-@;O	r0 = ヒットしたら1,しなかったら0を返す
+@I	r0 = ベースアドレス
+@	r1 = チェックしたいスキル
+@O	r0 = ヒットしたら1,しなかったら0を返す
 	push {r4, r5, lr}
     mov r4, r0
     mov r5, r1
 
-@getで弾いているから不要
-@	ldrb r0, [r0, #11]
-@	bl common_skill2
-@	cmp r0, #0
-@	beq end_extendSkill
-    
-
-@;いち
+@いち
 	mov r0, r4
 	mov r1, #0
 	bl get_Skill
@@ -22,7 +15,7 @@ extendSkill:
 	beq true_extendSkill
 	cmp r0, #0
 	beq false_extendSkill
-@;に
+@に
 	mov r0, r4
 	mov r1, #1
 	bl get_Skill
@@ -30,7 +23,7 @@ extendSkill:
 	beq true_extendSkill
 	cmp r0, #0
 	beq false_extendSkill
-@;さん
+@さん
 	mov r0, r4
 	mov r1, #2
 	bl get_Skill
@@ -38,7 +31,7 @@ extendSkill:
 	beq true_extendSkill
 	cmp r0, #0
 	beq false_extendSkill
-@;よん
+@よん
 	mov r0, r4
 	mov r1, #3
 	bl get_Skill
@@ -46,7 +39,7 @@ extendSkill:
 	beq true_extendSkill
 	cmp r0, #0
 	beq false_extendSkill
-@;ご
+@ご
 	mov r0, r4
 	mov r1, #4
 	bl get_Skill
@@ -54,7 +47,7 @@ extendSkill:
 	beq true_extendSkill
 	cmp r0, #0
 	beq false_extendSkill
-@;ろく
+@ろく
 	mov r0, r4
 	mov r1, #5
 	bl get_Skill
@@ -73,8 +66,5 @@ end_extendSkill:
 .ltorg
 get_Skill:
     ldr r3, adr
-    mov pc, r3
-common_skill2:
-    ldr r3, adr+4
     mov pc, r3
 adr:

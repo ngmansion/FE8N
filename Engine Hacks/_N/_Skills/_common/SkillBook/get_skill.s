@@ -1,7 +1,7 @@
 .thumb
-@;I	r0 = ベースアドレス
-@;	r1 = 0 is Skill1, 1 is Skill2, ...
-@;O	r0 = skillID
+@I	r0 = ベースアドレス
+@	r1 = 0 is Skill1, 1 is Skill2, ...
+@O	r0 = skillID
 	push {r4, lr}
 	mov r2, r0
 	mov r4, r1
@@ -12,21 +12,14 @@
 	
 	cmp r1, #5   @要求スキルindex
 	bgt false
-@;▼本処理
+@▼本処理
 	cmp r1, #1
 	bgt expand
-@;▼1-2スキル
+@▼1-2スキル
 	bl get_unitSkill
 	b end
 expand:
-@;▼3-6スキル
-	ldrb r0, [r0, #11]
-	bl common_skill2
-	cmp r0, #0
-	beq false   @Exスキルは自軍のみ
-	mov r0, r2
-	bl get_saveExSkill_ex
-	mov r1, r4
+@▼3-6スキル
 	bl get_unitSkillEx
 	b end
 false:
@@ -53,12 +46,21 @@ two:
 end_get_unitSkill:
 	bx lr
 	
-	
-	
 get_unitSkillEx:
-@;I	r0 = ユニットのセーブベースアドレス
-@;	r1 = SkillIndex
-@;O	r0 = SkillID
+	push {lr}
+	mov r0, r2
+	bl getExSkillBaseAdr
+	cmp r0, #0
+	beq falseEx   @Exスキルは自軍のみ
+	mov r1, r4
+	bl getExSkillFromBaseAdr
+falseEx:
+	pop {pc}
+	
+getExSkillFromBaseAdr:
+@I	r0 = ユニットのセーブベースアドレス
+@	r1 = SkillIndex
+@O	r0 = SkillID
 	cmp r1, #2
 	beq three
 	cmp r1, #3
@@ -94,20 +96,15 @@ six:
 	b true
 	nop
 true:
-	mov r1, #0x3F	@;IDをビットマスク
+	mov r1, #0x3F	@IDをビットマスク
 	and r0, r1
 end2:
 	bx lr
+.align
 .ltorg
-get_saveUnitAdr:
-	ldr r3, Adr+4
-	mov pc, r3
-get_saveExSkill_ex:
+getExSkillBaseAdr:
 	ldr r3, Adr+0
 	mov pc, r3
-common_skill2:
-    ldr r3, Adr+8
-    mov pc, r3
 
 Adr:
 

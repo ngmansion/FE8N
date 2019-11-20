@@ -1,16 +1,11 @@
 
 .thumb
 popSkill:
-@;I	r0 = ベースアドレス
-@;O	r0 = 取得したskillID。0は失敗。
-@;
+@I	r0 = ベースアドレス
+@O	r0 = 取得したskillID。0は失敗。
+@
 	push {r4, r5, lr}
 	mov r4, r0
-	ldr r0, [r0]
-	ldrb r0, [r0, #4]		@IDは固定
-	bl common_skill2
-	cmp r0, #0
-	beq FALSE
 	bl popSkill_impl
 	b END
 FALSE:
@@ -20,9 +15,9 @@ END:
 	
 	
 popSkill_impl:
-@;▼本処理
+@▼本処理
 	push {lr}
-	mov r5, #1	@;index0はあり得ないので
+	mov r5, #1	@index0はあり得ないので
 loop:
 	mov r0, r4
 	mov r1, r5
@@ -32,8 +27,8 @@ loop:
 	add r5, #1
 	b loop
 loop_end:
-	sub r5, #1 @;消すスキルに合わせる
-@;indexごとの内部処理へ分岐
+	sub r5, #1 @消すスキルに合わせる
+@indexごとの内部処理へ分岐
 	cmp r5, #0
 	beq one
 	cmp r5, #1
@@ -58,7 +53,9 @@ four:
 five:
 six:
 	mov r0, r4
-	bl common_skill1
+	bl getExSkillBaseAdr
+	cmp r0, #0
+	beq FALSE_impl
 	mov r1, r5
 	bl pop_unitSkillEx
 	b END_impl
@@ -69,18 +66,18 @@ END_impl:
 	
 	
 pop_unitSkill:
-@;▼内部処理1
+@▼内部処理1
 	mov r3, r0
 	cmp r1, #1
 	beq two_impl
-@;スキル1
+@スキル1
     ldrh r0, [r3, #0x3A]
     mov r1, #0x3F	@%0000000000111111
     and r0, r1
     mov r1, #0
     strh r1, [r3, #0x3A]
 	b end_unit
-@;スキル2:
+@スキル2:
 two_impl:
     ldrh r0, [r3, #0x3A]
     ldr r1, =0xFC0	@=%0000111111000000
@@ -96,7 +93,7 @@ end_unit:
 	
 	
 pop_unitSkillEx:
-@;▼内部処理2
+@▼内部処理2
 	mov r3, r0
 	cmp r1, #2
 	beq three_impl
@@ -165,11 +162,8 @@ end_unit_ex:
 get_skill:
 	ldr r3, Adr
 	mov pc, r3
-common_skill1:
+getExSkillBaseAdr:
 	ldr r3, Adr+4
-	mov pc, r3
-common_skill2:
-	ldr r3, Adr+8
 	mov pc, r3
 .align
 .ltorg
