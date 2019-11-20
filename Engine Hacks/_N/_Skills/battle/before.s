@@ -410,13 +410,14 @@ effective_impl:
 @r1にとび先
 @r2に装備武器
     push {r4, r5, r6, lr}
-    
-    mov r4, r0
-    mov r0, r4
-    
-    _blr r1
-    cmp r0, #0
-    beq falseEffective_impl
+
+	eor r4, r0
+	eor r0, r4
+	eor r4, r0
+	
+	_blr r1
+	cmp r0, #0
+	beq falseEffective_impl
 	mov r0, r4
 	bl getItemEffective
 @r4に装備武器
