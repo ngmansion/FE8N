@@ -406,9 +406,8 @@ endEffective:
 	pop {pc}
 
 effective_impl:
-@r0に特効リスト
+@r0に特効リストを利用する武器のID
 @r1にとび先
-@r2に装備武器
     push {r4, r5, r6, lr}
 
 	eor r4, r0
