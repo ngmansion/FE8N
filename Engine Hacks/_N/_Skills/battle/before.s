@@ -692,6 +692,12 @@ Hien:
     ldrh r0, [r4, r1]
     add r0, #5
     strh r0, [r4, r1]
+    
+    mov r1, #98
+    ldrh r0, [r4, r1]
+    add r0, #30
+    strh r0, [r4, r1]
+    
     mov r0, #1
     b endHien
 falseHien:

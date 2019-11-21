@@ -14,8 +14,7 @@ ORG 0x02aa5e
     SHORT $46C0
 
 ORG 0x02aa7c
-    #incbin weapon.gba
-    WORD WEAPON_EFFECTIVE
+    #incbin weapon.dmp
 
   ORG 0x16A30
     jumpToHack(effective_main)
