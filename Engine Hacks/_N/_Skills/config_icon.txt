@@ -343,11 +343,11 @@
 #define SKL_HELP_114 $0000 //両断
  #define SKL_COLOR_114 $FF
 
-#define SKL_HELP_115 $0000
- #define SKL_COLOR_115 0
+#define SKL_HELP_115 $056C
+ #define SKL_COLOR_115 $FF
 
-#define SKL_HELP_116 $0000
- #define SKL_COLOR_116 0
+#define SKL_HELP_116 $056C
+ #define SKL_COLOR_116 $FF
 
 #define SKL_HELP_117 $0000
  #define SKL_COLOR_117 0

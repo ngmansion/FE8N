@@ -7,7 +7,7 @@ SWORD_F_ADR = (adr+48)
 LANCE_F_ADR = (adr+52)
 AXE_F_ADR = (adr+56)
 BOW_F_ADR = (adr+60)
-MAGIC_F_ADR = (adr+64)
+ANIMA_F_ADR = (adr+64)
 
 FLY_E_ADR = (adr+68)
 ARMOR_E_ADR = (adr+72)
@@ -20,6 +20,8 @@ SOLO_ADR = (adr+96)
 SHISEN_ADR = (adr+100)
 FORT_ADR = (adr+104)
 WAR_ADR = (adr+108)
+DARK_F_ADR = (adr+112)
+LIGHT_F_ADR = (adr+116)
 
 
 
@@ -728,8 +730,12 @@ faire_impl:
     beq faire_bow
     cmp r1, #4
     beq faire_merge
+    cmp r1, #5
+    beq faire_anima
+    cmp r1, #6
+    beq faire_light
     cmp r1, #7
-    ble faire_magic
+    beq faire_dark
     b faire_merge
 faire_sword:
     mov r0, r4
@@ -751,10 +757,22 @@ faire_bow:
     ldr r1, BOW_F_ADR
     _blr r1
     b faire_merge
-faire_magic:
+faire_anima:
     mov r0, r4
-    ldr r1, MAGIC_F_ADR
+    ldr r1, ANIMA_F_ADR
     _blr r1
+    b faire_merge
+faire_light:
+    mov r0, r4
+    ldr r1, LIGHT_F_ADR
+    _blr r1
+    b faire_merge
+faire_dark:
+    mov r0, r4
+    ldr r1, DARK_F_ADR
+    _blr r1
+    b faire_merge
+    nop
 faire_merge:
     pop {pc}
 

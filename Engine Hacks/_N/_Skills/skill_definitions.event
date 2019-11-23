@@ -99,7 +99,7 @@
 #define LancefaireID 104 //0x68 槍の達人
 #define AxefaireID 105 //0x69 斧の達人
 #define BowfaireID 106 //0x6A 弓の達人
-#define TomefaireID 107 //0x6B 魔の達人
+#define AnimafaireID 107 //0x6B 理魔の達人
 #define Effective1ID 108 //0x6C特効1
 #define Effective2ID 109 //0x6D特効2
 #define Effective3ID 110 //0x6E特効3
@@ -107,4 +107,7 @@
 #define CancelAffinityID 112 //0x70相性相殺
 #define QuickChangeID 113 //0x71 持ち替え
 #define SunderID 114 //0x72 両断
+#define LightfaireID 115 //0x73 光魔の達人
+#define DarkfaireID 116 //0x74 闇魔の達人
+
 

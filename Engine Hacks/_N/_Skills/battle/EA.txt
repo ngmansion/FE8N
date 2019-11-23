@@ -35,7 +35,7 @@ battle_before:
     POIN hasLancefaire
     POIN hasAxefaire
     POIN hasBowfaire
-    POIN hasTomefaire
+    POIN hasAnimafaire
     POIN hasGrounder
     POIN hasHelmSplitter
     POIN hasKnightkneeler
@@ -47,6 +47,8 @@ battle_before:
     POIN hasLifeAndDeath
     POIN hasFort
     POIN hasSunder
+    POIN hasLightfaire
+    POIN hasDarkfaire
     
 battle_after:
     #incbin main.dmp
@@ -132,9 +134,17 @@ hasBowfaire:
  HAS_SKILL
  WORD BowfaireID
  POIN judgeSkill
-hasTomefaire:
+hasAnimafaire:
  HAS_SKILL
- WORD TomefaireID
+ WORD AnimafaireID
+ POIN judgeSkill
+hasLightfaire:
+ HAS_SKILL
+ WORD LightfaireID
+ POIN judgeSkill
+hasDarkfaire:
+ HAS_SKILL
+ WORD DarkfaireID
  POIN judgeSkill
 
 hasGrounder:
