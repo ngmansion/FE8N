@@ -20,8 +20,8 @@ SOLO_ADR = (adr+96)
 SHISEN_ADR = (adr+100)
 FORT_ADR = (adr+104)
 WAR_ADR = (adr+108)
-DARK_F_ADR = (adr+112)
-LIGHT_F_ADR = (adr+116)
+LIGHT_F_ADR = (adr+112)
+DARK_F_ADR = (adr+116)
 
 
 
