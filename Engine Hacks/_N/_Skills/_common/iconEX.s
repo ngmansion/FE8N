@@ -1,10 +1,12 @@
 .thumb
 SKL_TBL = (adr+16)
-ICON_LIST_SIZE = (adr+40)
-CHECK_ITEM_FUNC = (adr+44)
+GET_SKILL_FUNC = (adr+36)
+WP_LV_SKL_TABLE = (adr+40)
+ICON_LIST_SIZE = (adr+44)
+CHECK_ITEM_FUNC = (adr+48)
 ICON_NUM_LIMIT = (16) @上限数*2
 
-WP_LV_SKL_TABLE = (adr+36)
+
 
 @.org	0x08089268
 	
@@ -607,7 +609,7 @@ Get_WpLv:
 	mov pc, r1
 
 get_Skill:
-	ldr r2, adr+32
+	ldr r2, GET_SKILL_FUNC
 	mov pc, r2
 checkItemList:
 	ldr r3, CHECK_ITEM_FUNC
