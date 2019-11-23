@@ -4,6 +4,15 @@ ALIGN 4
 #include "checkSkill/EA.txt"
 #include "SkillBook/EA.txt"
 
+judgeOccult:
+	#incbin judgeOccult.gba
+	POIN hasOccult
+	WORD $080172f0
+    
+hasOccult:
+	HAS_SKILL
+	WORD OccultID
+	POIN judgeSkill
 
 ALIGN 4
 

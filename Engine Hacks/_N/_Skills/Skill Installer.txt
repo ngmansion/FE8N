@@ -33,6 +33,8 @@ WORD $08089348 //ICONPOSITION
 WORD $0808934C //ICON_GAP
 POIN getSkill
 POIN WP_LV_SKL_TABLE
+WORD ICON_LIST_SIZE
+POIN checkItemList
 SIcon_U:
     #incbin "_common\UNIT.bin"
 SIcon_C:
