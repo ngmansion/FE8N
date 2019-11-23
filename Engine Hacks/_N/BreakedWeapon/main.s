@@ -27,7 +27,7 @@ end:
 	pop {pc}
 
 checkBreak:
-	ldr r1, =pointer
+	ldr r1, pointer
 	mov pc, r1
 .align
 .ltorg
