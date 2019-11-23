@@ -1,4 +1,5 @@
-.equ PULSE_ID, (0x09)	@奥義の鼓動ID
+ATK_ID = (0x5)
+PULSE_ID = (0x09)	@奥義の鼓動ID
 
 .thumb
     push {r4, lr}
@@ -22,8 +23,11 @@
 	ldrb	r1, [r2]	@状態異常ロード
 	mov	r2, #15
 	and	r2, r1
+	cmp	r2, #ATK_ID
+	blt trueTiyu
 	cmp	r2, #PULSE_ID
-	bne	endTiyu	@奥義の鼓動以外は通常
+	ble	endTiyu
+trueTiyu:
 	mov r0, #0
 endTiyu:
     pop {r4, pc}
