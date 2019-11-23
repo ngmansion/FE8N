@@ -6,6 +6,7 @@ ORG 0x016550	//回数0の杖は使えない！
 
 ORG 0x016894	//武器を壊さない
 	#incbin main.dmp
+	POIN needsBreak_func
 
 ORG 0x016322	//0回の武器は装備できない
 	BYTE $28 $0A
@@ -34,17 +35,15 @@ ORG 0x025f8c
 POP
 BreakedWeapon:
 	#incbin repair_sys.dmp
-	POIN needRepair_func
+	POIN needsRepair_func
 ALIGN 4
 a_restore:
 	#incbin a_restore.dmp
 ALIGN 4
 
-needRepair_func:
-#ifdef REPAIR_SYSTEM
-	#incbin needsRepair_new.dmp
-#else
-	#incbin needsRepair_old.dmp
-#endif
+needsBreak_func:
+	#incbin needsBreak.dmp
+needsRepair_func:
+	#incbin needsRepair.dmp
 ALIGN 4
 

@@ -46,6 +46,7 @@ inLoopUnit:
 		ldr r2, =0x08017314
 		mov lr, r2
 		.short 0xF800
+	mov r0, r1
 	bl needsRepair
 	cmp r0, #0
 	beq isnotUnit
@@ -81,6 +82,7 @@ loopTransPort:
 		ldr r2, =0x08017314
 		mov lr, r2
 		.short 0xF800
+	mov r0, r1
 	bl needsRepair
 	cmp r0, #0
 	beq isnotTransPort
