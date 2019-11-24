@@ -5,6 +5,9 @@ WP_LV_SKL_TABLE = ADR+12
 SKL_TBL_SIZE = ADR+20
 CHECK_ITEM_FUNC = ADR+24
 
+@
+@	judgeSkillと横並びの作り
+@
 .thumb
 @I	r0 = ベースアドレス
 @	r1 = スキルID
@@ -15,9 +18,14 @@ CHECK_ITEM_FUNC = ADR+24
     lsr r1, r1, #24
     mov r5, r1
 @ダミーユニットチェック
-    ldr r2, [r4, #4]
-    cmp r2, #0
-    beq return
+	cmp r4, #0
+    beq false
+    ldr r0, [r4, #4]
+    cmp r0, #0
+    beq false
+    ldrb r0, [r4, #19]
+    cmp r0, #0
+    beq false
 @ユニットデータチェック
     mov r0, r4
     mov r1, r5
@@ -30,6 +38,7 @@ CHECK_ITEM_FUNC = ADR+24
     bl judgeList
     cmp r0, #1
     beq true
+false:
     mov r0, #0
     b return
 true:

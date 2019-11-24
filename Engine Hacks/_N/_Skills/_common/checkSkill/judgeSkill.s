@@ -6,6 +6,9 @@ WP_LV_SKL_TABLE = ADR+12
 SKL_TBL_SIZE = ADR+20
 CHECK_ITEM_FUNC = ADR+24
 
+@
+@	judgeUnitと横並びの作り
+@
 .thumb
 @ユニットデータとスキルIDから、発動可能かを判定する
     push {r4, r5, lr}
@@ -14,10 +17,14 @@ CHECK_ITEM_FUNC = ADR+24
     lsr r1, r1, #24
     mov r5, r1
 @ダミーユニットチェック
-    ldr r2, [r4, #4]
-    cmp r2, #0
-    beq return
-
+	cmp r4, #0
+    beq false
+    ldr r0, [r4, #4]
+    cmp r0, #0
+    beq false
+    ldrb r0, [r4, #19]
+    cmp r0, #0
+    beq false
 @書チェック
     mov r0, r4
     mov r1, r5
@@ -42,7 +49,7 @@ CHECK_ITEM_FUNC = ADR+24
     bl JudgeWpLv
     cmp r0, #1
     beq true
-
+false:
     mov r0, #0
     b return
 true:
