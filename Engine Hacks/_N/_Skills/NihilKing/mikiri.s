@@ -39,22 +39,16 @@ start:
 	push	{r3, r4, lr}
 	mov	r3, sp
 	ldr r2, =0x0802AFD1 @汎用
-	ldr r1, =0x0802aff9 @連続専用
 loop: @加攻撃者アドレス取得ループ
 	ldr	r0, [r3]
 	cmp	r0, r2
 	beq	gotA @汎用
-	cmp	r0, r1
-	beq	gotR @連続専用
 	add	r3, #4
 	b	loop
 return:
 	push {lr}
 	ldr	r0, =RETURN_ADR
 	mov	pc, r0
-gotR: @連続用
-	mov r2, r6
-	b hokan
 	
 gotA: @汎用
 	sub r3, #4

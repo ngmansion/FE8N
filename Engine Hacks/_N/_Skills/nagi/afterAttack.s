@@ -2,7 +2,7 @@
 .equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
 .equ WAR_FLAG, (0xFF)	@フラグ
 
-@ORG 0x02b808
+@ORG 0x02b866
 .thumb
 
 @前処理
@@ -40,12 +40,12 @@ WarSkill:
 	ldr r3, [r0]
 	
 	ldrb r0, [r3, #0xB]
-	mov r1, r13
-	ldr r1, [r1, #16]
-	ldrb r1, [r1, #0xB]
+	mov r2, r13
+	ldr r2, [r2, #16]
+	ldrb r1, [r2, #0xB]
 	cmp r0, r1
 	bne endWar	@選択者と攻撃者が違う
-	
+	mov r3, r2
 	mov r1, #STR_ADR
 	ldrb r0, [r3, r1]
 	cmp r0, #0xFF
