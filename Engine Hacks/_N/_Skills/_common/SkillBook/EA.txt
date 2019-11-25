@@ -4,27 +4,22 @@ pushSkill:
 #incbin "push_Skill.dmp"
 POIN getSkill
 POIN commonSkill
-POIN commonSkill+4
 ALIGN 4
 
 popSkill:
 #incbin "pop_Skill.dmp"
 POIN getSkill
 POIN commonSkill
-POIN commonSkill+4
 ALIGN 4
 
 getSkill:
 #incbin "get_Skill.dmp"
 POIN commonSkill
-WORD 0x08019108
-POIN commonSkill+4
 ALIGN 4
 
 containsSkill:
 #incbin "contains_skill.dmp"
 POIN getSkill
-POIN commonSkill+4
 ALIGN 4
 
 removeSkill:
@@ -32,7 +27,6 @@ removeSkill:
 POIN getSkill
 POIN pushSkill
 POIN popSkill
-POIN commonSkill+4
 ALIGN 4
 
 commonSkill:

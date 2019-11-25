@@ -36,7 +36,8 @@ WORD $0808934C //ICON_GAP
 POIN skl_anime_table
 POIN getSkill
 POIN WP_LV_SKL_TABLE
-
+WORD ICON_LIST_SIZE
+POIN checkItemList
 SIcon_U:
     #incbin "_common\UNIT.bin"
 SIcon_C:

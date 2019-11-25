@@ -13,21 +13,25 @@ judgeSkill:
 	#incbin judgeSkill.dmp
 	POIN skl_table
 	POIN containsSkill
-	POIN judgeUnit
+	POIN judgeSkillInUnitData
 	POIN WP_LV_SKL_TABLE
     POIN record_skillanime_id //発動したスキルIDを保存する関数
+   	WORD ICON_LIST_SIZE
+	POIN checkItemList
     
-judgeOccult:
-	#incbin judgeOccult.gba
-	POIN hasOccult
-	WORD $080172f0
-    
-hasOccult:
-	HAS_SKILL
-	WORD OccultID
-	POIN judgeSkill
-
 judgeUnit:
-	#incbin judgeUnit.gba
+	#incbin judgeUnit.dmp
 	POIN skl_table
+	POIN containsSkill
+	POIN judgeSkillInUnitData
+	POIN WP_LV_SKL_TABLE
+    POIN record_skillanime_id //発動したスキルIDを保存する関数
+   	WORD ICON_LIST_SIZE
+	POIN checkItemList
+	
+judgeSkillInUnitData:
+	#incbin judgeSkillInUnitData.dmp
+
+checkItemList:
+	#incbin checkItemList.dmp
 

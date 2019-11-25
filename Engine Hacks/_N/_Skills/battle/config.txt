@@ -56,7 +56,11 @@ AxefaireList: //斧の達人
  BYTE $00 0
 BowfaireList: //弓の達人
  BYTE $00 0
-TomefaireList: //魔の達人
+AnimafaireList: //理魔の達人
+ BYTE $00 0
+LightfaireList: //光魔の達人
+ BYTE $00 0
+DarkfaireList: //闇魔の達人
  BYTE $00 0
 
 GrounderList: //つばめ返し

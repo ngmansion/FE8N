@@ -21,7 +21,15 @@
     mov r1, #0x20
     and r0, r1
     bne endwo @闘技場チェック
-    
+
+	mov r0, r8
+	ldrb r0, [r0, #0xB]
+		ldr r1, =0x08019108
+		mov lr, r1
+		.short 0xF800
+	cmp r0, #0
+	beq endwo	@壁
+
 	mov r0, r8
 		ldr r1, ADDRESS+8 @見切り
 		_blr r1
@@ -104,7 +112,7 @@ gotWarth:
     mov r0, #0x13
     ldrb r0, [r7, r0]	@現在HP
     mov r1, #0x12
-    ldrb r1, [r7, r0]	@最大HP
+    ldrb r1, [r7, r1]	@最大HP
     lsl r0, r0, #1
     cmp r0, r1
     bgt false @HP分岐

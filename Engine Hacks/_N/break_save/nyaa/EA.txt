@@ -1,5 +1,7 @@
 #include nyaa.txt
 
+#define WORK_MEM_FOR_TRANSPORT_SKILL ($0203AE50)
+
 PUSH
 
 ORG 0x0a7c28
@@ -18,30 +20,45 @@ ORG 0xA7C8E
 ORG 0x0a7d16
     SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700
 
+ORG 0x031630
+	jumpToHack(storeSortedTransportSkill)
+ORG 0x03168c
+	jumpToHack(restoreSortedTransportSkill)
+
 POP
 
 
 yuso_save:
     #incbin save.gba
+    POIN SAVE_EXTRA_SKILL
     ALIGN 4
-POIN SAVE_EXTRA_SKILL
 
 yuso_load:
     #incbin load.gba
+    POIN LOAD_EXTRA_SKILL
     ALIGN 4
-POIN LOAD_EXTRA_SKILL
 
 SAVE_EXTRA_SKILL:
-#incbin "skillFromTransportMem_save.gba"
-ALIGN 4
-POIN COMMON_EXTRA_SKILL
+	#incbin "skillFromTransportMem_save.gba"
+	POIN COMMON_EXTRA_SKILL
+	ALIGN 4
 
 LOAD_EXTRA_SKILL:
-#incbin "skillFromTransportMem_load.gba"
-ALIGN 4
-POIN COMMON_EXTRA_SKILL
+	#incbin "skillFromTransportMem_load.gba"
+	POIN COMMON_EXTRA_SKILL
+	ALIGN 4
 
 COMMON_EXTRA_SKILL:
-#incbin "skillFromTransportMem_common.gba"
-ALIGN 4
+	#incbin "skillFromTransportMem_common.gba"
+	ALIGN 4
+
+restoreSortedTransportSkill:
+	#incbin "restoreSortedTransportSkill.dmp"
+	WORD WORK_MEM_FOR_TRANSPORT_SKILL
+	ALIGN 4
+
+storeSortedTransportSkill:
+	#incbin "storeSortedTransportSkill.dmp"
+	WORD WORK_MEM_FOR_TRANSPORT_SKILL
+	ALIGN 4
 

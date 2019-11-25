@@ -1,5 +1,7 @@
 listHeal:
     BYTE $66 $4F $29 $2A 0
+HealList_Item:
+	BYTE $00 0
 
 ImbueList:
     BYTE $00 0

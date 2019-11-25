@@ -26,5 +26,4 @@ effective_weapon4:
 effective_against4:
     BYTE 0
 
-#define WEAPON_EFFECTIVE (3)
 

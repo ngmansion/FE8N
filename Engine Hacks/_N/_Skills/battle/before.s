@@ -7,7 +7,7 @@ SWORD_F_ADR = (adr+48)
 LANCE_F_ADR = (adr+52)
 AXE_F_ADR = (adr+56)
 BOW_F_ADR = (adr+60)
-MAGIC_F_ADR = (adr+64)
+ANIMA_F_ADR = (adr+64)
 
 FLY_E_ADR = (adr+68)
 ARMOR_E_ADR = (adr+72)
@@ -20,6 +20,8 @@ SOLO_ADR = (adr+96)
 SHISEN_ADR = (adr+100)
 FORT_ADR = (adr+104)
 WAR_ADR = (adr+108)
+LIGHT_F_ADR = (adr+112)
+DARK_F_ADR = (adr+116)
 
 
 
@@ -406,17 +408,17 @@ endEffective:
 	pop {pc}
 
 effective_impl:
-@r0に特効リスト
+@r0に特効リストを利用する武器のID
 @r1にとび先
-@r2に装備武器
     push {r4, r5, r6, lr}
-    
-    mov r4, r0
-    mov r0, r4
-    
-    _blr r1
-    cmp r0, #0
-    beq falseEffective_impl
+
+	eor r4, r0
+	eor r0, r4
+	eor r4, r0
+	
+	_blr r1
+	cmp r0, #0
+	beq falseEffective_impl
 	mov r0, r4
 	bl getItemEffective
 @r4に装備武器
@@ -692,6 +694,12 @@ Hien:
     ldrh r0, [r4, r1]
     add r0, #5
     strh r0, [r4, r1]
+    
+    mov r1, #98
+    ldrh r0, [r4, r1]
+    add r0, #30
+    strh r0, [r4, r1]
+    
     mov r0, #1
     b endHien
 falseHien:
@@ -722,8 +730,12 @@ faire_impl:
     beq faire_bow
     cmp r1, #4
     beq faire_merge
+    cmp r1, #5
+    beq faire_anima
+    cmp r1, #6
+    beq faire_light
     cmp r1, #7
-    ble faire_magic
+    beq faire_dark
     b faire_merge
 faire_sword:
     mov r0, r4
@@ -745,10 +757,22 @@ faire_bow:
     ldr r1, BOW_F_ADR
     _blr r1
     b faire_merge
-faire_magic:
+faire_anima:
     mov r0, r4
-    ldr r1, MAGIC_F_ADR
+    ldr r1, ANIMA_F_ADR
     _blr r1
+    b faire_merge
+faire_light:
+    mov r0, r4
+    ldr r1, LIGHT_F_ADR
+    _blr r1
+    b faire_merge
+faire_dark:
+    mov r0, r4
+    ldr r1, DARK_F_ADR
+    _blr r1
+    b faire_merge
+    nop
 faire_merge:
     pop {pc}
 
