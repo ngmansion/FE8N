@@ -30,14 +30,4 @@ hotaru_semi:
 #incbin "semibreak.dmp"
 ALIGN 4
 
-////////////////音(revert)
-PUSH
-
-ORG	0x70A26
-SHORT	$2180
-ORG	0x70a48
-WORD $03d1
-
-POP
-ALIGN 4
 

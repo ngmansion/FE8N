@@ -1,0 +1,150 @@
+//スキルアニメーションテーブル
+//スキルの数だけ確保しなければいけない。とりあえず127個確保
+//
+//struct SkillAnimation{
+//	void*	frame_list;   // {ushort wait, ushort frame;} の繰り返し。終端 0xFFFF 0xFFFF
+//	void*	tsa_list;     //LZ77 HeaderTSAのポインタリスト tsa_list[frame]
+//	void*	image_list;   //LZ77 BG画像のポインタリスト    image_list[frame]
+//	void*	palette_list; //パレットのポインタリスト       palette_list[frame]
+//	int		playsound;	//FE8Uがint型で確保しているため追従する. song_id
+//}//sizeof == 20
+//
+//スキル発動時の音
+//skill[Skill_ID]->playsound
+//
+//FE8Uと違い、先頭にプログラムコードを入れる必要はありません。
+//そのため、SkillCreatorは利用できないので、FEBuilderGBAを利用してください。
+//
+
+skl_anime_table:
+POIN	0 //0
+POIN	0 //Skill_ID 1
+POIN	0 //Skill_ID 2
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //10
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //20
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //30
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //40
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //50
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //60
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //70
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //80
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //90
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //100
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //110
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0 //120
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+POIN	0
+WORD	0xFFFFFFFF
+
+ALIGN 4

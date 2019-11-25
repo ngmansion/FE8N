@@ -1,0 +1,55 @@
+ALIGN 4
+
+//このほかに、xeno/main.asm で、
+//スキルアニメの記録領域を消去する必要がある.
+
+//発動したスキルがアニメを保持していたら記録する r0=発動したスキルID
+record_skillanime_id:
+    #incbin    record_skillanime_id.dmp
+    POIN skl_anime_table      //+0
+
+//発動したスキルが記録されていれば、r0に、anime構造体のアドレスを返す. 
+//発動していなければ 0 が返る
+get_skillanime_data:
+    #incbin    get_skillanime_data.dmp
+    POIN skl_anime_table      //+0
+
+playskillanime_attack:
+    #incbin    playskillanime_attack.dmp
+    POIN get_skillanime_data
+
+playskillsound_attack:
+    #incbin    playskillsound_attack.dmp
+    POIN get_skillanime_data
+
+playskillanime_defence:
+    #incbin    playskillanime_defence.dmp
+    POIN get_skillanime_data
+
+playskillsound_defence:
+    #incbin    playskillsound_defence.dmp
+    POIN get_skillanime_data
+
+PUSH
+
+//攻撃スキルアニメ
+ORG $70946
+    BYTE 0 0   //NOP
+    jumpToHack(playskillanime_attack)
+    
+//攻撃スキルアニメの音を設定
+ORG $70A24
+    jumpToHack(playskillsound_attack)
+
+
+//防衛スキルアニメの設定
+ORG $70B96
+    BYTE 0 0   //NOP
+    jumpToHack(playskillanime_defence)
+    
+//防衛スキルアニメの音を設定
+ORG $70BF0
+    jumpToHack(playskillsound_defence)
+
+POP
+ALIGN 4

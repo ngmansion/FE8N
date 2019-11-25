@@ -15,8 +15,8 @@ judgeSkill:
 	POIN containsSkill
 	POIN judgeSkillInUnitData
 	POIN WP_LV_SKL_TABLE
-	POIN 0
-	WORD ICON_LIST_SIZE
+    POIN record_skillanime_id //発動したスキルIDを保存する関数
+   	WORD ICON_LIST_SIZE
 	POIN checkItemList
     
 judgeUnit:
@@ -25,8 +25,8 @@ judgeUnit:
 	POIN containsSkill
 	POIN judgeSkillInUnitData
 	POIN WP_LV_SKL_TABLE
-	POIN 0
-	WORD ICON_LIST_SIZE
+    POIN record_skillanime_id //発動したスキルIDを保存する関数
+   	WORD ICON_LIST_SIZE
 	POIN checkItemList
 	
 judgeSkillInUnitData:
