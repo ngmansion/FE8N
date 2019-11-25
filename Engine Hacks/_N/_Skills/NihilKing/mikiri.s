@@ -121,7 +121,7 @@ goneGeno:
 	mov r1, #WAR_ADR
 	ldrb r0, [r2, r1]
 	cmp r0, #0xFF
-	b goneWarSkill
+	bne goneWarSkill
 
 @発動率100%
 	mov r0, #100
