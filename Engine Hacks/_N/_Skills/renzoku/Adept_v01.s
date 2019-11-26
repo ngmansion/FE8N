@@ -17,7 +17,7 @@ DOUBLE_LION_ADR = ADDRESS+12
 
     bl dengeki
     cmp r4, #0
-    beq endBrave
+    beq falseBrave
 Brave:
     ldr r0, =0x0203a604
     ldr r3, [r0, #0]
@@ -31,11 +31,23 @@ Brave:
     orr r0, r1
     str r0, [r3, #0]
     mov r4, #1				@攻撃回数加算
+    b endBrave
+falseBrave:
+    bl addition
 endBrave:
-    bl renzoku
-    bl DoubleLion
     mov r0, r4
     pop {r4}
+    pop {pc}
+
+addition:
+    push {lr}
+    cmp r4, #0
+    bne endAddition
+    bl renzoku
+    cmp r4, #0
+    bne endAddition
+    bl DoubleLion
+endAddition:
     pop {pc}
 
 DoubleLion:
@@ -109,7 +121,7 @@ end_bolt:
 hasDoubleLion:
 	ldr r1, DOUBLE_LION_ADR
 	mov pc, r1
-
+.align
 .ltorg
 ADDRESS:
 
