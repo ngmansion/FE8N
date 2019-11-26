@@ -108,20 +108,38 @@ WarSkill:
 	and r0, r1
 	cmp r0, r1
 	bne endWar
-	
+
 	mov r0, r4
 	bl hasWarSkill
 	cmp r0, #0
 	beq endWar
 	
+    bl getDistance
+    ldrb r0, [r0]
+    cmp r0, #1
+    bne distantWar  @遠距離は弱体化
+
 	mov r1, #90
 	ldrh r0, [r4, r1]
 	add r0, #8
 	strh r0, [r4, r1] @自分
+
 	mov r1, #96
 	ldrh r0, [r4, r1]
 	add r0, #20
 	strh r0, [r4, r1] @自分
+    b endWar
+distantWar:
+	mov r1, #90
+	ldrh r0, [r4, r1]
+	add r0, #4
+	strh r0, [r4, r1] @自分
+    
+	mov r1, #96
+	ldrh r0, [r4, r1]
+	add r0, #10
+	strh r0, [r4, r1] @自分
+
 endWar:
 	pop {pc}
 
@@ -858,6 +876,10 @@ getItemEffective:
 getAlinaAdr:
 	ldr r0, =0x0203a4d0
 	bx lr
+getDistance:
+    ldr r0, =0x0203a4d2
+    bx lr
+
 .ltorg
 adr:
 
