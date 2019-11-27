@@ -24,10 +24,10 @@ PULSE_ID = (0x09)	@奥義の鼓動ID
 	mov	r2, #15
 	and	r2, r1
 	cmp	r2, #ATK_ID
-	blt trueTiyu
+	blt endTiyu
 	cmp	r2, #PULSE_ID
-	ble	endTiyu
-trueTiyu:
+	bgt	endTiyu
+falseTiyu:  @ATK～PULSEの間なら強制無効化
 	mov r0, #0
 endTiyu:
     pop {r4, pc}
