@@ -301,7 +301,7 @@ SHORT SKL_HELP_99 SKL_COLOR_99
 POIN 0 0 0 0
 
 SHORT SKL_HELP_100 SKL_COLOR_100 
-POIN 0 GenocideList GenocideList_w 0
+POIN GenocideList_unit GenocideList GenocideList_w 0
 
 SHORT SKL_HELP_101 SKL_COLOR_101 
 POIN OccultList_u OccultList_c 0 OccultList_i
@@ -351,8 +351,8 @@ POIN 0 LightfaireList 0 0
 SHORT SKL_HELP_116 SKL_COLOR_116 
 POIN 0 DarkfaireList 0 0
 
-SHORT SKL_HELP_117 SKL_COLOR_117 
-POIN 0 0 0 0
+SHORT 0 0 
+POIN GenocideList_unit GenocideList GenocideList_w 0
 
 SHORT SKL_HELP_118 SKL_COLOR_118 
 POIN 0 0 0 0

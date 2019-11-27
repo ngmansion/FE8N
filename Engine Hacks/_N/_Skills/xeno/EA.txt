@@ -1,5 +1,5 @@
 #include config.txt
-    
+ALIGN 4
 PUSH
     ORG 0x02ae54
     jumpToHack(xeno_main)
@@ -9,26 +9,33 @@ PUSH
     jumpToHack(xeno_light)
     
     ORG 0x05573c
-    jumpToHack(xeno_red)
+    jumpToHack(xeno_red)	//赤くする処理だが、エフェクト付加したので無効化
     ORG 0x059cda
     SHORT $2108 //赤継続
 POP
     
 xeno_red:
-    #incbin red.gba
-    
+    #incbin red.dmp
+ALIGN 4
 xeno_main:
     #incbin main.dmp
     POIN hasNihil
     POIN hasXeno
     POIN hasCharge
+    POIN hasReverseXeno
 xeno_light:
-    #incbin light.gba
+    #incbin light.dmp
+ALIGN 4
 xeno_back:
     #incbin back.dmp
+ALIGN 4
 hasXeno:
     HAS_SKILL
     WORD GenocideID
+    POIN judgeSkill
+hasReverseXeno:
+    HAS_SKILL
+    WORD ReverseGenocideID
     POIN judgeSkill
 hasCharge:
     HAS_SKILL

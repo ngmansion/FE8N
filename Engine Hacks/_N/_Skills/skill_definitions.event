@@ -109,5 +109,5 @@
 #define SunderID 114 //0x72 両断
 #define LightfaireID 115 //0x73 光魔の達人
 #define DarkfaireID 116 //0x74 闇魔の達人
-
+#define ReverseGenocideID 117 //0x75裏ジェノサイド
 
