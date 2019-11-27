@@ -35,6 +35,8 @@ Player:  @©ŒR(‚Ü‚½‚ÍA—FŒR)
 	beq		DefenseSkill
 	cmp		r5, #0x11		@¹‚
 	beq		DefenseSkill
+	cmp		r5, #0x75		@— ƒWƒFƒmƒTƒCƒh
+	beq		DefenseSkill
 	b		AttackSkill
 
 DefenseSkill:
