@@ -10,11 +10,6 @@ LULL_ADR = (adr+16)
 @ステータス画面では呼ばれない
 @相手の数値に影響を与える処理群
 
-.macro _blr reg
-	mov lr, \reg
-	.short 0xF800
-.endm
-
 
     push {r4, r5, r6, lr}
     mov r4, r0
@@ -76,7 +71,7 @@ Lull:
         strh r0, [r1] @威力
 
     endLull:
-        pop {pc}
+        pop {r4, r5, pc}
 
 
 QuickenedPulse:
