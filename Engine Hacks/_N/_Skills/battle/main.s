@@ -63,12 +63,27 @@ Lull:
         mov r0, r5
         mov r1, r4
         bl recalcAtk
-
+        mov r0, r5
+        mov r1, r4
+        bl recalcSpd
+        
         mov r1, r5
         add r1, #90
         ldrh r0, [r1]
         sub r0, #2
+        bge jumpAtk
+        mov r0, #0
+    jumpAtk:
         strh r0, [r1] @威力
+        
+        mov r1, r5
+        add r1, #94
+        ldrh r0, [r1]
+        sub r0, #2
+        bge jumpSpd
+        mov r0, #0
+    jumpSpd:
+        strh r0, [r1] @速さ
 
     endLull:
         pop {r4, r5, pc}
@@ -137,6 +152,9 @@ endBless:
 
 recalcAtk:
     ldr r2, =0x0802aa28
+    mov pc, r2
+recalcSpd:
+    ldr r2, =0x0802aae4
     mov pc, r2
 
 .ltorg

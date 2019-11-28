@@ -155,13 +155,16 @@ Fort:
 	mov r1, r4
 	add r1, #90
 	ldrh r0, [r1]
-	sub r0, #3
+	sub r0, #2
+	bge jumpFort
+	mov r0, #0
+jumpFort:
 	strh r0, [r1] @自分
 	
 	mov r1, r4
 	add r1, #92
 	ldrh r0, [r1]
-	add r0, #3
+	add r0, #4
 	strh r0, [r1] @自分
 	
 	mov r0, #1
