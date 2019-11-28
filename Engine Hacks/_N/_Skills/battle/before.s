@@ -164,12 +164,6 @@ Fort:
 	add r0, #3
 	strh r0, [r1] @自分
 	
-	mov r1, r4
-	add r1, #98
-	ldrh r0, [r1]
-	add r0, #20
-	strh r0, [r1] @自分
-	
 	mov r0, #1
 	b endFort
 falseFort:
@@ -273,10 +267,6 @@ trueSolo:
 	mov r1, #94
 	ldrh r0, [r4, r1]
 	add r0, #3
-	strh r0, [r4, r1] @自分
-	mov r1, #96
-	ldrh r0, [r4, r1]
-	add r0, #20
 	strh r0, [r4, r1] @自分
 falseSolo:
 	pop {r4, r5, r6, pc}
@@ -607,7 +597,20 @@ Shishi:
 	_blr r1
 	cmp r0, #0
 	beq falseShishi
-	b gotKoroshi
+    mov r1, #90
+    ldrh r0, [r4, r1]
+    add r0, #3
+    strh r0, [r4, r1] @自分
+    
+    mov r1, #92
+    ldrh r0, [r4, r1]
+    add r0, #3
+    strh r0, [r4, r1] @自分
+    
+    mov r1, #94
+    ldrh r0, [r4, r1]
+    add r0, #3
+    strh r0, [r4, r1] @自分
 falseShishi:
 	mov r0, #0
 	pop {pc}
@@ -624,7 +627,20 @@ Konshin:
 	ldrb r0, [r4, #19] @現在HP
 	cmp r0, r1
 	blt falseKonshin @現在が最大よりも小さい場合
-	b gotKoroshi
+    mov r1, #90
+    ldrh r0, [r4, r1]
+    add r0, #3
+    strh r0, [r4, r1] @自分
+    
+    mov r1, #92
+    ldrh r0, [r4, r1]
+    add r0, #3
+    strh r0, [r4, r1] @自分
+    
+    mov r1, #94
+    ldrh r0, [r4, r1]
+    add r0, #3
+    strh r0, [r4, r1] @自分
 falseKonshin:
 	mov r0, #0
 	pop {pc}
