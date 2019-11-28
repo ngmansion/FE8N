@@ -154,6 +154,14 @@ jumpUnit2:
 		ldr	r4, [r4]
 		ldrb	r4, [r4, #4]
 		bl	SKILL	@表示のみ
+
+		ldr	r5, SKL_TBL	@UNIT2
+		ldr r4, =0x02003BFC
+		ldr r4, [r4, #12]
+		ldr r4, [r4]
+		ldrb r4, [r4, #4]
+		mov r3, #1@CLASS
+		bl SKILL4
 		pop {pc}
 
 Ability:
