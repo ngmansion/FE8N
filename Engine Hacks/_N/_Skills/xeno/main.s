@@ -157,6 +157,9 @@ Xeno_impl:
         add r1, #100
         ldrb r0, [r1]
         sub r0, #20
+        bge jumpXeno
+        mov r0, #0
+    jumpXeno:
         strb r0, [r1]
         
         mov r1, #90

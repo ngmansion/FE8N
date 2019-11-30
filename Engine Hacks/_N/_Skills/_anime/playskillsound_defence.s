@@ -24,6 +24,6 @@ exit:
 
 	ldr	r3,=0x08070BF8+1	@元に戻す
 	mov pc,r3
-.align 4
+.align
 .ltorg
 adr:

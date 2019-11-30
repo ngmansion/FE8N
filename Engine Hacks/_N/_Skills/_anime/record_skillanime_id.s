@@ -57,6 +57,6 @@ AttackSkill:
 
 exit:
 	pop {r4,r5, pc}
-.align 4
+.align
 .ltorg
 adr:

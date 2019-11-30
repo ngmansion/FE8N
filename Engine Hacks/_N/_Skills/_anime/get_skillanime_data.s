@@ -45,6 +45,6 @@ Join1:
 
 Exit:
     pop {pc}
-.align 4
+.align
 .ltorg
 adr:

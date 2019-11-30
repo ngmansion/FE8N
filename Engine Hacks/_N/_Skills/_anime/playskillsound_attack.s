@@ -24,6 +24,6 @@ exit: @フック時に壊してしまう命令の再送
 	ldr	r3,=0x08070A2C+1	@元に戻す
 	mov pc,r3
 
-.align 4
+.align
 .ltorg
 adr:
