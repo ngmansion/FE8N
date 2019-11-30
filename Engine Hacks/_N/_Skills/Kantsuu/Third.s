@@ -34,6 +34,13 @@ start:
 MasterySkill:
 		push {lr}
 
+		mov r0, r8
+			ldr r2, NIHIL
+			mov lr, r2
+			.short 0xF800
+		cmp r0, #1
+		beq endMasterySkill @見切り持ち
+		
 		bl Dragon
 		cmp r0, #1
 		beq endMasterySkill

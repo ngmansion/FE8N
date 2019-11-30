@@ -9,6 +9,7 @@ IMPALE_ADR = (adr+12)
 ECRIPSE_ADR = (adr+16)
 JIHAD_ADR = (adr+20)
 SET_SKILLANIME_ATK_FUNC = (adr+24)
+HAS_NIHIL_FUNC = (adr+28)
 
 .thumb
 @.org	0802b484
@@ -24,6 +25,13 @@ SET_SKILLANIME_ATK_FUNC = (adr+24)
 	beq	start	@奥義なしで開始
 	b	return
 start:
+    mov r0, r8
+        ldr r2, HAS_NIHIL_FUNC
+        mov lr, r2
+        .short 0xF800
+	cmp r0, #1
+	beq return	@見切り持ちなので終了
+
 	bl jihad_impl @ジハド
 	cmp r0, #1
 	beq return

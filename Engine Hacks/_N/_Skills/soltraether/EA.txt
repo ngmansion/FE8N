@@ -20,6 +20,7 @@ POIN hasImpale //12
 POIN hasEclipse //16
 POIN hasJihad //20
 POIN set_skillanime_attack
+POIN hasNihil
 
 ALIGN 4
 
@@ -82,6 +83,7 @@ taiyo4:
     POIN hasSOL
     POIN judgeOccult
     POIN set_skillanime_attack
+    POIN hasNihil
 
 hasSOL:
     HAS_OCCULT

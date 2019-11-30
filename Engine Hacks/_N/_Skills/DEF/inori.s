@@ -69,13 +69,13 @@ end:
 			ldrh r0, [r0]
 			mov r1, #0x20
 			and r0, r1
-			bne endDeflect @闘技場チェック
+			bne falseDeflect @闘技場チェック
 		mov r0, r8
 			ldr r3, adr+32 @連撃防御
 			mov lr, r3
 			.short 0xF800
 		cmp r0, #0
-		beq endDeflect
+		beq falseDeflect
 		
 		mov r0, r8
 		ldrb r0, [r0, #11]
@@ -86,20 +86,20 @@ end:
 		mov r0, r8
 		ldrb r0, [r0, #0x13] @今のHP
 		cmp r0, r1
-		bge endDeflect @HP減少(被攻撃)が無ければ終わり
+		bge falseDeflect @HP減少(被攻撃)が無ければ終わり
 		
 		mov r0, r7
-			ldr r1, adr+16 @見切り
+			ldr r1, HAS_NIHIL_FUNC
 			mov lr, r1
 			.short 0xF800
-		cmp r0, #0
-		bne endDeflect
+		cmp r0, #1
+		beq falseDeflect	@見切り持ちなら終了
 		ldrh r0, [r4, #4]
 		asr r0, r0, #1
 		strh r0, [r4, #4]
 		mov r0, #1
 		.short 0xE000
-	endDeflect:
+	falseDeflect:
 		mov r0, #0
 		pop {pc}
 	
@@ -134,7 +134,14 @@ BigShield:
 		.short 0xF800
 	cmp r0, #0
 	beq falseShield
-ouiShield:
+	
+	mov r0, r7
+		ldr r1, HAS_NIHIL_FUNC
+		mov lr, r1
+		.short 0xF800
+	cmp r0, #1
+	beq falseShield	@見切り持ちなら終了
+	
 	mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	@魔法判定
@@ -176,8 +183,15 @@ HolyShield:
 		mov lr, r1
 		.short 0xF800
 	cmp r0, #0
-	beq endHoly
-Holy:
+	beq falseHoly
+	
+	mov r0, r7
+		ldr r1, HAS_NIHIL_FUNC
+		mov lr, r1
+		.short 0xF800
+	cmp r0, #1
+	beq falseHoly	@見切り持ちなら終了
+	
 	mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	@物理判定
@@ -187,13 +201,13 @@ Holy:
 	beq	ouiHoly
 	cmp	r0, #5
 	beq	ouiHoly
-	b endHoly
+	b falseHoly
 ouiHoly:
 	ldrb	r0, [r3, #21]	@技
 	mov	r1, #0
 	bl	random
 	cmp	r0, #0
-	beq	endHoly
+	beq	falseHoly
 	ldrh	r0, [r4, #4]
 	mov r0, #0
 	strh	r0, [r4, #4]
@@ -208,7 +222,7 @@ ouiHoly:
 	mov	r0, #1
 	pop	{pc}
 
-endHoly:
+falseHoly:
 	mov	r0, #0
 	pop	{pc}
 	
@@ -238,11 +252,11 @@ Pray:
 	blt falsePray @一撃で死なないなら終了
 	
 	mov r0, r7
-		ldr r1, adr+16 @見切り
+		ldr r1, HAS_NIHIL_FUNC
 		mov lr, r1
 		.short 0xF800
-	cmp r0, #0
-	bne falsePray @見切り持ちなら終了
+	cmp r0, #1
+	beq falsePray @見切り持ちなら終了
 
 @祈り効果
 	mov	r0, r8
@@ -267,25 +281,23 @@ endPray:
 
 Oracle:
 	push	{lr}
-	ldr r1, adr+8 @聖盾
+	ldr r1, HAS_GOD_SHIELD_FUNC
 	mov lr, r1
 	mov r0, r8
 	.short 0xF800
 	cmp r0, #0
 	beq	endOracle
 	
-nihil_check:
 	mov r0, r7
-		ldr r1, adr+16 @見切り
+		ldr r1, HAS_NIHIL_FUNC
 		mov lr, r1
 		.short 0xF800
-	cmp r0, #0
-	bne	Nihil
+	cmp r0, #1
+	beq	endOracle	@見切り持ちなら終了
 	ldrh	r0, [r4, #4]
 	asr	r0, r0, #1
 	strh	r0, [r4, #4]
 	b	endOracle
-Nihil:
 endOracle:
 	pop	{pc}
 	

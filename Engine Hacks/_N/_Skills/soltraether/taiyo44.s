@@ -5,6 +5,7 @@ MAX_BATTLE_NUM = (24)
 HAS_SOL_FUNC = (adr+4)
 
 SET_SKILLANIME_ATK_FUNC = (adr+12)
+HAS_NIHIL_FUNC = (adr+16)
 
 @(2B666 > )
 	mov	r0, r10
@@ -36,12 +37,20 @@ clear_loop:
     cmp r0, #0
     bne rizaia @HP吸収フラグ起動済み
 
+
+    mov r0, r4
+        ldr r1, HAS_NIHIL_FUNC
+        mov lr, r1
+        .short 0xF800
+    cmp r0, #1
+    beq buki
+
     mov r0, r5
         ldr r1, HAS_SOL_FUNC @太陽
         mov lr, r1
         .short 0xF800
-    cmp r0, #0
-    bne taiyo
+    cmp r0, #1
+    beq taiyo
 buki:
     ldrh r0, [r7]
         ldr r1,	=0x080174cc

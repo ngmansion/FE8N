@@ -2,6 +2,7 @@
 
 ORACLE_FLAG = (0xDD) @奥義目印
 SET_SKILLANIME_ATK_FUNC = (adr+4)
+HAS_NIHIL_FUNC = (adr+8)
 
 @org    0x08E48BB0
 
@@ -13,6 +14,16 @@ SET_SKILLANIME_ATK_FUNC = (adr+4)
         pop {r2}
     cmp r0, #0
     beq end
+    
+    mov r0, r8
+        push {r2}
+        ldr r2, HAS_NIHIL_FUNC
+        mov lr, r2
+        .short 0xF800
+        pop {r2}
+    cmp r0, #1
+    beq end
+    
 @奥義目印
     mov r1, #ORACLE_FLAG
     mov r10, r1

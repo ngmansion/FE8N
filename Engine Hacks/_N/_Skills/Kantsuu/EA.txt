@@ -13,7 +13,7 @@ geckojump:
 #incbin "Gecko.dmp"
 POIN hasGecko
 POIN set_skillanime_attack
-
+POIN hasNihil
 
 hasGecko:
     HAS_OCCULT
