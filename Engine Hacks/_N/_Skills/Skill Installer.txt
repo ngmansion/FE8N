@@ -1,6 +1,7 @@
 //header
 #define SKILL_PATCH
   #include config_icon.txt
+  #include config_skill.txt
   #include skill_definitions.event
   #include list_definitions.event
   #include "skl_anime_table.event"  //スキルアニメーションテーブル
