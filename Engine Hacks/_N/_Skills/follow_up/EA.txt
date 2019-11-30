@@ -21,6 +21,7 @@ breaker_main:
     POIN waryFighter_hasSkill
     POIN boldFighter_hasSkill
     POIN vengefulFighter_hasSkill
+    POIN hasDartingBlow
     
 breaker_semetate:
     #incbin semetate.gba
