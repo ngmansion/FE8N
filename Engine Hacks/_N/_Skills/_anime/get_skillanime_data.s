@@ -9,6 +9,7 @@
 	@”­“®‚µ‚½êŠ‚ğ³Šm‚É‘ª’è‚·‚é.
 	ldr r2, =0x03004F9C @gCurrentUnitIndex
 	ldr r3, =0x02000000 @WRAM 
+	ldr r2, [r2] @‚±‚ê”²‚¯‚Ä‚½
 	lsl r1 ,r2 ,#0x2
 	add r1 ,r1, r3
 	ldr r1, [r1, #0x0]  @ pointer:02000000 (WRAM )
