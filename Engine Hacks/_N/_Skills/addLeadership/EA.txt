@@ -20,10 +20,8 @@ ALIGN 4
 hasLeadership1:
     HAS_SKILL
     WORD Leadership1ID
-    POIN judgeSkill
 hasLeadership2:
     HAS_SKILL
     WORD Leadership2ID
-    POIN judgeSkill
     
 ALIGN 4

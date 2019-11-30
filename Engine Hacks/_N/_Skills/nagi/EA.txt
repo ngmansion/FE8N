@@ -83,7 +83,6 @@ nagi_tome:
 hasWindsweep:
  HAS_SKILL
  WORD WindsweepID
- POIN judgeSkill
 
 nagi_setFlag:
   #incbin setFlag.dmp

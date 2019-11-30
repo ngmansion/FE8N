@@ -130,27 +130,21 @@ pulse_impl:
     hasRemove:
         HAS_SKILL
         WORD RemoveID
-        POIN judgeSkill
     hasGaleforce:
         HAS_SKILL
         WORD GaleforceID
-        POIN judgeSkill
     hasLifetaker:
         HAS_SKILL
         WORD LifetakerID
-        POIN judgeSkill
     hasGaleCause:
         HAS_SKILL
         WORD GaleCauseID
-        POIN judgeSkill
     hasCantoPlus:
         HAS_SKILL
         WORD CantoPlusID
-        POIN judgeSkill
 
     hasGoodyBasket:
         HAS_SKILL
         WORD 0
-        POIN judgeSkill
 
 ALIGN 4

@@ -28,10 +28,8 @@ ALIGN 4
 hasFear:
     HAS_SKILL
     WORD DauntID
-    POIN judgeSkill
     
 hasCharm:
     HAS_SKILL
     WORD CharmID
-    POIN judgeSkill
     

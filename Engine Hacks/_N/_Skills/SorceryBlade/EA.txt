@@ -18,7 +18,6 @@ POP
 hasSorceryBlade:
  HAS_SKILL
  WORD SorceryBladeID
- POIN judgeSkill
 	
 ALIGN 4
 //////////////

@@ -18,7 +18,6 @@ POIN judgeOccult
 hasGecko:
     HAS_SKILL
     WORD LunaID
-    POIN judgeSkill
 
 //////////貫通系奥義分岐
 

@@ -32,14 +32,11 @@ ALIGN 4
 hasXeno:
     HAS_SKILL
     WORD GenocideID
-    POIN judgeSkill
 hasReverseXeno:
     HAS_SKILL
     WORD ReverseGenocideID
-    POIN judgeSkill
 hasCharge:
     HAS_SKILL
     WORD ChargeID
-    POIN judgeSkill
     
     

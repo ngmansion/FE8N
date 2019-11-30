@@ -30,44 +30,35 @@ breaker_semetate:
 breaker_hasSkill1:
     HAS_SKILL
     WORD SwordbreakerID
-    POIN judgeSkill
     
 breaker_hasSkill2:
     HAS_SKILL
     WORD LancebreakerID
-    POIN judgeSkill
     
 breaker_hasSkill3:
     HAS_SKILL
     WORD AxebreakerID
-    POIN judgeSkill
     
 breaker_hasSkill4:
     HAS_SKILL
     WORD BowbreakerID
-    POIN judgeSkill
     
 breaker_hasSkill5:
     HAS_SKILL
     WORD TomebreakerID
-    POIN judgeSkill
     
 waryFighter_hasSkill:
     HAS_SKILL
     WORD WaryFighterID
-    POIN judgeSkill
     
 boldFighter_hasSkill:
     HAS_SKILL
     WORD BoldFighterID
-    POIN judgeSkill
     
 vengefulFighter_hasSkill:
     HAS_SKILL
     WORD VengefulFighterID
-    POIN judgeSkill
     
 hasDesperation:
     HAS_SKILL
     WORD DesperationID
-    POIN judgeSkill

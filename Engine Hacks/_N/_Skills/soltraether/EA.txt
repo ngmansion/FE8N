@@ -85,29 +85,22 @@ taiyo4:
 hasSOL:
     HAS_SKILL
     WORD SolID
-    POIN judgeSkill
 hasTenku:
     HAS_SKILL
     WORD AetherID
-    POIN judgeSkill
 hasYoukoh:
     HAS_SKILL
     WORD FlareID
-    POIN judgeSkill
 hasRyusei:
     HAS_SKILL
     WORD AstraID
-    POIN judgeSkill
 hasImpale:
     HAS_SKILL
     WORD ImpaleID
-    POIN judgeSkill
 hasEclipse:
     HAS_SKILL
     WORD EclipseID
-    POIN judgeSkill
 hasJihad:
     HAS_SKILL
     WORD JihadID
-    POIN judgeSkill
 

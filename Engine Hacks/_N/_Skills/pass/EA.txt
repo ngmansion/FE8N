@@ -12,5 +12,4 @@ passem:
 hasPass:
     HAS_SKILL
     WORD PassID
-    POIN judgeSkill
     

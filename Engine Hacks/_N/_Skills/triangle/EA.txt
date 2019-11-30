@@ -17,11 +17,9 @@ skill_triangle:
 hasTriangleAdept:
   HAS_SKILL
   WORD TriangleAdeptID
-  POIN judgeSkill
 hasCancelAffinity:
   HAS_SKILL
   WORD CancelAffinityID
-  POIN judgeSkill
 
 
 

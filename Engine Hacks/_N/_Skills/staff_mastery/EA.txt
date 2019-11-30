@@ -48,5 +48,4 @@ staff_mastery_target:
 staff_mastery_hasSkill:
     HAS_SKILL
     WORD StafffaireID
-    POIN judgeSkill
 ALIGN 4

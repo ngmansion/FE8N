@@ -22,11 +22,9 @@ tiyu_main:
 hasRenewal:
     HAS_SKILL
     WORD RenewalID
-    POIN judgeSkill
     
 hasImbue:
     HAS_SKILL
     WORD ImbueID
-    POIN judgeSkill
     
     

@@ -29,32 +29,26 @@ shikkokunori:
 BigShield_hasSkill:
  HAS_SKILL
  WORD PaviseID
- POIN judgeSkill
  
 HolyShield_hasSkill:
  HAS_SKILL
  WORD AegisID
- POIN judgeSkill
  
 GodShield_hasSkill:
  HAS_SKILL
  WORD DivineShieldID
- POIN judgeSkill
  
 Pray_hasSkill:
  HAS_SKILL
  WORD MiracleID
- POIN judgeSkill
 
 hasDistantGuard:
  HAS_SKILL
  WORD DistantGuardID
- POIN judgeSkill
  
 hasDeflect:
  HAS_SKILL
  WORD DeflectID
- POIN judgeSkill
  
 
  

@@ -69,126 +69,98 @@ battle_down:
 hasLull:
     HAS_SKILL
     WORD LullID
-    POIN judgeSkill
     
 hasFury:
     HAS_SKILL
     WORD FuryID
-    POIN judgeSkill
     
 hasLightBless:
     HAS_SKILL
     WORD LightBlessID
-    POIN judgeSkill
     
 hasDarkBless:
     HAS_SKILL
     WORD DarkBlessID
-    POIN judgeSkill
     
 hasLifeAndDeath:
     HAS_SKILL
     WORD LifeAndDeathID
-    POIN judgeSkill
     
 hasDeathBlow:
     HAS_SKILL
     WORD DeathBlowID
-    POIN judgeSkill
 hasArmoredBlow:
     HAS_SKILL
     WORD ArmoredBlowID
-    POIN judgeSkill
 hasDartingBlow:
     HAS_SKILL
     WORD DartingBlowID
-    POIN judgeSkill
 
 hasMonsterBlast:
     HAS_SKILL
     WORD MonsterBlastID
-    POIN judgeSkill
     
 hasCloseDef:
  HAS_SKILL
  WORD CloseDefID
- POIN judgeSkill
 
 hasDistantDef:
  HAS_SKILL
  WORD DistantDefID
- POIN judgeSkill
 
 hasDefender:
  HAS_SKILL
  WORD DefenderID
- POIN judgeSkill
 
 hasSwordfaire:
  HAS_SKILL
  WORD SwordfaireID
- POIN judgeSkill
 hasLancefaire:
  HAS_SKILL
  WORD LancefaireID
- POIN judgeSkill
 hasAxefaire:
  HAS_SKILL
  WORD AxefaireID
- POIN judgeSkill
 hasBowfaire:
  HAS_SKILL
  WORD BowfaireID
- POIN judgeSkill
 hasAnimafaire:
  HAS_SKILL
  WORD AnimafaireID
- POIN judgeSkill
 hasLightfaire:
  HAS_SKILL
  WORD LightfaireID
- POIN judgeSkill
 hasDarkfaire:
  HAS_SKILL
  WORD DarkfaireID
- POIN judgeSkill
 
 hasGrounder:
  HAS_SKILL
  WORD GrounderID
- POIN judgeSkill
 hasHelmSplitter:
  HAS_SKILL
  WORD HelmSplitterID
- POIN judgeSkill
 hasKnightkneeler:
  HAS_SKILL
  WORD KnightkneelerID
- POIN judgeSkill
 
 hasPoisonStrike:
    HAS_SKILL
    WORD PoisonStrikeID
-   POIN judgeSkill
 hasCounter:
     HAS_SKILL
     WORD CounterID
-    POIN judgeSkill
 hasPush:
     HAS_SKILL
     WORD PushID
-    POIN judgeSkill
 hasSolo:
     HAS_SKILL
     WORD SoloID
-    POIN judgeSkill
 hasFort:
     HAS_SKILL
     WORD FortID
-    POIN judgeSkill
 hasSunder:
     HAS_SKILL
     WORD SunderID
-    POIN judgeSkill
 
 

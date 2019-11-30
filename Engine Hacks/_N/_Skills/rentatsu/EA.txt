@@ -16,4 +16,4 @@ POIN hasNihil
 hasRentatsu:
     HAS_SKILL
     WORD NullifyID
-    POIN judgeSkill
+

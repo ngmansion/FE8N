@@ -1,6 +1,6 @@
 #include config.txt
 ALIGN 4
-#define HAS_SKILL "BYTE $01 $49 $02 $4A $97 $46 $00 $00"
+#define HAS_SKILL "BYTE $02 $49 $01 $4B $9F $46 $C0 $46; POIN judgeSkill"
 #include "checkSkill/EA.txt"
 #include "SkillBook/EA.txt"
 
@@ -12,7 +12,6 @@ judgeOccult:
 hasOccult:
 	HAS_SKILL
 	WORD OccultID
-	POIN judgeSkill
 
 ALIGN 4
 

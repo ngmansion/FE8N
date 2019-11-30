@@ -11,6 +11,5 @@ magma_bomb:
 hasProminence:
     HAS_SKILL
     WORD ProminenceID
-    POIN judgeSkill
     
     

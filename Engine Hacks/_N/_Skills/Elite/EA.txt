@@ -20,6 +20,5 @@ Elitenon:
 hasElite:
     HAS_SKILL
     WORD ParagonID
-    POIN judgeSkill
     
     

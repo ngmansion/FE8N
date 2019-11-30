@@ -38,17 +38,13 @@ effective_main:
 effective_hasSkill1:
     HAS_SKILL
     WORD Effective1ID
-    POIN judgeSkill
 effective_hasSkill2:
     HAS_SKILL
     WORD Effective2ID
-    POIN judgeSkill
 effective_hasSkill3:
     HAS_SKILL
     WORD Effective3ID
-    POIN judgeSkill
 effective_hasSkill4:
     HAS_SKILL
     WORD Effective4ID
-    POIN judgeSkill
     

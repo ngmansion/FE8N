@@ -25,7 +25,6 @@ motikae_test:
 hasQuickChange:
     HAS_SKILL
     WORD QuickChangeID
-    POIN judgeSkill
     
     //16540
     

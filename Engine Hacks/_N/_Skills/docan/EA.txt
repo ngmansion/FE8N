@@ -19,11 +19,9 @@ POIN hasFortune
 hasCancel:
     HAS_SKILL
     WORD CancelID
-    POIN judgeSkill
     
 hasWrath:
     HAS_SKILL
     WORD WrathID
-    POIN judgeSkill
     
 ALIGN 4
