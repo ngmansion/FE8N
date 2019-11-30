@@ -82,9 +82,14 @@ judgeList: @リストチェック
 		beq trueList
 	@武器
 		add r6, #4
+		
+		mov r0, r4
+			ldr r1, =0x080168d0
+			mov lr, r1
+			.short 0xF800
+		lsl r1, r0, #24
+		lsr r1, r1, #24
 		ldr r0, [r6]
-		mov r1, #74
-		ldrb r1, [r4, r1]	@装備が取得可能な状態かは不明。改良余地あり。
 		bl Listfunc
 		cmp r0, #1
 		beq trueList
