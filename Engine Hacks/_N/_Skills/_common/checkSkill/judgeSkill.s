@@ -3,9 +3,8 @@ SKL_TBL = ADR+0
 CONTAINS_SKILL = ADR+4
 JUDGE_UNIT_FUNC = ADR+8
 WP_LV_SKL_TABLE = ADR+12
-RECORD_SKILLANIME_ID_FUNC = ADR+16	@record_skillanime_id 保持しているとされたスキルを記録 その後発動すれば、エフェクト付きで表示する.
-SKL_TBL_SIZE = ADR+20
-CHECK_ITEM_FUNC = ADR+24
+SKL_TBL_SIZE = ADR+16
+CHECK_ITEM_FUNC = ADR+20
 
 @
 @	judgeUnitと横並びの作り
@@ -54,9 +53,6 @@ false:
     mov r0, #0
     b return
 true:
-	mov r0, r4	 @RAM上へのユニットポインタ
-	mov r1, r5	 @持っているスキルID
-	bl record_skillanime_id
     mov r0, #1
 return:
     pop {r4, r5, pc}
@@ -218,9 +214,6 @@ judgeSkillInUnitData:
 checkItemList:
 	ldr r3, CHECK_ITEM_FUNC
 	mov pc, r3
-record_skillanime_id:
-	ldr r2, RECORD_SKILLANIME_ID_FUNC
-	mov pc, r2
 .align
 .ltorg
 ADR:

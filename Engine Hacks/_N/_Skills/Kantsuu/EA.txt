@@ -10,13 +10,13 @@ POP
 
 ALIGN 4
 geckojump:
-#incbin "Gecko.gba"
+#incbin "Gecko.dmp"
 POIN hasGecko
-POIN judgeOccult
+POIN set_skillanime_attack
 
 
 hasGecko:
-    HAS_SKILL
+    HAS_OCCULT
     WORD LunaID
 
 //////////貫通系奥義分岐
@@ -33,12 +33,31 @@ POP
 ALIGN 4
 origin_third:
 #incbin "Third.dmp"
-POIN	listDragon
-POIN	listMeido
-POIN	listRevenge
-POIN	listStan
-POIN	listStone
-POIN	listFlower
-POIN judgeOccult
+POIN	hasDragonFung
+POIN	hasColossus
+POIN	hasVengeance
+POIN	hasStun
+POIN	hasScream
+POIN	hasIgnis
 POIN hasNihil
+POIN set_skillanime_attack
+    
+hasDragonFung:
+    HAS_OCCULT
+    WORD DragonFungID
+hasColossus:
+    HAS_OCCULT
+    WORD ColossusID
+hasVengeance:
+    HAS_OCCULT
+    WORD VengeanceID
+hasStun:
+    HAS_SKILL
+    WORD StunID
+hasScream:
+    HAS_SKILL
+    WORD ScreamID
+hasIgnis:
+    HAS_OCCULT
+    WORD IgnisID
 

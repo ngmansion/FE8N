@@ -30,6 +30,13 @@ playskillsound_defence:
     #incbin    playskillsound_defence.dmp
     POIN get_skillanime_data
 
+set_skillanime_attack:
+    #incbin    set_skillanime_attack.dmp
+    POIN record_skillanime_id
+set_skillanime_defence:
+    #incbin    set_skillanime_defence.dmp
+    POIN record_skillanime_id
+    
 PUSH
 
 //攻撃スキルアニメ

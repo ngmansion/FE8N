@@ -19,7 +19,7 @@ POIN hasRyusei //8
 POIN hasImpale //12
 POIN hasEclipse //16
 POIN hasJihad //20
-POIN judgeOccult //24
+POIN set_skillanime_attack
 
 ALIGN 4
 
@@ -77,30 +77,31 @@ taiyo3:
     WORD SOL_WORK_ADDRESS
 ALIGN	4
 taiyo4:
-	#incbin "taiyo44.gba"
+	#incbin "taiyo44.dmp"
     WORD SOL_WORK_ADDRESS
     POIN hasSOL
     POIN judgeOccult
+    POIN set_skillanime_attack
 
 hasSOL:
-    HAS_SKILL
+    HAS_OCCULT
     WORD SolID
 hasTenku:
-    HAS_SKILL
+    HAS_OCCULT
     WORD AetherID
 hasYoukoh:
-    HAS_SKILL
+    HAS_OCCULT
     WORD FlareID
 hasRyusei:
-    HAS_SKILL
+    HAS_OCCULT
     WORD AstraID
 hasImpale:
-    HAS_SKILL
+    HAS_OCCULT
     WORD ImpaleID
 hasEclipse:
-    HAS_SKILL
+    HAS_OCCULT
     WORD EclipseID
 hasJihad:
-    HAS_SKILL
+    HAS_OCCULT
     WORD JihadID
 

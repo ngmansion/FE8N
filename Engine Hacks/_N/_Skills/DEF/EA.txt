@@ -20,7 +20,7 @@ shikkokunori:
  POIN GodShield_hasSkill
  POIN Pray_hasSkill
  POIN hasNihil
- WORD 0
+ POIN set_skillanime_defence
  POIN hasDistantGuard
  POIN 0
  POIN hasDeflect

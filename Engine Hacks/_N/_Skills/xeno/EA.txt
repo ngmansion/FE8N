@@ -23,6 +23,8 @@ xeno_main:
     POIN hasXeno
     POIN hasCharge
     POIN hasReverseXeno
+    POIN set_skillanime_attack
+    POIN set_skillanime_defence
 xeno_light:
     #incbin light.dmp
 ALIGN 4

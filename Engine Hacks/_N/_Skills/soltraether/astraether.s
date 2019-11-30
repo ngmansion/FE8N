@@ -8,51 +8,43 @@ ASTRA_ADR = (adr+8)
 IMPALE_ADR = (adr+12)
 ECRIPSE_ADR = (adr+16)
 JIHAD_ADR = (adr+20)
-JUDGE_OCCULT_ADR = (adr+24)
+SET_SKILLANIME_ATK_FUNC = (adr+24)
 
 .thumb
 @.org	0802b484
 @武器レベルチェック
-	mov r0, r7
-		ldr r1, JUDGE_OCCULT_ADR	@奥義判定
-		mov lr, r1
-		.short 0xF800
-	cmp r0, #0
-	beq return
+
+	ldr	r2, [r6, #0]
+	ldr	r0, [r2, #0]
+	lsl	r0, r0, #13
+	lsr	r0, r0, #13
+	mov	r1, #128
+	lsl	r1, r1, #9
+	and	r0, r1
+	beq	start	@奥義なしで開始
+	b	return
+start:
 	bl jihad_impl @ジハド
 	cmp r0, #1
-	beq ef_hit
+	beq return
 
 	bl tenku_impl @天空・陽光
 	cmp r0, #1
-	beq ef_hit
+	beq return
 	
 	bl astra_impl @流星
 	cmp r0, #1
-	beq ef_hit
+	beq return
 	
 	bl ecripse_impl @月食
 	cmp r0, #1
-	beq ef_hit
+	beq return
 	
 	bl impale_impl @撃破
 	cmp r0, #1
-	beq ef_hit
+	beq return
 	
 	b return
-ef_hit:
-    ldr r3, [r6]
-    ldr r2, [r3]
-    lsl r1, r2, #13
-    lsr r1, r1, #13
-    ldr	r0, =0xFFF80000
-    and r0, r2
-    orr r0, r1
-    
-    mov r1, #128
-    lsl r1, r1, #9
-    orr r0, r1
-    str r0, [r3, #0]
 
 return:
 	mov	r1, #4
@@ -116,6 +108,14 @@ not_dec:
     ldsh r1, [r5, r1] @攻撃力
     add r0, r0, r1
     strh r0, [r5, #4] @ダメージ
+    
+    mov r0, r7
+    ldr r1, JIHAD_ADR
+    ldr r1, [r1, #12]
+        ldr r2, SET_SKILLANIME_ATK_FUNC
+        mov lr, r2
+        .short 0xF800
+    
     b sol_crt
 falseJihad:
     mov r0, #0
@@ -171,7 +171,15 @@ ecripse_impl:
     ldrb r0, [r0, #0x13] @nowHP
     sub r0, #1
     strh r0, [r5, #4]
-    b effect
+    
+    mov r0, r7
+    ldr r1, ECRIPSE_ADR
+    ldr r1, [r1, #12]
+        ldr r2, SET_SKILLANIME_ATK_FUNC
+        mov lr, r2
+        .short 0xF800
+    
+    b effect_crt
 falseEcripse:
     mov r0, #0
     pop {pc}
@@ -213,6 +221,13 @@ impale_impl:
     ldsh r1, [r5, r1] @ ダメージ
     add r0, r0, r1
     strh r0, [r5, #4]
+    
+    mov r0, r7
+    ldr r1, IMPALE_ADR
+    ldr r1, [r1, #12]
+        ldr r2, SET_SKILLANIME_ATK_FUNC
+        mov lr, r2
+        .short 0xF800
     
     mov r0, #1
     .short 0xE000
@@ -285,7 +300,15 @@ waranai:
 	mov	r0, #1
 nononon:
 	bl	RYUSEI
-    b effect
+    
+    mov r0, r7
+    ldr r1, ASTRA_ADR
+    ldr r1, [r1, #12]
+        ldr r2, SET_SKILLANIME_ATK_FUNC
+        mov lr, r2
+        .short 0xF800
+    
+    b effect_crt
 falseAstra:
     mov r0, #0
     pop {pc}
@@ -360,6 +383,14 @@ eight:
     ldsh r1, [r5, r1] @ダメージ
     add r0, r0, r1
     strh r0, [r5, #4]
+    
+    mov r0, r7
+    ldr r1, TENKU_ADR
+    ldr r1, [r1, #12]
+        ldr r2, SET_SKILLANIME_ATK_FUNC
+        mov lr, r2
+        .short 0xF800
+    
     b sol_crt
 
 
@@ -377,6 +408,13 @@ YOUKOU:
     add r0, r0, r1
     strh r0, [r5, #4]
 
+    mov r0, r7
+    ldr r1, YOUKO_ADR
+    ldr r1, [r1, #12]
+        ldr r2, SET_SKILLANIME_ATK_FUNC
+        mov lr, r2
+        .short 0xF800
+    
     b sol_ef
 falseTenku:
     mov r0, #0
@@ -423,7 +461,7 @@ ryuend:
 	pop	{r6, r7, pc}
 
 
-effect: @必殺
+effect_crt: @必殺
     ldr r3, [r6]
     ldr r2, [r3]
     lsl r1, r2, #13

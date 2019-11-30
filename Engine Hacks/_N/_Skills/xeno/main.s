@@ -1,6 +1,9 @@
 TRUE = (1)
 FALSE = (0)
+XENO_ADR = (adr+4)
 REVERSE_XENO = (adr+12)
+SET_SKILLANIME_ATK_FUNC = (adr+16)
+SET_SKILLANIME_DEF_FUNC = (adr+20)
 
 .thumb
 @0002ae54
@@ -66,38 +69,24 @@ Xeno:
         b falseXeno
 
     firstXeno:
-        ldr	r3, =0x0203a604
-        ldr	r3, [r3]
-        ldr	r2, [r3]
-        lsl	r1, r2, #13
-        lsr	r1, r1, #13
-        mov	r0, #128
-        lsl	r0, r0, #9
-        orr	r1, r0
-        ldr	r0, =0xFFF80000
-        and	r0, r2
-        orr	r0, r1
-        str	r0, [r3]
-
+        mov r0, r5
+        ldr r1, XENO_ADR
+        ldr r1, [r1, #12]
+            ldr r2, SET_SKILLANIME_ATK_FUNC
+            mov lr, r2
+            .short 0xF800
         mov r0, r5
         mov r1, r6
         bl Xeno_impl
         b retXeno
 
     secondXeno:
-        ldr	r3, =0x0203a604
-        ldr	r3, [r3]
-        ldr	r2, [r3]
-        lsl	r1, r2, #13
-        lsr	r1, r1, #13
-        mov	r0, #128
-        lsl	r0, r0, #8
-        orr	r1, r0
-        ldr	r0, =0xFFF80000
-        and	r0, r2
-        orr	r0, r1
-        str	r0, [r3]
-
+        mov r0, r6
+        ldr r1, REVERSE_XENO
+        ldr r1, [r1, #12]
+            ldr r2, SET_SKILLANIME_DEF_FUNC
+            mov lr, r2
+            .short 0xF800
         mov r0, r6
         mov r1, r5
         bl Xeno_impl
@@ -132,7 +121,7 @@ Xeno:
         cmp r5, #FALSE
         beq Reverse
         mov r0, r4
-            ldr r1, adr+4 @Xeno
+            ldr r1, XENO_ADR @Xeno
             mov lr, r1
             .short 0xF800
         b endXeno
