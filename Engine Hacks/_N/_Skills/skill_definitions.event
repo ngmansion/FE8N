@@ -53,8 +53,7 @@
 #define PushID 51 //0x33 渾身
 #define SoloID 52 //0x34 孤軍
 #define FortID 53 //0x35 城塞
-#define DoubleLionID 54 //0x36 獅子連斬
-#define LullID 55 //0x37 凪
+#define LullID 54 //0x36 凪
 
 
 #define AstraID 64 //0x40流星
@@ -111,4 +110,5 @@
 #define LightfaireID 115 //0x73 光魔の達人
 #define DarkfaireID 116 //0x74 闇魔の達人
 #define ReverseGenocideID 117 //0x75裏ジェノサイド
+#define DoubleLionID 118 //0x76 獅子連斬
 
