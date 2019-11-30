@@ -87,122 +87,63 @@ nonTATE:
 	str r0, [sp] @r3
 	b end
 nonTri:
-@■しゅんころ判定
 	mov r0, r10
 	cmp r0, #KORO_FLAG
-	bne goneDeath	@瞬殺ではない
+	bne notDeath	@瞬殺ではない
+@■瞬殺独自判定
 	ldr r0, [sp] @r3
 	bl isDeath
 	cmp r0, #1
-	beq isMikiri	@ジェノサイド・戦技はスキップして次へ
+	beq skipWar	@戦技の確定発動判定を飛ばす
 	b FALSE
+notDeath:
 
-goneDeath:
+
+@■戦技判定
+	mov r1, #WAR_ADR
+	ldrb r0, [r2, r1]
+	cmp r0, #0xFF
+	beq TRUE	@発動率100%
+skipWar:
 @■ジェノサイド判定
 	ldrb r0, [r3, #11]
 	ldr r1, =0x0203a5e8 @ゲノ
 	ldrb r1, [r1]
 	cmp r0, r1
-	bne goneGeno
-	mov r0, #0
-	str r0, [sp] @r3
-	b end
-nonGeno:
-@スキル100%効果
-	ldrb r0, [r2, #11]
-	cmp r0, r1
-	bne goneGeno
-	mov r0, #100
-	str r0, [sp] @r3
-	b end
-
-goneGeno:
-@■戦技判定
-	mov r1, #WAR_ADR
-	ldrb r0, [r2, r1]
-	cmp r0, #0xFF
-	bne goneWarSkill
-
-@発動率100%
-	mov r0, #100
-	str r0, [sp] @r3
-	b end
-goneWarSkill:
-isMikiri:
+	beq FALSE		@相手がジェノサイド発動中
 @■見切りチェック
 	mov r0, r3
 	mov r4, r2
 		ldr r3, ADDRESS
 		mov lr, r3
 		.short 0xF800
-	cmp r0, #0
-	beq pulse
-	b FALSE
+	cmp r0, #1
+	beq FALSE
 
-pulse:	@■奥義の鼓動
-	mov r0, #48
-	ldrb r1, [r4, r0]
-	cmp r1, #PULSE_ID
-	bne toking
-@独自の奥義チェック
-	mov r0, r10
-	cmp r0, #ORACLE_FLAG
-	bne toking
-@鼓動リセット
-	mov r0, #48
-	mov r1, #PULSE_RESET
-	strb r1, [r4, r0] @状態異常治癒
-	mov r0, #100
-	str r0, [sp] @r3
-@状態異常治癒
-	mov r0, #0xB
-	ldrb r0, [r4, r0]
-		ldr r1, =0x08019108	@部隊表IDから変換
-		mov lr, r1
-		.short 0xF800
-	add r0, #48
-	mov r1, #PULSE_RESET
-	strb r1, [r0]
+	bl pulse_func	@■奥義の鼓動
+	cmp r0, #1
+	beq TRUE	@確定発動
+@加算処理
+	bl king_func	@■王の器チェック
+	ldr r1, [sp]
+	add r1, r0
+	str r1, [sp]
+	
+	bl god_func	@■神の器チェック
+	ldr r1, [sp]
+	add r1, r0
+	str r1, [sp]
+	
+	bl ace_func	@■勇将チェック
+	ldr r1, [sp]
+	add r1, r0
+	str r1, [sp]
+	
 	b end
-	
-toking: @■王の器チェック
-	mov r0, r4
-		ldr r3, ADDRESS+4 @王の器
-		mov lr, r3
-		.short 0xF800
-	cmp r0, #0
-	beq togod
-	ldr r0, [sp] @r3
-	add r0, #20
-	str r0, [sp] @r3
-	
-togod: @■神の器チェック
-	mov r0, r4
-		ldr r3, ADDRESS+12 @神の器
-		mov lr, r3
-		.short 0xF800
-	cmp r0, #0
-	beq toace
-	ldr r0, [sp] @r3
-	add r0, #40
-	str r0, [sp] @r3
-	
-toace: @■勇将チェック
-	mov r0, r4
-		ldr r3, ADDRESS+8 @勇将
-		mov lr, r3
-		.short 0xF800
-	cmp	r0, #0
-	beq	end
-gotAC:
-	ldrb	r0, [r4, #0x13]	@NOW
-	ldrb	r1, [r4, #0x12]	@MAX
-	lsl	r0, r0, #1
-	cmp	r0, r1
-	bgt	end
-	ldr	r0, [sp] @r3
-	add	r0, #50
-	str	r0, [sp] @r3
+
+TRUE:
+	mov r0, #100
+	str r0, [sp]
 	b end
 FALSE:
 	mov r0, #0
@@ -212,7 +153,88 @@ end:
 	pop {r3, r4}
 	ldr r0, =RETURN_ADR
 	mov pc, r0
-	
+
+ace_func:
+		push {lr}
+		mov r0, r4
+			ldr r3, ADDRESS+8 @勇将
+			mov lr, r3
+			.short 0xF800
+		cmp	r0, #0
+		beq	falseAC
+
+		ldrb	r0, [r4, #0x13]	@NOW
+		ldrb	r1, [r4, #0x12]	@MAX
+		lsl	r0, r0, #1
+		cmp	r0, r1
+		bgt	falseAC
+		mov	r0, #50
+		b endAC
+	falseAC:
+		mov r0, #0
+	endAC:
+		pop {pc}
+
+
+
+god_func:
+		push {lr}
+		mov r0, r4
+			ldr r3, ADDRESS+12 @神の器
+			mov lr, r3
+			.short 0xF800
+		cmp r0, #0
+		beq endGod
+		mov r0, #40
+	endGod:
+		pop {pc}
+
+king_func:
+		push {lr}
+		
+		mov r0, r4
+			ldr r3, ADDRESS+4 @王の器
+			mov lr, r3
+			.short 0xF800
+		cmp r0, #0
+		beq endKing
+		mov r0, #20
+	endKing:
+		pop {pc}
+
+
+pulse_func:
+		push {lr}
+		mov r0, #48
+		ldrb r1, [r4, r0]
+		cmp r1, #PULSE_ID
+		bne falsePulse
+	@独自の奥義チェック
+		mov r0, r10
+		cmp r0, #ORACLE_FLAG
+		bne falsePulse
+	@鼓動リセット
+		mov r0, #48
+		mov r1, #PULSE_RESET
+		strb r1, [r4, r0] @状態異常治癒
+	@状態異常治癒
+		mov r0, #0xB
+		ldrb r0, [r4, r0]
+			ldr r1, =0x08019108	@部隊表IDから変換
+			mov lr, r1
+			.short 0xF800
+		add r0, #48
+		mov r1, #PULSE_RESET
+		strb r1, [r0]
+	truePulse:
+		mov r0, #1
+		b endPulse
+	falsePulse:
+		mov r0, #0
+	endPulse:
+		pop {pc}
+
+
 isDeath:
 @戦技チェック
 	cmp r0, #0
@@ -238,7 +260,7 @@ endDeath:
 @	bx	lr
 @0x8反撃
 @0x4追撃
-
+.align
 .ltorg
 ADDRESS:
 
