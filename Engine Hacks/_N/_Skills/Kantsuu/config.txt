@@ -2,7 +2,7 @@ GeckoClass:		//月光(以下すべての奥義は重複設定不可)
    BYTE $0C $35 $36 $04 0
 
 ALIGN 4
-//各奥義2職まで
+
 listDragon: //竜穿
     BYTE $00 $00 0
 listMeido: //鳴動
