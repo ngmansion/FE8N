@@ -38,9 +38,83 @@ no_active:
     beq normal
     ldr r0, =0x0802af80 @追撃無し
     mov pc, r0
-    
 
-    
+
+result:
+    cmp r0, r1
+    bgt greater1
+    blt greater2
+equal:
+    cmp r0, #0
+    bge normal
+    ldr r0, =0x0802af80 @追撃無し
+    mov pc, r0
+
+greater1:
+    cmp r0, #0
+    bgt active1 @絶対追撃
+@相手の方が速い場合、相手の攻速を自分と同じにする
+    mov r0, r5
+    mov r1, r6
+    bl cancel
+    b normal
+
+greater2:
+    cmp r1, #0
+    bgt active2 @絶対追撃
+@自分の方が速い場合、自分の攻速を相手と同じにする
+    mov r1, r5
+    mov r0, r6
+    bl cancel
+    b normal
+
+cancel:
+        add r0, #94
+	    ldrh r0, [r0]
+	    add r1, #94
+	    ldrh r2, [r1, r2]
+	    cmp r0, r2
+	    bgt endCancel	@r0の方が速いので不要
+@キャンセル発動
+	    strh r0, [r1]
+    endCancel:
+        bx lr
+
+
+        push {lr}
+        push {r4}
+        push {r7}
+        mov r4, #0
+        mov r7, #0
+        bl waryFighter_judgeActivate    @守備隊形
+        cmp r0, #0
+        beq jump1
+    @守備隊形発動中
+        sub r4, #1
+        sub r7, #1
+    jump1:
+        bl BrashAssault @差し違え
+        cmp r0, #0
+        beq jump2
+        add r4, #1
+    jump2:
+        bl QuickRiposte @切り返し
+        cmp r0, #0
+        beq jump2
+        add r7, #1
+    jump2:
+        bl Impact   @瞬撃
+        cmp r0, #0
+        beq jump3
+        sub r7, #1
+    jump3:
+        mov r0, r4
+        mov r1, r7
+        pop {r7}
+        pop {r4}
+        pop {pc}
+
+
     
 normal: @通常追撃判定
     mov r0, r5
