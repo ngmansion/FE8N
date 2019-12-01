@@ -49,6 +49,7 @@ battle_before:
     POIN hasSunder
     POIN hasLightfaire
     POIN hasDarkfaire
+    POIN hasBond
     
 battle_after:
     #incbin main.dmp
@@ -65,6 +66,10 @@ battle_down:
   POIN hasPoisonStrike
   POIN hasCounter
   POIN hasDoubleLion
+    
+hasBond:
+    HAS_NIHIL
+    WORD BondID
     
 hasLull:
     HAS_SKILL

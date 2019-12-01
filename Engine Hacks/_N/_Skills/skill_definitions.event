@@ -54,6 +54,7 @@
 #define SoloID 52 //0x34 孤軍
 #define FortID 53 //0x35 城塞
 #define LullID 54 //0x36 凪
+#define BondID 55 //0x37 絆
 
 
 #define AstraID 64 //0x40流星

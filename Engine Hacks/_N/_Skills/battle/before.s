@@ -22,6 +22,7 @@ FORT_ADR = (adr+104)
 WAR_ADR = (adr+108)
 LIGHT_F_ADR = (adr+112)
 DARK_F_ADR = (adr+116)
+HAS_BOND_ADR = (adr+120)
 
 
 
@@ -70,6 +71,7 @@ gotSkill:
 	bl shisen_A
 	bl Solo
 	bl Fort
+    bl Bond
 
 endNoEnemy:
 @相手の存在をチェック
@@ -142,6 +144,77 @@ distantWar:
 
 endWar:
 	pop {pc}
+
+Bond:
+	push {r4, r5, r6, r7, lr}
+	ldrb r6, [r4, #0xB]
+	mov r0, #0xC0
+	and r6, r0	@r6に部隊表ID
+	
+	mov r0, r4
+    mov r1, #0
+	bl hasBond
+	cmp r0, #0
+	beq falseBond
+	mov r7, #0
+loopBond:
+	add r6, #1
+	mov r0, r6
+	bl Get_Status
+	mov r5, r0
+	cmp r0, #0
+	beq resultBond	@リスト末尾
+	ldr r0, [r5]
+	cmp r0, #0
+	beq loopBond	@死亡判定1
+	ldrb r0, [r5, #19]
+	cmp r0, #0
+	beq loopBond	@死亡判定2
+@	ldrb r0, [r4, #0xB]
+@	ldrb r1, [r5, #0xB]
+@	cmp r0, r1
+@	beq loopBond	@自分
+	ldr r0, [r5, #0xC]
+	mov r1, #0x0C
+	and r0, r1
+	bne loopBond	@死亡フラグまたは非出撃フラグ
+
+	mov r0, #16
+	ldsb r0, [r4, r0]
+	mov r1, #16
+	ldsb r1, [r5, r1]
+    cmp r0, r1
+    bne jumpBond
+	mov r2, #17
+	ldsb r2, [r4, r2]
+	mov r3, #17
+	ldsb r3, [r5, r3]
+	cmp r2, r3
+    beq loopBond    @完全に同じ座標
+jumpBond:
+	mov r0, #1  @1マス指定
+	bl CheckXY
+	cmp r0, #0
+	beq loopBond
+    add r7, #1
+	b loopBond
+resultBond:
+    mov r2, #3
+    mul r2, r7
+    cmp r2, #7
+    ble limitBond
+    mov r2, #7
+limitBond:
+	mov r1, #90
+	ldrh r0, [r4, r1]
+	add r0, r2
+	strh r0, [r4, r1] @自分
+	mov r1, #92
+	ldrh r0, [r4, r1]
+	add r0, r2
+	strh r0, [r4, r1] @自分
+falseBond:
+	pop {r4, r5, r6, r7, pc}
 
 Fort:
 	push {lr}
@@ -256,8 +329,7 @@ loopSolo:
 	and r0, r1
 	bne loopSolo	@死亡フラグまたは非出撃フラグ
 	
-	mov r0, r4
-	mov r1, r5
+    mov r0, #2  @2マス以内
 	bl CheckXY
 	cmp r0, #1
 	beq falseSolo
@@ -275,35 +347,40 @@ falseSolo:
 	pop {r4, r5, r6, pc}
 
 CheckXY:
-@r5とr4が2マス以内に居るならr0=1
-	mov	r2, #16
-	ldsb	r2, [r4, r2]
-	mov	r0, #16
-	ldsb	r0, [r5, r0]
-	sub	r1, r2, r0
-	cmp	r1, #0
-	bge	jump1CheckXY
-	sub	r1, r0, r2
+@r5とr4がr0マス以内に居るならr0=TRUE
+@同座標ならTRUE
+@
+    push {r6}
+    mov r6, r0
+	mov r2, #16
+	ldsb r2, [r4, r2]
+	mov r0, #16
+	ldsb r0, [r5, r0]
+	sub r1, r2, r0
+	cmp r1, #0
+	bge jump1CheckXY
+	sub r1, r0, r2
 
 jump1CheckXY:
-	mov	r3, #17
-	ldsb	r3, [r4, r3]
+	mov r3, #17
+	ldsb r3, [r4, r3]
 	mov	r2, #17
-	ldsb	r2, [r5, r2]
-	sub	r0, r3, r2
-	cmp	r0, #0
-	bge	jump2CheckXY
-	sub	r0, r2, r3
+	ldsb r2, [r5, r2]
+	sub r0, r3, r2
+	cmp r0, #0
+	bge jump2CheckXY
+	sub r0, r2, r3
 
 jump2CheckXY:
 	add	r0, r1, r0
-	cmp	r0, #2
-	bgt	falseCheckXY	@2マス以内に居ない
+	cmp	r0, r6
+	bgt	falseCheckXY	@r6マス以内に居ない
 	mov r0, #1
 	b endCheckXY
 falseCheckXY:
 	mov r0, #0
 endCheckXY:
+    pop {r6}
 	bx lr
 
 Get_Status:
@@ -888,6 +965,9 @@ hasFort:
 hasWarSkill:
 	ldr r3, WAR_ADR
 	mov pc, r3
+hasBond:
+	ldr r3, HAS_BOND_ADR
+	mov pc, r3
 
 getItemEffective:
 	ldr r1, =BL_GETITEMEFFECTIVE
@@ -898,7 +978,7 @@ getAlinaAdr:
 getDistance:
     ldr r0, =0x0203a4d2
     bx lr
-
+.align
 .ltorg
 adr:
 
