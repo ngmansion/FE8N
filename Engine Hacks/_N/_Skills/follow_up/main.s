@@ -82,7 +82,7 @@ active_DartingBlow:
     falseDarting:
         mov r0, #0
     endDarting:
-        pop {pc}
+        pop {r4, r5, pc}
 
 
 
