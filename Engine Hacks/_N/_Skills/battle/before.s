@@ -170,27 +170,15 @@ loopBond:
 	ldrb r0, [r5, #19]
 	cmp r0, #0
 	beq loopBond	@死亡判定2
-@	ldrb r0, [r4, #0xB]
-@	ldrb r1, [r5, #0xB]
-@	cmp r0, r1
-@	beq loopBond	@自分
+	ldrb r0, [r4, #0xB]
+	ldrb r1, [r5, #0xB]
+	cmp r0, r1
+	beq loopBond	@自分
 	ldr r0, [r5, #0xC]
-	mov r1, #0x0C
+	mov r1, #0x2C
 	and r0, r1
-	bne loopBond	@死亡フラグまたは非出撃フラグ
+	bne loopBond	@死亡フラグまたは非出撃フラグまたは救出されている
 
-	mov r0, #16
-	ldsb r0, [r4, r0]
-	mov r1, #16
-	ldsb r1, [r5, r1]
-    cmp r0, r1
-    bne jumpBond
-	mov r2, #17
-	ldsb r2, [r4, r2]
-	mov r3, #17
-	ldsb r3, [r5, r3]
-	cmp r2, r3
-    beq loopBond    @完全に同じ座標
 jumpBond:
 	mov r0, #1  @1マス指定
 	bl CheckXY
