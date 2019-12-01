@@ -4,7 +4,7 @@ ALIGN 4
 
 #define HAS_OCCULT "BYTE $02 $49 $01 $4B $9F $46 $C0 $46; POIN mergeOccult"
 
-
+#define HAS_NIHIL "BYTE $02 $4A $01 $4B $9F $46 $C0 $46; POIN checkNihil"
 
 #include "checkSkill/EA.txt"
 #include "SkillBook/EA.txt"
@@ -22,6 +22,11 @@ hasOccult:
 	HAS_SKILL
 	WORD OccultID
 
+checkNihil:
+    #incbin checkNihil.dmp
+    POIN hasNihil
+    POIN judgeSkill
+    
 ALIGN 4
 
 

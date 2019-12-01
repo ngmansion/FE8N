@@ -49,15 +49,15 @@ breaker_hasSkill5:
     WORD TomebreakerID
     
 waryFighter_hasSkill:
-    HAS_SKILL
+    HAS_NIHIL
     WORD WaryFighterID
     
 boldFighter_hasSkill:
-    HAS_SKILL
+    HAS_NIHIL
     WORD BoldFighterID
     
 vengefulFighter_hasSkill:
-    HAS_SKILL
+    HAS_NIHIL
     WORD VengefulFighterID
     
 hasDesperation:
