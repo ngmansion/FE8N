@@ -17,12 +17,14 @@ HAS_DARTING_FUNC = (Adr+36)
 equal:
     cmp r0, #0
     bge normal
+disable:
     ldr r0, =0x0802af80 @追撃無し
     mov pc, r0
 
 greater1:
     cmp r0, #0
     bgt active1 @絶対追撃
+    blt disable @追撃不可
 @相手の方が速い場合、相手の攻速を自分と同じにする
     mov r0, r5
     mov r1, r6
@@ -32,6 +34,7 @@ greater1:
 greater2:
     cmp r1, #0
     bgt active2 @絶対追撃
+    blt disable @追撃不可
 @自分の方が速い場合、自分の攻速を相手と同じにする
     mov r1, r5
     mov r0, r6
