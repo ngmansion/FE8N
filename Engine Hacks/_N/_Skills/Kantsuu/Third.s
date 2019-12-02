@@ -16,6 +16,7 @@ HAS_SCREAM_FUNC = (adr+16)
 HAS_IGNIS_FUNC = (adr+20)
 NIHIL = (adr+24)	@見切りアドレス
 SET_SKILLANIME_ATK_FUNC = (adr+28)
+HAS_WARD_ARROW_FUNC = (adr+32)
 	
 	ldr	r2, [r6, #0]
 	ldr	r0, [r2, #0]
@@ -89,6 +90,9 @@ WarSkill:
 		cmp r0, #1
 		beq endWarSkill
 		bl Stone
+		cmp r0, #1
+		beq endWarSkill
+		bl WardArrow
 		cmp r0, #1
 		beq endWarSkill
 		nop
@@ -242,6 +246,24 @@ mergeFlower:
 	mov r0, #1
 endFlower:
 	pop {pc}
+
+
+WardArrow:
+	push {lr}
+
+    mov r0, r7
+	mov r1, r8
+        ldr r2, HAS_WARD_ARROW_FUNC
+        mov lr, r2
+        .short 0xF800
+    cmp r0, #0
+    beq endWar
+	
+	mov	r1, r8
+	add	r1, #111
+	mov	r0, #0x23		@@状態異常(2スリプ,3サイレス,4バサク,Bストン)
+	strb	r0, [r1, #0]
+	b	Effect
 
 
 Stan:

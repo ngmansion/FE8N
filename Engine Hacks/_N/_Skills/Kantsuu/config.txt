@@ -15,5 +15,6 @@ listStone: //叫喚
     BYTE $49 $00 0
 listFlower: //華炎
     BYTE $00 $00 0
-
+WardArrowList_class: //封魔
+    BYTE $00 0
 
