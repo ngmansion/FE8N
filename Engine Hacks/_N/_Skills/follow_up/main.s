@@ -59,7 +59,7 @@ cancel:
         add r0, #94
 	    ldrh r0, [r0]
 	    add r1, #94
-	    ldrh r2, [r1, r2]
+	    ldrh r2, [r1]
 	    cmp r0, r2
 	    bgt endCancel	@r0の方が速いので不要
 @キャンセル発動
