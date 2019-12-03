@@ -1,4 +1,8 @@
 .thumb
+
+WAR_ADR = (67)	@書き込み先(AI1カウンタ)
+WAR_FLAG = (0xFE)	@フラグ
+
 HAS_DARTING_FUNC = (Adr+36)
 
 @.org 0002af18
@@ -104,12 +108,32 @@ followup_skill:
         beq jumpImpact
         sub r7, #1
     jumpImpact:
+        mov r0, r5
+        bl WarSkill @戦技
+        cmp r0, #0
+        beq jumpWar
+        sub r4, #1
+    jumpWar:
 
         mov r0, r4
         mov r1, r7
         pop {r7}
         pop {r4}
         pop {pc}
+
+WarSkill:
+        add r0, #WAR_ADR
+        ldrb r0, [r0]
+        mov r1, #WAR_FLAG
+        and r0, r1
+        cmp r0, r1
+        beq cancelWar
+        mov r0, #0
+        b endWar
+    cancelWar:
+        mov r0, #1
+    endWar:
+        bx lr
 
 
 Impact:

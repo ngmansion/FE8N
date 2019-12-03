@@ -1,5 +1,10 @@
 #include config.txt
-    
+
+//revert
+ORG 0x02af60
+  SHORT $6820 $304a $8800 $f7ec
+  
+
 ///////////////////////////////
 PUSH
     ORG 0x02ae88

@@ -9,10 +9,6 @@ POIN	nagi_setFlag
 ORG 0x02a834
 	jumpToHack(nagi_kaze)
 
-//追撃なし
-ORG 0x02af60
-  jumpToHack(nagi_tome)
-
 POP
 
 ////攻撃後処理
