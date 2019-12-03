@@ -72,10 +72,6 @@ nagi_kaze:
   POIN hasNihil
   POIN hasWindsweep
 
-//追撃なし
-nagi_tome:
-  #incbin tome.dmp
-
 hasWindsweep:
  HAS_SKILL
  WORD WindsweepID

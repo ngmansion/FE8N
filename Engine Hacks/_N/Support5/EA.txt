@@ -5,6 +5,9 @@ PUSH
 ORG	0x000a4d18
 #incbin "kaiwa.gba"
 
+ORG 0x0a4dba
+SHORT $46C0	//部隊の「支援関係」暫定対応
+
 ORG	0x282CC
 WORD	$46874800
 POIN	Support5
