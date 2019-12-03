@@ -18,6 +18,10 @@ bl DistantGuard @遠距離無効
 	cmp r0, #0
 	bne zero
 	
+	bl Amulet
+	cmp r0, #1
+	beq end
+	
 	mov r1, r10
 	cmp r1, #0xDE
 	beq end	@必的チェック
@@ -39,10 +43,7 @@ bl DistantGuard @遠距離無効
 	bl Pray
 	cmp r0, #1
 	beq end
-	
-	bl Amulet
-	cmp r0, #1
-	beq end
+
 @半減
 	bl BigShield
 	cmp r0, #1
