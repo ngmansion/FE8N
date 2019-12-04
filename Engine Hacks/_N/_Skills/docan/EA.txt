@@ -17,11 +17,11 @@ POIN hasNihil
 POIN hasFortune
 
 hasCancel:
-    HAS_SKILL
+    HAS_NIHIL
     WORD CancelID
     
 hasWrath:
-    HAS_SKILL
+    HAS_NIHIL
     WORD WrathID
     
 ALIGN 4
