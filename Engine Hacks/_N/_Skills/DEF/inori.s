@@ -43,6 +43,7 @@ bl DistantGuard @遠距離無効
 	bl Pray
 	cmp r0, #1
 	beq end
+	bl Xeno
 
 @半減
 	bl BigShield
@@ -53,7 +54,6 @@ bl DistantGuard @遠距離無効
 	cmp r0, #1
 	beq end
 bl Oracle
-bl Xeno
 	b end
 
 zero:
@@ -365,9 +365,7 @@ Xeno:
 	ldrb r1, [r1]
 	cmp r0, r1
 	bne endXeno @不発
-@	ldrh r0, [r4, #4]
-@	lsr r0, r0, #1
-@	strh r0, [r4, #4]
+	ldrh r0, [r4, #4]
 	ldrb r1, [r2, #19]	@現在HP
 @一撃で死ぬか
 	cmp r0, r1
