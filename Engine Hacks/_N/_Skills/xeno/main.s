@@ -7,7 +7,7 @@ SET_SKILLANIME_DEF_FUNC = (adr+20)
 GENOCIDE_WORK_ADR = (adr+24)
 
 .thumb
-@0002ae54
+@0802ae54
 @
 @
 @
@@ -58,15 +58,15 @@ Xeno:
         mov r1, r6
         mov r2, #TRUE
         bl HasXeno
-        cmp r0, #0
-        bne firstXeno
+        cmp r0, #1
+        beq firstXeno
     @受け側
         mov r0, r6
         mov r1, r5
         mov r2, #FALSE
         bl HasXeno
-        cmp r0, #0
-        bne secondXeno
+        cmp r0, #1
+        beq secondXeno
         b falseXeno
 
     firstXeno:
@@ -111,7 +111,7 @@ HasXeno:
             mov lr, r2
             .short 0xF800
         cmp r0, #0
-        bne notXeno @不発
+        beq notXeno @不発
         b merge
     Reverse:
         mov r0, r4
@@ -119,7 +119,7 @@ HasXeno:
             mov lr, r2
             .short 0xF800
         cmp r0, #0
-        bne notXeno @不発
+        beq notXeno @不発
         b merge
     merge:
         ldrb r0, [r4, #0x13] @nowHP
