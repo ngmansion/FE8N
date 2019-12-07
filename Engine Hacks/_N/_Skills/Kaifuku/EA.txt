@@ -12,15 +12,20 @@ POP
 
 ALIGN 4
 ski_kaifuku:
-#incbin "KAIFUKU.gba"
+#incbin "KAIFUKU.dmp"
 POIN hasRenewal
+POIN hasDivineDragonHorn
 
 tiyu_main:
   #incbin tiyu.dmp
   POIN hasImbue
 
+hasDivineDragonHorn:
+    HAS_NIHIL
+    WORD DivineDragonHornID
+    
 hasRenewal:
-    HAS_SKILL
+    HAS_NIHIL
     WORD RenewalID
     
 hasImbue:

@@ -114,4 +114,5 @@
 #define DoubleLionID 118 //0x76 獅子連斬
 #define WardArrowID 119 //0x77 封魔
 #define SavageBlowID 120 //0x78 死の吐息
+#define DivineDragonHornID 121 //0x79 聖獣の大角
 

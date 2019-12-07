@@ -265,6 +265,19 @@ startSavage:
 		cmp r5, #0
 		beq resultSavage
 
+		ldr r0, [r5]
+		cmp r0, #0
+		beq loopSavage	@死亡判定1
+		
+		ldr r0, [r5, #0xC]
+		mov r1, #0x0C
+		and r0, r1
+		bne loopSavage	@死亡判定2
+
+	    ldrb r0, [r5, #19] @現在19
+		cmp r0, #0
+		beq loopSavage	@死亡判定3
+
 		mov r0, #2	@within 2
 		mov r1, r4
 		mov r2, r5
@@ -272,10 +285,7 @@ startSavage:
 		cmp r0, #0
 		beq loopSavage	@no exist
 
-	gotSavage:
 	    ldrb r0, [r5, #19] @現在19
-		cmp r0, #0
-		beq loopSavage
 	    sub r0, #10
 	    bgt hpOk2
 	    mov r0, #1
