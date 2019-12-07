@@ -16,7 +16,7 @@ HAS_SCREAM_FUNC = (adr+16)
 HAS_IGNIS_FUNC = (adr+20)
 NIHIL = (adr+24)	@見切りアドレス
 SET_SKILLANIME_ATK_FUNC = (adr+28)
-HAS_WARD_ARROW_FUNC = (adr+32)
+HAS_MAGIC_BIND_FUNC = (adr+32)
 	
 	ldr	r2, [r6, #0]
 	ldr	r0, [r2, #0]
@@ -92,7 +92,7 @@ WarSkill:
 		bl Stone
 		cmp r0, #1
 		beq endWarSkill
-		bl WardArrow
+		bl MagicBind
 		cmp r0, #1
 		beq endWarSkill
 		nop
@@ -248,12 +248,12 @@ endFlower:
 	pop {pc}
 
 
-WardArrow:
+MagicBind:
 	push {lr}
 
     mov r0, r7
 	mov r1, r8
-        ldr r2, HAS_WARD_ARROW_FUNC
+        ldr r2, HAS_MAGIC_BIND_FUNC
         mov lr, r2
         .short 0xF800
     cmp r0, #0
