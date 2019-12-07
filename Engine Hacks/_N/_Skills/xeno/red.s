@@ -9,9 +9,8 @@
     ldr r2, =0x0203a5e8
     ldrb r2, [r2]
     cmp r1, r2
-@    bne unred @無効化
-    b unred
-    mov r0, #4
+    bne unred   @非ジェノサイドならジャンプ
+@    mov r0, #4
 unred:
     ldr r1, =0x08055744
     mov pc, r1
