@@ -1,17 +1,23 @@
 #include config.txt
 ALIGN 4
+
+#define GENOCIDE_WORK_ADR (0x0203a5e8) //完全に置換しきれていない
+
 PUSH
-    ORG 0x02ae54
-    jumpToHack(xeno_main)
-    ORG 0x02aec0
-    jumpToHack(xeno_back)
-    ORG 0x06fc18
-    jumpToHack(xeno_light)
+   ORG 0x02ae54
+      jumpToHack(xeno_main)
+   ORG 0x02aec0
+      jumpToHack(xeno_back)
+   ORG 0x06fc18
+      jumpToHack(xeno_light)
     
-    ORG 0x05573c
-    jumpToHack(xeno_red)	//赤くする処理だが、エフェクト付加したので無効化
-    ORG 0x059cda
-    SHORT $2108 //赤継続
+   ORG 0x05573c
+      jumpToHack(xeno_red)	//赤くする処理だが、エフェクト付加したので無効化
+   ORG 0x059cda
+      SHORT $2108 //赤継続
+   ORG 0x070c74
+      jumpToHack(non_yellow_when_shield) //大楯でもジェノサイドは赤くする
+    
 POP
     
 xeno_red:
@@ -40,5 +46,9 @@ hasReverseXeno:
 hasCharge:
     HAS_SKILL
     WORD ChargeID
+    
+non_yellow_when_shield:
+    #incbin non_yellow_when_shield.dmp
+    WORD GENOCIDE_WORK_ADR
     
     

@@ -10,7 +10,7 @@
     ldrb r2, [r2]
     cmp r1, r2
     bne unred   @非ジェノサイドならジャンプ
-@    mov r0, #4
+    mov r0, #4
 unred:
     ldr r1, =0x08055744
     mov pc, r1
