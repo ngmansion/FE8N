@@ -1,7 +1,7 @@
 #include config.txt
 ALIGN 4
 
-#define GENOCIDE_WORK_ADR (0x0203a5e8) //完全に置換しきれていない
+#define GENOCIDE_WORK_ADR (0x0203a5e8)
 
 PUSH
    ORG 0x02ae54
