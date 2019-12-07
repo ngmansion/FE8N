@@ -22,6 +22,7 @@ POP
     
 xeno_red:
     #incbin red.dmp
+    WORD GENOCIDE_WORK_ADR
 ALIGN 4
 xeno_main:
     #incbin main.dmp
@@ -31,20 +32,23 @@ xeno_main:
     POIN hasReverseXeno
     POIN set_skillanime_attack
     POIN set_skillanime_defence
+    WORD GENOCIDE_WORK_ADR
 xeno_light:
     #incbin light.dmp
+    WORD GENOCIDE_WORK_ADR
 ALIGN 4
 xeno_back:
     #incbin back.dmp
+    WORD GENOCIDE_WORK_ADR
 ALIGN 4
 hasXeno:
-    HAS_SKILL
+    HAS_NIHIL
     WORD GenocideID
 hasReverseXeno:
-    HAS_SKILL
+    HAS_NIHIL
     WORD ReverseGenocideID
 hasCharge:
-    HAS_SKILL
+    HAS_NIHIL
     WORD ChargeID
     
 non_yellow_when_shield:

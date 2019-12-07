@@ -1,5 +1,5 @@
 .thumb
-    ldr r2, =0x0203a5e8 
+    ldr r2, adr
     ldr r1, [r2]
     cmp r1, #0
     beq not
@@ -29,4 +29,7 @@ merge:
     
     ldr r1, =0x0806fc30
     mov pc, r1
-    
+.align
+.ltorg
+adr:
+

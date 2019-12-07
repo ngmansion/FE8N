@@ -9,7 +9,7 @@
     and r0, r1
     bne Retrun @闘技場チェック
     
-    ldr r2, =0x0203a5e8
+    ldr r2, adr
     ldr r1, [r2]
     cmp r1, #0
     beq Retrun @突撃系スキル未発動なら終了
@@ -41,5 +41,7 @@ Retrun:
     
     ldr r0, =0x0802aec8
     mov pc, r0
-    
+.align
+.ltorg
+adr:
     
