@@ -173,14 +173,14 @@ Charge:
         mov r0, r5
         mov r1, r6
         bl HasCharge
-        cmp r0, #0
-        bne trueCharge
+        cmp r0, #1
+        beq trueCharge
     @
         mov r0, r6
         mov r1, r5
         bl HasCharge
-        cmp r0, #0
-        bne trueCharge
+        cmp r0, #1
+        beq trueCharge
         b falseCharge
         
     trueCharge:
