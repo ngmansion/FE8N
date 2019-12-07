@@ -113,4 +113,5 @@
 #define ReverseGenocideID 117 //0x75裏ジェノサイド
 #define DoubleLionID 118 //0x76 獅子連斬
 #define WardArrowID 119 //0x77 封魔
+#define SavageBlowID 120 //0x78 死の吐息
 

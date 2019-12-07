@@ -66,6 +66,12 @@ battle_down:
   POIN hasPoisonStrike
   POIN hasCounter
   POIN hasDoubleLion
+  POIN hasSavageBlow
+  
+  
+hasSavageBlow:
+    HAS_NIHIL
+    WORD SavageBlowID
     
 hasBond:
     HAS_NIHIL
