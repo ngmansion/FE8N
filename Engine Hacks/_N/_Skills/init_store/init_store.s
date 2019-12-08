@@ -1,8 +1,8 @@
-.equ SKILL_MAX, (0x35)	@城塞
+.equ SKILL_MAX, (0x37)	@絆
 
 
 .thumb
-@;	00017bd4
+@	00017bd4
 
 @ユニットID一致検索
 	ldr r1, [r4]
