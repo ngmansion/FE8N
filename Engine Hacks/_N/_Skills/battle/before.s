@@ -136,11 +136,6 @@ distantWar:
 	ldrh r0, [r4, r1]
 	add r0, #3
 	strh r0, [r4, r1] @自分
-    
-	mov r1, #96
-	ldrh r0, [r4, r1]
-	add r0, #5
-	strh r0, [r4, r1] @自分
 
 endWar:
 	pop {pc}
