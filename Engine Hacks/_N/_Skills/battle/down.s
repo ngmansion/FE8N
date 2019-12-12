@@ -6,10 +6,11 @@
 
 
 DOUBLE_LION_ADR = (ADR+16)
+HAS_SAVAGE_FUNC = (ADR+20)
 
 .thumb
 
-@ 0x02bfd8
+@ 0802bfd8
 
 	cmp	r6, #0
 	bne	START
@@ -40,6 +41,10 @@ START:
 	mov	r1, r6
 	bl DoubleLion	@HP満タンの時だけなので最後
 	
+	mov	r0, r7
+	mov	r1, r6
+	bl SavageBlow
+
 	ldrb r0, [r6, #19]
 	cmp r0, #0
 	beq negative	@相手のHP0
@@ -216,6 +221,132 @@ hpOkCounter:
 falseCounter:
     mov	r0, #0
 	pop	{r4, pc}
+
+SavageBlow:
+	push	{r4, r5, lr}
+	mov r3, r0
+	mov r4, r1
+
+    ldrb r0, [r3, #0xB]
+    lsl r0, r0, #24
+    bmi isRed2
+
+    ldrb r0, [r4, #0xB]
+    lsl r0, r0, #24
+    bmi startSavage
+    b falseSavage	@相手チェック失敗
+    
+isRed2:
+    ldrb r0, [r4, #0xB]
+    lsl r0, r0, #24
+    bpl startSavage
+    b falseSavage	@相手チェック失敗
+    
+startSavage:
+    mov r0, r3
+	mov r1, r4
+        ldr r2, HAS_SAVAGE_FUNC
+        mov lr, r2
+        .short 0xF800
+    cmp r0, #0
+    beq falseSavage	@死の吐息未所持なら終了
+
+		ldrb r0, [r4, #0xB]
+		mov r1, #0xC0
+		and r0, r1
+		b loopStartSavage
+
+ 	loopSavage:
+		ldrb r0, [r5, #0xB]
+	loopStartSavage:
+		add r0, #1
+		bl Get_Status
+		mov r5, r0
+		cmp r5, #0
+		beq resultSavage
+
+		ldr r0, [r5]
+		cmp r0, #0
+		beq loopSavage	@死亡判定1
+		
+		ldr r0, [r5, #0xC]
+		mov r1, #0x0C
+		and r0, r1
+		bne loopSavage	@死亡判定2
+
+	    ldrb r0, [r5, #19] @現在19
+		cmp r0, #0
+		beq loopSavage	@死亡判定3
+
+		mov r0, #2	@within 2
+		mov r1, r4
+		mov r2, r5
+		bl CheckXY
+		cmp r0, #0
+		beq loopSavage	@no exist
+
+	    ldrb r0, [r5, #19] @現在19
+	    sub r0, #10
+	    bgt hpOk2
+	    mov r0, #1
+	hpOk2:
+	    strb r0, [r5, #19] @現在19
+		b loopSavage
+
+resultSavage:
+	mov r0, #0xB7	@妥当な音のIDが分からん
+	mov r1, #0xB8
+		ldr r2, =0x08014B50 @音
+		mov lr, r2
+		.short 0xF800
+    mov	r0, #1
+    .short 0xE000
+falseSavage:
+    mov	r0, #0
+	pop	{r4, r5, pc}
+
+CheckXY:
+@r1とr2がr0マス以内に居るならr0=TRUE
+@同座標ならTRUE
+@
+    push {r4, r5, r6}
+	mov r4, r1
+	mov r5, r2
+    mov r6, r0
+	mov r2, #16
+	ldsb r2, [r4, r2]
+	mov r0, #16
+	ldsb r0, [r5, r0]
+	sub r1, r2, r0
+	cmp r1, #0
+	bge jump1CheckXY
+	sub r1, r0, r2
+
+jump1CheckXY:
+	mov r3, #17
+	ldsb r3, [r4, r3]
+	mov	r2, #17
+	ldsb r2, [r5, r2]
+	sub r0, r3, r2
+	cmp r0, #0
+	bge jump2CheckXY
+	sub r0, r2, r3
+
+jump2CheckXY:
+	add	r0, r1, r0
+	cmp	r0, r6
+	bgt	falseCheckXY	@r6マス以内に居ない
+	mov r0, #1
+	b endCheckXY
+falseCheckXY:
+	mov r0, #0
+endCheckXY:
+    pop {r4, r5, r6}
+	bx lr
+
+Get_Status:
+	ldr r1, =0x08019108
+	mov pc, r1
 
 Jadoku:
 	push	{r4, lr}

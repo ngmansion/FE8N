@@ -1,9 +1,10 @@
 .thumb
 @
-@r0 = unit_data
+@r0 = unit_data (利用しない)
 @r1 = skill_id
 @
     push {lr}
+    mov r0, #0x1 @防衛スキル
         ldr r2, record_skillanime_id
         mov lr, r2
         .short 0xF800

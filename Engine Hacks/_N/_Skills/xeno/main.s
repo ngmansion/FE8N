@@ -4,9 +4,10 @@ XENO_ADR = (adr+4)
 REVERSE_XENO = (adr+12)
 SET_SKILLANIME_ATK_FUNC = (adr+16)
 SET_SKILLANIME_DEF_FUNC = (adr+20)
+GENOCIDE_WORK_ADR = (adr+24)
 
 .thumb
-@0002ae54
+@0802ae54
 @
 @
 @
@@ -14,7 +15,7 @@ SET_SKILLANIME_DEF_FUNC = (adr+20)
     mov r0, #0x0
     str r0, [r2] @スキルアニメ記録のリセット
 
-    ldr r2, =0x0203a5e8
+    ldr r2, GENOCIDE_WORK_ADR
     mov r0, #0x0
     str r0, [r2] @フラグリセット
     
@@ -57,15 +58,15 @@ Xeno:
         mov r1, r6
         mov r2, #TRUE
         bl HasXeno
-        cmp r0, #0
-        bne firstXeno
+        cmp r0, #1
+        beq firstXeno
     @受け側
         mov r0, r6
         mov r1, r5
         mov r2, #FALSE
         bl HasXeno
-        cmp r0, #0
-        bne secondXeno
+        cmp r0, #1
+        beq secondXeno
         b falseXeno
 
     firstXeno:
@@ -97,18 +98,30 @@ Xeno:
         pop {r5, r6, pc}
         
     
-    HasXeno:
+HasXeno:
         push {r4, r5, lr}
         mov r5, r2
         mov r4, r0
         
-        mov r0, r1
-            ldr r1, adr @見切り
-            mov lr, r1
+        cmp r5, #FALSE
+        beq Reverse
+
+        mov r0, r4
+            ldr r2, XENO_ADR @Xeno
+            mov lr, r2
             .short 0xF800
         cmp r0, #0
-        bne notXeno @見切り終了
-
+        beq notXeno @不発
+        b merge
+    Reverse:
+        mov r0, r4
+            ldr r2, REVERSE_XENO
+            mov lr, r2
+            .short 0xF800
+        cmp r0, #0
+        beq notXeno @不発
+        b merge
+    merge:
         ldrb r0, [r4, #0x13] @nowHP
             ldr r1, =0x08000c78
             mov lr, r1
@@ -118,18 +131,7 @@ Xeno:
         cmp r0, #0
         beq endXeno @確率失敗
 
-        cmp r5, #FALSE
-        beq Reverse
-        mov r0, r4
-            ldr r1, XENO_ADR @Xeno
-            mov lr, r1
-            .short 0xF800
-        b endXeno
-    Reverse:
-        mov r0, r4
-            ldr r1, REVERSE_XENO
-            mov lr, r1
-            .short 0xF800
+        mov r0, #1
         b endXeno
 
     notXeno:
@@ -139,7 +141,7 @@ Xeno:
 
 Xeno_impl:
         mov r3, r0
-        ldr r2, =0x0203a5e8
+        ldr r2, GENOCIDE_WORK_ADR
         ldrb r0, [r3, #11]	@部隊表ID取得
         strb r0, [r2]
         
@@ -171,19 +173,19 @@ Charge:
         mov r0, r5
         mov r1, r6
         bl HasCharge
-        cmp r0, #0
-        bne trueCharge
+        cmp r0, #1
+        beq trueCharge
     @
         mov r0, r6
         mov r1, r5
         bl HasCharge
-        cmp r0, #0
-        bne trueCharge
+        cmp r0, #1
+        beq trueCharge
         b falseCharge
         
     trueCharge:
         mov r0, #0xFF
-        ldr r2, =0x0203a5e8 @無効部隊表IDストア(非ジェノサイド)
+        ldr r2, GENOCIDE_WORK_ADR @無効部隊表IDストア(非ジェノサイド)
         strb r0, [r2]
         b retCharge
     falseCharge:
@@ -206,16 +208,9 @@ Charge:
         cmp r0, r2
         ble notCharge @HPが足りない！
     
-        
-        mov r0, r1
-            ldr r1, adr	@見切り
-            mov lr, r1
-            .short 0xF800
-        cmp r0, #0
-        bne notCharge
         mov r0, r4
-            ldr r1, adr+8 @突撃
-            mov lr, r1
+            ldr r2, adr+8 @突撃
+            mov lr, r2
             .short 0xF800
         cmp r0, #0
         beq notCharge

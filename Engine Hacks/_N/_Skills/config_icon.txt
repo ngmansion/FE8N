@@ -358,10 +358,10 @@
 #define SKL_HELP_119 $057C
  #define SKL_COLOR_119 $FF
 
-#define SKL_HELP_120 $0000
+#define SKL_HELP_120 $057D
  #define SKL_COLOR_120 0
 
-#define SKL_HELP_121 $0000
+#define SKL_HELP_121 $057E
  #define SKL_COLOR_121 0
 
 #define SKL_HELP_122 $0000

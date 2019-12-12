@@ -1,51 +1,29 @@
 @
-@Ä¶‚·‚éƒXƒLƒ‹ƒAƒjƒ\‘¢‘Ì‚ÌŽæ“¾
-@Žæ“¾‚Å‚«‚È‚¯‚ê‚Î 0 ‚ª•Ô‚³‚ê‚é
+@å†ç”Ÿã™ã‚‹ã‚¹ã‚­ãƒ«ã‚¢ãƒ‹ãƒ¡æ§‹é€ ä½“ã®å–å¾—
+@å–å¾—ã§ããªã‘ã‚Œã° 0 ãŒè¿”ã•ã‚Œã‚‹
 @
-@ˆø” r0=ƒXƒLƒ‹‚ÌŽí—Þ #0x00=UŒ‚ #0x01=–h‰q
+@å¼•æ•° r0=ã‚¹ã‚­ãƒ«ã®ç¨®é¡ž #0x00=æ”»æ’ƒ #0x01=é˜²è¡›
 .thumb
     push {lr}
 
-	@”­“®‚µ‚½êŠ‚ð³Šm‚É‘ª’è‚·‚é.
-	ldr r2, =0x03004F9C @gCurrentUnitIndex
-	ldr r3, =0x02000000 @WRAM 
-	ldr r2, [r2] @‚±‚ê”²‚¯‚Ä‚½
-	lsl r1 ,r2 ,#0x2
-	add r1 ,r1, r3
-	ldr r1, [r1, #0x0]  @ pointer:02000000 (WRAM )
-
-	ldr r3, =0x0203AE40		@”­“®‚µ‚½ƒXƒLƒ‹ƒAƒjƒ‚ð‹L˜^‚µ‚Ä‚¢‚éêŠ
-							@Player UŒ‚ƒXƒLƒ‹	0203AE40
-							@Player –h‰qƒXƒLƒ‹	0203AE41
-							@Enemy  UŒ‚ƒXƒLƒ‹	0203AE42
-							@Enemy  –h‰qƒXƒLƒ‹	0203AE43
-							@UŒ‚ƒXƒLƒ‹‚Æ–h‰qƒXƒLƒ‹‚ª“¯Žž‚É”­“®‚·‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å•ª‚¯‚é.
-
-	LDR r2, =0x02029000
-	CMP r1, r2
-	BLS Player
-
-Enemy:
-	add		r3, #0x02       @“GŒR
-	add		r3, r0          @–h‰qƒXƒLƒ‹‚È‚ç+1 UŒ‚ƒXƒLƒ‹‚È‚ç+0
-	b		Join1
-
-Player:
-	add		r3, r0          @–h‰qƒXƒLƒ‹‚È‚ç+1 UŒ‚ƒXƒLƒ‹‚È‚ç+0
-@	b		Join1
+	ldr r3, =0x0203AE40		@ç™ºå‹•ã—ãŸã‚¹ã‚­ãƒ«ã‚¢ãƒ‹ãƒ¡ã‚’è¨˜éŒ²ã—ã¦ã„ã‚‹å ´æ‰€
+							@æ”»æ’ƒã‚¹ã‚­ãƒ«	0203AE40
+							@é˜²è¡›ã‚¹ã‚­ãƒ«	0203AE41
+							@æ”»æ’ƒã‚¹ã‚­ãƒ«ã¨é˜²è¡›ã‚¹ã‚­ãƒ«ãŒåŒæ™‚ã«ç™ºå‹•ã™ã‚‹ã“ã¨ãŒã‚ã‚‹ã®ã§åˆ†ã‘ã‚‹.
 
 Join1:
-	ldrb	r0, [r3]      @‹L˜^‚µ‚Ä‚¨‚¢‚½ƒXƒLƒ‹ID‚ðŽæ“¾
+	ldrb	r0, [r3,r0]      @è¨˜éŒ²ã—ã¦ãŠã„ãŸã‚¹ã‚­ãƒ«IDã‚’å–å¾—
 
 	cmp		r0,#0x00
-	beq		Exit	@•s–¾ ƒfƒBƒtƒHƒ‹ƒgƒAƒjƒ‚ð‚»‚Ì‚Ü‚Ü—˜—p
+	beq		Exit	      @ä¸æ˜Ž ãƒ‡ã‚£ãƒ•ã‚©ãƒ«ãƒˆã‚¢ãƒ‹ãƒ¡ã‚’ãã®ã¾ã¾åˆ©ç”¨
 
 	ldr		r1,	adr       @SkillAnimation* SkillAnimation[SKILL_ID] skillanimation@
-	lsl		r0 ,r0 ,#0x2	@r1=skill_id << 2 (ƒ|ƒCƒ“ƒ^ŽQÆ‚·‚é‚½‚ß)
+	lsl		r0 ,r0 ,#0x2	@r1=skill_id << 2 (ãƒã‚¤ãƒ³ã‚¿å‚ç…§ã™ã‚‹ãŸã‚)
 	ldr		r0,[r1,r0]      @skl_anime_table[skill_id].SkillAnime
 
 Exit:
     pop {pc}
+
 .align
 .ltorg
 adr:

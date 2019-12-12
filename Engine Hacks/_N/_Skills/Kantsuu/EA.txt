@@ -41,7 +41,7 @@ POIN	hasScream
 POIN	hasIgnis
 POIN hasNihil
 POIN set_skillanime_attack
-POIN hasWardArrow
+POIN hasMagicBind
     
 hasDragonFung:
     HAS_OCCULT
@@ -61,7 +61,7 @@ hasScream:
 hasIgnis:
     HAS_OCCULT
     WORD IgnisID
-hasWardArrow:
+hasMagicBind:
     HAS_NIHIL
-    WORD WardArrowID
+    WORD MagicBindID
 

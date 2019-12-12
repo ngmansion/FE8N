@@ -1,59 +1,25 @@
 @
-@”­“®‚µ‚½ƒXƒLƒ‹ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‹L˜^‚·‚é
+@ç™ºå‹•ã—ãŸã‚¹ã‚­ãƒ«ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¨˜éŒ²ã™ã‚‹
 @
 .thumb
     push {r4,r5,lr}
-	mov r4,r0  @RAMUnit
+	mov r4,r0  @SkillType æ”»æ’ƒ=0 é˜²è¡›=1
 	mov r5,r1  @SkillID
 
-	@”­“®‚µ‚½ƒXƒLƒ‹ID‚ğ‹L˜^‚µ‚½‚¢.
-	@‚½‚¾AƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‚Á‚Ä‚¢‚È‚¢ƒXƒLƒ‹ID‚Í‹L˜^‚µ‚½‚­‚È‚¢.
+	@ç™ºå‹•ã—ãŸã‚¹ã‚­ãƒ«IDã‚’è¨˜éŒ²ã—ãŸã„.
+	@ãŸã ã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æŒã£ã¦ã„ãªã„ã‚¹ã‚­ãƒ«IDã¯è¨˜éŒ²ã—ãŸããªã„.
 	ldr		r3,	adr	 @SkillAnimation* SkillAnimation[SKILL_ID] skillanimation@
-	lsl		r1 ,r5 ,#0x2	@r1=skill_id << 2 (ƒ|ƒCƒ“ƒ^QÆ‚·‚é‚½‚ß)
+	lsl		r1 ,r5 ,#0x2	@r1=skill_id << 2 (ãƒã‚¤ãƒ³ã‚¿å‚ç…§ã™ã‚‹ãŸã‚)
 	ldr		r3,[r3,r1]	 @skl_anime_table[skill_id].SkillAnime
 	cmp		r3,#0x00
-	beq		exit	@ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‚Á‚Ä‚¢‚È‚¢
+	beq		exit	@ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æŒã£ã¦ã„ãªã„
 
-	@ƒAƒjƒ‚ğ‚à‚Á‚Ä‚¢‚é‚æ‚¤‚È‚Ì‚Å‹L˜^‚·‚é
-	ldr		r3, =0x0203AE40   @•Û‚µ‚Ä‚¢‚é‚Æ”»’è‚³‚ê‚½ƒXƒLƒ‹ID‚ğ‹L˜^. ƒXƒLƒ‹”­“®‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ğo‚·‚É—˜—p‚·‚é
+	@ã‚¢ãƒ‹ãƒ¡ã‚’ã‚‚ã£ã¦ã„ã‚‹ã‚ˆã†ãªã®ã§è¨˜éŒ²ã™ã‚‹
+	ldr		r3, =0x0203AE40   @ä¿æŒã—ã¦ã„ã‚‹ã¨åˆ¤å®šã•ã‚ŒãŸã‚¹ã‚­ãƒ«IDã‚’è¨˜éŒ². ã‚¹ã‚­ãƒ«ç™ºå‹•ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å‡ºã™æ™‚ã«åˆ©ç”¨ã™ã‚‹
+	strb	r5, [r3,r4]
 
-	mov		r2,#0xB
-	ldrb	r2,[r4,r2]	@UnitRAMPointer->•”‘à•\ID	—FŒR+0x40	“GŒR+0x80
-	cmp		r2,#0x80
-	blt		Player		@Player or Ally
-
-Enemy:  @“GŒR
-	add		r3, #0x02		@“GŒR
-	@b		Join1
-
-Player:  @©ŒR(‚Ü‚½‚ÍA—FŒR)
-	@nop
-
-@Join1
-	@–h‰qƒXƒLƒ‹‚ÆUŒ‚ƒXƒLƒ‹‚Ì•ªŠò
-	cmp		r5, #0x01		@‘å‚
-	beq		DefenseSkill
-	cmp		r5, #0x11		@¹‚
-	beq		DefenseSkill
-	cmp		r5, #0x75		@— ƒWƒFƒmƒTƒCƒh
-	beq		DefenseSkill
-	b		AttackSkill
-
-DefenseSkill:
-	add		r3,#0x01	@–h‰qƒXƒLƒ‹‚Í+1‚·‚é.
-	@b		Join2
-
-AttackSkill:
-	@nop
-
-@Join2:
-	strb	r5, [r3]		@ƒXƒLƒ‹ID‚Ì‹L˜^
-	
-	@Player UŒ‚ƒXƒLƒ‹	0203AE40
-	@Player –h‰qƒXƒLƒ‹	0203AE41
-	@Enemy  UŒ‚ƒXƒLƒ‹	0203AE42
-	@Enemy  –h‰qƒXƒLƒ‹	0203AE43
-	@UŒ‚ƒXƒLƒ‹‚Æ–h‰qƒXƒLƒ‹‚ª“¯‚É”­“®‚·‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å•ª‚¯‚é.
+	@æ”»æ’ƒã‚¹ã‚­ãƒ«	0203AE40
+	@é˜²è¡›ã‚¹ã‚­ãƒ«	0203AE41
 
 exit:
 	pop {r4,r5, pc}

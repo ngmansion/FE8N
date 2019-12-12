@@ -6,3 +6,7 @@ HealList_Item:
 ImbueList:
     BYTE $00 0
 
+DivineDragonHorn_class:
+   BYTE $00 0
+
+
