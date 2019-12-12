@@ -77,7 +77,9 @@ ALIGN 4
 PUSH
 
 ORG 0xaa8a6
-#incbin "break_save_c.dmp"
+   SHORT $46C0
+   jumpToHack(break_save_c)
+
 
 
 ORG 0xaaa90
@@ -86,7 +88,10 @@ ORG 0xaaa96
 SHORT $46C0
 
 ORG 0xaab5e
-#incbin "break_load_c.gba"
+#incbin "break_load_c.dmp"
 
 POP
+break_save_c:
+   #incbin "break_save_c.dmp"
+ALIGN 4
 

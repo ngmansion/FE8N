@@ -79,10 +79,20 @@ end:
 	lsr r0, r0, #28
 	orr r6, r0
 	strh	r6, [r3, #18]	@
-	
+
+@new(現在HPの最上位1bitをレベルとする)
+	mov	r2, ip
+	ldrb r0, [r2, #15]
+@	lsl r0, r0, #25
+@	lsr r0, r0, #25	@上位1bitを落とす
+	ldrb r1, [r7, #8]
+	lsr r1, r1, #5
+	lsl r1, r1, #7
+	orr r0, r1
+	strb r0, [r2, #15]
+@revert
 	mov	r6, #7
 	ldrb	r2, [r7, #26]
-@next 000aa932
-	mov	r4, #31
-	and	r2, r4
+	ldr r0, =0x080aa932
+	mov pc, r0
 

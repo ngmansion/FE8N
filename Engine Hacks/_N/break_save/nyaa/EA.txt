@@ -1,13 +1,20 @@
 #include nyaa.txt
 
 #define WORK_MEM_FOR_TRANSPORT_SKILL ($0203AE50)
+#define WORK_MEM_FOR_TRANSPORT_HP ($0203B01C)
 
 PUSH
 
 ORG 0x0a7c28
     jumpToHack(yuso_save)
+
 ORG 0x0a7cb0
     jumpToHack(yuso_load)
+ORG 0x0a7d16
+    SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700
+ORG 0x0a7d1c
+    jumpToHack(yuso_hp_load)	//hpロード
+
 
 ORG 0xAA600
 //    WORD $732C
@@ -17,8 +24,7 @@ ORG 0xAA79C
 ORG 0xA7C8E
    #incbin A7C8E.bin
    
-ORG 0x0a7d16
-    SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700
+
 
 ORG 0x031630
 	jumpToHack(storeSortedTransportSkill)
@@ -37,6 +43,11 @@ yuso_load:
     #incbin load.gba
     POIN LOAD_EXTRA_SKILL
     ALIGN 4
+yuso_hp_load:
+    #incbin loadHpMax.dmp
+    POIN LOAD_EXTRA_SKILL
+    ALIGN 4
+
 
 SAVE_EXTRA_SKILL:
 	#incbin "skillFromTransportMem_save.gba"
