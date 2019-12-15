@@ -1,29 +1,24 @@
 #include nyaa.txt
 
 #define WORK_MEM_FOR_TRANSPORT_SKILL ($0203AE50)
-#define WORK_MEM_FOR_TRANSPORT_HP ($0203B01C)
-
+#define WORK_MEM_FOR_TRANSPORT_HP ($0203a818+154)//(3*51)スキル+1//0203A8B2
+//0203A8C8～がセーブ不可
 PUSH
-
 ORG 0x0a7c28
     jumpToHack(yuso_save)
+ORG 0xA7C8E
+   #incbin A7C8E.bin	//↑の追加
+   POIN yuso_save_ret+1
+ORG 0x0a7c28
+    jumpToHack(yuso_hp_save)	//hpストア
 
 ORG 0x0a7cb0
     jumpToHack(yuso_load)
 ORG 0x0a7d16
-    SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700
+    SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700	
 ORG 0x0a7d1c
     jumpToHack(yuso_hp_load)	//hpロード
 
-
-ORG 0xAA600
-//    WORD $732C
-ORG 0xAA79C
-//    WORD $732C
-
-ORG 0xA7C8E
-   #incbin A7C8E.bin
-   
 
 
 ORG 0x031630
@@ -38,6 +33,14 @@ yuso_save:
     #incbin save.gba
     POIN SAVE_EXTRA_SKILL
     ALIGN 4
+yuso_hp_save:
+    #incbin saveHpMax.dmp
+    WORD WORK_MEM_FOR_TRANSPORT_HP
+    POIN yuso_save
+    ALIGN 4
+yuso_save_ret:
+    #incbin save_ret.dmp
+    ALIGN 4
 
 yuso_load:
     #incbin load.gba
@@ -45,7 +48,7 @@ yuso_load:
     ALIGN 4
 yuso_hp_load:
     #incbin loadHpMax.dmp
-    POIN LOAD_EXTRA_SKILL
+    WORD WORK_MEM_FOR_TRANSPORT_HP
     ALIGN 4
 
 

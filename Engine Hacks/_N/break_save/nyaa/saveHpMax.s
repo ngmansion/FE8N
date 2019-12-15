@@ -1,11 +1,14 @@
 .thumb
 
-@080a7d1c
-.short 0xB02C
+@080a7c28
+push {lr}
+push {r0}
 bl main
-pop {r4, r5, r6, r7}
 pop {r0}
-bx r0
+pop {r1}
+mov lr, r1
+ldr r1, adr+4
+mov pc, r1
 
 main:
     push {r4, r5, lr}
@@ -15,23 +18,29 @@ loop:
     cmp r4, #51
     bgt end
     mov r0, r4
-    bl get_level_bit
-    lsl r5, r0, #5
-    mov r0, r4
     bl Get_Status
     mov r2, r0
     ldrb r0, [r2, #8]
-    orr r0, r5
-    strb r0, [r2, #8]
+    lsl r0, r0, #26
+    lsr r1, r0, #31
+
+    mov r0, r4
+    bl set_level_bit
+
     b loop
 end:
     pop {r4, r5, pc}
 
-get_level_bit:
+set_level_bit:
 @
 @r0 = ID
+@r1 = HPbit
 @
-        push {r4, r5, lr}
+        push {r4, r5, r6, lr}
+        cmp r1, #0
+        beq end_set
+        mov r6, r1
+
         mov r4, r0
     
         mov r0, r4
@@ -42,13 +51,18 @@ get_level_bit:
         bl mod_eight
         mov r4, r0
 
-        ldr r0, adr
-        ldrb r0, [r0, r5]
-        lsr r0, r0, r4
-        lsl r0, r0, #31
-        lsr r0, r0, #31
-    
-        pop {r4, r5, pc}
+        ldr r1, adr
+        ldrb r0, [r1, r5]
+        
+        lsl r6, r6, r4
+   
+        neg r2, r6
+        and r0, r2
+
+        orr r0, r6
+        strb r0, [r1, r5]
+    end_set:
+        pop {r4, r5, r6, pc}
 
 
 div_eight:
@@ -75,3 +89,4 @@ Get_Status:
 .align
 .ltorg
 adr:
+
