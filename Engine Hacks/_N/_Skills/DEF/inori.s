@@ -14,7 +14,16 @@ SET_SKILLANIME_DEF_FUNC = (adr+20)
 	ldsh r0, [r4, r1]
 	cmp r0, #0
 	ble zero
-bl DistantGuard @遠距離無効
+	
+	mov r0, r8
+	ldrb r0, [r0, #0xB]
+		ldr r1, =0x08019108
+		mov lr, r1
+		.short 0xF800
+	cmp r0, #0
+	beq end	@壁
+	
+	bl DistantGuard @遠距離無効
 	cmp r0, #0
 	bne zero
 	
