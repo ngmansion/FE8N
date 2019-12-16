@@ -2,8 +2,8 @@ CHAPTER_BASE_ADR = (0x0202bcec)
 .thumb
 @080a7cb0
     push {r4, r5, r6, r7, lr}
-    .short 0xb0ac @sub sp, #176
-    .short 0xb0ac @sub sp, #176
+    sub sp, #176
+    sub sp, #176
     nop			@消すと下の命令が異常動作する・・・
     ldr r1, =0x080a9bb5
     mov r0, lr
@@ -26,13 +26,13 @@ merge:
 @ここからスキル
     mov r1, #0
     cmp r0, #0
-    .short 0xD100
+    bne jump
     mov r1, #1
-
+jump:
     mov r0, r1
         ldr r1, ADR
         mov lr, r1
-    .short 0xF800
+        .short 0xF800
 @ここまでスキル
     mov r0, r4
     
@@ -42,15 +42,15 @@ merge:
     mov r1, sp
         ldr r2, =0x080d65c8 @
         mov lr, r2
-    mov r2, #176
-    lsl r2, r2, #1
-    .short 0xF800
-    
+        mov r2, #176
+        lsl r2, r2, #1
+        .short 0xF800
+    nop
         ldr r0, =0x0803144c @=輸送隊のベースアドレスロード
         mov lr, r0
         .short 0xF800
     mov r4, r0
-    .short 0xAD19
+    add r5, sp, #100
     add r5, #100
     ldr r1, =0x080a7cc8
     mov pc, r1

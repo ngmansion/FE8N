@@ -4,8 +4,8 @@ CHAPTER_BASE_ADR = (0x0202bcec)
     push {r4, r5, r6, r7, lr}
     mov r7, r8
     push {r7}
-    .short 0xb0ac @sub sp, #176
-    .short 0xb0ac @sub sp, #176
+    sub sp, #176
+    sub sp, #176
     nop
     ldr r1, =0x080a9abd
     mov r0, lr
@@ -36,9 +36,9 @@ merge:
 @ここからスキル
     mov r1, #0
     cmp r0, #0
-    .short 0xD100
+    bne jump
     mov r1, #1
-
+jump:
     mov r0, r1
         ldr r1, ADR
         mov lr, r1
@@ -49,7 +49,7 @@ merge:
         mov lr, r0
         .short 0xF800
     mov r6, r0
-    .short 0xAD19
+    add r5, sp, #100
     add r5, #100
     ldr r0, =0x080a7c3a
     mov pc, r0

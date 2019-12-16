@@ -30,7 +30,7 @@ POP
 
 
 yuso_save:
-    #incbin save.gba
+    #incbin save.dmp
     POIN SAVE_EXTRA_SKILL
     ALIGN 4
 yuso_hp_save:
@@ -43,7 +43,7 @@ yuso_save_ret:
     ALIGN 4
 
 yuso_load:
-    #incbin load.gba
+    #incbin load.dmp
     POIN LOAD_EXTRA_SKILL
     ALIGN 4
 yuso_hp_load:
