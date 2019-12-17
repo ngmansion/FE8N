@@ -38,7 +38,7 @@ main:
     mov r0, r4
     bl getSuffix    @中断か通常セーブか判別
     ldr r1, =0x160
-    mul r1, r4
+    mul r0, r1
     ldr r1, EX_SAVE_AREA    @0x0E領域
     add r0, r0, r1
 
