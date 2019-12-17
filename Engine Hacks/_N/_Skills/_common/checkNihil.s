@@ -9,6 +9,7 @@ HAS_SKILL_FUNC = (ADR+4)
     push {r4, r5, lr}
     mov r4, r0
     mov r5, r2
+    mov r0, r1
     bl hasNihil
     cmp r0, #1
     beq false
