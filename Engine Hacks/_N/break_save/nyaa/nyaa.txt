@@ -53,6 +53,8 @@ ORG 0x09ffb0
     
 ORG 0x0a0ba2
     BYTE $C8
+ORG 0x0a7c8e
+    BYTE $C7
     
 ORG 0x0b92C0
     BYTE $C7

@@ -46,9 +46,9 @@ main:
 
 org_transport_func:
         push {lr}
-        bl extract_org_transport_data_func    @オリジナルの輸送隊データ→オリジナルの輸送隊データ展開
+        bl expand_org_transport_data_func    @オリジナルの輸送隊データ→オリジナルの輸送隊データ展開
         nop
-            ldr r0, ADR+4   @拡張レベルを展開(loadHpMax.dmp)
+            ldr r0, ADR+4   @拡張レベルを展開(loadLvMax.dmp)
             mov lr, r0
             .short 0xF800
         pop {pc}
@@ -75,10 +75,10 @@ getSuffix:
     merge:
         bx lr
 
-EXTRACT_DATA_ADR = (0x03006790)
+EXPAND_DATA_ADR = (0x03006790)
 ORG_TRANSPORT_DATA_ADR = (0x0203a818)
 
-extract_org_transport_data_func:
+expand_org_transport_data_func:
 @
 @オリジナルの輸送隊データ展開処理を簡易的に実現
 @
@@ -86,7 +86,7 @@ extract_org_transport_data_func:
         
         ldr r1, =ORG_TRANSPORT_DATA_ADR
         mov r2, #176
-        ldr r3, =EXTRACT_DATA_ADR
+        ldr r3, =EXPAND_DATA_ADR
         ldr r3, [r3, #0]
         bl jumpToR3
 

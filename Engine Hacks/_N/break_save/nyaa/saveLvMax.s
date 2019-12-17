@@ -1,14 +1,6 @@
 .thumb
 
 @080a7c28
-push {lr}
-push {r0}
-bl main
-pop {r0}
-pop {r1}
-mov lr, r1
-ldr r1, adr+4
-mov pc, r1
 
 main:
     push {r4, r5, lr}
