@@ -1,11 +1,6 @@
 .thumb
 
 @080a7d1c
-.short 0xB02C
-bl main
-pop {r4, r5, r6, r7}
-pop {r0}
-bx r0
 
 main:
     push {r4, r5, lr}

@@ -33,7 +33,7 @@ main:
     push {r4, lr}
     mov r4, r1
 
-    bl extract_org_transport_data_func    @オリジナルの輸送隊データ→オリジナルの輸送隊データ展開
+    bl org_transport_func
 @ex輸送隊用
     mov r0, r4
     bl getSuffix    @中断か通常セーブか判別
@@ -44,8 +44,18 @@ main:
 
     pop {r4, pc}
 
-CHAPTER_BASE_ADR = (0x0202bcec)
+org_transport_func:
+        push {lr}
+        bl extract_org_transport_data_func    @オリジナルの輸送隊データ→オリジナルの輸送隊データ展開
+        nop
+            ldr r0, ADR+4   @拡張レベルを展開(loadHpMax.dmp)
+            mov lr, r0
+            .short 0xF800
+        pop {pc}
+    
 
+
+CHAPTER_BASE_ADR = (0x0202bcec)
 getSuffix:
 @
 @中断なら0

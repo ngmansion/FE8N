@@ -7,6 +7,9 @@
 #define EX_SAVE_AREA ($0E007400)	//拡張輸送隊データ保存領域
 
 PUSH
+ORG 0x0b03a8
+    WORD 0	//記録を写す消去
+
 ORG 0x0a7c28
     jumpToHack(yuso_save)
 ORG 0xA7C8E
@@ -19,8 +22,6 @@ ORG 0x0a7cb0
     jumpToHack(yuso_load)
 ORG 0x0a7d16
     SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700	
-ORG 0x0a7d1c
-    jumpToHack(yuso_hp_load)	//hpロード
 
 
 
@@ -48,6 +49,7 @@ yuso_save_ret:
 yuso_load:
     #incbin load.dmp
     WORD EX_SAVE_AREA
+    POIN yuso_hp_load
     ALIGN 4
 yuso_hp_load:
     #incbin loadHpMax.dmp
