@@ -29,10 +29,7 @@ set_level_bit:
 @r1 = HPbit
 @
         push {r4, r5, r6, lr}
-        cmp r1, #0
-        beq end_set
         mov r6, r1
-
         mov r4, r0
     
         mov r0, r4
