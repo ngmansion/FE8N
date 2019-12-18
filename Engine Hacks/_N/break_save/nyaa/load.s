@@ -46,7 +46,7 @@ main:
 
 org_transport_func:
         push {lr}
-        bl expand_org_transport_data_func    @オリジナルの輸送隊データ→オリジナルの輸送隊データ展開
+        bl load_org_transport_data_to_wram    @オリジナルの輸送隊データ→オリジナルの輸送隊データ展開
         nop
             ldr r0, ADR+4   @拡張レベルを展開(loadLvMax.dmp)
             mov lr, r0
@@ -78,7 +78,7 @@ getSuffix:
 EXPAND_DATA_ADR = (0x03006790)
 ORG_TRANSPORT_DATA_ADR = (0x0203a818)
 
-expand_org_transport_data_func:
+load_org_transport_data_to_wram:
 @
 @オリジナルの輸送隊データ展開処理を簡易的に実現
 @
