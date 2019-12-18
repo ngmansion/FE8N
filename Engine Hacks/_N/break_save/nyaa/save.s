@@ -70,13 +70,13 @@ org_transport_func:
             mov lr, r0
             .short 0xF800
         nop
-        bl contruct_org_transport_data_func
+        bl save_org_transport_data_to_sram
         pop {pc}
 
 BL_ARCHIVE_DATA_ADR = (0x080d6548)
 ORG_TRANSPORT_DATA_ADR = (0x0203a818)
 
-contruct_org_transport_data_func:
+save_org_transport_data_to_sram:
     push {lr}
     mov r1, r8
     ldr r0, =ORG_TRANSPORT_DATA_ADR
