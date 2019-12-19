@@ -11,14 +11,14 @@ HAS_INVINCIBLE_FUNC = (adr+28)
 @.org	0002b490 > 00 4A 97 46 XX XX XX 08
 @
 @
+	bl Invincible
+	cmp r0, #1
+	beq zero
+
 	mov r1, #4
 	ldsh r0, [r4, r1]
 	cmp r0, #0
 	ble zero
-	
-	bl Invincible
-	cmp r0, #1
-	beq zero
 
 	mov r0, r8
 	ldrb r0, [r0, #0xB]
@@ -93,6 +93,12 @@ Invincible:
 		mov r0, #99
 		strh r0, [r4, #10] @命中99
 	jumpInvincible:
+		ldr r0, =0x0203a4d0
+		ldrh r1, [r0, #0]
+		mov r0, #2
+		and r0, r1
+		cmp r0, #0
+		bne falseInvincible @戦闘予測時はスキップ
 @
 		mov r3, r8
 		ldrb r1, [r3, #19]
