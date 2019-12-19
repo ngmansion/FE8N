@@ -6,6 +6,7 @@ HAS_GOD_SHIELD_FUNC = (adr+8)
 HAS_INORI_FUNC = (adr+12)
 HAS_NIHIL_FUNC = (adr+16)
 SET_SKILLANIME_DEF_FUNC = (adr+20)
+HAS_INVINCIBLE_FUNC = (adr+28)
 
 @.org	0002b490 > 00 4A 97 46 XX XX XX 08
 @
@@ -15,6 +16,10 @@ SET_SKILLANIME_DEF_FUNC = (adr+20)
 	cmp r0, #0
 	ble zero
 	
+	bl Invincible
+	cmp r0, #1
+	beq zero
+
 	mov r0, r8
 	ldrb r0, [r0, #0xB]
 		ldr r1, =0x08019108
@@ -72,8 +77,49 @@ end:
 	ldr r0, =0x0802b49a
 	mov pc, r0
 	
-	
-	Deflect:
+
+Invincible:
+		push {lr}
+
+		mov r0, r7
+		mov r1, #0
+		bl hasInvincible
+		cmp r0, #0
+		beq falseInvincible
+@
+		ldrh r0, [r4, #10]
+		cmp r0, #100
+		beq jumpInvincible
+		mov r0, #99
+		strh r0, [r4, #10] @命中99
+	jumpInvincible:
+@
+		mov r3, r8
+		ldrb r1, [r3, #19]
+		ldrh r0, [r4, #4]
+		cmp r0, r1
+		blt falseInvincible @一撃で死なないなら終了
+@
+		ldr r3, =0x0203a604
+		ldr r3, [r3, #0]
+		ldr r2, [r3, #0]
+		lsl r1, r2, #13
+		lsr r1, r1, #13
+		mov r0, #2
+		orr r1, r0
+		ldr r0, =0xfff80000
+		and r0, r2
+		orr r0, r1
+		str r0, [r3, #0]	@回避
+
+		mov r0, #1
+		b endInvincible
+	falseInvincible:
+		mov r0, #0
+	endInvincible:
+		pop {pc}
+
+Deflect:
 		push {lr}
 			ldr r0, =0x0203a4d0
 			ldrh r0, [r0]
@@ -256,7 +302,6 @@ Pray:
     blt falsePray
 	
 	ldrb r1, [r3, #19]
-	cmp r1, #1
 	ldrh r0, [r4, #4]
 	cmp r0, r1
 	blt falsePray @一撃で死なないなら終了
@@ -384,6 +429,9 @@ Xeno:
 endXeno:
 	bx lr
 
+hasInvincible:
+	ldr	r2, HAS_INVINCIBLE_FUNC
+	mov	pc, r2
 
 random:
 	ldr	r2, =0x0802a490
