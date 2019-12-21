@@ -1,0 +1,10 @@
+skill_092_unit:
+   BYTE $00 $00 0 
+skill_092_class:
+   BYTE $00 $00 0 
+skill_092_weapon:
+   BYTE $00 $00 0 
+skill_092_item:
+   BYTE $00 $00 0 
+#define SKL_HELP_092 $0000
+#define SKL_COLOR_092 $FF
