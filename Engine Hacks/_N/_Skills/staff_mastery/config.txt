@@ -1,2 +1,0 @@
-staff_mastery_list:
- BYTE	$4C 0

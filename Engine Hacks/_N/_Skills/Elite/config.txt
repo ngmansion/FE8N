@@ -1,2 +1,0 @@
-ParagonList:
-    BYTE $00 0

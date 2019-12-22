@@ -1,2 +1,0 @@
-FortuneList:
-BYTE $00 0

@@ -1,7 +1,4 @@
-#include config.txt
-    
 ////////////////////
-ALIGN 4
 
 PUSH
 ORG	0x2B3A4

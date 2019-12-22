@@ -10,14 +10,14 @@
 #define VantageID 8 //0x8待ち伏せ
 #define AdeptID 9 // 0x9連続
 #define ParagonID 10 //0xaエリート
-#define RemoveID 11 //0xb再動
+#define RemoveID 11 //0xb再動(自軍のみ)
 #define PassID 12 //0xcすり抜け
 #define RenewalID 13 //0xd回復
 #define DauntID 14 //0xe恐怖
 #define FortuneID 15 //0xf強運
-#define GaleforceID 16 //0x10疾風迅雷
+#define GaleforceID 16 //0x10疾風迅雷(自軍のみ)
 #define AegisID 17 //0x11聖盾
-#define StafffaireID 18 //0x12杖の達人
+#define StafffaireID 18 //0x12杖射程＋
 #define SwordbreakerID 19 //0x13剣殺し
 #define LancebreakerID 20 //0x14槍殺し
 #define AxebreakerID 21 //0x15斧殺し
@@ -40,7 +40,7 @@
 #define ArmoredBlowID 38 //0x26金剛の一撃
 #define CounterID 39 //0x27 応撃
 #define QuickenedPulseID 40 //0x28奥義の鼓動
-#define GaleCauseID 41 //0x29 神風招来
+#define GaleCauseID 41 //0x29 神風招来(自軍のみ)
 #define ChargeID 42 //0x2A 突撃
 #define ImbueID 43 //0x2B 治癒
 #define WindsweepID 44 //0x2C 風薙ぎ
@@ -65,15 +65,15 @@
 #define RightfulKingID 69 //0x45王の器
 #define CharmID 70 //0x46カリスマ
 #define DivineShieldID 71 //0x47神盾
-#define ColossusID 72//0x48鳴動(表示のみ)
-#define VengeanceID 73//0x49復讐(表示のみ)
+#define ColossusID 72//0x48鳴動
+#define VengeanceID 73//0x49復讐
 #define PointBlankID 74//0x4a近接射撃(表示のみ)
 #define SagittaryID 75//0x4b神射手(表示のみ)
 #define SureStrikeID 76//0x4c必的(表示のみ)
-#define ScreamID 77//0x4d叫喚(表示のみ)
-#define StunID 78//0x4e衝撃(表示のみ)
-#define IgnisID 79//0x4f華炎(表示のみ)
-#define DragonFungID 80//0x50竜穿(表示のみ)
+#define ScreamID 77//0x4d叫喚
+#define StunID 78//0x4e衝撃
+#define IgnisID 79//0x4f華炎
+#define DragonFungID 80//0x50竜穿
 #define StealID 81//0x51盗む(表示のみ)
 #define LocktouchID 82//0x52カギ開け(表示のみ)
 #define CritUpID 83//0x53必殺上昇(表示のみ)
@@ -84,7 +84,7 @@
 #define VoidCurseID 88//0x58虚無の呪い(表示のみ)
 #define DistantGuardID 89 //0x59遠距離無効
 #define RightfulGodID 90 //0x5a魔の器
-#define CantoPlusID 91 //0x5b再移動
+#define CantoPlusID 91 //0x5b再移動(自軍のみ)
 #define ImpaleID 92 //0x5c撃破
 #define Leadership1ID 93 //0x5d指揮+1
 #define Leadership2ID 94 //0x5e指揮+2

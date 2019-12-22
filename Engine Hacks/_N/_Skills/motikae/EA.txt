@@ -1,6 +1,3 @@
-#include config.txt
-
-ALIGN 4
 
 PUSH
   ORG 0x016918

@@ -1,5 +1,0 @@
-fearList:
-    BYTE $4F $66 0
-
-charmList:
-    BYTE $00 0

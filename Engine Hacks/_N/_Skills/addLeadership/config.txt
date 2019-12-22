@@ -1,6 +1,0 @@
-Leadership1_list:
-    BYTE $00 $00 0
-Leadership2_list:
-    BYTE $00 $00 0
-    
-    

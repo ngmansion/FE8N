@@ -1,7 +1,3 @@
-#include config.txt
-
-ALIGN 4
-
 //revert
 PUSH
   ORG 0x2c35C

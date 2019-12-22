@@ -1,6 +1,3 @@
-#include config.txt
-
-
 
 //code
 ALIGN 4

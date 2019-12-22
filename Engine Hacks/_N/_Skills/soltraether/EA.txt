@@ -1,4 +1,3 @@
-#include config.txt
 
 
 #define SOL_WORK_ADDRESS $0203ACAC 

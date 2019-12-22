@@ -1,6 +1,4 @@
-#include config.txt
 
-ALIGN 4
 PUSH
 ORG	0x1A1D0
 BYTE	$00 $48 $87 $46

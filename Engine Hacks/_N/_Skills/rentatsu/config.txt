@@ -1,6 +1,0 @@
-//config
-
-Rentatsu_List:
-BYTE $00 0
-Rentatsu_List_w:
-BYTE $00 0

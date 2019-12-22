@@ -1,7 +1,0 @@
-WindsweepList:
-  BYTE $00 0
-
-WindsweepList_w:
-  BYTE $00 0
-
-

@@ -1,6 +1,0 @@
-GenocideList_unit:
-    BYTE $00 0
-GenocideList:
-    BYTE $00 0
-GenocideList_w:
-    BYTE $00 0

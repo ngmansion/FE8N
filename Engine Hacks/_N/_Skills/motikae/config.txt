@@ -1,5 +1,0 @@
-QuickChangeList_class:
-    BYTE $00 0
-
-
-

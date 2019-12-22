@@ -1,4 +1,3 @@
-#include config.txt
 
 PUSH
 ORG 0x2ac60

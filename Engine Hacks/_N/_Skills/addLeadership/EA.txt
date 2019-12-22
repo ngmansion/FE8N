@@ -1,6 +1,4 @@
-#include config.txt
 
-ALIGN 4
 PUSH
 //ORG 0x2A960
 //    WORD $468F4900

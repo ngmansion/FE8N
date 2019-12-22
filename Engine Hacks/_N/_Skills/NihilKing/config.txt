@@ -1,9 +1,0 @@
-//config
-
-RightfulKingClassList:
- BYTE $00 0
-ResolveClassList:
- BYTE $00 0
-RightfulGodList:
- BYTE $00 0
-

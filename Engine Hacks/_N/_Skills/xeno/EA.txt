@@ -1,5 +1,3 @@
-#include config.txt
-ALIGN 4
 
 #define GENOCIDE_WORK_ADR (0x0203a5e8)
 

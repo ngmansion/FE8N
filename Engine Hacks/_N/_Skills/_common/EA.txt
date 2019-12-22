@@ -1,5 +1,4 @@
-#include config.txt
-ALIGN 4
+
 #define HAS_SKILL "BYTE $02 $49 $01 $4B $9F $46 $C0 $46; POIN judgeSkill"
 
 #define HAS_OCCULT "BYTE $02 $49 $01 $4B $9F $46 $C0 $46; POIN mergeOccult"
