@@ -15,6 +15,7 @@ set /p number="ファイル数を入力してください："
 
 setlocal enabledelayedexpansion
 for /l %%n in (1,1,%number%) do (
+  set counta=%%n
   set num=00%%n
   set num=!num:~-3,3!
   type nul > skill_!num!.txt
@@ -31,8 +32,14 @@ for /l %%n in (1,1,%number%) do (
   echo skill_!num!_item:>> skill_!num!.txt
   echo    BYTE $00 $00 0 >> skill_!num!.txt
 
-  echo #define SKL_HELP_!num! $0000>> skill_!num!.txt
-  echo #define SKL_COLOR_!num! $FF>> skill_!num!.txt
+
+set DATA=$0000
+call :MYSET2 !counta! 1
+  echo #define SKL_HELP_!num! !DATA!>> skill_!num!.txt
+
+set DATA=$00
+call :MYSET2 !counta! 2
+  echo #define SKL_COLOR_!num! !DATA!>> skill_!num!.txt
 
   echo SHORT SKL_HELP_!num! SKL_COLOR_!num! >> list_definitions.event
   echo POIN skill_!num!_unit skill_!num!_class skill_!num!_weapon skill_!num!_item>> list_definitions.event
@@ -43,3 +50,12 @@ endlocal
 
   echo WORD $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF>> list_definitions.event
   echo ALIGN 4 >> config_index.event
+  pause
+  exit
+
+:MYSET2
+FOR /F "tokens=%2 skip=%1" %%i IN (config_icon.txt) DO (
+    SET DATA=%%i
+    exit /b
+)
+
