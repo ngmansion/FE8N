@@ -7,4 +7,4 @@ skill_100_weapon:
 skill_100_item:
    BYTE $00 $00 0 
 #define SKL_HELP_100 $0000
-#define SKL_COLOR_100 $FF
+#define SKL_COLOR_100 0

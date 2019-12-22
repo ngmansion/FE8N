@@ -7,4 +7,4 @@ skill_062_weapon:
 skill_062_item:
    BYTE $00 $00 0 
 #define SKL_HELP_062 $0000
-#define SKL_COLOR_062 $FF
+#define SKL_COLOR_062 0

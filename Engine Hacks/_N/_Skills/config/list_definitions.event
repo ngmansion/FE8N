@@ -256,6 +256,4 @@ SHORT SKL_HELP_126 SKL_COLOR_126
 POIN skill_126_unit skill_126_class skill_126_weapon skill_126_item
 SHORT SKL_HELP_127 SKL_COLOR_127 
 POIN skill_127_unit skill_127_class skill_127_weapon skill_127_item
-SHORT SKL_HELP_128 SKL_COLOR_128 
-POIN skill_128_unit skill_128_class skill_128_weapon skill_128_item
 WORD $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF

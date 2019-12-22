@@ -1,6 +1,0 @@
-
-original_skill:
-    BYTE $00 0
-
-
-ALIGN 4

@@ -6,5 +6,5 @@ skill_006_weapon:
    BYTE $00 $00 0 
 skill_006_item:
    BYTE $00 $00 0 
-#define SKL_HELP_006 $0000
+#define SKL_HELP_006 $05A8
 #define SKL_COLOR_006 $FF
