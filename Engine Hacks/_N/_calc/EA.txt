@@ -12,9 +12,15 @@ ORG	0x2a9c6
 ORG	0x02acc8
 	jumpToHack(weapon_bonus)
 
+///////////////level_down
+
+ORG 0x075bb6	//CC画面の処理(実際の減少処理は別にある)
+	SHORT $7A18
+
 POP
 
 weapon_bonus:
 	#incbin weapon_bonus.dmp
+ALIGN 4
 
 

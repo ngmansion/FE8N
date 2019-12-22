@@ -111,6 +111,12 @@ WarSkill:
 	cmp r0, r1
 	bne endWar
 
+    mov r1, #0x10
+    ldr r0, [r4, #12]
+    and r0, r1
+    cmp r0, r1
+    beq endWar @救出中なら終了
+
 	mov r0, r4
 	bl hasWarSkill
 	cmp r0, #0
@@ -518,7 +524,7 @@ Faire:
     beq endFaire
     mov r1, #90
     ldrh r0, [r4, r1]
-    add r0, #5
+    add r0, #3
     strh r0, [r4, r1] @自分
 endFaire:
 	pop {pc}

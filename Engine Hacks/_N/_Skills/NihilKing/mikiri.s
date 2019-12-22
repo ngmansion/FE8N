@@ -100,6 +100,12 @@ notDeath:
 
 
 @■戦技判定
+	ldr r0, [r2, #12]
+	mov r1, #0x10
+	and r0, r1
+	cmp r0, r1
+	beq skipWar @救出中は確定発動しない
+
 	mov r1, #WAR_ADR
 	ldrb r0, [r2, r1]
 	cmp r0, #0xFF
