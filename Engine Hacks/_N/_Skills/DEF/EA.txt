@@ -22,10 +22,15 @@ shikkokunori:
  POIN hasNihil
  POIN set_skillanime_defence
  POIN hasDistantGuard
- POIN 0
+ POIN hasInvincible
  POIN hasDeflect
  POIN 0
- 
+
+hasInvincible:
+ HAS_NIHIL
+ WORD InvincibleID
+
+
 BigShield_hasSkill:
  HAS_SKILL
  WORD PaviseID

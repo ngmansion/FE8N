@@ -1,14 +1,6 @@
 .thumb
 
 @080a7c28
-push {lr}
-push {r0}
-bl main
-pop {r0}
-pop {r1}
-mov lr, r1
-ldr r1, adr+4
-mov pc, r1
 
 main:
     push {r4, r5, lr}
@@ -37,10 +29,7 @@ set_level_bit:
 @r1 = HPbit
 @
         push {r4, r5, r6, lr}
-        cmp r1, #0
-        beq end_set
         mov r6, r1
-
         mov r4, r0
     
         mov r0, r4

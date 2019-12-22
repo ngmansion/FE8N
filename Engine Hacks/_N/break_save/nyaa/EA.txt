@@ -1,24 +1,25 @@
 #include nyaa.txt
 
 #define WORK_MEM_FOR_TRANSPORT_SKILL ($0203AE50)
-#define WORK_MEM_FOR_TRANSPORT_HP ($0203a818+154)//(3*51)スキル+1//0203A8B2
+#define WORK_MEM_FOR_TRANSPORT_LV ($0203a818+154)//(3*51)スキル+1//0203A8B2
 //0203A8C8～がセーブ不可
+
+#define EX_SAVE_AREA ($0E007400)	//拡張輸送隊データ保存領域
+
 PUSH
+ORG 0x0b03a8
+    WORD 0	//記録を写す消去
+
 ORG 0x0a7c28
     jumpToHack(yuso_save)
-ORG 0xA7C8E
+ORG 0x0a7c98
    #incbin A7C8E.bin	//↑の追加
-   POIN yuso_save_ret+1
-ORG 0x0a7c28
-    jumpToHack(yuso_hp_save)	//hpストア
+
 
 ORG 0x0a7cb0
     jumpToHack(yuso_load)
 ORG 0x0a7d16
     SHORT $2EC7 $DDD8 $B02C $B02C $BCF0 $BC01 $4700	
-ORG 0x0a7d1c
-    jumpToHack(yuso_hp_load)	//hpロード
-
 
 
 ORG 0x031630
@@ -30,41 +31,26 @@ POP
 
 
 yuso_save:
-    #incbin save.gba
-    POIN SAVE_EXTRA_SKILL
+    #incbin save.dmp
+    WORD EX_SAVE_AREA
+    POIN yuso_lv_save
     ALIGN 4
-yuso_hp_save:
-    #incbin saveHpMax.dmp
-    WORD WORK_MEM_FOR_TRANSPORT_HP
-    POIN yuso_save
-    ALIGN 4
-yuso_save_ret:
-    #incbin save_ret.dmp
+yuso_lv_save:
+    #incbin saveLvMax.dmp
+    WORD WORK_MEM_FOR_TRANSPORT_LV
     ALIGN 4
 
 yuso_load:
-    #incbin load.gba
-    POIN LOAD_EXTRA_SKILL
+    #incbin load.dmp
+    WORD EX_SAVE_AREA
+    POIN yuso_lv_load
     ALIGN 4
-yuso_hp_load:
-    #incbin loadHpMax.dmp
-    WORD WORK_MEM_FOR_TRANSPORT_HP
+yuso_lv_load:
+    #incbin loadLvMax.dmp
+    WORD WORK_MEM_FOR_TRANSPORT_LV
     ALIGN 4
 
 
-SAVE_EXTRA_SKILL:
-	#incbin "skillFromTransportMem_save.gba"
-	POIN COMMON_EXTRA_SKILL
-	ALIGN 4
-
-LOAD_EXTRA_SKILL:
-	#incbin "skillFromTransportMem_load.gba"
-	POIN COMMON_EXTRA_SKILL
-	ALIGN 4
-
-COMMON_EXTRA_SKILL:
-	#incbin "skillFromTransportMem_common.gba"
-	ALIGN 4
 
 restoreSortedTransportSkill:
 	#incbin "restoreSortedTransportSkill.dmp"

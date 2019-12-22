@@ -84,11 +84,10 @@ judgeList: @リストチェック
 		add r6, #4
 		
 		mov r0, r4
-			ldr r1, =0x080168d0
-			mov lr, r1
-			.short 0xF800
+		bl getWeapon
 		lsl r1, r0, #24
 		lsr r1, r1, #24
+
 		ldr r0, [r6]
 		bl Listfunc
 		cmp r0, #1
@@ -132,6 +131,23 @@ Listfunc:
 	endLoop:
 		bx lr
 
+getWeapon:
+		push {lr}
+		ldr r1, =0x0203a4e8
+		cmp r0, r1
+		beq notWeapon
+		ldr r1, =0x0203a568
+		cmp r0, r1
+		beq notWeapon
+			ldr r1, =0x080168d0
+			mov lr, r1
+			.short 0xF800
+		b endWeapon
+	notWeapon:
+		mov r1, #74
+		ldrh r0, [r0, r1]
+	endWeapon:
+		pop {pc}
 
 JudgeWpLv:
 	push {r4, r5, r6, lr}

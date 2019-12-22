@@ -115,4 +115,6 @@
 #define MagicBindID 119 //0x77 封魔
 #define SavageBlowID 120 //0x78 死の吐息
 #define DivineDragonHornID 121 //0x79 聖竜の大角
+#define InvincibleID 122 //0x7A 無敵
+
 
