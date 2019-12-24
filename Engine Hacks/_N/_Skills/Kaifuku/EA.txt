@@ -4,8 +4,11 @@ ORG	0x19f28
 BYTE	$00 $4B $9F $46
 POIN	ski_kaifuku
 
-    ORG 0x019f38
+ORG 0x019f38
     jumpToHack(tiyu_main)
+
+ORG 0x025904
+    jumpToHack(BreathofLife)
 
 POP
 
@@ -14,10 +17,19 @@ ski_kaifuku:
 #incbin "KAIFUKU.dmp"
 POIN hasRenewal
 POIN hasDivineDragonHorn
+POIN hasBreathofLife
+
+BreathofLife:
+#incbin BreathofLife.dmp
+POIN hasBreathofLife
 
 tiyu_main:
   #incbin tiyu.dmp
   POIN hasImbue
+
+hasBreathofLife:
+   HAS_NIHIL
+   WORD BreathofLifeID
 
 hasDivineDragonHorn:
     HAS_NIHIL

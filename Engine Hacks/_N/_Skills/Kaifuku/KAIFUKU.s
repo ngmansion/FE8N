@@ -25,6 +25,11 @@ main:
     mov r0, r5
     bl DivineHeal
     add r4, r0
+
+    mov r0, r5
+    bl BreathofLife
+    add r4, r0
+
 end:
     mov r0, r4
     pop {r4, r5, pc}
@@ -85,6 +90,15 @@ DivineHeal:
     endDivine:
         pop {r4, r5, r6, pc}
 
+BreathofLife:
+        push {lr}
+        mov r1, #0
+        bl hasBreathofLife
+        cmp r0, #0
+        beq endBreathofLife
+        mov r0, #10 @10パーセント
+    endBreathofLife:
+        pop {pc}
 
 Heal:
         push {lr}
@@ -138,13 +152,16 @@ endCheckXY:
 Get_Status:
 	ldr r1, =0x08019108
 	mov pc, r1
+hasBreathofLife:
+        ldr r2, addr+8
+        mov pc, r2
 hasDivineHeal:
-        ldr r2, adr+4 @回復
+        ldr r2, addr+4 @回復
         mov pc, r2
 hasHeal:
-        ldr r2, adr @回復
+        ldr r2, addr @回復
         mov pc, r2
 
 .align
 .ltorg
-adr:
+addr:
