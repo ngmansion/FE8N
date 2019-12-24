@@ -82,7 +82,7 @@ Heal:
         push {r4, lr}
         mov	r4, r0
         bl	getMaxHp    @$00018ea4=最大HP
-        mov r1, #10
+        mov r1, #20     @回復パーセント
         bl divFunc
 
         ldrb r1, [r4, #19]  @現在HP

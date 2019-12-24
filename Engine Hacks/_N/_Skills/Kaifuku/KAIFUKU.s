@@ -96,7 +96,7 @@ BreathofLife:
         bl hasBreathofLife
         cmp r0, #0
         beq endBreathofLife
-        mov r0, #10 @10パーセント
+        mov r0, #20 @パーセント
     endBreathofLife:
         pop {pc}
 
