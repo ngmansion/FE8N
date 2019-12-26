@@ -35,11 +35,11 @@ notAlly:
 	bl GetSkill_em
 	mov r5, r0
 ret_em:
-	bl GetSkill_em
-	cmp r0, r5
-	beq ret_em
-	lsl r5, r5, #6
-	orr r0, r0, r5
+@	bl GetSkill_em
+@	cmp r0, r5
+@	beq ret_em
+@	lsl r5, r5, #6
+@	orr r0, r0, r5
 	strh r0, [r4, #0x3A]
 	
 RETURN:
