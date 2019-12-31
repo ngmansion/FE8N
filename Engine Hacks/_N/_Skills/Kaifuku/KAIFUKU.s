@@ -62,7 +62,7 @@ DivineHeal:
 		beq loopDivine	@死亡判定1
 		
 		ldr r0, [r5, #0xC]
-		mov r1, #0x0C
+		ldr r1, =0x1002C
 		and r0, r1
 		bne loopDivine	@死亡判定2
 

@@ -1,99 +1,110 @@
-
-
-
 .thumb
-
-bl BreathofLife
+mov r0, r5
+bl Boon
 cmp r0, #1
 beq Got_Effect
 
-mov	r0, r5
-bl	getNowHp    @$00018e64=現在HP
-mov	r4, r0
-mov	r0, r5
-bl	getMaxHp    @$00018ea4=最大HP
-cmp	r4, r0
-beq	No_Effect
+mov r2, r5
+add r2, #48
+ldrb r1, [r2, #0]	@状態異常ロード
+mov r0, #15
+and r0, r1
+cmp r0, #0
+beq Not_Effect
+ldr r0, =0x08025958
+mov pc, r0
 
 Got_Effect:
-ldr r0, =0x08025916
+ldr r0, =0x0802596a
 mov pc, r0
 
-No_Effect:
-ldr r0, =0x0802593e
+Not_Effect:
+ldr r0, =0x0802597e
 mov pc, r0
 
-BreathofLife:
+
+Boon:
         push {r4, r5, r6, r7, lr}
         mov r7, #0  @フラグリセット
 
         mov r0, r5
         mov r1, #0
-        bl hasBreathofLife
+        bl hasBoon
         cmp r0, #0
-        beq endBreathofLife
+        beq endBoon
     @周囲回復処理(自分はスキップ)
     	ldrb r6, [r5, #0xB]
 	    mov r0, #0xC0
 	    and r6, r0	@r6に部隊表ID
-    loopBreathofLife:
+    loopBoon:
 	    add r6, #1
 	    mov r0, r6
 	    bl Get_Status
 
         mov r4, r0
         cmp r0, #0
-        beq endBreathofLife	@リスト末尾
+        beq endBoon	@リスト末尾
         ldr r0, [r4]
         cmp r0, #0
-        beq loopBreathofLife	@死亡判定1
+        beq loopBoon	@死亡判定1
         ldrb r0, [r4, #19]
         cmp r0, #0
-        beq loopBreathofLife	@死亡判定2
+        beq loopBoon	@死亡判定2
         ldrb r0, [r4, #0xB]
         ldrb r1, [r5, #0xB]
         cmp r0, r1
-        beq loopBreathofLife	@自分
+        beq loopBoon	@自分
         ldr r0, [r4, #0xC]
         ldr r1, =0x1000C
         and r0, r1
-        bne loopBreathofLife	@死亡フラグまたは非出撃フラグ
-        ldrb r0, [r4, #19]
-        ldrb r1, [r4, #18]
-        cmp r0, r1
-        bge loopBreathofLife    @この人は全快
+        bne loopBoon	@死亡フラグまたは非出撃フラグ
+	    mov	r0, r4
+	    add	r0, #48
+	    ldrb r0, [r0]   @状態異常ロード
+        bl judgeBadEffect
+        cmp r0, #0
+        beq loopBoon    @状態異常回復不要
 
         mov r0, #2
         bl CheckXY
         cmp r0, #0
-        beq loopBreathofLife    @2マス以上離れている
+        beq loopBoon    @2マス以上離れている
 
-        mov r0, r4
-        bl Heal
+        mov r1, #0
+	    mov	r0, r4
+	    add	r0, #48
+	    strb r1, [r0]   @状態異常ストア
+
         mov r7, #1
-        b loopBreathofLife
+        b loopBoon
 
-    endBreathofLife:
+    endBoon:
         mov r0, r7
         pop {r4, r5, r6, r7, pc}
 
 
-Heal:
-        push {r4, lr}
-        mov	r4, r0
-        bl	getMaxHp    @$00018ea4=最大HP
-        mov r1, #20     @回復パーセント
-        bl divFunc
 
-        ldrb r1, [r4, #19]  @現在HP
-        add r0, r1
-        ldrb r2, [r4, #18]  @最大HP
-        cmp r0, r2
-        blt jumpHeal    @最大HPより小さいなら
-        mov r0, r2
-    jumpHeal:
-        strb r0, [r4, #19]  @現在HP
-        pop {r4, pc}
+
+
+ATK_ID = (0x5)
+PULSE_ID = (0x09)	@奥義の鼓動ID
+
+judgeBadEffect:
+    cmp r0, #0
+    beq falseBadEffect
+	mov	r1, #15
+	and	r1, r0
+	cmp	r1, #ATK_ID
+	blt trueBadEffect
+	cmp	r1, #PULSE_ID
+	bgt	trueBadEffect
+falseBadEffect:
+    mov r0, #0
+    b endBadEffect
+trueBadEffect:
+    mov r0, #1
+endBadEffect:
+    bx lr
 
 CheckXY:
 @r5とr4がr0マス以内に居るならr0=TRUE
@@ -132,26 +143,16 @@ endCheckXY:
     pop {r6}
 	bx lr
 
-getNowHp:
-ldr r1, =0x08018e64
-mov pc, r1
-
-getMaxHp:
-ldr r1, =0x08018ea4
-mov pc, r1
-
-divFunc:
-ldr r2, =0x080d65f8
-mov pc, r2
-
 Get_Status:
 ldr r1, =0x08019108
 mov pc, r1
 
-hasBreathofLife:
+hasBoon:
 ldr r2, addr
 mov pc, r2
 
 .align
 .ltorg
 addr:
+
+

@@ -176,9 +176,9 @@ loopBond:
 	cmp r0, r1
 	beq loopBond	@自分
 	ldr r0, [r5, #0xC]
-	mov r1, #0x2C
+	bl getExistFlagR1
 	and r0, r1
-	bne loopBond	@死亡フラグまたは非出撃フラグまたは救出されている
+	bne loopBond
 
 jumpBond:
 	mov r0, #1  @1マス指定
@@ -314,9 +314,9 @@ loopSolo:
 	cmp r0, r1
 	beq loopSolo	@自分
 	ldr r0, [r5, #0xC]
-	mov r1, #0x0C
+	bl getExistFlagR1
 	and r0, r1
-	bne loopSolo	@死亡フラグまたは非出撃フラグ
+	bne loopSolo	@居ないフラグ+救出中
 	
     mov r0, #2  @2マス以内
 	bl CheckXY
@@ -967,6 +967,9 @@ getAlinaAdr:
 getDistance:
     ldr r0, =0x0203a4d2
     bx lr
+getExistFlagR1:
+	ldr r1, =0x1002C	@居ないフラグ+救出されている
+	bx lr
 .align
 .ltorg
 adr:

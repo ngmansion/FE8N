@@ -117,5 +117,6 @@
 #define DivineDragonHornID 121 //0x79 聖竜の大角
 #define InvincibleID 122 //0x7A 無敵
 #define BreathofLifeID 123 //0x7B 生の息吹
+#define BoonID 124 //0x7C 地の祝福
 
 

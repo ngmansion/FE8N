@@ -268,15 +268,14 @@ startSavage:
 		ldr r0, [r5]
 		cmp r0, #0
 		beq loopSavage	@死亡判定1
-		
-		ldr r0, [r5, #0xC]
-		mov r1, #0x0C
-		and r0, r1
-		bne loopSavage	@死亡判定2
-
 	    ldrb r0, [r5, #19] @現在19
 		cmp r0, #0
-		beq loopSavage	@死亡判定3
+		beq loopSavage	@死亡判定2
+		
+		ldr r0, [r5, #0xC]
+		ldr r1, =0x1002C
+		and r0, r1
+		bne loopSavage	@居ない判定+救出中
 
 		mov r0, #2	@within 2
 		mov r1, r4

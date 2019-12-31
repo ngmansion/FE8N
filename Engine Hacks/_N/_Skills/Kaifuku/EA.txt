@@ -10,6 +10,9 @@ ORG 0x019f38
 ORG 0x025904
     jumpToHack(BreathofLife)
 
+ORG 0x02594c
+    jumpToHack(Boon)
+
 POP
 
 ALIGN 4
@@ -23,9 +26,19 @@ BreathofLife:
 #incbin BreathofLife.dmp
 POIN hasBreathofLife
 
+Boon:
+#incbin Boon.dmp
+POIN hasBoon
+
+hasBoon:
+   HAS_NIHIL
+   WORD BoonID
+
 tiyu_main:
   #incbin tiyu.dmp
   POIN hasImbue
+  POIN hasBoon
+
 
 hasBreathofLife:
    HAS_NIHIL
