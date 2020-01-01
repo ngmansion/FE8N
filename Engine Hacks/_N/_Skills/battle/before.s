@@ -1,28 +1,6 @@
-SAVIOR_ADR = (adr+44)
 SAVIOR_DAMAGE = (10)
 
-SHISHI_ADR = (adr+4)
 
-SWORD_F_ADR = (adr+48)
-LANCE_F_ADR = (adr+52)
-AXE_F_ADR = (adr+56)
-BOW_F_ADR = (adr+60)
-ANIMA_F_ADR = (adr+64)
-
-FLY_E_ADR = (adr+68)
-ARMOR_E_ADR = (adr+72)
-HORSE_E_ADR = (adr+76)
-MONSTER_E_ADR = (adr+80)
-HIEN_ADR = (adr+84)
-ACE_ADR = (adr+88)
-KONSHIN_ADR = (adr+92)
-SOLO_ADR = (adr+96)
-SHISEN_ADR = (adr+100)
-FORT_ADR = (adr+104)
-WAR_ADR = (adr+108)
-LIGHT_F_ADR = (adr+112)
-DARK_F_ADR = (adr+116)
-HAS_BOND_ADR = (adr+120)
 
 
 
@@ -440,27 +418,34 @@ EffectiveBonus:
 	ldr r1, FLY_E_ADR
 
 	bl effective_impl
-	cmp r0, #0
-	bne getEffective
+	cmp r0, #1
+	beq getEffective
 @HelmSplitter
 	mov r0, #ARMOR_E2_ID
 	ldr r1, ARMOR_E_ADR
 
 	bl effective_impl
-	cmp r0, #0
-	bne getEffective
+	cmp r0, #1
+	beq getEffective
 @@@@@
 	mov r0, #HORSE_E2_ID
 	ldr r1, HORSE_E_ADR
 	bl effective_impl
-	cmp r0, #0
-	bne getEffective
+	cmp r0, #1
+	beq getEffective
 @@@@@
 	mov r0, #MONSTER_E2_ID
 	ldr r1, MONSTER_E_ADR
 	bl effective_impl
-	cmp r0, #0
-	bne getEffective
+	cmp r0, #1
+	beq getEffective
+@無惨
+    mov r0, r4
+    mov r1, r5
+    bl hasAtrocity
+	cmp r0, #1
+	beq getEffective
+
 	b endEffective
 getEffective:
 	mov r1, r4
@@ -936,6 +921,33 @@ Attacker_Adr:
 Equipment_Adr:
 .long 0x080172f0
 
+SAVIOR_ADR = (adr+44)
+
+
+SHISHI_ADR = (adr+4)
+
+SWORD_F_ADR = (adr+48)
+LANCE_F_ADR = (adr+52)
+AXE_F_ADR = (adr+56)
+BOW_F_ADR = (adr+60)
+ANIMA_F_ADR = (adr+64)
+
+FLY_E_ADR = (adr+68)
+ARMOR_E_ADR = (adr+72)
+HORSE_E_ADR = (adr+76)
+MONSTER_E_ADR = (adr+80)
+HIEN_ADR = (adr+84)
+ACE_ADR = (adr+88)
+KONSHIN_ADR = (adr+92)
+SOLO_ADR = (adr+96)
+SHISEN_ADR = (adr+100)
+FORT_ADR = (adr+104)
+WAR_ADR = (adr+108)
+LIGHT_F_ADR = (adr+112)
+DARK_F_ADR = (adr+116)
+HAS_BOND_ADR = (adr+120)
+HAS_ATROCITY_ADR = (adr+124)
+
 hasMikiri:
 	ldr r1, adr	@見切り
 	mov pc, r1
@@ -957,6 +969,9 @@ hasWarSkill:
 hasBond:
 	ldr r3, HAS_BOND_ADR
 	mov pc, r3
+hasAtrocity:
+    ldr r2, HAS_ATROCITY_ADR
+    mov pc, r2
 
 getItemEffective:
 	ldr r1, =BL_GETITEMEFFECTIVE

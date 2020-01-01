@@ -119,4 +119,7 @@
 #define BreathofLifeID 123 //0x7B 生の息吹
 #define BoonID 124 //0x7C 地の祝福
 
+#define RagingStormID 128//0x80 狂嵐
+#define AtrocityID 129//0x81 無惨
+#define FallenStarID 130//0x82 落星
 

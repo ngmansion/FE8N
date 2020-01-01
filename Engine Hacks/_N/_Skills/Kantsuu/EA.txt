@@ -41,7 +41,11 @@ POIN	hasIgnis
 POIN hasNihil
 POIN set_skillanime_attack
 POIN hasMagicBind
+POIN hasFallenStar
     
+hasFallenStar:
+  HAS_NIHIL
+  WORD FallenStarID
 hasDragonFung:
     HAS_OCCULT
     WORD DragonFungID

@@ -1,0 +1,10 @@
+skill_142_unit:
+   BYTE $00 $00 0 
+skill_142_class:
+   BYTE $00 $00 0 
+skill_142_weapon:
+   BYTE $00 $00 0 
+skill_142_item:
+   BYTE $00 $00 0 
+#define SKL_HELP_142 $0000
+#define SKL_COLOR_142 $00

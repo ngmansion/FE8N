@@ -68,6 +68,8 @@ WarSkill:
 		cmp r0, r1
 		bne endWarSkill
 
+		bl FallenStar
+
 		mov	r2, r8
 		ldr	r1, [r2, #4]
 		ldrb	r0, [r1, #4]
@@ -248,6 +250,20 @@ endFlower:
 	pop {pc}
 
 
+FallenStar:
+		push {lr}
+    	mov r0, r7
+		mov r1, r8
+		bl hasFallenStar
+    	cmp r0, #0
+    	beq endFallenStar
+		mov	r1, r7
+		add	r1, #111
+		mov	r0, #0x18		@@状態異常(5攻撃,6守備,7必殺,8回避)
+		strb	r0, [r1, #0]
+	endFallenStar:
+		pop {pc}
+
 MagicBind:
 	push {lr}
 
@@ -335,6 +351,12 @@ retrun:
 	strh	r0, [r5, #4]
 	ldr	r1, =0x0802b3f0
 	mov	pc, r1
+
+HAS_FALLENSTAR_FUNC = (adr+36)
+
+hasFallenStar:
+ldr r2, HAS_FALLENSTAR_FUNC
+mov pc, r2
 
 .align
 .ltorg
