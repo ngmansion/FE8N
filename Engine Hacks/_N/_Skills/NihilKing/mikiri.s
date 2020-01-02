@@ -1,16 +1,15 @@
-.equ PULSE_ID, (0x09)	@奥義の鼓動の状態異常
-.equ PULSE_RESET, (0x39)	@奥義の鼓動の状態異常
+PULSE_ID = (0x09)	@奥義の鼓動の状態異常
+PULSE_RESET = (0x39)	@奥義の鼓動の状態異常
 
-.equ KORO_FLAG, (0xDC) @瞬殺目印
-.equ ORACLE_FLAG, (0xDD) @奥義目印
-.equ DEFENSE_FLAG, (0xDF) @防御目印
-.equ WAR_ADR, (67)	@書き込み先(AI1カウンタ)
-.equ WAR_FLAG, (0xFE)	@フラグ
+KORO_FLAG = (0xDC) @瞬殺目印
+ORACLE_FLAG = (0xDD) @奥義目印
+DEFENSE_FLAG = (0xDF) @防御目印
+WAR_ADR = (67)	@書き込み先(AI1カウンタ)
+WAR_FLAG = (0xFE)	@フラグ
 
+RETURN_ADR = 0x0802a4a6
 
-.equ RETURN_ADR, 0x0802a4a6
-
-@0x2A490
+@0802A490
 .thumb
 	lsl	r0, r0, #16
 	lsr	r3, r0, #16
@@ -92,25 +91,18 @@ nonTri:
 	bne notDeath	@瞬殺ではない
 @■瞬殺独自判定
 	ldr r0, [sp] @r3
-	bl isDeath
+	bl judgeDeath
 	cmp r0, #1
 	beq skipWar	@戦技の確定発動判定を飛ばす
 	b FALSE
+
 notDeath:
 
-
 @■戦技判定
-	ldr r0, [r2, #12]
-	mov r1, #0x10
-	and r0, r1
-	cmp r0, r1
-	beq skipWar @救出中は確定発動しない
+	bl judgeWar
+	cmp r0, #1
+	beq TRUE @発動率100%
 
-	mov r1, #WAR_ADR
-	ldrb r0, [r2, r1]
-	cmp r0, #0xFF
-	beq TRUE	@発動率100%
-skipWar:
 @■ジェノサイド判定
 	ldrb r0, [r3, #11]
 	ldr r1, =0x0203a5e8 @ゲノ
@@ -159,6 +151,32 @@ end:
 	pop {r3, r4}
 	ldr r0, =RETURN_ADR
 	mov pc, r0
+
+judgeWar:
+		push {r2, r3, lr}
+		ldr r0, [r2, #12]
+		mov r1, #0x10
+		and r0, r1
+		cmp r0, r1
+		beq falseWar @救出中は確定発動しない
+	
+		mov r1, #WAR_ADR
+		ldrb r0, [r2, r1]
+		cmp r0, #0xFF
+		bne falseWar
+
+		mov r0, r2
+		mov r1, #0
+		bl hasSunder
+		cmp r0, #0
+		beq falseWar
+
+		mov r0, #1   @発動率100%
+		b endWar
+	falseWar:
+		mov r0, #0
+	endWar:
+		pop {r2, r3, pc}
 
 ace_func:
 		push {lr}
@@ -241,7 +259,7 @@ pulse_func:
 		pop {pc}
 
 
-isDeath:
+judgeDeath:
 @戦技チェック
 	cmp r0, #0
 	beq falseDeath	@0なら不発
@@ -259,7 +277,12 @@ falseDeath:
 	mov r0, #0
 endDeath:
 	bx lr
-	
+
+hasSunder:
+ldr r2, ADDRESS+16
+mov pc, r2
+
+
 @non
 @	pop	{r3}
 @	mov	r0, #0

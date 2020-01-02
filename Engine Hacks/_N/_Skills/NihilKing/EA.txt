@@ -17,7 +17,8 @@ mirikiri:
  POIN hasRightfulKing
  POIN hasResolve
  POIN hasRightfulGod
- 
+ POIN hasSunder
+
 hasRightfulKing:
  HAS_SKILL
  WORD RightfulKingID
