@@ -12,10 +12,18 @@ RETURN2_ADR = (0x0802b812)
 	cmp r0, #0
 	bne RETURN	@戦闘予測時はスキップ
 	
+	ldr r0, =0x0203a568	@DEF側
+	ldrb r0, [r0, #0xB]
+		ldr r1, =0x08019108
+		mov lr, r1
+		.short 0xF800
+	cmp r0, #0
+	beq RETURN	@壁
+	
 	bl defeat_flag
 	bl Alina_back
 	cmp r0, #1
-	beq RETURN2
+	beq UNDEAD
 	
 RETURN:
 	ldr	r3, [r4, #0]
@@ -25,7 +33,7 @@ RETURN:
 	ldr r0, =RETURN_ADR
 	mov pc, r0
 	
-RETURN2:
+UNDEAD:
 	ldr	r3, [r4, #0]
 	ldr	r1, [r3, #0]
 	lsl	r1, r1, #8
