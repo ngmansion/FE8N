@@ -28,16 +28,13 @@ Jinrai_back:
         ldrb r0, [r1]
     
         mov r2, #DEFEAT
-        neg r2, r2
-        and r0, r2
+        bic r0, r2
 
         mov r2, #DEFEATED
-        neg r2, r2
-        and r0, r2
+        bic r0, r2
 
         mov r2, #STORM
-        neg r2, r2
-        and r0, r2
+        bic r0, r2
     
         strb r0, [r1]
     jump:

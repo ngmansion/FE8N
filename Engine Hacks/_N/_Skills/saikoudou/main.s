@@ -62,11 +62,11 @@ DEFEAT2 = (0xC0)
     add r0, #69
     ldrb r1, [r0]
 
-    cmp r2, #DEFEATED
+    mov r2, #DEFEATED
     and r2, r1
     bne next    @再行動済み
 
-    cmp r2, #DEFEAT
+    mov r2, #DEFEAT
     and r2, r1
     bne pattern1
     b pattern2
@@ -164,14 +164,12 @@ clear_defeat:
         ldrb r0, [r1]
 
         mov r2, #DEFEAT
-        neg r2, r2
-        and r0, r2
+        bic r0, r2
 
 @再行動済みは消さない
 
         mov r2, #STORM
-        neg r2, r2
-        and r0, r2
+        bic r0, r2
 
         strb r0, [r1]
         bx lr
