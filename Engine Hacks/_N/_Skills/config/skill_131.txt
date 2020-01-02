@@ -1,10 +1,10 @@
-skill_122_unit:
+skill_131_unit:
    BYTE $00 $00 0 
-skill_122_class:
+skill_131_class:
    BYTE $00 $00 0 
-skill_122_weapon:
+skill_131_weapon:
    BYTE $00 $00 0 
-skill_122_item:
+skill_131_item:
    BYTE $00 $00 0 
-#define SKL_HELP_122 $0000
-#define SKL_COLOR_122 0
+#define SKL_HELP_131 $0000
+#define SKL_COLOR_131 0
