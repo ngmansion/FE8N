@@ -86,12 +86,12 @@
 #define RightfulGodID 90 //0x5a魔の器
 #define CantoPlusID 91 //0x5b再移動(自軍のみ)
 #define ImpaleID 92 //0x5c撃破
-//#define Leadership1ID 93 //0x5d指揮+1
-//#define Leadership2ID 94 //0x5e指揮+2
+#define Leadership1ID 93 //0x5d指揮+1
+#define Leadership2ID 94 //0x5e指揮+2
 #define EclipseID 95 //0x5f月食
 #define JihadID 96 //0x60ジハド
-//#define LightBlessID 97 //0x61神竜の加護
-//#define DarkBlessID 98 //0x62暗黒竜の加護
+#define LightBlessID 97 //0x61神竜の加護
+#define DarkBlessID 98 //0x62暗黒竜の加護
 #define ProminenceID 99 //0x63プロミネンス
 #define GenocideID 100 //0x64ジェノサイド
 #define OccultID 101 //0x65 奥義の書
@@ -110,21 +110,16 @@
 #define SunderID 114 //0x72 両断
 #define LightfaireID 115 //0x73 光魔の達人
 #define DarkfaireID 116 //0x74 闇魔の達人
-//#define ReverseGenocideID 117 //0x75裏ジェノサイド
+#define ReverseGenocideID 117 //0x75裏ジェノサイド
 #define DoubleLionID 118 //0x76 獅子連斬
 #define MagicBindID 119 //0x77 封魔
 #define SavageBlowID 120 //0x78 死の吐息
 #define DivineDragonHornID 121 //0x79 聖竜の大角
-//#define InvincibleID 122 //0x7A 無敵
+#define InvincibleID 122 //0x7A 無敵
 #define BreathofLifeID 123 //0x7B 生の息吹
 #define BoonID 124 //0x7C 地の祝福
 #define RagingStormID 125 //0x7D 狂嵐
 #define AtrocityID 126 //0x7E 無惨
 #define FallenStarID 127//0x7F 落星
-#define ReverseGenocideID 128 //0x80 裏ジェノサイド
-#define Leadership1ID 129 //0x81 指揮+1
-#define Leadership2ID 130 //0x82 指揮+2
-#define InvincibleID 131 //0x83 無敵
-#define LightBlessID 132 //0x84 神竜の加護
-#define DarkBlessID 133 //0x85 暗黒竜の加護
+
 
