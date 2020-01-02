@@ -1,12 +1,9 @@
-.equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
-.equ WAR_FLAG, (0xFF)	@フラグ
-.equ WAR_FLAG2, (0xFE)	@フラグ
-.equ PULSE_ID, (0x09) @奥義の鼓動
-.equ PULSE_START, (0x39)
+STR_ADR = (67)	@書き込み先(AI1カウンタ)
+WAR_FLAG = (0xFF)	@フラグ
+WAR_FLAG2 = (0xFE)	@フラグ
+PULSE_ID = (0x09) @奥義の鼓動
+PULSE_START = (0x39)
 
-
-DOUBLE_LION_ADR = (ADR+16)
-HAS_SAVAGE_FUNC = (ADR+20)
 
 .thumb
 
@@ -26,6 +23,10 @@ START:
 	ldrb r0, [r7, #19]
 	cmp r0, #0
 	beq negative	@自分のHP0
+	
+	mov	r0, r7
+	mov	r1, r6
+    bl RagingStorm  @アイムール
 	
 	mov	r0, r7
 	bl WarSkill_back
@@ -57,8 +58,6 @@ START:
 	mov	r1, r6
 	bl Counter
 
-
-
 negative:
 @受け側スキル→攻め
 	ldrb r0, [r6, #19]
@@ -82,6 +81,51 @@ END:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
+
+
+@DEFEAT   = (0b10000000) @撃破フラグ
+@DEFEATED = (0b01000000) @迅雷済みフラグ
+STORM    = (0b00100000) @狂嵐フラグ
+
+@アイムール
+RagingStorm:
+        push {r4, lr}
+		mov r4, r0
+		
+		ldrb r0, [r4, #11]
+		mov r2, #0xC0
+		and r2, r0
+		bne falseStorm @自軍以外は終了
+
+
+    @スキルを持っているか
+        mov r0, r4	@r1は既にセット済み
+        bl hasRagingStorm
+        cmp r0, #0
+        beq falseStorm
+    @戦技を発動中か
+        mov r0, #67
+        ldrb r0, [r4, r0]
+        mov r1, #0xFE
+        and r0, r1
+        cmp r0, r1
+        bne falseStorm
+
+		mov r0, r4
+		add r0, #69
+		ldrb r1, [r0]
+
+		mov r2, #STORM
+		orr r1, r2
+
+		strb r1, [r0] @狂嵐発動
+
+        mov r0, #1
+        b endStorm
+    falseStorm:
+        mov r0, #0
+    endStorm:
+        pop {r4, pc}
 
 DoubleLion:
 	push	{r4, lr}
@@ -428,9 +472,17 @@ hasNihil:
 	ldr	r1, ADR+0
 	mov pc, r1
 
+DOUBLE_LION_ADR = (ADR+16)
+HAS_SAVAGE_FUNC = (ADR+20)
+HAS_RASINGSTORM = (ADR+24)
+
 hasDoubleLion:
 	ldr r1, DOUBLE_LION_ADR
 	mov pc, r1
+
+hasRagingStorm:
+ldr r2, HAS_RASINGSTORM
+mov pc, r2
 
 .align
 .ltorg

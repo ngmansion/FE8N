@@ -1,10 +1,7 @@
-.equ RETURN_ADR, (0x0802b810)
-.equ RETURN2_ADR, (0x0802b812)
+RETURN_ADR = (0x0802b810)
+RETURN2_ADR = (0x0802b812)
 
-.equ DEFEAT, (0xFF)
-.equ DEFEATED, (0xFE)
-.equ DEFEAT2, (0x7F)
-.equ DEFEATED2, (0x7E)
+
 
 @ORG 0x02b808
 .thumb
@@ -15,7 +12,7 @@
 	cmp r0, #0
 	bne RETURN	@戦闘予測時はスキップ
 	
-	bl Jinrai
+	bl defeat_flag
 	bl Alina_back
 	cmp r0, #1
 	beq RETURN2
@@ -57,31 +54,34 @@ falseAlina:
 endAlina:
 	bx lr
 
-Jinrai:
-	ldr r3, =0x03004df0
-	ldr r3, [r3]
-	ldrb r0, [r3, #11]
-	ldrb r1, [r6, #11]
-	cmp r0, r1
-	beq endJinrai @やられている？
-	
-	lsl r0, r0, #24
-	lsr r0, r0, #30
-	bne endJinrai	@攻撃者が敵である
-	
-    mov r2, #DEFEAT2
-	
-	mov r0, r3
-    add r0, #69
-    ldrb	r1, [r0]
-    cmp r1, #DEFEATED
-    beq normal
-    cmp r1, #DEFEATED2
-    beq normal
-    mov r2, #DEFEAT	@疾風迅雷用
-normal:
-    strb	r2, [r0]
-endJinrai:
-    bx lr
+DEFEAT   = (0b10000000) @撃破フラグ
+@DEFEATED = (0b01000000) @迅雷済みフラグ
+@STORM    = (0b00100000) @狂嵐フラグ
 
-
+defeat_flag:
+@撃破していたらフラグをオン
+@
+		ldr r3, =0x03004df0
+		ldr r3, [r3]
+		ldrb r0, [r3, #11]
+		ldrb r1, [r6, #11]
+		cmp r0, r1
+		beq endJinrai @やられている？
+		
+		lsl r0, r0, #24
+		lsr r0, r0, #30
+		bne endJinrai	@攻撃者が敵である
+		
+		mov r0, r3
+		add r0, #69
+		ldrb	r1, [r0]
+	
+		mov r2, #DEFEAT
+		orr r2, r1
+	
+		strb	r2, [r0]
+	
+	endJinrai:
+		bx lr
+	
+	

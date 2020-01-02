@@ -65,7 +65,8 @@ battle_down:
   POIN hasCounter
   POIN hasDoubleLion
   POIN hasSavageBlow
-  
+  POIN hasRagingStorm
+
   
 hasAtrocity:
     HAS_NIHIL

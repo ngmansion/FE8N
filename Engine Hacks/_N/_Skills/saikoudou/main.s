@@ -1,9 +1,6 @@
 ATK = (0x0203a4e8)
 DEF = (0x0203a568)
-DEFEAT = 0xFF
-DEFEATED = 0xFE
-DEFEAT2 = 0x7F
-DEFEATED2 = 0x7E
+
 hasRemove = (adr+0)
 hasGaleforce = (adr+4)
 hasLifetaker = (adr+8)
@@ -11,6 +8,13 @@ hasCantoPlus = (adr+12)
 hasGaleCause = (adr+16)
 TARGET_UNIT = (0x03004df0)
 WEAPON_SP_ADR = (0x080172f0)
+
+DEFEAT   = (0b10000000) @撃破フラグ
+DEFEATED = (0b01000000) @迅雷済みフラグ
+STORM    = (0b00100000) @狂嵐フラグ
+
+DEFEAT2 = (0xC0)
+
 @0801cea8
 .thumb
     push {r4, r5, lr}
@@ -40,54 +44,59 @@ WEAPON_SP_ADR = (0x080172f0)
     ldr r0, =0x0203a954
     ldrb r0, [r0, #17]
     cmp r0, #1
-    beq FALSE @待機選択なら終了
+    beq clearFALSE @待機選択なら終了
     cmp r0, #17
-    beq FALSE @制圧選択なら終了
+    beq clearFALSE @制圧選択なら終了
 
-    bl RagingStorm  @アイムール
-    cmp r0, #0
-    beq notStorm
     mov r0, r4
-    add r0, #69
-    mov r1, #DEFEATED
-    strb r1, [r0] @撃破済み
-    b Sound
-notStorm:
+    ldr r1, =DEF
+    bl kaifuku
+
+    mov r0, r4
+    ldr r1, =DEF
+    bl RagingStorm
+    cmp r0, #1
+    beq Sound
+@疾風迅雷・神風招来判定
     mov r0, r4
     add r0, #69
     ldrb r1, [r0]
-    cmp r1, #DEFEAT
-    beq pattern1
-    cmp r1, #DEFEATED
-    beq pattern0
-    cmp r1, #DEFEAT2
-    beq pattern2
-    cmp r1, #DEFEATED2
-    beq pattern0
-    b pattern3
+
+    cmp r2, #DEFEATED
+    and r2, r1
+    bne next    @再行動済み
+
+    cmp r2, #DEFEAT
+    and r2, r1
+    bne pattern1
+    b pattern2
+
+clearFALSE:
+    bl clear_defeat
+FALSE:
+	ldr r4, =TARGET_UNIT
+    ldr r3, =0x0801cefc
+    mov pc, r3
+
+
 pattern1:
 @再行動なし撃破
 @
-    mov r1, #DEFEATED
-    strb r1, [r0] @撃破済み
-
-	bl kaifuku
-	
     bl shippuJinrai
-    cmp r0, #1
-    beq Sound	@再行動
-    b next
+    cmp r0, #0
+    beq next
+@一回目撃破(再行動済みフラグ)をオン
+    mov r0, #69
+    ldrb r1, [r4, r0]
+
+    mov r2, #DEFEATED
+    orr r1, r2
+
+    strb r1, [r4, r0] @撃破済み
+    
+    b Sound	@再行動
 
 pattern2:
-@再行動済み撃破
-@
-    mov r1, #DEFEATED2
-    strb r1, [r0] @撃破済み
-    
-    bl kaifuku
-	b next
-
-pattern3:
 @再行動なし未撃破
 @
     ldr r0, =DEF
@@ -100,15 +109,19 @@ pattern3:
     beq next
 @一回目撃破(再行動済みフラグ)をオン
     mov r0, #69
-    mov r1, #DEFEATED
+    ldrb r1, [r4, r0]
+
+    mov r2, #DEFEATED
+    orr r1, r2
+
     strb r1, [r4, r0] @撃破済み
     
     b Sound	@再行動
-    
-pattern0:
-@再行動済み未撃破
-@
+nop
+nop
+
 next:
+    bl clear_defeat
 @スキル再移動による再移動化
     mov r0, r4
         ldr r1, adr+12 @再移動
@@ -126,8 +139,9 @@ Canto:
     ldr r3, =0x0801cece
     mov pc, r3
 
-
-Sound:	@再行動
+Sound:	
+    bl clear_defeat
+@再行動
     ldr	r0, =0x0202bcec
     add	r0, #65
     ldrb	r0, [r0, #0]
@@ -143,121 +157,150 @@ end:
 	pop	{r1}
 	bx	r1
 
-FALSE:
-	ldr r4, =TARGET_UNIT
-    ldr r3, =0x0801cefc
-    mov pc, r3
 
-@アイムール
+clear_defeat:
+        mov r1, r4
+        add r1, #69
+        ldrb r0, [r1]
+
+        mov r2, #DEFEAT
+        neg r2, r2
+        and r0, r2
+
+@再行動済みは消さない
+
+        mov r2, #STORM
+        neg r2, r2
+        and r0, r2
+
+        strb r0, [r1]
+        bx lr
+
+    
+@狂嵐
+@
 RagingStorm:
-        push {lr}
-    @スキルを持っているか
-        mov r0, r4
-        ldr r1, =DEF
-        bl hasRagingStorm
-        cmp r0, #0
+        push {r4, lr}
+        mov r4, r0
+
+        mov r0, #69
+        ldrb r1, [r4, r0]
+    
+        mov r2, #STORM
+        and r1, r2
         beq falseStorm
-    @戦技を発動中か
-        mov r0, #67
-        ldrb r0, [r4, r0]
-        mov r1, #0xFE
-        and r0, r1
-        cmp r0, r1
-        bne falseStorm
-        mov r0, #1
-        b endStorm
+
+        mov	r0, r4
+        ldr	r1, [r0, #12]	@行動済み等の状態
+        ldr	r2, =0xfffffbbd
+        and	r1, r2
+        str	r1, [r0, #12]
+        
+        mov	r0, #1
+        .short 0xE000
     falseStorm:
-        mov r0, #0
-    endStorm:
-        pop {pc}
+        mov	r0, #0
+        pop	{r4, pc}
+
+@疾風迅雷
+@
+shippuJinrai:
+        push {lr}
+        mov r0, r4
+            ldr r2, hasGaleforce
+            mov lr, r2
+            .short 0xF800
+        cmp r0, #0
+        beq falseJinrai
+        mov	r0, r4
+        ldr	r1, [r0, #12]	@行動済み等の状態
+        ldr	r2, =0xfffffbbd
+        and	r1, r2
+        str	r1, [r0, #12]
+        
+        mov	r0, #1
+        .short 0xE000
+    falseJinrai:
+        mov	r0, #0
+        pop	{pc}
 
 @神風招来
 @
 jinpuShourai:
-    push {lr}
-    mov	r0, r4
-        ldr r2, hasGaleCause
-        mov lr, r2
-        .short 0xF800
-    cmp r0, #0
-    beq non_ka
-    
-    mov r0, r4
-    ldr r1, =ATK
-    ldrb r0, [r0, #0xB]
-    ldrb r2, [r1, #0xB]
-    cmp r0, r2
-    bne non_ka
-    add r1, #0x48
-    ldrh r0, [r1]
-        ldr r2, =WEAPON_SP_ADR
-        mov lr, r2
-        .short 0xF800
-    cmp r0, #4		@杖
-    bne non_ka
-    b gogot @待機チェック
-@疾風迅雷
-@
-shippuJinrai:
-    push {lr}
-    mov r0, r4
-        ldr r2, hasGaleforce
-        mov lr, r2
-        .short 0xF800
-    cmp r0, #0
-    beq non_ka
-gogot:
-    mov	r0, r4
-    ldr	r1, [r0, #12]	@行動済み等の状態
-    ldr	r2, =0xfffffbbd
-    and	r1, r2
-    str	r1, [r0, #12]
-    
-    mov	r0, #1
-    .short 0xE000
-non_ka:
-    mov	r0, #0
-    pop	{pc}
-    
+        push {lr}
+        mov	r0, r4
+            ldr r2, hasGaleCause
+            mov lr, r2
+            .short 0xF800
+        cmp r0, #0
+        beq falseShourai
+        
+        mov r0, r4
+        ldr r1, =ATK
+        ldrb r0, [r0, #0xB]
+        ldrb r2, [r1, #0xB]
+        cmp r0, r2
+        bne falseShourai
+        add r1, #0x48
+        ldrh r0, [r1]
+            ldr r2, =WEAPON_SP_ADR
+            mov lr, r2
+            .short 0xF800
+        cmp r0, #4		@杖
+        bne falseShourai
+
+        mov	r0, r4
+        ldr	r1, [r0, #12]	@行動済み等の状態
+        ldr	r2, =0xfffffbbd
+        and	r1, r2
+        str	r1, [r0, #12]
+        
+        mov	r0, #1
+        .short 0xE000
+    falseShourai:
+        mov	r0, #0
+        pop	{pc}
+
 @生命吸収
 kaifuku:
-    push {lr}
-    mov r0, r4
-        ldr r2, adr+8
-        mov lr, r2
-        .short 0xF800
-    cmp r0, #0
-    beq non_hp
+        push {lr}
+        mov r0, r4
+            ldr r2, adr+8
+            mov lr, r2
+            .short 0xF800
+        cmp r0, #0
+        beq non_hp
 
-    mov	r2, r4
-    ldrb r0, [r2, #19] @現在19
-    ldrb r1, [r2, #18] @最大18
-    asr r1, r1, #1
-    add r0, r0, r1
-    
-    ldrb r1, [r2, #18] @最大18
-    cmp r0, r1
-    ble jump_hp
-    mov r0, r1
-jump_hp:
-    strb r0, [r2, #19] @現在19
-    
-    mov r0, #0x89
-    mov r1, #0xB8
-        ldr r2, =0x08014B50 @音
-        mov lr, r2
-        .short 0xF800
-    mov	r0, #1
-    .short 0xE000
-non_hp:
-    mov	r0, #0
-    pop	{pc}
+        mov r0, r4
+        add r0, #69
+        ldrb r1, [r0]
+        mov r2, #DEFEAT
+        and r1, r2
+        beq non_hp  @撃破フラグがオフ
 
-HAS_RASINGSTORM = (adr+20)
+        mov	r2, r4
+        ldrb r0, [r2, #19] @現在19
+        ldrb r1, [r2, #18] @最大18
+        asr r1, r1, #1
+        add r0, r0, r1
 
-hasRagingStorm:
-ldr r2, HAS_RASINGSTORM
-mov pc, r2
+        ldrb r1, [r2, #18] @最大18
+        cmp r0, r1
+        ble jump_hp
+        mov r0, r1
+    jump_hp:
+        strb r0, [r2, #19] @現在19
+
+        mov r0, #0x89
+        mov r1, #0xB8
+            ldr r2, =0x08014B50 @音
+            mov lr, r2
+            .short 0xF800
+        mov	r0, #1
+        .short 0xE000
+    non_hp:
+        mov	r0, #0
+        pop	{pc}
 
 
 .align
