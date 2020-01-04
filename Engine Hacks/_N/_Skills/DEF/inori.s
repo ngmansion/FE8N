@@ -8,7 +8,7 @@ HAS_NIHIL_FUNC = (adr+16)
 SET_SKILLANIME_DEF_FUNC = (adr+20)
 HAS_INVINCIBLE_FUNC = (adr+28)
 
-@.org	0002b490 > 00 4A 97 46 XX XX XX 08
+@.org	0802b490 > 00 4A 97 46 XX XX XX 08
 @
 @
 	bl Invincible
@@ -81,17 +81,19 @@ end:
 Invincible:
 		push {lr}
 
-		mov r0, r7
+		mov r0, r8
 		mov r1, #0
 		bl hasInvincible
 		cmp r0, #0
 		beq falseInvincible
 @
-		ldrh r0, [r4, #10]
+		mov r1, r7
+		add r1, #100
+		ldrh r0, [r1]
 		cmp r0, #100
-		beq jumpInvincible
+		blt jumpInvincible
 		mov r0, #99
-		strh r0, [r4, #10] @命中99
+		strh r0, [r1] @命中99
 	jumpInvincible:
 		ldr r0, =0x0203a4d0
 		ldrh r1, [r0, #0]
