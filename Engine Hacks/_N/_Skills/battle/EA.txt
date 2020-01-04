@@ -85,7 +85,7 @@ hasLull:
     WORD LullID
     
 hasFury:
-    HAS_SKILL
+    HAS_NIHIL
     WORD FuryID
     
 hasLightBless:
@@ -159,10 +159,10 @@ hasKnightkneeler:
  WORD KnightkneelerID
 
 hasPoisonStrike:
-   HAS_SKILL
+   HAS_NIHIL
    WORD PoisonStrikeID
 hasCounter:
-    HAS_SKILL
+    HAS_NIHIL
     WORD CounterID
 hasPush:
     HAS_SKILL

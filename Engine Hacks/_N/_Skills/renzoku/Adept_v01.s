@@ -59,15 +59,11 @@ DoubleLion:
 	bne endDouble	@闘技場は無効
 	
 	mov r0, r6
+    mov r1, r8
 	bl hasDoubleLion
 	cmp r0, #0
 	beq endDouble
-	mov r0, r8
-		ldr r1, ADDRESS+8 @見切り
-		mov lr, r1
-		.short 0xF800
-	cmp r0, #1
-	beq endDouble
+
 	ldrb r1, [r6, #18]	@最大HP
 	ldrb r0, [r6, #19]	@現在HP
 	cmp r0, r1
@@ -119,8 +115,8 @@ end_bolt:
     pop {pc}
 
 hasDoubleLion:
-	ldr r1, DOUBLE_LION_ADR
-	mov pc, r1
+	ldr r2, DOUBLE_LION_ADR
+	mov pc, r2
 .align
 .ltorg
 ADDRESS:

@@ -647,8 +647,9 @@ setKoroshi:
 Shishi:
 	push {lr}
 	mov r0, r4
-	ldr r1, SHISHI_ADR
-	_blr r1
+    mov r1, #0
+	ldr r2, SHISHI_ADR
+	_blr r2
 	cmp r0, #0
 	beq falseShishi
     mov r1, #90

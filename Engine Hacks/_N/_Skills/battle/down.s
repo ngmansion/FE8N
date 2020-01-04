@@ -131,12 +131,6 @@ DoubleLion:
 	push	{r4, lr}
 	mov	r4, r0
 	
-	mov	r0, r1
-	bl hasNihil
-	cmp	r0, #1
-	beq	falseDouble
-	
-	mov	r0, r4
 	bl hasDoubleLion
 	cmp	r0, #0
 	beq falseDouble
@@ -232,16 +226,12 @@ isRedCounter:
     
 startCounter:
     mov r0, r3
+    mov r1, r4
         ldr r2, ADR+12
         mov lr, r2
         .short 0xF800
     cmp r0, #0
     beq falseCounter	@相手応撃未所持なら終了
-    
-    mov r0, r4
-    bl hasNihil
-    cmp r0, #0
-    bne falseCounter	@自分見切り持ちなら終了
     
     ldr r1, =0x0203a4d0
     ldrb	r1, [r1, #4]
@@ -289,6 +279,11 @@ isRed2:
 startSavage:
     mov r0, r3
 	mov r1, r4
+	ldrb r2, [r1, #19]
+	cmp r2, #0
+	bne jumpSavege
+	mov r1, #0	@相手のHP0なら見切り貫通
+jumpSavege:
         ldr r2, HAS_SAVAGE_FUNC
         mov lr, r2
         .short 0xF800
@@ -413,16 +408,13 @@ isRed:
     
 startJadoku:
     mov r0, r3
+	mov r1, r4
         ldr r2, ADR+8
         mov lr, r2
         .short 0xF800
     cmp r0, #0
     beq falseJadoku	@蛇毒未所持なら終了
-    
-    mov r0, r4
-    bl hasNihil
-    cmp r0, #0
-    bne falseJadoku	@見切り持ちなら終了
+
 @蛇毒on
     ldrb r0, [r4, #19] @現在19
     sub r0, #10
@@ -445,40 +437,32 @@ falseJadoku:
 Fury:
 	push	{r4, lr}
 	mov	r4, r0
-	mov	r0, r1
-	bl hasNihil
-	cmp	r0, #0
-	bne	false
-	mov	r0, r4
-		ldr	r1, ADR+4
-		mov	lr, r1
+		ldr	r2, ADR+4
+		mov	lr, r2
 		.short 0xF800
 	cmp	r0, #0
-	beq false
+	beq falseFury
 	ldrb r0, [r4, #19] @現在HP
 	sub	r0, #3
-	bgt jump
+	bgt jumpFury
 	mov	r0, #1
-jump:
+jumpFury:
 	strb	r0, [r4, #19]
 	mov	r0, #1
-	b	ret
-false:
+	b	retFury
+falseFury:
 	mov	r0, #0
-ret:
+retFury:
 	pop	{r4, pc}
 
-hasNihil:
-	ldr	r1, ADR+0
-	mov pc, r1
 
 DOUBLE_LION_ADR = (ADR+16)
 HAS_SAVAGE_FUNC = (ADR+20)
 HAS_RASINGSTORM = (ADR+24)
 
 hasDoubleLion:
-	ldr r1, DOUBLE_LION_ADR
-	mov pc, r1
+	ldr r2, DOUBLE_LION_ADR
+	mov pc, r2
 
 hasRagingStorm:
 ldr r2, HAS_RASINGSTORM

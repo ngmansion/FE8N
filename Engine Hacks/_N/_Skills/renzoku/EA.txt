@@ -42,7 +42,7 @@ hasBlitzkrieg:
     WORD BlitzkriegID
 
 hasDoubleLion:
-    HAS_SKILL
+    HAS_NIHIL
     WORD DoubleLionID
 
 ////////////////必的の後処理

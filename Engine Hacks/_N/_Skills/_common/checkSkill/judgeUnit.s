@@ -20,10 +20,10 @@ CHECK_ITEM_FUNC = ADR+20
 @ダミーユニットチェック
 	cmp r4, #0
     beq false
-    ldr r0, [r4, #4]
+    ldr r0, [r4, #0]
     cmp r0, #0
     beq false
-    ldrb r0, [r4, #19]
+    ldr r0, [r4, #4]
     cmp r0, #0
     beq false
 @ユニットデータチェック
