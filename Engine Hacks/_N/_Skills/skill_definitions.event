@@ -33,7 +33,7 @@
 #define DistantDefID 31 //0x1f遠距離防御
 #define DeflectID 32  //0x20連撃防御
 #define DesperationID 33 //0x21攻め立て
-#define BlitzkriegID 34 //0x22電撃戦
+//#define BlitzkriegID 34 //0x22電撃戦
 #define LifetakerID 35 //0x23生命吸収
 #define LifeAndDeathID 36 //0x24死線
 #define DeathBlowID 37 //0x25鬼神の一撃
@@ -121,5 +121,5 @@
 #define RagingStormID 125 //0x7D 狂嵐
 #define AtrocityID 126 //0x7E 無惨
 #define FallenStarID 127//0x7F 落星
-
+#define BlitzkriegID 128 //0x80電撃戦
 
