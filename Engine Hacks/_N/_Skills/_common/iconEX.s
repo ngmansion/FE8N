@@ -6,7 +6,7 @@ ICON_LIST_SIZE = (adr+44)
 CHECK_ITEM_FUNC = (adr+48)
 ICON_NUM_LIMIT = (16) @上限数*2
 
-
+MAX_SKILL_NUM = (255)
 
 @.org	0x08089268
 	
@@ -486,7 +486,7 @@ SKILL3: @新仕様1
 end3:
 	b endSKILL3
 test3:
-	cmp r4, #127
+	cmp r4, #MAX_SKILL_NUM
 	bge end3
 	ldr r0, ICON_LIST_SIZE
 	mul r0, r4
@@ -601,7 +601,7 @@ next4:
 	ldr r0, ICON_LIST_SIZE
 	add r5, r0
 	add r4, #1
-	cmp r4, #127 @スキル最大数
+	cmp r4, #MAX_SKILL_NUM
 	ble loopstart4
 end4:
 	pop {r3, r4, pc}
