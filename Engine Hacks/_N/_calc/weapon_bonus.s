@@ -36,7 +36,7 @@ LEVEL_S = (6)
 	cmp r0, #DARK
 	beq typeC
 	b end
-@åïÅEèÒÅEåı
+@Ââ£„ÉªÊùñ„ÉªÂÖâ
 typeA:
 	add	r0, r4
 	add	r0, #40
@@ -49,41 +49,41 @@ typeA:
 	
 	cmp r3, #LEVEL_E
 	blt merge
+	nop
+	
+	cmp r3, #LEVEL_D
+	blt merge
 	mov r0, #5
 	mov r1, #7
 	mov r2, #5
 	
-	cmp r3, #LEVEL_D
+	cmp r3, #LEVEL_C
 	blt merge
 	mov r0, #6
 	mov r1, #10
 	mov r2, #6
 	
-	cmp r3, #LEVEL_C
+	cmp r3, #LEVEL_B
 	blt merge
 	mov r0, #7
 	mov r1, #13
 	mov r2, #7
 	
-	cmp r3, #LEVEL_B
+	cmp r3, #LEVEL_A
 	blt merge
 	mov r0, #8
 	mov r1, #16
 	mov r2, #8
 	
-	cmp r3, #LEVEL_A
+	cmp r3, #LEVEL_S
 	blt merge
 	mov r0, #10
 	mov r1, #20
 	mov r2, #10
-	
-	cmp r3, #LEVEL_S
-	blt merge
-	nop
 	b merge
 	
 	
-@ëÑÅEã|
+@Êßç„ÉªÂºì
 typeB:
 	add	r0, r4
 	add	r0, #40
@@ -96,41 +96,41 @@ typeB:
 	
 	cmp r3, #LEVEL_E
 	blt merge
+	nop
+	
+	cmp r3, #LEVEL_D
+	blt merge
 	mov r0, #6
 	mov r1, #6
 	mov r2, #5
 	
-	cmp r3, #LEVEL_D
+	cmp r3, #LEVEL_C
 	blt merge
 	mov r0, #8
 	mov r1, #8
 	mov r2, #6
 	
-	cmp r3, #LEVEL_C
+	cmp r3, #LEVEL_B
 	blt merge
 	mov r0, #10
 	mov r1, #10
 	mov r2, #7
 	
-	cmp r3, #LEVEL_B
+	cmp r3, #LEVEL_A
 	blt merge
 	mov r0, #12
 	mov r1, #12
 	mov r2, #8
 	
-	cmp r3, #LEVEL_A
+	cmp r3, #LEVEL_S
 	blt merge
 	mov r0, #15
 	mov r1, #15
 	mov r2, #10
-	
-	cmp r3, #LEVEL_S
-	blt merge
-	nop
 	b merge
 	
 	
-@ïÄÅEóùÅEà≈
+@Êñß„ÉªÁêÜ„ÉªÈóá
 typeC:
 	add	r0, r4
 	add	r0, #40
@@ -143,37 +143,37 @@ typeC:
 	
 	cmp r3, #LEVEL_E
 	blt merge
+	nop
+	
+	cmp r3, #LEVEL_D
+	blt merge
 	mov r0, #7
 	mov r1, #5
 	mov r2, #5
 	
-	cmp r3, #LEVEL_D
+	cmp r3, #LEVEL_C
 	blt merge
 	mov r0, #10
 	mov r1, #6
 	mov r2, #6
 	
-	cmp r3, #LEVEL_C
+	cmp r3, #LEVEL_B
 	blt merge
 	mov r0, #13
 	mov r1, #7
 	mov r2, #7
 	
-	cmp r3, #LEVEL_B
+	cmp r3, #LEVEL_A
 	blt merge
 	mov r0, #16
 	mov r1, #8
 	mov r2, #8
 	
-	cmp r3, #LEVEL_A
+	cmp r3, #LEVEL_S
 	blt merge
 	mov r0, #20
 	mov r1, #10
 	mov r2, #10
-	
-	cmp r3, #LEVEL_S
-	blt merge
-	nop
 	b merge
 merge:
 	add r4, #96
