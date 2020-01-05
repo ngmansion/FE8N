@@ -24,7 +24,7 @@ end:
 set_level_bit:
 @
 @r0 = ID
-@r1 = HPbit
+@r1 = LVbit
 @
         push {r4, r5, r6, lr}
         mov r6, r1
