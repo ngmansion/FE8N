@@ -104,7 +104,7 @@ WaryFighter:
 		beq falseWaryFighter
 		
 		ldrh	r0, [r4, #4]
-		asr	r0, r0, #2
+		asr	r0, r0, #1
 		bne jumpWaryFighter
 		mov r0, #1
 	jumpWaryFighter:
