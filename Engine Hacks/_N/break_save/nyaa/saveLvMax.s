@@ -1,7 +1,5 @@
 .thumb
 
-@080a7c28
-
 main:
     push {r4, r5, lr}
     mov r4, #0
@@ -40,15 +38,16 @@ set_level_bit:
         bl mod_eight
         mov r4, r0
 
-        ldr r1, adr
+        ldr r1, addr
         ldrb r0, [r1, r5]
         
-        lsl r6, r6, r4
-   
-        neg r2, r6
-        and r0, r2
+        mov r2, #1
+        lsl r2, r2, r4
+        bic r0, r2      @念のためビットクリア
 
+        lsl r6, r6, r4
         orr r0, r6
+
         strb r0, [r1, r5]
     end_set:
         pop {r4, r5, r6, pc}
@@ -77,5 +76,5 @@ Get_Status:
         mov pc, r1
 .align
 .ltorg
-adr:
+addr:
 

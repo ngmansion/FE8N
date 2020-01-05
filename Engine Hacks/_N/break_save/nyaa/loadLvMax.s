@@ -1,7 +1,5 @@
 .thumb
 
-@080a7d1c
-
 main:
     push {r4, r5, lr}
     mov r4, #0
@@ -37,7 +35,7 @@ get_level_bit:
         bl mod_eight
         mov r4, r0
 
-        ldr r0, adr
+        ldr r0, addr
         ldrb r0, [r0, r5]
         lsr r0, r0, r4
         lsl r0, r0, #31
@@ -69,4 +67,4 @@ Get_Status:
         mov pc, r1
 .align
 .ltorg
-adr:
+addr:
