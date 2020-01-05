@@ -51,7 +51,7 @@ battle_before:
     
 battle_after:
     #incbin main.dmp
-    POIN hasDistantGuard
+    POIN 0
     POIN hasLightBless
     POIN hasDarkBless
     POIN hasNihil

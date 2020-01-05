@@ -68,11 +68,11 @@ ALIGN 4
 
 nagi_kaze:
   #incbin kaze.dmp
-  POIN hasNihil
   POIN hasWindsweep
+  POIN waryFighter_hasSkill
 
 hasWindsweep:
- HAS_SKILL
+ HAS_NIHIL
  WORD WindsweepID
 
 nagi_setFlag:

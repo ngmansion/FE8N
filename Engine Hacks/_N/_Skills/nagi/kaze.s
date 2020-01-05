@@ -1,44 +1,24 @@
 .thumb
-@0002a834
+@0802a834
 STR_ADR = (67)	@書き込み先(AI1カウンタ)
 FLAG = (0xFE)	@フラグ
 
     cmp r0, #0
     beq cancel @射程外
-    
-    ldr r0, =0x03004df0
-    ldr r0, [r0]
-    ldrb r0, [r0, #11]
-    ldrb r1, [r5, #11]
-    cmp r0, r1
-    beq normal @攻撃者じゃ無い
-    
     ldr r0, =0x0203a4d0
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
     bne normal @闘技場チェック
 
-	ldr r0, =0x0203a4e8
-		ldr r1, adr+4 @風薙ぎ
-		mov lr, r1
-		.short 0xF800
-	beq normal @スキル無し
+    bl WindSweep
+    cmp r0, #1
+    beq cancel
 
-	mov r0, r5
-	ldr r1, adr+0 @見切り
-	mov lr, r1
-	.short 0xF800
-	cmp r0, #1
-	beq normal @見切り
+    bl WaryFighter
+    cmp r0, #1
+    beq cancel
 
-	ldr r0, =0x0203a4e8
-	add r0, #STR_ADR
-	ldrb r0, [r0]
-	mov r1, #FLAG
-	and r0, r1
-	cmp r0, r1
-	beq cancel
 normal:
     mov r1, r8
     ldrb r0, [r1, #0]
@@ -50,5 +30,64 @@ cancel:
 end:
     ldr r0, =0x0802a84a
     mov pc, r0
+
+WaryFighter:
+        push {lr}
+        ldr r0, =0x03004df0
+        ldr r0, [r0]
+        ldrb r0, [r0, #11]
+        ldrb r1, [r5, #11]
+        cmp r0, r1
+        beq falseWaryFighter @r5は攻撃者
+        mov r0, r5
+        ldr r1, =0x0203a4e8
+        bl hasWaryFighter
+        cmp r0, #0
+        beq falseWaryFighter @スキル無し
+        mov r0, #1
+        b endWaryFighter
+    falseWaryFighter:
+        mov r0, #0
+    endWaryFighter:
+        pop {pc}
+
+WindSweep:
+        push {lr}
+        ldr r0, =0x03004df0
+        ldr r0, [r0]
+        ldrb r0, [r0, #11]
+        ldrb r1, [r5, #11]
+        cmp r0, r1
+        beq falseWindSweep @r5は攻撃者
+    
+        ldr r0, =0x0203a4e8
+        mov r1, r5
+        bl hasWindSweep
+        cmp r0, #0
+        beq falseWindSweep @スキル無し
+    
+        ldr r0, =0x0203a4e8
+        add r0, #STR_ADR
+        ldrb r0, [r0]
+        mov r1, #FLAG
+        and r0, r1
+        cmp r0, r1
+        bne cancel
+        mov r0, #1
+        b endWindSweep
+    falseWindSweep:
+        mov r0, #0
+    endWindSweep:
+        pop {pc}
+
+hasWindSweep:
+ldr r2, addr
+mov pc, r2
+
+hasWaryFighter:
+ldr r2, addr+4
+mov pc, r2
+
+.align
 .ltorg
-adr:
+addr:

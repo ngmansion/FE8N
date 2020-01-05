@@ -6,11 +6,12 @@ HAS_GOD_SHIELD_FUNC = (adr+8)
 HAS_INORI_FUNC = (adr+12)
 HAS_NIHIL_FUNC = (adr+16)
 SET_SKILLANIME_DEF_FUNC = (adr+20)
-HAS_INVINCIBLE_FUNC = (adr+28)
 
 @.org	0802b490 > 00 4A 97 46 XX XX XX 08
 @
 @
+@備考：
+@戦闘予測のダメージ計算は 08036a3a～で実施
 	bl Invincible
 	cmp r0, #1
 	beq zero
@@ -31,43 +32,38 @@ HAS_INVINCIBLE_FUNC = (adr+28)
 	bl DistantGuard @遠距離無効
 	cmp r0, #0
 	bne zero
+
+	bl WaryFighter
+
+	bl Oracle
 	
-	bl Amulet
+	bl Deflect
+
+	bl Xeno
 	cmp r0, #1
 	beq end
-	
-	mov r1, r10
-	cmp r1, #0xDE
-	beq end	@必的チェック
-	ldr r0, =0x0203a604
-	ldr r0, [r0]
-	ldr r0, [r0]
-	mov r1, #128
-	lsl r1, r1, #3
-	and r0, r1
-	bne end	@トライアングルチェック
-	mov r1, #0xDF		@防御用
-	mov r10, r1
-@無効
-	bl HolyShield
-	cmp r0, #1
-	beq end
-	
-@致命耐え
+
 	bl Pray
 	cmp r0, #1
 	beq end
-	bl Xeno
 
-@半減
+	bl Amulet
+	cmp r0, #1
+	beq end
+@以下、確率発動処理
+	bl checkSkip
+	cmp r0, #1
+	beq end	@確率発動処理をスキップ
+
+	mov r1, #0xDF		@確率発動防御用
+	mov r10, r1
+
+	bl HolyShield
+	cmp r0, #1
+	beq end
+
 	bl BigShield
-	cmp r0, #1
-	beq end
 	
-	bl Deflect
-	cmp r0, #1
-	beq end
-bl Oracle
 	b end
 
 zero:
@@ -76,7 +72,51 @@ zero:
 end:
 	ldr r0, =0x0802b49a
 	mov pc, r0
+
+checkSkip:
+		mov r1, r10
+		cmp r1, #0xDE
+		beq trueSkip	@必的チェック
+		ldr r0, =0x0203a604
+		ldr r0, [r0]
+		ldr r0, [r0]
+		mov r1, #128
+		lsl r1, r1, #3
+		and r0, r1
+		bne trueSkip	@トライアングルチェック
+		mov r0, #0
+		bx lr
+	trueSkip:
+		mov r0, #1
+		bx lr
+
+
+WaryFighter:
+		push {lr}
+		bl checkSkip
+		cmp r0, #1
+		beq falseWaryFighter
+
+		mov r0, r8
+		mov r1, r7
+		bl hasWaryFighter
+		cmp r0, #0
+		beq falseWaryFighter
+		
+		ldrh	r0, [r4, #4]
+		asr	r0, r0, #2
+		bne jumpWaryFighter
+		mov r0, #1
+	jumpWaryFighter:
+		strh	r0, [r4, #4]
 	
+		mov	r0, #1
+		b endWaryFighter
+	falseWaryFighter:
+		mov	r0, #0
+	endWaryFighter:
+		pop	{pc}
+
 
 Invincible:
 		push {lr}
@@ -129,11 +169,16 @@ Invincible:
 
 Deflect:
 		push {lr}
-			ldr r0, =0x0203a4d0
-			ldrh r0, [r0]
-			mov r1, #0x20
-			and r0, r1
-			bne falseDeflect @闘技場チェック
+		ldr r0, =0x0203a4d0
+		ldrh r0, [r0]
+		mov r1, #0x20
+		and r0, r1
+		bne falseDeflect @闘技場チェック
+
+		bl checkSkip
+		cmp r0, #1
+		beq falseDeflect
+
 		mov r0, r8
 			ldr r3, adr+32 @連撃防御
 			mov lr, r3
@@ -182,7 +227,9 @@ Deflect:
 		ldrb r0, [r0] @距離
 		cmp r0, #1
 		beq endDistantGuard
-		
+		mov r0, #0
+		mov r1, #90
+		strh r0, [r7, r1]	@攻撃力0
 		mov r0, #1
 		.short 0xE000
 	endDistantGuard:
@@ -222,7 +269,10 @@ BigShield:
 	cmp	r0, #0
 	beq	falseShield
 	ldrh	r0, [r4, #4]
-	lsr	r0, r0, #1
+	asr	r0, r0, #1
+	bne jumpShield
+	mov r0, #1
+jumpShield:
 	strh	r0, [r4, #4]
 	
     mov r0, r8
@@ -299,8 +349,12 @@ Pray:
 		.short 0xF800
 	cmp r0, #0
 	beq	falsePray
+
+	bl checkSkip
+	cmp r0, #1
+	beq falsePray
+
 	mov r3, r8
-	
     mov r0, #0x13
     ldrb r0, [r3, r0]	@現在HP
     mov r1, #0x12
@@ -344,10 +398,14 @@ endPray:
 
 Oracle:
 	push	{lr}
-	ldr r1, HAS_GOD_SHIELD_FUNC
-	mov lr, r1
+	bl checkSkip
+	cmp r0, #1
+	beq	endOracle
+
 	mov r0, r8
-	.short 0xF800
+		ldr r1, HAS_GOD_SHIELD_FUNC
+		mov lr, r1
+		.short 0xF800
 	cmp r0, #0
 	beq	endOracle
 	
@@ -359,6 +417,9 @@ Oracle:
 	beq	endOracle	@見切り持ちなら終了
 	ldrh	r0, [r4, #4]
 	asr	r0, r0, #1
+	bne jumpOracle
+	mov r0, #1
+jumpOracle:
 	strh	r0, [r4, #4]
 	b	endOracle
 endOracle:
@@ -421,24 +482,35 @@ endAmulet:
 	pop	{r5, pc}
 
 Xeno:
-	mov r2, r8
-	ldrb r0, [r2, #11]
-	ldr r1, =0x0203a5e8 @ゲノ
-	ldrb r1, [r1]
-	cmp r0, r1
-	bne endXeno @不発
-	ldrh r0, [r4, #4]
-	ldrb r1, [r2, #19]	@現在HP
-@一撃で死ぬか
-	cmp r0, r1
-	blt endXeno
-	sub r1, #1
-	strh r1, [r4, #4]
-endXeno:
-	bx lr
+		mov r2, r8
+		ldrb r0, [r2, #11]
+		ldr r1, =0x0203a5e8 @ジェノサイド
+		ldrb r1, [r1]
+		cmp r0, r1
+		bne falseXeno @不発
+		ldrh r0, [r4, #4]
+		ldrb r1, [r2, #19]	@現在HP
+	@一撃で死ぬか
+		cmp r0, r1
+		blt falseXeno
+		sub r1, #1
+		strh r1, [r4, #4]
+		mov r0, #1
+		b endXeno
+	falseXeno:
+		mov r0, #0
+	endXeno:
+		bx lr
+
+HAS_INVINCIBLE_FUNC = (adr+28)
+HAS_WARYFIGHTER_FUNC = (adr+36)
 
 hasInvincible:
 	ldr	r2, HAS_INVINCIBLE_FUNC
+	mov	pc, r2
+
+hasWaryFighter:
+	ldr	r2, HAS_WARYFIGHTER_FUNC
 	mov	pc, r2
 
 random:

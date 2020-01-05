@@ -21,7 +21,7 @@ shikkokunori:
  POIN hasDistantGuard
  POIN hasInvincible
  POIN hasDeflect
- POIN 0
+ POIN waryFighter_hasSkill
 
 hasInvincible:
  HAS_NIHIL

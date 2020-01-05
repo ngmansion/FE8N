@@ -12,11 +12,6 @@ LULL_ADR = (adr+16)
 
 
     push {r4, r5, r6, lr}
-    mov r4, r0
-    mov r6, r1
-    bl DistantGuard
-    cmp r0, #1
-    beq endZero
     
     mov	r0, r6
         ldr r1, NIHIL_ADR
@@ -102,26 +97,6 @@ QuickenedPulse:
 	strh r0, [r1]
 endPulse:
 	pop {pc}
-
-DistantGuard:
-    push {lr}
-    mov r0, r6
-        ldr r1, adr+0 @遠距離無効
-        mov lr, r1
-        .short 0xF800
-    cmp r0, #0
-    beq endDistantGuard
-    
-    ldr r0, =0x0203a4d2
-    ldrb r0, [r0] @距離
-    cmp r0, #1
-    beq endDistantGuard
-    
-    mov r0, #1
-    .short 0xE000
-endDistantGuard:
-    mov r0, #0
-    pop {pc}
 
 godBless:
     push {lr}
