@@ -347,40 +347,32 @@ CheckXY:
 @r1とr2がr0マス以内に居るならr0=TRUE
 @同座標ならTRUE
 @
-    push {r4, r5, r6}
-	mov r4, r1
-	mov r5, r2
-    mov r6, r0
-	mov r2, #16
-	ldsb r2, [r4, r2]
-	mov r0, #16
-	ldsb r0, [r5, r0]
-	sub r1, r2, r0
-	cmp r1, #0
-	bge jump1CheckXY
-	sub r1, r0, r2
+        push {r0}
+        ldrb r0, [r1, #16]
+        ldrb r3, [r2, #16]
+        sub r3, r0, r3
+        bge jump1CheckXY
+        neg r3, r3  @絶対値取得
+    jump1CheckXY:
 
-jump1CheckXY:
-	mov r3, #17
-	ldsb r3, [r4, r3]
-	mov	r2, #17
-	ldsb r2, [r5, r2]
-	sub r0, r3, r2
-	cmp r0, #0
-	bge jump2CheckXY
-	sub r0, r2, r3
+        ldrb r1, [r1, #17]
+        ldrb r2, [r2, #17]
+        sub r2, r1, r2
+        bge jump2CheckXY
+        neg r2, r2  @絶対値取得
+    jump2CheckXY:
 
-jump2CheckXY:
-	add	r0, r1, r0
-	cmp	r0, r6
-	bgt	falseCheckXY	@r6マス以内に居ない
-	mov r0, #1
-	b endCheckXY
-falseCheckXY:
-	mov r0, #0
-endCheckXY:
-    pop {r4, r5, r6}
-	bx lr
+        add r2, r2, r3
+        pop {r0}
+        cmp r2, r0
+        bgt falseCheckXY    @r0マス以内に居ない
+        mov r0, #1
+        b endCheckXY
+
+    falseCheckXY:
+        mov r0, #0
+    endCheckXY:
+        bx lr
 
 Get_Status:
 	ldr r1, =0x08019108
