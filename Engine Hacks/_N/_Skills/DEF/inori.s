@@ -403,18 +403,13 @@ Oracle:
 	beq	endOracle
 
 	mov r0, r8
-		ldr r1, HAS_GOD_SHIELD_FUNC
-		mov lr, r1
+	mov r1, r7
+		ldr r2, HAS_GOD_SHIELD_FUNC
+		mov lr, r2
 		.short 0xF800
 	cmp r0, #0
 	beq	endOracle
-	
-	mov r0, r7
-		ldr r1, HAS_NIHIL_FUNC
-		mov lr, r1
-		.short 0xF800
-	cmp r0, #1
-	beq	endOracle	@見切り持ちなら終了
+
 	ldrh	r0, [r4, #4]
 	asr	r0, r0, #1
 	bne jumpOracle
