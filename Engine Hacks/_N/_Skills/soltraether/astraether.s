@@ -382,10 +382,14 @@ jump:
     ldrb r0, [r0, #0x17] @守備
 
 @    bl divEight @8割減
-    asr r0, r0, #1  @半減
+    lsl r1, r0, #31
+    lsr r1, r1, #31
+    asr r0, r0, #1 @半減
+    add r0, r1
 
     mov r1, #4
     ldsh r1, [r5, r1] @ダメージ
+    
     add r0, r0, r1
     strh r0, [r5, #4]
     
@@ -417,11 +421,17 @@ YOUKOU:
     bl random
     cmp r0, #0
     beq falseTenku
-    mov r0, #4
-    ldsh r1, [r5, r0]
+
     mov r0, r8
     ldrb r0, [r0, #0x18] @魔防
-    asr r0, r0, #1
+    lsl r1, r0, #31
+    lsr r1, r1, #31
+    asr r0, r0, #1 @半減
+    add r0, r1
+
+    mov r0, #4
+    ldsh r1, [r5, r0]
+
     add r0, r0, r1
     strh r0, [r5, #4]
 

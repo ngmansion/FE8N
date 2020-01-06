@@ -46,7 +46,7 @@ HAS_NIHIL_FUNC = (adr+8)
         .short 0xF800
     
     pop {r4, r5}
-    asr r4, r4, #1
+    asr r4, r4, #1  @半減
     pop {r0}
     bx  r0
     
