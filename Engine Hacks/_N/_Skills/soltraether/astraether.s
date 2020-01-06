@@ -224,6 +224,7 @@ impale_impl:
     mov r1, #8
     ldsh r1, [r5, r1] @防御
     sub r0, r0, r1
+    asr r0, r0, #1
 
     mov r1, #4
     ldsh r1, [r5, r1] @ ダメージ
@@ -389,7 +390,7 @@ jump:
 
     mov r1, #4
     ldsh r1, [r5, r1] @ダメージ
-    
+
     add r0, r0, r1
     strh r0, [r5, #4]
     
