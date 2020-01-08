@@ -25,7 +25,7 @@ BL_GETITEMEFFECTIVE = (0x08017478)
 @闘技場チェック
 	bl Faire
 	
-	bl getAlinaAdr
+	bl GetAlinaAdr
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
@@ -37,7 +37,7 @@ BL_GETITEMEFFECTIVE = (0x08017478)
     beq gotSkill	@相手いない
 	mov	r0, r5
 
-	bl hasMikiri
+	bl HasMikiri
 	
 	cmp r0, #0
 	bne endNoEnemy	@見切り持ちなら終了
@@ -61,7 +61,7 @@ endNoEnemy:
 	bl shisen_B
 	
     mov	r0, r5
-	bl hasMikiri
+	bl HasMikiri
     cmp r0, #0
     bne endNeedEnemy
     
@@ -96,11 +96,11 @@ WarSkill:
     beq endWar @救出中なら終了
 
 	mov r0, r4
-	bl hasWarSkill
+	bl HasWarSkill
 	cmp r0, #0
 	beq endWar
 	
-    bl getDistance
+    bl GetDistance
     ldrb r0, [r0]
     cmp r0, #1
     bne distantWar  @遠距離は弱体化
@@ -132,7 +132,7 @@ Bond:
 	
 	mov r0, r4
     mov r1, #0
-	bl hasBond
+	bl HasBond
 	cmp r0, #0
 	beq falseBond
 	mov r7, #0
@@ -154,7 +154,7 @@ loopBond:
 	cmp r0, r1
 	beq loopBond	@自分
 	ldr r0, [r5, #0xC]
-	bl getExistFlagR1
+	bl GetExistFlagR1
 	and r0, r1
 	bne loopBond
 
@@ -189,7 +189,7 @@ Fort:
 	push {lr}
 	mov r0, r4
 
-	bl hasFort
+	bl HasFort
 
 	cmp r0, #0
 	beq falseFort
@@ -220,7 +220,7 @@ shisen_A:	@自分死線
     push {lr}
     mov r0, r4
     
-    bl hasShisen
+    bl HasShisen
     
     cmp r0, #0
     beq falseShisen
@@ -247,11 +247,11 @@ endShisen:
 shisen_B:	@相手死線
     push {lr}
     mov r0, r5
-    bl hasShisen
+    bl HasShisen
     cmp r0, #0
     beq falseShisen
     mov r0, r4
-    bl hasMikiri
+    bl HasMikiri
     cmp r0, #0
     bne falseShisen	@見切り持ちなら終了
     
@@ -272,7 +272,7 @@ Solo:
 	and r6, r0	@r6に部隊表ID
 	
 	mov r0, r4
-	bl hasSolo
+	bl HasSolo
 	cmp r0, #0
 	beq falseSolo
 	
@@ -294,7 +294,7 @@ loopSolo:
 	cmp r0, r1
 	beq loopSolo	@自分
 	ldr r0, [r5, #0xC]
-	bl getExistFlagR1
+	bl GetExistFlagR1
 	and r0, r1
 	bne loopSolo	@居ないフラグ+救出中
 	
@@ -357,7 +357,7 @@ Get_Status:
 Ace:
 	push {lr}
 	mov r0, r4
-	bl hasAce
+	bl HasAce
 	cmp	r0, #0
 	beq	endAce
 
@@ -440,7 +440,7 @@ EffectiveBonus:
 @無惨
     mov r0, r4
     mov r1, r5
-    bl hasAtrocity
+    bl HasAtrocity
 	cmp r0, #1
 	beq getEffective
 
@@ -480,7 +480,7 @@ effective_impl:
 	cmp r0, #0
 	beq falseEffective_impl
 	mov r0, r4
-	bl getItemEffective
+	bl GetItemEffective
 @r4に装備武器
 @r5に相手アドレス
 @r6に特効リスト
@@ -512,12 +512,12 @@ Faire:
 endFaire:
 	pop {pc}
 
-    Savior:
+Savior:
         push {lr}
         
         mov r0, r4
-        ldr r1, SAVIOR_ADR
-        _blr r1
+        mov r1, #0
+        bl HasSavior
         cmp r0, #0
         beq endSavior
         
@@ -525,6 +525,16 @@ endFaire:
         mov r1, #0x10
         and r0, r1
         beq endSavior
+
+        ldrb r0, [r4, #27]
+        cmp r0, #0
+        beq endSavior
+
+        ldrb r1, [r4, #0xB]
+        lsr r0, r0, #30
+        lsr r1, r1, #30
+        cmp r0, r1
+        bne endSavior
         
         mov r1, #92
         ldrh r0, [r4, r1]
@@ -536,7 +546,7 @@ endFaire:
         mov r0, #0
         pop {pc}
 
-    DistantDef:
+DistantDef:
         push {lr}
         ldr r0, Range_Adr
         ldrb r0, [r0] @距離
@@ -568,7 +578,7 @@ endFaire:
         pop {pc}
         
 
-    CloseDef:
+CloseDef:
         push {lr}
         ldr r0, Range_Adr
         ldrb r0, [r0] @距離
@@ -947,41 +957,44 @@ DARK_F_ADR = (adr+116)
 HAS_BOND_ADR = (adr+120)
 HAS_ATROCITY_ADR = (adr+124)
 
-hasMikiri:
+HasSavior:
+	ldr r2, SAVIOR_ADR
+	mov pc, r2
+HasMikiri:
 	ldr r1, adr	@見切り
 	mov pc, r1
-hasAce:
+HasAce:
 	ldr r3, ACE_ADR
 	mov pc, r3
-hasSolo:
+HasSolo:
 	ldr r3, SOLO_ADR
 	mov pc, r3
-hasShisen:
+HasShisen:
 	ldr r3, SHISEN_ADR
 	mov pc, r3
-hasFort:
+HasFort:
 	ldr r3, FORT_ADR
 	mov pc, r3
-hasWarSkill:
+HasWarSkill:
 	ldr r3, WAR_ADR
 	mov pc, r3
-hasBond:
+HasBond:
 	ldr r3, HAS_BOND_ADR
 	mov pc, r3
-hasAtrocity:
+HasAtrocity:
     ldr r2, HAS_ATROCITY_ADR
     mov pc, r2
 
-getItemEffective:
+GetItemEffective:
 	ldr r1, =BL_GETITEMEFFECTIVE
 	mov pc, r1
-getAlinaAdr:
+GetAlinaAdr:
 	ldr r0, =0x0203a4d0
 	bx lr
-getDistance:
+GetDistance:
     ldr r0, =0x0203a4d2
     bx lr
-getExistFlagR1:
+GetExistFlagR1:
 	ldr r1, =0x1002C	@居ないフラグ+救出されている
 	bx lr
 .align
