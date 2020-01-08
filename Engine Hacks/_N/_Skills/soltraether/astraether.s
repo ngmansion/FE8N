@@ -430,8 +430,8 @@ YOUKOU:
     asr r0, r0, #1 @半減
     add r0, r1
 
-    mov r0, #4
-    ldsh r1, [r5, r0]
+    mov r1, #4
+    ldsh r1, [r5, r1]
 
     add r0, r0, r1
     strh r0, [r5, #4]
