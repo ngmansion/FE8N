@@ -507,7 +507,7 @@ Faire:
     beq endFaire
     mov r1, #90
     ldrh r0, [r4, r1]
-    add r0, #3
+    add r0, #5
     strh r0, [r4, r1] @自分
 endFaire:
 	pop {pc}
