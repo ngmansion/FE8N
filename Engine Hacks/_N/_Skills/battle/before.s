@@ -89,11 +89,15 @@ WarSkill:
 	cmp r0, r1
 	bne endWar
 
+    ldrb r0, [r4, #27]
+    cmp r0, #0
+    bne jumpWarSkill
     mov r1, #0x10
     ldr r0, [r4, #12]
     and r0, r1
     cmp r0, r1
-    beq endWar @救出中なら終了
+    beq endWar @捕獲攻撃中なら終了
+jumpWarSkill:
 
 	mov r0, r4
 	bl HasWarSkill
