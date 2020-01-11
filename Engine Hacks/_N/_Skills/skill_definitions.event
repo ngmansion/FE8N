@@ -125,4 +125,5 @@
 #define WaryFighterOrgID 129 //0x81 元守備隊形
 #define MiracleOldID 130 //0x82 旧祈り
 #define RecoverID 131 //0x83 完治
+#define ImmuneStatusID 132 //0x84 守護
 

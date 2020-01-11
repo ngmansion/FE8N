@@ -32,6 +32,8 @@
 	#include "DOWNLOAD\EA.txt"
 	#include "TANTE\EA.txt"
 	#include "BreakedWeapon\EA.txt"
+	#include "Fomortiis\EA.txt"
+
 	
 
 

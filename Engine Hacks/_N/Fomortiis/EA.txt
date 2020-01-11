@@ -1,0 +1,26 @@
+fodes_func:
+ #incbin loop_func.dmp
+ POIN judgeFodes	//フォデスならTRUE
+ POIN ImmuneStatus	//スキル持ちならTRUE
+ POIN 0	//末尾
+
+#define FODES_ID (0x66)
+
+judgeFodes:
+ #incbin main.dmp
+ WORD FODES_ID
+
+PUSH //魔王判定をfodes_funcに差し替え
+ORG 0x02b578
+ BYTE 0x2F 0x1C 0x48 0x37 0x20 0x1C 0xFF 0xF7 0xCF 0xFE
+ORG 0x02cc70
+ BYTE 0x30 0x1C 0xFE 0xF7 0x55 0xFB
+
+ORG 0x02b6ac
+ jumpToHack(Fodes_Stone)
+
+POP
+
+Fodes_Stone:
+#incbin stone.dmp
+ POIN fodes_func

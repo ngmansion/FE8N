@@ -31,6 +31,14 @@ Boon:
 #incbin Boon.dmp
 POIN hasBoon
 
+ImmuneStatus:
+ #incbin ImmuneStatus.dmp
+ POIN hasImmuneStatus
+
+hasImmuneStatus:
+ HAS_NIHIL
+ WORD ImmuneStatusID
+
 hasBoon:
    HAS_NIHIL
    WORD BoonID

@@ -36,6 +36,7 @@ hasQuickenedPulse:
 PUSH
  ORG	0x2b2fc
  #incbin "King_Shunsatsu_fix.gba"
+ POIN fodes_func
 POP
 
 ////////////////////瞬殺ダメージ

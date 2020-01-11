@@ -42,6 +42,7 @@ POIN hasNihil
 POIN set_skillanime_attack
 POIN hasMagicBind
 POIN hasFallenStar
+POIN fodes_func
     
 hasFallenStar:
   HAS_NIHIL

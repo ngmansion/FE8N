@@ -70,10 +70,8 @@ WarSkill:
 
 		bl FallenStar
 
-		mov	r2, r8
-		ldr	r1, [r2, #4]
-		ldrb	r0, [r1, #4]
-		cmp	r0, #0x66	@@魔王に無効
+		mov	r0, r8
+		bl FodesFunc
 		beq	endWarSkill
 		ldr	r2, [r2]
 		ldr	r2, [r2, #40]
@@ -353,9 +351,14 @@ retrun:
 	mov	pc, r1
 
 HAS_FALLENSTAR_FUNC = (adr+36)
+FODES_FUNC = (adr+40)
 
 hasFallenStar:
 ldr r2, HAS_FALLENSTAR_FUNC
+mov pc, r2
+
+FodesFunc:
+ldr r2, FODES_FUNC
 mov pc, r2
 
 .align
