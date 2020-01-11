@@ -276,13 +276,16 @@ BigShield:
 	mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	@魔法判定
-	cmp	r0, #7
-	beq	falseShield
-	cmp	r0, #6
-	beq	falseShield
-	cmp	r0, #5
-	beq	falseShield
-	
+	cmp	r0, #0
+	beq	ouiShield
+	cmp	r0, #1
+	beq	ouiShield
+	cmp	r0, #2
+	beq	ouiShield
+	cmp	r0, #3
+	beq	ouiShield
+	b falseShield
+ouiShield:
 	ldrb	r0, [r3, #21]	@技
 	mov	r1, #0
 	bl	random
@@ -329,13 +332,14 @@ HolyShield:
 	mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	@物理判定
-	cmp	r0, #7
-	beq	ouiHoly
-	cmp	r0, #6
-	beq	ouiHoly
-	cmp	r0, #5
-	beq	ouiHoly
-	b falseHoly
+	cmp	r0, #0
+	beq	falseHoly
+	cmp	r0, #1
+	beq	falseHoly
+	cmp	r0, #2
+	beq	falseHoly
+	cmp	r0, #4
+	beq	falseHoly
 ouiHoly:
 	ldrb	r0, [r3, #21]	@技
 	mov	r1, #0
@@ -343,7 +347,10 @@ ouiHoly:
 	cmp	r0, #0
 	beq	falseHoly
 	ldrh	r0, [r4, #4]
-	mov r0, #0
+	asr	r0, r0, #1
+	bne jumpHoly
+	mov r0, #1
+jumpHoly:
 	strh	r0, [r4, #4]
 	
     mov r0, r8
