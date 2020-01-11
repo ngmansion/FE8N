@@ -50,9 +50,7 @@ Lull:
         push {r4, r5, lr}
         mov r4, r0
         mov r5, r1
-            ldr r1, LULL_ADR
-            mov lr, r1
-            .short 0xF800
+        bl HasLull
         cmp r0, #0
         beq endLull
         mov r0, r5
@@ -130,6 +128,10 @@ recalcAtk:
     mov pc, r2
 recalcSpd:
     ldr r2, =0x0802aae4
+    mov pc, r2
+
+HasLull:
+    ldr r2, LULL_ADR
     mov pc, r2
 
 .ltorg
