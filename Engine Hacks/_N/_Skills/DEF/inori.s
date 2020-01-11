@@ -428,6 +428,7 @@ JudgePray:
 		b activePray
 
 JudgePrayOld:
+		push {lr}
 		mov r0, r8
 		mov r1, r7
 		bl HasPrayOld
