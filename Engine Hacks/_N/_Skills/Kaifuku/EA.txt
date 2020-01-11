@@ -21,6 +21,7 @@ ski_kaifuku:
 POIN hasRenewal
 POIN hasDivineDragonHorn
 POIN hasBreathofLife
+POIN hasRecover
 
 BreathofLife:
 #incbin BreathofLife.dmp
@@ -51,6 +52,9 @@ hasDivineDragonHorn:
 hasRenewal:
     HAS_NIHIL
     WORD RenewalID
+hasRecover:
+    HAS_NIHIL
+    WORD RecoverID
     
 hasImbue:
     HAS_SKILL

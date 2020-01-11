@@ -30,6 +30,9 @@ main:
     bl BreathofLife
     add r4, r0
 
+    mov r0, r5
+    bl Recover
+    add r4, r0
 end:
     mov r0, r4
     pop {r4, r5, pc}
@@ -110,6 +113,16 @@ Heal:
     endHeal:
         pop {pc}
 
+Recover:
+        push {lr}
+        mov r1, #0
+        bl HasRecover
+        cmp r0, #0
+        beq endRecover
+        mov r0, #100
+    endRecover:
+        pop {pc}
+
 CheckXY:
 @r1とr2がr0マス以内に居るならr0=TRUE
 @同座標ならTRUE
@@ -144,6 +157,9 @@ CheckXY:
 Get_Status:
     ldr r1, =0x08019108
     mov pc, r1
+HasRecover:
+    ldr r2, addr+12
+    mov pc, r2
 hasBreathofLife:
     ldr r2, addr+8
     mov pc, r2

@@ -124,3 +124,5 @@
 #define BlitzkriegID 128 //0x80電撃戦
 #define WaryFighterOrgID 129 //0x81 元守備隊形
 #define MiracleOldID 130 //0x82 旧祈り
+#define RecoverID 131 //0x83 完治
+
