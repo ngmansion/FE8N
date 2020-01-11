@@ -81,7 +81,7 @@ hasBond:
     WORD BondID
     
 hasLull:
-    HAS_SKILL
+    HAS_NIHIL
     WORD LullID
     
 hasFury:
