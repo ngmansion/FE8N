@@ -1,4 +1,5 @@
-CHAPTER_BASE_ADR = (0x0202bcec)
+
+DATA_SIZE = (176)
 .thumb
 @080a7c28
 push {r4, r5, r6, r7, lr}
@@ -8,8 +9,8 @@ mov r8, r0
 mov r1, lr
 bl main @r0に拡張セーブアドレス
 mov r8, r0
-sub sp, #176
-sub sp, #176
+sub sp, #DATA_SIZE
+sub sp, #DATA_SIZE
 nop
 nop
 nop
@@ -22,7 +23,7 @@ add r5, #100
 ldr r0, =0x080a7c3a
 mov pc, r0
 
-EX_SAVE_AREA = (ADR)
+EX_SAVE_AREA = (ADDR)
 
 main:
     push {r4, lr}
@@ -36,7 +37,7 @@ main:
     add r0, r1
     pop {r4, pc}
 
-CHAPTER_BASE_ADR = (0x0202bcec)
+CHAPTER_BASE_ADDR = (0x0202bcec)
 getSuffix:
 @
 @中断なら0
@@ -53,7 +54,7 @@ getSuffix:
         mov r0, #0
         b merge
     start:
-        ldr r0, =CHAPTER_BASE_ADR
+        ldr r0, =CHAPTER_BASE_ADDR
         ldrb r0, [r0, #12]
     @	mov r0, r9
         add r0, #1
@@ -66,26 +67,38 @@ getSuffix:
 
 org_transport_func:
         push {lr}
-            ldr r0, ADR+4   @saveLvMax.s
+            ldr r0, ADDR+4   @saveLvMax.s
             mov lr, r0
             .short 0xF800
         nop
         bl save_org_transport_data_to_sram
         pop {pc}
 
-BL_ARCHIVE_DATA_ADR = (0x080d6548)
-ORG_TRANSPORT_DATA_ADR = (0x0203a818)
+BL_ARCHIVE_DATA_R0toR1_FUNC = (0x080d6548)
+ORG_TRANSPORT_DATA_ADDR = (0x0203a818)
+MEMCPY_R1toR0_FUNC = (0x080d6908)
 
 save_org_transport_data_to_sram:
     push {lr}
-    mov r1, r8
-    ldr r0, =ORG_TRANSPORT_DATA_ADR
-    mov r2, #176 @ビットギリギリ
-    ldr r3, =BL_ARCHIVE_DATA_ADR
+    sub sp, #DATA_SIZE
+
+    mov r0, sp
+    ldr r1, =ORG_TRANSPORT_DATA_ADDR
+    mov r2, #DATA_SIZE
+        ldr r3, =MEMCPY_R1toR0_FUNC
         mov lr, r3
         .short 0xF800
+    
+    mov r0, sp
+    mov r1, r8
+    mov r2, #DATA_SIZE
+        ldr r3, =BL_ARCHIVE_DATA_R0toR1_FUNC
+        mov lr, r3
+        .short 0xF800
+
+    add sp, #DATA_SIZE
     pop {pc}
 
 .align
 .ltorg
-ADR:
+ADDR:

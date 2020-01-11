@@ -1,11 +1,12 @@
+DATA_SIZE = (176)
 
 .thumb
 @080a7cb0
 push {r4, r5, r6, r7, lr}
 mov r1, lr
 bl main @r0に拡張セーブアドレス
-sub sp, #176
-sub sp, #176
+sub sp, #DATA_SIZE
+sub sp, #DATA_SIZE
 nop			@消すと下の命令が異常動作する・・・
 nop
 nop
@@ -13,7 +14,7 @@ ldr r1, =0x080a7d24
 ldr r1, [r1]    @load 0x03006790
 ldr r3, [r1]
 mov r1, sp
-mov r2, #176
+mov r2, #DATA_SIZE
 lsl r2, r2, #1
 bl jumpToR3
     ldr r0, =0x0803144c @=輸送隊のベースアドレスロード
@@ -75,21 +76,31 @@ getSuffix:
     merge:
         bx lr
 
-EXPAND_DATA_ADR = (0x03006790)
+EXPAND_DATA_R0toR1_ADDR = (0x03006790)
 ORG_TRANSPORT_DATA_ADR = (0x0203a818)
+MEMCPY_R1toR0_FUNC = (0x080d6908)
 
 load_org_transport_data_to_wram:
 @
 @オリジナルの輸送隊データ展開処理を簡易的に実現
 @
         push {lr}
-        
-        ldr r1, =ORG_TRANSPORT_DATA_ADR
-        mov r2, #176
-        ldr r3, =EXPAND_DATA_ADR
+        sub sp, #DATA_SIZE
+
+        mov r1, sp
+        mov r2, #DATA_SIZE
+        ldr r3, =EXPAND_DATA_R0toR1_ADDR
         ldr r3, [r3, #0]
         bl jumpToR3
 
+        ldr r0, =ORG_TRANSPORT_DATA_ADR
+        mov r1, sp
+        mov r2, #DATA_SIZE
+            ldr r3, =MEMCPY_R1toR0_FUNC
+            mov lr, r3
+            .short 0xF800
+
+        add sp, #DATA_SIZE
         pop {pc}
 
 
