@@ -1,12 +1,38 @@
 
+InfiniteItem:
+#incbin Infinity.dmp
+POIN HasInfiniteWeapon
+POIN HasStaffSavant
+
+HasInfiniteWeapon:
+ HAS_NIHIL
+ WORD InfiniteWeaponID
+
+HasStaffSavant:
+ HAS_NIHIL
+ WORD StaffSavantID
+
 PUSH
   ORG 0x016918
     jumpToHack(motikae_main)
+
+  ORG 0x02b73c
+    jumpToHack(NoDecreaseWeapon)
+  ORG 0x02cbc4
+    jumpToHack(NoDecreaseStaff)
+
 POP
 motikae_main:
     #incbin main.gba
     POIN hasNihil
     POIN hasQuickChange
+
+NoDecreaseWeapon:
+   #incbin NoDecrease.dmp
+   POIN InfiniteItem
+NoDecreaseStaff:
+   #incbin NoDecreaseStaff.dmp
+   POIN InfiniteItem
 
 /*
 PUSH

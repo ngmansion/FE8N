@@ -46,6 +46,7 @@ POP
 
 afterAttack:
 	#incbin afterAttack.dmp
+	POIN InfiniteItem
 	ALIGN 4
 
 ////攻撃キャンセル時

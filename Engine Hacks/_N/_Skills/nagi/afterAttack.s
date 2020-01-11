@@ -52,6 +52,14 @@ WarSkill:
 	bne endWar
 	mov r0, #0xFE
 	strb r0, [r3, r1]
+@無限の武器
+	mov r0, r13
+	ldr r0, [r0, #16]	@r8が相手のアドレス
+	mov	r1, #72	@装備中(74はトップアイテム)
+	ldrh r1, [r1, r0]
+	bl Infinity
+	cmp r0, #1
+	beq endWar
 @命中チェック
 	ldr	r2, =0x0203a604
 	ldr	r2, [r2]
@@ -103,5 +111,12 @@ func_break:
 	mov lr, r3
 	.short 0xF800
 	pop {r3, pc}
+
+Infinity:
+	ldr r3, addr
+	mov pc, r3
+.align
+.ltorg
+addr:
 
 	
