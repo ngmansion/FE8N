@@ -27,16 +27,7 @@ main:
         beq jump1
         bl divide
     jump1:
-        ldrb r0, [r5, #0xb]
-        ldr r1, =0x03004df0
-        ldr r1, [r1]
-        ldrb r1, [r1, #0xb]
-        cmp r0, r1
-        beq jump2
-    
-        mov r0, r5
-        mov r1, r4
-        bl HasWaryFighter
+        bl WaryFighter
         cmp r0, #0
         beq jump2
         bl divide
@@ -44,6 +35,27 @@ main:
         mov r1, r8
         pop {r2}
         pop {r4, r5, pc}
+
+WaryFighter:
+        push {lr}
+        ldrb r0, [r5, #0xb]
+        ldr r1, =0x03004df0
+        ldr r1, [r1]
+        ldrb r1, [r1, #0xb]
+        cmp r0, r1
+        beq jumpWaryFighter
+    @r4が攻め。r5が守備隊形の場合、この攻撃は半減
+        mov r0, r5
+        mov r1, r4
+        bl HasWaryFighter
+        b endWaryFighter
+    jumpWaryFighter:
+    @r5が攻め。r4が守備隊形の場合、この攻撃は半減
+        mov r0, r4
+        mov r1, r5
+        bl HasWaryFighter
+    endWaryFighter:
+        pop {pc}
 
 divide:
     mov r0, r8

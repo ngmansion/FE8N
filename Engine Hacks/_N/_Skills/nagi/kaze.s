@@ -15,9 +15,9 @@ FLAG = (0xFE)	@フラグ
     cmp r0, #1
     beq cancel
 
-    bl WaryFighter
-    cmp r0, #1
-    beq cancel
+@    bl WaryFighter
+@    cmp r0, #1
+@    beq cancel
 
 normal:
     mov r1, r8

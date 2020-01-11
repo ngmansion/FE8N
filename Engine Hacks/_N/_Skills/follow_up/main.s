@@ -165,36 +165,31 @@ Impact:
 
 waryFighter_judgeActivate:
         push {r7, lr}
+        mov r7, #0
+
         mov r0, r6
         mov r1, r5
-        bl waryFighter_impl
-        mov r7, r0
+        bl HasWaryFighter
+        orr r7, r0
         
         mov r0, r5
         mov r1, r6
-        bl waryFighter_impl
-        orr r0, r7
+        bl HasWaryFighter
+        orr r7, r0
+
+        mov r0, r6
+        mov r1, r5
+        bl HasWaryFighterOrg
+        orr r7, r0
+        
+        mov r0, r5
+        mov r1, r6
+        bl HasWaryFighterOrg
+        orr r7, r0
+
+        mov r0, r7
         pop {r7, pc}
         
-waryFighter_impl:
-        push {r4, r5, lr}
-        mov r4, r0
-        mov r5, r1
-        
-        mov r0, r4
-        mov r1, r5
-            ldr r2, Adr+24 @守備隊形@見切り
-            mov lr, r2
-            .short 0xF800
-        cmp r0, #0
-        beq	non_waryFighter_impl
-        
-        mov r0, #1
-        .short 0xE000
-        non_waryFighter_impl:
-            mov r0, #0
-        pop {r4, r5, pc}
-
 BrashAssault:   @差し違え
         push {r4, r5, lr}
         mov r4, r0
@@ -329,6 +324,14 @@ QuickRiposte: @切り返し
             end:
                 mov r0, #0
             pop {r4, r5, pc}
+
+HasWaryFighter:
+ldr r2, Adr+24 @守備隊形@見切り
+mov pc, r2
+
+HasWaryFighterOrg:
+ldr r2, Adr+40
+mov pc, r2
 
 .align
 .ltorg

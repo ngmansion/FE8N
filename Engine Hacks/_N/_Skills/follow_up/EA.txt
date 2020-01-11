@@ -27,6 +27,7 @@ breaker_main:
     POIN boldFighter_hasSkill
     POIN vengefulFighter_hasSkill
     POIN hasDartingBlow
+    POIN HasWaryFighterOrg
     
 breaker_semetate:
     #incbin semetate.gba
@@ -56,6 +57,9 @@ breaker_hasSkill5:
 waryFighter_hasSkill:
     HAS_NIHIL
     WORD WaryFighterID
+HasWaryFighterOrg:
+    HAS_NIHIL
+    WORD WaryFighterOrgID
     
 boldFighter_hasSkill:
     HAS_NIHIL

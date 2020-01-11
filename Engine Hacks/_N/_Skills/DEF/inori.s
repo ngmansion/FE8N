@@ -97,9 +97,7 @@ WaryFighter:
 		cmp r0, #1
 		beq falseWaryFighter
 
-		mov r0, r8
-		mov r1, r7
-		bl hasWaryFighter
+		bl JudgeWaryFighter
 		cmp r0, #0
 		beq falseWaryFighter
 		
@@ -116,6 +114,29 @@ WaryFighter:
 		mov	r0, #0
 	endWaryFighter:
 		pop	{pc}
+
+JudgeWaryFighter:
+		push {lr}
+		mov r0, r8
+        ldrb r0, [r0, #0xb]
+        ldr r1, =0x03004df0
+        ldr r1, [r1]
+        ldrb r1, [r1, #0xb]
+        cmp r0, r1
+        beq nextWaryFighter
+
+		mov r0, r8
+		mov r1, r7
+		bl HasWaryFighter
+		b activeWaryFighter
+	nextWaryFighter:
+		mov r0, r7
+		mov r1, r8
+		bl HasWaryFighter
+	activeWaryFighter:
+		pop {pc}
+
+
 
 
 Invincible:
@@ -504,7 +525,7 @@ hasInvincible:
 	ldr	r2, HAS_INVINCIBLE_FUNC
 	mov	pc, r2
 
-hasWaryFighter:
+HasWaryFighter:
 	ldr	r2, HAS_WARYFIGHTER_FUNC
 	mov	pc, r2
 

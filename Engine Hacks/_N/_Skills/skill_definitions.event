@@ -122,4 +122,5 @@
 #define AtrocityID 126 //0x7E 無惨
 #define FallenStarID 127//0x7F 落星
 #define BlitzkriegID 128 //0x80電撃戦
+#define WaryFighterOrgID 129 //0x81 元守備隊形
 
