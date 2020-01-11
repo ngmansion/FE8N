@@ -61,6 +61,7 @@ shikkokunori:
  POIN hasInvincible
  POIN hasDeflect
  POIN waryFighter_hasSkill
+ POIN PrayOld_hasSkill
 
 hasInvincible:
  HAS_NIHIL
@@ -80,8 +81,11 @@ GodShield_hasSkill:
  WORD DivineShieldID
  
 Pray_hasSkill:
- HAS_SKILL
+ HAS_NIHIL
  WORD MiracleID
+PrayOld_hasSkill:
+ HAS_NIHIL
+ WORD MiracleOldID
 
 hasDistantGuard:
  HAS_SKILL
