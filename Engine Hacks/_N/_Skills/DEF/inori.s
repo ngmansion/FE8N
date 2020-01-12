@@ -474,6 +474,13 @@ endOracle:
 	
 Amulet:
 	push {r5, lr}
+	mov	r3, r8
+	ldrb	r1, [r3, #19]	@現在HP
+@一撃で死ぬか
+	ldrh	r0, [r4, #4]	@ダメージ
+	cmp	r0, r1
+	blt	endAmulet
+
 	mov	r5, #0x1C
 loopAmulet:
 	add	r5, #2
@@ -492,23 +499,21 @@ loopAmulet:
 	b	loopAmulet
 	
 ouiAmulet:
-	mov	r3, r8
-	ldrb	r1, [r3, #19]	@現在HP
-@一撃で死ぬか
-	ldrh	r0, [r4, #4]	@ダメージ
-	cmp	r0, r1
-	blt	endAmulet
-	lsl	r0, r2, #27	@特殊・売却不可
-	bmi	gotElixir
-	
-	ldrh	r0, [r3, r5]
-	mov		r2, #0xFF
-	lsl	r2, r2, #8
-	tst	r0, r2
-	beq	endAmulet	@破損チェック
-	mov		r2, #0xFF
-	and	r0, r2
-	strh	r0, [r3, r5]	@破損処理
+	ldrh r0, [r3, r5]
+	lsr r1, r0, #8
+	cmp r1, #0xFF
+	beq loopAmulet	@壊れているので次へ(エリクサー用)
+	cmp r1, #0
+	beq loopAmulet	@壊れているので次へ(エリクサー用)
+
+	lsl	r1, r2, #27	@特殊・売却不可
+	bmi	gotElixir	@エリクサーはここでは破損処理はしない
+
+	push {r3}
+	bl $08016894
+	pop {r3}
+	strh r0, [r3, r5]	@破損処理
+
 gotElixir:
 	ldrb	r0, [r3, #19]
 	sub	r0, #1
@@ -568,6 +573,10 @@ mov pc, r2
 HasWaryFighter:
 ldr	r2, HAS_WARYFIGHTER_FUNC
 mov	pc, r2
+
+$08016894:
+ldr	r1, =0x08016894
+mov	pc, r1
 
 random:
 	ldr	r2, =0x0802a490
