@@ -33,6 +33,7 @@
 	#include "TANTE\EA.txt"
 	#include "BreakedWeapon\EA.txt"
 	#include "Fomortiis\EA.txt"
+	#include "StatusUp\EA.txt"
 
 	
 

@@ -1,0 +1,62 @@
+#define FairePow (5)
+
+SwordfaireFunc:
+#incbin Faire.dmp
+    WORD 0
+    WORD FairePow
+    POIN hasSwordfaire
+LancefaireFunc:
+#incbin Faire.dmp
+    WORD 1
+    WORD FairePow
+    POIN hasLancefaire
+AxefaireFunc:
+#incbin Faire.dmp
+    WORD 2
+    WORD FairePow
+    POIN hasAxefaire
+BowfaireFunc:
+#incbin Faire.dmp
+    WORD 3
+    WORD FairePow
+    POIN hasBowfaire
+AnimafaireFunc:
+#incbin Faire.dmp
+    WORD 5
+    WORD FairePow
+    POIN hasAnimafaire
+LightfaireFunc:
+#incbin Faire.dmp
+    WORD 6
+    WORD FairePow
+    POIN hasLightfaire
+DarkfaireFunc:
+#incbin Faire.dmp
+    WORD 7
+    WORD FairePow
+    POIN hasDarkfaire
+
+hasSwordfaire:
+ HAS_NIHIL
+ WORD SwordfaireID
+hasLancefaire:
+ HAS_NIHIL
+ WORD LancefaireID
+hasAxefaire:
+ HAS_NIHIL
+ WORD AxefaireID
+hasBowfaire:
+ HAS_NIHIL
+ WORD BowfaireID
+hasAnimafaire:
+ HAS_NIHIL
+ WORD AnimafaireID
+hasLightfaire:
+ HAS_NIHIL
+ WORD LightfaireID
+hasDarkfaire:
+ HAS_NIHIL
+ WORD DarkfaireID
+
+
+

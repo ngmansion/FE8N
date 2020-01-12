@@ -23,8 +23,6 @@ BL_GETITEMEFFECTIVE = (0x08017478)
 @相手が存在するとは限らない(ダミーかもしれない)
 .thumb
 @闘技場チェック
-	bl Faire
-	
 	bl GetAlinaAdr
     ldrh r0, [r0]
     mov r1, #0x20
@@ -504,18 +502,6 @@ falseEffective_impl:
 	pop	{r1}
 	bx	r1
 
-Faire:
-    push {lr}
-    bl faire_impl
-    cmp r0, #0
-    beq endFaire
-    mov r1, #90
-    ldrh r0, [r4, r1]
-    add r0, #5
-    strh r0, [r4, r1] @自分
-endFaire:
-	pop {pc}
-
 Savior:
         push {lr}
         
@@ -807,75 +793,7 @@ falseHien:
 	mov r0, #0
 endHien:
 	pop {pc}
-	
 
-faire_impl:
-    push {lr}
-    mov r0, r4
-    add r0, #72
-    ldrh r0, [r0]
-    cmp r0, #0
-    beq faire_merge
-    ldr r1, Equipment_Adr
-    _blr r1
-    mov r1, r0
-    
-    mov r0, #0
-    cmp r1, #0
-    beq faire_sword
-    cmp r1, #1
-    beq faire_lance
-    cmp r1, #2
-    beq faire_axe
-    cmp r1, #3
-    beq faire_bow
-    cmp r1, #4
-    beq faire_merge
-    cmp r1, #5
-    beq faire_anima
-    cmp r1, #6
-    beq faire_light
-    cmp r1, #7
-    beq faire_dark
-    b faire_merge
-faire_sword:
-    mov r0, r4
-    ldr r1, SWORD_F_ADR
-    _blr r1
-    b faire_merge
-faire_lance:
-    mov r0, r4
-    ldr r1, LANCE_F_ADR
-    _blr r1
-    b faire_merge
-faire_axe:
-    mov r0, r4
-    ldr r1, AXE_F_ADR
-    _blr r1
-    b faire_merge
-faire_bow:
-    mov r0, r4
-    ldr r1, BOW_F_ADR
-    _blr r1
-    b faire_merge
-faire_anima:
-    mov r0, r4
-    ldr r1, ANIMA_F_ADR
-    _blr r1
-    b faire_merge
-faire_light:
-    mov r0, r4
-    ldr r1, LIGHT_F_ADR
-    _blr r1
-    b faire_merge
-faire_dark:
-    mov r0, r4
-    ldr r1, DARK_F_ADR
-    _blr r1
-    b faire_merge
-    nop
-faire_merge:
-    pop {pc}
 
 breaker_impl:
     push {lr}
@@ -939,11 +857,11 @@ SAVIOR_ADR = (adr+44)
 
 SHISHI_ADR = (adr+4)
 
-SWORD_F_ADR = (adr+48)
-LANCE_F_ADR = (adr+52)
-AXE_F_ADR = (adr+56)
-BOW_F_ADR = (adr+60)
-ANIMA_F_ADR = (adr+64)
+@SWORD_F_ADR = (adr+48)
+@LANCE_F_ADR = (adr+52)
+@AXE_F_ADR = (adr+56)
+@BOW_F_ADR = (adr+60)
+@ANIMA_F_ADR = (adr+64)
 
 FLY_E_ADR = (adr+68)
 ARMOR_E_ADR = (adr+72)
@@ -956,8 +874,8 @@ SOLO_ADR = (adr+96)
 SHISEN_ADR = (adr+100)
 FORT_ADR = (adr+104)
 WAR_ADR = (adr+108)
-LIGHT_F_ADR = (adr+112)
-DARK_F_ADR = (adr+116)
+@LIGHT_F_ADR = (adr+112)
+@DARK_F_ADR = (adr+116)
 HAS_BOND_ADR = (adr+120)
 HAS_ATROCITY_ADR = (adr+124)
 

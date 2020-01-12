@@ -28,11 +28,11 @@ battle_before:
     POIN hasCloseDef
     POIN hasDistantDef
     POIN hasDefender
-    POIN hasSwordfaire
-    POIN hasLancefaire
-    POIN hasAxefaire
-    POIN hasBowfaire
-    POIN hasAnimafaire
+    POIN 0
+    POIN 0
+    POIN 0
+    POIN 0
+    POIN 0
     POIN hasGrounder
     POIN hasHelmSplitter
     POIN hasKnightkneeler
@@ -44,8 +44,8 @@ battle_before:
     POIN hasLifeAndDeath
     POIN hasFort
     POIN hasSunder
-    POIN hasLightfaire
-    POIN hasDarkfaire
+    POIN 0
+    POIN 0
     POIN hasBond
     POIN hasAtrocity
     
@@ -125,28 +125,6 @@ hasDistantDef:
 hasDefender:
  HAS_NIHIL
  WORD DefenderID
-
-hasSwordfaire:
- HAS_SKILL
- WORD SwordfaireID
-hasLancefaire:
- HAS_SKILL
- WORD LancefaireID
-hasAxefaire:
- HAS_SKILL
- WORD AxefaireID
-hasBowfaire:
- HAS_SKILL
- WORD BowfaireID
-hasAnimafaire:
- HAS_SKILL
- WORD AnimafaireID
-hasLightfaire:
- HAS_SKILL
- WORD LightfaireID
-hasDarkfaire:
- HAS_SKILL
- WORD DarkfaireID
 
 hasGrounder:
  HAS_SKILL

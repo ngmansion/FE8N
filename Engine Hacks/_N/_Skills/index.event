@@ -27,5 +27,6 @@
 #include "SorceryBlade\EA.txt"
 #include "init_store\EA.txt"
 #include "Savior\EA.txt"
+#include "Faire\EA.txt"
 
 //#include "my_skill\EA.txt"

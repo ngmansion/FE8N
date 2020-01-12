@@ -1,0 +1,39 @@
+PUSH
+ORG 0x018ec4
+   jumpToHack(StatusUpStrength)
+POP
+
+
+StatusUpStrength:
+#incbin StatusUp.dmp
+WORD 0x08018ed4	//戻りアドレス
+POIN StrengthWp
+POIN SwordfaireFunc
+POIN LancefaireFunc
+POIN AxefaireFunc
+POIN BowfaireFunc
+POIN AnimafaireFunc
+POIN LightfaireFunc
+POIN DarkfaireFunc
+POIN 0	//末尾判定用
+
+StatusUpConstitution:	//魔力パッチ想定用
+#incbin StatusUp.dmp
+POIN ConstitutionStatus	//戻りアドレス
+POIN ConstitutionWp
+POIN AnimafaireFunc
+POIN LightfaireFunc
+POIN DarkfaireFunc
+POIN 0	//末尾判定用
+
+StrengthWp:
+#incbin StrengthWp.dmp
+ALIGN 4
+
+ConstitutionWp:
+#incbin ConstitutionWp.dmp
+ALIGN 4
+ConstitutionStatus:
+#incbin ConstitutionStatus.dmp
+ALIGN 4
+
