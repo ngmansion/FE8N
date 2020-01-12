@@ -1,52 +1,55 @@
-.equ INVARID_ITEM, (0xFF)
-.equ BREAK_NUM, (0xFF)
+INVARID_ITEM = (0xFF)
+BREAK_NUM = (0xFF)
+DEAD_EYE_FLAG = (0xDE)
 
 .thumb
-	
+@.org 0802b3b0
+
 	ldr	r0, =0x0203a4d0
 	ldrh	r1, [r0, #0]
 	mov	r0, #2
 	and	r0, r1
 	cmp	r0, #0
-	bne	RETURN	@;予測ならノーマル
+	bne	RETURN	@予測ならノーマル
+
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]
 	cmp	r0, #4
-	ble	denai
+	ble	physics
 	cmp	r0, #8
-	bge	denai
+	bge	physics
 	mov	r0, #1
-	b	osoba
-denai:
+	b	magic
+physics:
 	mov	r0, #0
-osoba:
+magic:
 	mov	r1, r8
 	bl	SHIELD
 	cmp	r0, #0
 	beq	RETURN
-	mov	r2, r10
-	cmp	r2, #0xDE	@
-	beq	force_break		@必的フラグオンならジャンプ
 	cmp	r1, #255
 	beq	RETURN	@壊れないならジャンプ
+	mov	r2, r10
+	cmp	r2, #DEAD_EYE_FLAG
+	beq	force_break		@必的フラグオンならジャンプ
 	
 	add	r1, r8
 	ldrb r2, [r1, #1]
 	cmp	r2,	#BREAK_NUM	@この回数なら破損状態
 	beq	breaked
 
-	mov r0, r8
-	ldrh r0, [r0]
+	ldrh r0, [r1]
+	push {r1}
 	bl $08016894	@破損処理
+	pop {r1}
 	cmp r0, #0
 	bne not_zero
 	mov r0, r8
-	ldrh r0, [r0]
-	mov r1, #BREAK_NUM	@消滅フラグ
-	lsl r1, r1, #8
-	orr r0, r1
+	ldrh r0, [r1]
+	mov r2, #BREAK_NUM	@消滅フラグ
+	lsl r2, r2, #8
+	orr r0, r2
 not_zero:
-	mov r1, r8
 	strh r0, [r1]
 	b	RETURN
 

@@ -1,6 +1,6 @@
 
 .thumb
-@;0002aec8
+@ 0802aec8
 
 	ldr	r0, [sp, #0]
 	bl HASON
@@ -55,7 +55,7 @@ HASON_loop:
 	strb r0, [r5, #19]	@最大HPをストア
 	
 	ldrh r0, [r5, r4]
-	bl $08016894
+	bl $08016894	@破損処理
 	cmp r0, #0x00
 	bne notBreak
 	ldrh r0, [r5, r4]
