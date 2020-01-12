@@ -128,4 +128,5 @@
 #define ImmuneStatusID 132 //0x84 守護
 #define InfiniteWeaponID 133 //0x85 無限の武器
 #define StaffSavantID 134 //0x86 無限の杖
+#define SaviorID 135 //0x87 運び屋
 

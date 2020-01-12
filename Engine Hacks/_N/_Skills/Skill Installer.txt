@@ -10,7 +10,7 @@
   #include index.event
 PUSH
 
-#ifndef MAGIC_PATCH //魔力パッチなし、もしくは以降
+#ifndef MAGIC_PATCH //魔力パッチなし
 
     ORG 0xA741A8
     #incext Png2Dmp "_common\Equipment7.png" --lz77
@@ -21,10 +21,18 @@ ORG 0x089348
     
 #endif
 
-
 ORG	0x89268
 BYTE	$00 $4B $9F $46
 POIN Skills_Icon
+
+//スキルインデックス
+ORG 0x892FC
+ #incbin "Savior\GotoRescue.dmp"
+ POIN IsRescure
+ORG 0x89308
+
+
+//～0x089348
 POP
 
 Skills_Icon:
