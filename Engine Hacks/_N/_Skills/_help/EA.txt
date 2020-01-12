@@ -1,6 +1,14 @@
 PUSH
 
 //////ƒwƒ‹ƒvˆÊ’u
+ORG 0xA72C6C //‰E
+POIN SK_ONE
+
+ORG 0xA72D0C //‰º
+POIN SK_ONE
+
+ORG 0xA72DB4
+POIN SK_FIVE
 
 ORG 0x89270
 
