@@ -1,4 +1,4 @@
-.equ BREAK_NUM, (0xFF)
+
 .thumb
 @;0002aec8
 
@@ -19,7 +19,9 @@ retrun:
 	
 	ldr	r0, =0x0802aed0
 	mov	pc, r0
-	
+
+BREAK_NUM = (0xFF)
+
 HASON:
 	push	{r4, r5, lr}
 	mov	r5, r0
@@ -32,43 +34,52 @@ HASON_loop:
 	
 	ldrh	r0, [r5, r4]
 	cmp	r0, #0
-	beq	HASON_loop
+	beq	HASON_loop	@アイテムなし
 	
 		ldr	r1, =0x08017314
 		mov	lr, r1
 		.short 0xF800
+	
 	lsl	r1, r0, #28
-	bmi	HASON_loop	@破損不可ならジャンプ
+	bmi	HASON_loop	@破損不可なら次へ
 	lsl	r1, r0, #5
 	bpl	notElixir	@お守り以外ならジャンプ
 	lsl	r1, r0, #27
 	bpl	notElixir	@売却可能ならジャンプ
 	
-@エリクサー効果
+@エリクサー処理
 	ldrb	r0, [r5, #19]
 	cmp r0, #1
 	bgt notElixir	@HP1以外はジャンプ
 	ldrb r0, [r5, #18]
 	strb r0, [r5, #19]	@最大HPをストア
 	
-	add r1, r4, #1
-	ldrb	r0, [r5, r1]
-
-	sub r0, #1	@1回減少
+	ldrh r0, [r5, r4]
+	bl $08016894
 	cmp r0, #0x00
 	bne notBreak
-	mov r0, #BREAK_NUM
+	ldrh r0, [r5, r4]
+	mov r1, #BREAK_NUM	@消滅フラグ
+	lsl r1, r1, #8
+	orr r0, r1
 notBreak:
-	strb	r0, [r5, r1]
+	strh	r0, [r5, r4]
+@エリクサー効果ここまで
 notElixir:
 	ldrh	r0, [r5, r4]
 	lsr	r1, r0, #8
 	cmp r1, #BREAK_NUM
 	bne	HASON_loop	@回数0xFF以外はジャンプ
 	mov	r0, #0
-	strh	r0, [r5, r4]
+	strh	r0, [r5, r4]	@FF回数のアイテム消滅
 	b	HASON_loop
 end:
 	pop	{r4, r5, pc}
+
+$08016894:
+ldr	r1, =0x08016894
+mov	pc, r1
+
 .align
+.ltorg
 

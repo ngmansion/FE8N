@@ -581,5 +581,6 @@ mov	pc, r1
 random:
 	ldr	r2, =0x0802a490
 	mov	pc, r2
+.align
 .ltorg
 adr:

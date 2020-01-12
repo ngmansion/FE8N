@@ -25,29 +25,37 @@ osoba:
 	cmp	r0, #0
 	beq	RETURN
 	mov	r2, r10
-	cmp	r2, #0xDE	@;
-	beq	BREAK		@;必的フラグオンならジャンプ
+	cmp	r2, #0xDE	@
+	beq	force_break		@必的フラグオンならジャンプ
 	cmp	r1, #255
 	beq	RETURN	@壊れないならジャンプ
 	
 	add	r1, r8
 	ldrb r2, [r1, #1]
 	cmp	r2,	#BREAK_NUM	@この回数なら破損状態
-	beq	KOWARE
-	sub	r2, #1		@耐久減少
-	cmp r2, #0
-	bne non_zero
-	mov r2, #BREAK_NUM
-non_zero:
-	strb r2, [r1, #1]
+	beq	breaked
+
+	mov r0, r8
+	ldrh r0, [r0]
+	bl $08016894	@破損処理
+	cmp r0, #0
+	bne not_zero
+	mov r0, r8
+	ldrh r0, [r0]
+	mov r1, #BREAK_NUM	@消滅フラグ
+	lsl r1, r1, #8
+	orr r0, r1
+not_zero:
+	mov r1, r8
+	strh r0, [r1]
 	b	RETURN
-BREAK:
+
+force_break:
 	add	r1, r8
 	ldrb r2, [r1, #1]
-	mov	r2, #BREAK_NUM
+	mov	r2, #BREAK_NUM	@消滅フラグ
 	strb r2, [r1, #1]
-	
-KOWARE:
+breaked:
 	sub	r4, r4, r0	@壊れてるので、ボーナス分を減算
 RETURN:
 	ldr	r0, =0x0802b3b8
@@ -133,7 +141,10 @@ kowareru:
 	mov	r1, r6
 endShield:
 	pop	{r4, r5, r6, r7, pc}
-	
+
+$08016894:
+ldr	r1, =0x08016894
+mov	pc, r1
 	
 .align
 .ltorg
