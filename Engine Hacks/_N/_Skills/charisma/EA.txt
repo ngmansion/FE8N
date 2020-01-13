@@ -1,13 +1,10 @@
 
+//////revert(元恐怖)
 PUSH
 ORG	0x2ABC4
-BYTE	$00 $4B $9F $46
-POIN	kyokyokyo
+SHORT $2119 $5641 $3068 $8001 $4770 $0
+
 POP
-kyokyokyo:
-#incbin "fear.gba"
-    POIN hasFear
-ALIGN 4
 
 ///////////////////支援効果制限+カリスマ制限
 PUSH
@@ -20,11 +17,6 @@ karikari:
     POIN hasCharm
 ALIGN 4
 
-
-
-hasFear:
-    HAS_SKILL
-    WORD DauntID
     
 hasCharm:
     HAS_SKILL

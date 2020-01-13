@@ -74,12 +74,91 @@ endNeedEnemy:
 
 @マイナス処理
     bl Heartseeker
-@    bl Daunt
+    bl Daunt
 
 RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+Daunt:
+@青は赤に対して効く
+@赤は青と緑に対して効く
+@緑は赤に対して効く
+	push {r4, r5, r6, r7, lr}
+
+    ldrb r0, [r4, #0xB]
+    lsl r0, r0, #24
+    bmi isRedDaunt
+    mov r6, #0x80
+    bl Daunt_impl
+    b endDaunt
+isRedDaunt:
+    mov r6, #0x00
+    bl Daunt_impl
+    mov r6, #0x40
+    bl Daunt_impl
+endDaunt:
+	pop {r4, r5, r6, r7, pc}
+
+Daunt_impl:
+        push {lr}
+        mov r7, #0
+    loopDaunt:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq resultDaunt	@リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopDaunt	@死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopDaunt	@死亡判定2
+    
+        ldr r0, [r5, #0xC]
+        bl GetExistFlagR1	@居ないフラグ+救出されている
+        and r0, r1
+        bne loopDaunt
+    
+        mov r0, #3  @範囲指定
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopDaunt @近くにいない
+    
+        mov r0, r5
+        mov r1, r4
+        bl HasDaunt
+        cmp r0, #0
+        beq loopDaunt    @相手が恐怖未所持
+    
+        add r7, #1
+        b loopDaunt
+    
+    resultDaunt:
+        mov r2, #15 @マイナス15
+        mul r2, r7
+    
+        mov r1, #98 @回避
+        ldrh r0, [r4, r1]
+        sub r0, r2
+        bgt limitDaunt1
+        mov r0, #0
+    limitDaunt1:
+        strh r0, [r4, r1]
+
+        mov r1, #102 @必殺
+        ldrh r0, [r4, r1]
+        sub r0, r2
+        bgt limitDaunt2
+        mov r0, #0
+    limitDaunt2:
+        strh r0, [r4, r1]
+        pop {pc}
 
 Heartseeker:
 @青は赤に対して効く
