@@ -1,4 +1,4 @@
-SAVIOR_DAMAGE = (10)
+DEFENDER_DAMAGE = (10)
 
 
 
@@ -82,7 +82,7 @@ RETURN:
 Heartseeker:
 @青は赤に対して効く
 @赤は青に対して効く
-@緑は赤に対して効く
+@緑は何もしない
 	push {r4, r5, r6, r7, lr}
 
     ldrb r0, [r4, #0xB]
@@ -137,7 +137,7 @@ resultHeartseeker:
 	mov r1, #98
 	ldrh r0, [r4, r1]
 	sub r0, r2
-    blt limitHeartseeker
+    bgt limitHeartseeker
     mov r0, #0
 limitHeartseeker:
 	strh r0, [r4, r1] @自分
@@ -595,7 +595,7 @@ Savior:
         
         mov r1, #92
         ldrh r0, [r4, r1]
-        add r0, #SAVIOR_DAMAGE
+        add r0, #DEFENDER_DAMAGE
         strh r0, [r4, r1]
         mov r0, #1
         .short 0xE000
