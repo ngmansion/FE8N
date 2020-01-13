@@ -44,7 +44,7 @@ battle_before:
     POIN hasLifeAndDeath
     POIN hasFort
     POIN hasSunder
-    POIN 0
+    POIN HasHeartseeker
     POIN 0
     POIN hasBond
     POIN hasAtrocity
@@ -67,7 +67,10 @@ battle_down:
   POIN hasSavageBlow
   POIN hasRagingStorm
 
-  
+HasHeartseeker:
+    HAS_NIHIL
+    WORD HeartseekerID
+
 hasAtrocity:
     HAS_NIHIL
     WORD AtrocityID

@@ -48,6 +48,8 @@ gotSkill:
 	bl Solo
 	bl Fort
     bl Bond
+@    bl Daunt
+    bl Heartseeker
 
 endNoEnemy:
 @相手の存在をチェック
@@ -76,6 +78,71 @@ RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+Heartseeker:
+@青は赤に対して効く
+@赤は青に対して効く
+@緑は赤に対して効く
+	push {r4, r5, r6, r7, lr}
+
+    ldrb r0, [r4, #0xB]
+    lsl r0, r0, #24
+    bmi isRedHeartseeker
+    mov r6, #0x80
+    b startHeartseeker
+isRedHeartseeker:
+    mov r6, #0x00
+
+startHeartseeker:
+	mov r7, #0
+loopHeartseeker:
+	add r6, #1
+	mov r0, r6
+	bl Get_Status
+	mov r5, r0
+	cmp r0, #0
+	beq resultHeartseeker	@リスト末尾
+	ldr r0, [r5]
+	cmp r0, #0
+	beq loopHeartseeker	@死亡判定1
+	ldrb r0, [r5, #19]
+	cmp r0, #0
+	beq loopHeartseeker	@死亡判定2
+
+	ldr r0, [r5, #0xC]
+	bl GetExistFlagR1
+	and r0, r1
+	bne loopHeartseeker
+
+	mov r0, #1  @1マス指定
+	mov r1, r4
+	mov r2, r5
+	bl CheckXY
+	cmp r0, #0
+	beq loopHeartseeker @近くにいない
+
+	mov r0, r5
+    mov r1, r4
+	bl HasHeartseeker
+	cmp r0, #0
+	beq loopHeartseeker    @相手が呪縛未所持
+
+    add r7, #1
+	b loopHeartseeker
+
+resultHeartseeker:
+    mov r2, #20 @マイナス20
+    mul r2, r7
+
+	mov r1, #98
+	ldrh r0, [r4, r1]
+	sub r0, r2
+    blt limitHeartseeker
+    mov r0, #0
+limitHeartseeker:
+	strh r0, [r4, r1] @自分
+falseHeartseeker:
+	pop {r4, r5, r6, r7, pc}
 
 
 WarSkill:
@@ -874,11 +941,14 @@ SOLO_ADR = (adr+96)
 SHISEN_ADR = (adr+100)
 FORT_ADR = (adr+104)
 WAR_ADR = (adr+108)
-@LIGHT_F_ADR = (adr+112)
+HEARTSEEKER_ADR = (adr+112)
 @DARK_F_ADR = (adr+116)
 HAS_BOND_ADR = (adr+120)
 HAS_ATROCITY_ADR = (adr+124)
 
+HasHeartseeker:
+    ldr r2, HEARTSEEKER_ADR
+	mov pc, r2
 HasSavior:
 	ldr r2, SAVIOR_ADR
 	mov pc, r2
