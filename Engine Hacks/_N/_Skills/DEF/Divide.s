@@ -37,17 +37,14 @@ WaryFighter:
         ldr r1, [r1]
         ldrb r1, [r1, #0xb]
         cmp r0, r1
-        beq jumpWaryFighter
+        beq falseWaryFighter
     @r4が攻め。r5が守備隊形の場合、この攻撃は半減
         mov r0, r5
         mov r1, r4
         bl HasWaryFighter
         b endWaryFighter
-jumpWaryFighter:
-    @r5が攻め。r4が守備隊形の場合、この攻撃は半減
-        mov r0, r4
-        mov r1, r5
-        bl HasWaryFighter
+    falseWaryFighter:
+        mov r0, #0
     endWaryFighter:
         pop {pc}
 
