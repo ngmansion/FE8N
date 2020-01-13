@@ -20,6 +20,7 @@ POIN hasEclipse //16
 POIN hasJihad //20
 POIN set_skillanime_attack
 POIN hasNihil
+POIN fodes_func
 
 ALIGN 4
 

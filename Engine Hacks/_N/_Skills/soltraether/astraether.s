@@ -159,6 +159,12 @@ ecripse_impl:
     ldr r1, =0x01008000
     and r0, r1
     bne falseEcripse @敵将チェック
+
+    mov r0, r8
+    bl CheckFodes
+    cmp r0, #1
+    beq falseEcripse    @フォデス効果
+
 @ユニットチェック
     mov r0, r7
         ldr r1, ECRIPSE_ADR	@月食
@@ -533,6 +539,12 @@ sol_ef: @吸収
     mov r0, #1
     pop {pc}
 
+
+CHECK_FODES_FUNC = (adr+32)
+
+CheckFodes:
+ldr r2, CHECK_FODES_FUNC
+mov pc, r2
 
 .align
 .ltorg
