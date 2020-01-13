@@ -32,9 +32,7 @@ SET_SKILLANIME_DEF_FUNC = (adr+20)
 	cmp r0, #0
 	bne zero
 
-	bl WaryFighter
-
-	bl Oracle
+	bl Divide
 	
 	bl Deflect
 
@@ -89,54 +87,24 @@ checkSkip:
 		mov r0, #1
 		bx lr
 
-
-WaryFighter:
+Divide:	@神盾+守備隊形
 		push {lr}
 		bl checkSkip
 		cmp r0, #1
-		beq falseWaryFighter
+		beq falseDivide
 
-		bl JudgeWaryFighter
-		cmp r0, #0
-		beq falseWaryFighter
-		
-		ldrh	r0, [r4, #4]
-		asr	r0, r0, #1
-		bne jumpWaryFighter
-		mov r0, #1
-	jumpWaryFighter:
-		strh	r0, [r4, #4]
-	
-		mov	r0, #1
-		b endWaryFighter
-	falseWaryFighter:
-		mov	r0, #0
-	endWaryFighter:
-		pop	{pc}
-
-JudgeWaryFighter:
-		push {lr}
-		mov r0, r8
-        ldrb r0, [r0, #0xb]
-        ldr r1, =0x03004df0
-        ldr r1, [r1]
-        ldrb r1, [r1, #0xb]
-        cmp r0, r1
-        beq nextWaryFighter
-
-		mov r0, r8
+		ldrh r0, [r4, #4]
 		mov r1, r7
-		bl HasWaryFighter
-		b activeWaryFighter
-	nextWaryFighter:
-		mov r0, r7
-		mov r1, r8
-		bl HasWaryFighter
-	activeWaryFighter:
-		pop {pc}
+		mov r2, r8
+		bl DefDivide
+		strh r0, [r4, #4]
+		mov r0, #1
+		b endDivide
 
-
-
+	falseDivide:
+		mov	r0, #0
+	endDivide:
+		pop	{pc}
 
 Invincible:
 		push {lr}
@@ -447,31 +415,6 @@ JudgePrayOld:
 		mov r0, #0
 		pop {pc}
 
-Oracle:
-	push	{lr}
-	bl checkSkip
-	cmp r0, #1
-	beq	endOracle
-
-	mov r0, r8
-	mov r1, r7
-		ldr r2, HAS_GOD_SHIELD_FUNC
-		mov lr, r2
-		.short 0xF800
-	cmp r0, #0
-	beq	endOracle
-
-	ldrh	r0, [r4, #4]
-	asr	r0, r0, #1
-	bne jumpOracle
-	mov r0, #1
-jumpOracle:
-	strh	r0, [r4, #4]
-	b	endOracle
-endOracle:
-	pop	{pc}
-	
-	
 Amulet:
 	push {r5, lr}
 	mov	r3, r8
@@ -553,10 +496,15 @@ Xeno:
 	endXeno:
 		bx lr
 
+DEF_DIVIDE_FUNC = (adr+8)
 HAS_INORI_FUNC = (adr+12)
 HAS_INVINCIBLE_FUNC = (adr+28)
 HAS_WARYFIGHTER_FUNC = (adr+36)
 HAS_INORI_OLD_FUNC = (adr+40)
+
+DefDivide:
+	ldr	r3, DEF_DIVIDE_FUNC
+	mov	pc, r3
 
 hasInvincible:
 	ldr	r2, HAS_INVINCIBLE_FUNC

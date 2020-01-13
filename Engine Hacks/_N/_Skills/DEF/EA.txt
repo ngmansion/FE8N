@@ -7,45 +7,25 @@ PUSH
  ORG 0x02b258//元の大盾削除
  SHORT $4770
 
-ORG 0x0369c4
- jumpToHack(DefForecast1)
+ORG 0x0369c4	//戦闘予測
+#incbin 000369c4.gba
 ORG 0x036a46
- SHORT 0x46C0
- jumpToHack(DefForecast2)
+#incbin 00036a46.gba
+SHORT $4688
 
-
-ORG 0x058718
- jumpToHack(DefBattleDisplay1)
+ORG 0x058718	//戦闘画面表示
+#incbin 00058718.gba
 
 ORG 0x058754
- jumpToHack(DefBattleDisplay2)
+#incbin 00058754.gba
 POP
 
+MiddleDef:	//(bl 08089308)
+#incbin MiddleDef.dmp
+POIN DefDivide
 
-
-
-
-DefBattleDisplay1:
-#incbin DefBattleDisplay.dmp
- WORD 0x08058720
- POIN GodShield_hasSkill
- POIN waryFighter_hasSkill
-
-DefBattleDisplay2:
-#incbin DefBattleDisplay.dmp
- WORD 0x0805875c
- POIN GodShield_hasSkill
- POIN waryFighter_hasSkill
-
-DefForecast1:
-#incbin DefForecast.dmp
- WORD 0x080369ce
- POIN GodShield_hasSkill
- POIN waryFighter_hasSkill
- 
-DefForecast2:
-#incbin DefForecast.dmp
- WORD 0x08036a50
+DefDivide:
+#incbin Divide.dmp
  POIN GodShield_hasSkill
  POIN waryFighter_hasSkill
  
@@ -53,14 +33,14 @@ shikkokunori:
  #incbin "inori.dmp"
  POIN BigShield_hasSkill
  POIN HolyShield_hasSkill
- POIN GodShield_hasSkill
+ POIN DefDivide
  POIN Pray_hasSkill
  POIN hasNihil
  POIN set_skillanime_defence
  POIN hasDistantGuard
  POIN hasInvincible
  POIN hasDeflect
- POIN waryFighter_hasSkill
+ POIN 0//waryFighter_hasSkill
  POIN PrayOld_hasSkill
 
 hasInvincible:

@@ -30,6 +30,7 @@ ORG 0x892FC
  #incbin "Savior\GotoRescue.dmp"
  POIN IsRescure
 ORG 0x89308
+ jumpToHack(MiddleDef)
 
 
 //～0x089348
