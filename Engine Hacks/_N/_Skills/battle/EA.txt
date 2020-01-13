@@ -45,7 +45,7 @@ battle_before:
     POIN hasFort
     POIN hasSunder
     POIN HasHeartseeker
-    POIN 0
+    POIN HasDaunt
     POIN hasBond
     POIN hasAtrocity
     
@@ -66,6 +66,10 @@ battle_down:
   POIN hasDoubleLion
   POIN hasSavageBlow
   POIN hasRagingStorm
+
+HasDaunt:
+    HAS_NIHIL
+    WORD DauntID
 
 HasHeartseeker:
     HAS_NIHIL
