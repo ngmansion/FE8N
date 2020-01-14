@@ -72,7 +72,7 @@ WindSweep:
         mov r1, #FLAG
         and r0, r1
         cmp r0, r1
-        bne cancel
+        bne falseWindSweep
         mov r0, #1
         b endWindSweep
     falseWindSweep:
