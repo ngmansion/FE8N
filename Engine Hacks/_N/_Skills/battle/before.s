@@ -70,6 +70,8 @@ endNoEnemy:
     bl koroshi
     bl DistantDef
     bl CloseDef
+
+    bl WaryFighter
 endNeedEnemy:
 
 @マイナス処理
@@ -80,6 +82,30 @@ RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+WaryFighter:
+        push {lr}
+        ldrb r1, [r4, #0xb]
+        bl GetAttackerAddr
+        ldr r0, [r0]
+        ldrb r0, [r0, #0xb]
+        cmp r0, r1
+        beq falseWaryFighter
+        mov r0, r4
+        mov r1, r5
+        bl HasWaryFighter
+        cmp r0, #0
+        beq falseWaryFighter
+        mov r0, #0
+        mov r1, #98 @回避
+        strh r0, [r4, r1]
+
+        mov r0, #1
+        b endWaryFighter
+    falseWaryFighter:
+        mov r0, #0
+    endWaryFighter:
+        pop {pc}
 
 Daunt:
 @青は赤に対して効く
@@ -697,11 +723,11 @@ DistantDef:
         cmp r0, #1
         ble endDistantDef
         
-        mov r0, r4
-        ldrb r0, [r0, #11]
-        ldr r1, Attacker_Adr
-        ldr r1, [r1]
+        mov r1, r4
         ldrb r1, [r1, #11]
+        bl GetAttackerAddr
+        ldr r0, [r0]
+        ldrb r0, [r0, #11]
         cmp r0, r1
         beq endDistantDef	@攻撃者と一致
         
@@ -729,11 +755,11 @@ CloseDef:
         cmp r0, #1
         bne endCloseDef
         
-        mov r0, r4
-        ldrb r0, [r0, #11]
-        ldr r1, Attacker_Adr
-        ldr r1, [r1]
+        mov r1, r4
         ldrb r1, [r1, #11]
+        bl GetAttackerAddr
+        ldr r0, [r0]
+        ldrb r0, [r0, #11]
         cmp r0, r1
         beq endCloseDef	@攻撃者と一致
         
@@ -860,7 +886,7 @@ kishin:
     cmp r0, #0
     beq falseKishin
     
-    ldr r0, Attacker_Adr
+    bl GetAttackerAddr
     ldr r0, [r0]
     ldrb r0, [r0, #0xB]
     
@@ -894,7 +920,7 @@ kongou:
     cmp r0, #0
     beq falseKongou
     
-    ldr r0, Attacker_Adr
+    bl GetAttackerAddr
     ldr r0, [r0]
     ldrb r0, [r0, #0xB]
     
@@ -924,7 +950,7 @@ Hien:
     cmp r0, #0
     beq falseHien
     
-    ldr r0, Attacker_Adr
+    bl GetAttackerAddr
     ldr r0, [r0]
     ldrb r0, [r0, #0xB]
     
@@ -1001,8 +1027,6 @@ endBreaker:
 .align
 Range_Adr:
 .long 0x0203a4d2
-Attacker_Adr:
-.long 0x03004df0
 Equipment_Adr:
 .long 0x080172f0
 
@@ -1015,7 +1039,8 @@ SHISHI_ADR = (adr+4)
 @LANCE_F_ADR = (adr+52)
 @AXE_F_ADR = (adr+56)
 @BOW_F_ADR = (adr+60)
-@ANIMA_F_ADR = (adr+64)
+
+WARYFIGHTER_ADR = (adr+64)
 
 FLY_E_ADR = (adr+68)
 ARMOR_E_ADR = (adr+72)
@@ -1033,6 +1058,12 @@ DAUNT_ADR = (adr+116)
 HAS_BOND_ADR = (adr+120)
 HAS_ATROCITY_ADR = (adr+124)
 
+GetAttackerAddr:
+    ldr r0, =0x03004df0
+    bx lr
+HasWaryFighter:
+    ldr r2, WARYFIGHTER_ADR
+	mov pc, r2
 HasDaunt:
     ldr r2, DAUNT_ADR
 	mov pc, r2

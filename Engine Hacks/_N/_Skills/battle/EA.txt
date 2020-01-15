@@ -32,7 +32,7 @@ battle_before:
     POIN 0
     POIN 0
     POIN 0
-    POIN 0
+    POIN waryFighter_hasSkill
     POIN hasGrounder
     POIN hasHelmSplitter
     POIN hasKnightkneeler
