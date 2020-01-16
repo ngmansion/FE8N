@@ -1,9 +1,6 @@
 DEFENDER_DAMAGE = (10)
 
 
-
-
-
 FLY_E2_ID = (0x2D)	@てつのゆみ
 ARMOR_E2_ID = (0x26)	@ハンマー
 HORSE_E2_ID = (0x1B)	@ホースキラー
@@ -48,6 +45,7 @@ gotSkill:
 	bl Solo
 	bl Fort
     bl Bond
+    bl BladeSession
 endNoEnemy:
 
 @相手の存在をチェック
@@ -70,6 +68,7 @@ endNoEnemy:
     bl koroshi
     bl DistantDef
     bl CloseDef
+    bl ShieldSession
 
     bl WaryFighter
 endNeedEnemy:
@@ -82,6 +81,210 @@ RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+ShieldSession:
+        push {r5, r6, r7, lr}
+
+        mov r1, r4
+        ldrb r1, [r1, #11]
+        bl GetAttackerAddr
+        ldr r0, [r0]
+        ldrb r0, [r0, #11]
+        cmp r0, r1
+        beq endShieldSession	@攻撃者と一致
+
+        mov r0, r4
+        mov r1, r5
+        bl HasShieldSession
+        cmp r0, #0
+        beq endShieldSession
+    
+        mov r7, #0
+        ldrb r0, [r4, #0xB]
+        lsl r0, r0, #24
+        bmi isRedShieldSession
+        mov r6, #0x80
+    
+        bl ShieldSession_impl
+        b calcShieldSession
+    isRedShieldSession:
+        mov r6, #0x00
+        bl ShieldSession_impl
+        mov r6, #0x40
+        bl ShieldSession_impl
+    calcShieldSession:
+        mov r0, #6
+        mov r1, #2
+        mul r1, r7
+        sub r0, r1
+        bgt jumpShieldSession
+        mov r0, #0
+    jumpShieldSession:
+        mov r1, #92
+        ldrh r2, [r4, r1]
+        add r2, r0
+        strh r2, [r4, r1]
+    endShieldSession:
+        pop {r5, r6, r7, pc}
+
+ShieldSession_impl:
+        push {lr}
+    loopShieldSession:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq resultShieldSession  @リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopShieldSession @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopShieldSession @死亡判定2
+        ldr r0, [r5, #0xC]
+        bl GetExistFlagR1
+        tst r0, r1
+        bne loopShieldSession
+        mov r1, #0x2
+        tst r0, r1
+        beq loopShieldSession  @未行動
+
+        mov r0, #2  @2マス指定
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopShieldSession
+        add r7, #1
+        b loopShieldSession
+    resultShieldSession:
+        pop {pc}
+
+BladeSession:
+        push {r5, r6, r7, lr}
+        bl BladeSessionOne  @自己強化
+        bl BladeSessionAll  @周囲強化
+        pop {r5, r6, r7, pc}
+
+BladeSessionAll:
+        push {lr}
+        ldrb r6, [r4, #0xB]
+        mov r0, #0xC0
+        and r6, r0  @r6に部隊表ID
+       
+    loopBladeSessionAll:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq falseBladeSessionAll  @リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopBladeSessionAll @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopBladeSessionAll @死亡判定2
+        ldrb r0, [r4, #0xB]
+        ldrb r1, [r5, #0xB]
+        cmp r0, r1
+        beq loopBladeSessionAll @自分
+        ldr r0, [r5, #0xC]
+        bl GetExistFlagR1
+        tst r0, r1
+        bne loopBladeSessionAll @居ない
+        mov r1, #0x2
+        tst r0, r1
+        beq loopBladeSessionAll  @未行動
+        mov r0, r5
+        mov r1, #0
+        bl HasBladeSession
+        cmp r0, #0
+        beq loopBladeSessionAll
+  
+        mov r0, #2  @2マス指定
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        bne trueBladeSessionAll
+        b loopBladeSessionAll
+    trueBladeSessionAll:
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #3
+        strh r0, [r4, r1]
+        mov r1, #94
+        ldrh r0, [r4, r1]
+        add r0, #3
+        strh r0, [r4, r1]
+    falseBladeSessionAll:
+        pop {pc}
+
+BladeSessionOne:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HasBladeSession
+        cmp r0, #0
+        beq falseBladeSession
+
+        ldrb r6, [r4, #0xB]
+        mov r0, #0xC0
+        and r6, r0  @r6に部隊表ID
+
+        mov r7, #0
+    loopBladeSession:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq resultBladeSession  @リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopBladeSession @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopBladeSession @死亡判定2
+        ldrb r0, [r4, #0xB]
+        ldrb r1, [r5, #0xB]
+        cmp r0, r1
+        beq loopBladeSession @自分
+        ldr r0, [r5, #0xC]
+        bl GetExistFlagR1
+        tst r0, r1
+        bne loopBladeSession
+        mov r1, #0x2
+        tst r0, r1
+        beq loopBladeSession  @未行動
+  
+        mov r0, #2  @2マス指定
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopBladeSession
+        add r7, #1
+        b loopBladeSession
+    resultBladeSession:
+        mov r2, #3
+        mul r2, r7
+        cmp r2, #9
+        ble limitBladeSession
+        mov r2, #9
+    limitBladeSession:
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, r2
+        strh r0, [r4, r1] @自分
+        mov r1, #94
+        ldrh r0, [r4, r1]
+        add r0, r2
+        strh r0, [r4, r1] @自分
+    falseBladeSession:
+        pop {pc}
 
 WaryFighter:
         push {lr}
@@ -1035,8 +1238,8 @@ SAVIOR_ADR = (adr+44)
 
 SHISHI_ADR = (adr+4)
 
-@SWORD_F_ADR = (adr+48)
-@LANCE_F_ADR = (adr+52)
+BLADE_SESSION_ADDR = (adr+48)
+SHIELD_SESSION_ADDR = (adr+52)
 @AXE_F_ADR = (adr+56)
 @BOW_F_ADR = (adr+60)
 
@@ -1058,6 +1261,12 @@ DAUNT_ADR = (adr+116)
 HAS_BOND_ADR = (adr+120)
 HAS_ATROCITY_ADR = (adr+124)
 
+HasBladeSession:
+    ldr r2, BLADE_SESSION_ADDR
+	mov pc, r2
+HasShieldSession:
+    ldr r2, SHIELD_SESSION_ADDR
+	mov pc, r2
 GetAttackerAddr:
     ldr r0, =0x03004df0
     bx lr

@@ -33,7 +33,7 @@
 #define DistantDefID 31 //0x1f遠距離防御
 #define DeflectID 32  //0x20連撃防御
 #define DesperationID 33 //0x21攻め立て
-//#define BlitzkriegID 34 //0x22電撃戦
+#define BladeSessionID 34 //0x22 刃のセッション
 #define LifetakerID 35 //0x23生命吸収
 #define LifeAndDeathID 36 //0x24死線
 #define DeathBlowID 37 //0x25鬼神の一撃
@@ -55,6 +55,7 @@
 #define FortID 53 //0x35 城塞
 #define LullID 54 //0x36 凪
 #define BondID 55 //0x37 絆
+#define ShieldSessionID 56 //0x38 盾のセッション
 
 
 #define AstraID 64 //0x40流星
@@ -130,4 +131,5 @@
 #define StaffSavantID 134 //0x86 無限の杖
 #define SaviorID 135 //0x87 運び屋
 #define HeartseekerID 136//0x88 呪縛
+
 
