@@ -385,14 +385,24 @@ JudgePray:
 		bl HasPray
 		cmp r0, #0
 		beq	inactivePray
-		mov r3, r8
+		mov r0, r8
+		ldrb r0, [r0, #0xb]
+		bl Get_Status
+		mov r3, r0
+
     	mov r0, #0x13
-    	ldrb r0, [r3, r0]	@現在HP
+    	ldrb r0, [r3, r0]	@戦闘前現在HP
+
     	mov r1, #0x12
     	ldrb r1, [r3, r1]	@最大HP
     	lsl r0, r0, #1
     	cmp r0, r1
     	blt inactivePray
+		mov r3, r8
+    	mov r0, #0x13
+    	ldrb r0, [r3, r0]	@現在HP
+		cmp r0, #1
+		ble inactivePray
 		b activePray
 
 JudgePrayOld:
@@ -521,6 +531,10 @@ mov pc, r2
 HasWaryFighter:
 ldr	r2, HAS_WARYFIGHTER_FUNC
 mov	pc, r2
+
+Get_Status:
+	ldr r1, =0x08019108
+	mov pc, r1
 
 $08016894:
 ldr	r1, =0x08016894
