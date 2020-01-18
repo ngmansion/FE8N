@@ -67,6 +67,13 @@ battle_down:
   POIN hasSavageBlow
   POIN hasRagingStorm
 
+ChangeMagic:
+ #incbin ChangeMagic.dmp
+ POIN HasSoulblade
+
+HasSoulblade:
+    HAS_NIHIL
+    WORD SoulbladeID
 HasBladeSession:
     HAS_NIHIL
     WORD BladeSessionID

@@ -8,6 +8,12 @@ ORG	0x2aae4
 ORG	0x2a9c6
 #incbin "mahoken.gba"
 
+ORG 0x02a9dc
+#incbin 2a9dc.gba
+
+ORG 0x02acf0
+jumpToHack(MagicDefDivide)
+
 ///////////////Sランク補正
 ORG	0x02acc8
 	jumpToHack(weapon_bonus)
@@ -17,7 +23,12 @@ ORG	0x02acc8
 ORG 0x075bb6	//CC画面の処理(実際の減少処理は別にある)
 	SHORT $7A18
 
+
 POP
+
+MagicDefDivide:
+#incbin DefDivide.dmp
+POIN ChangeMagic
 
 weapon_bonus:
 	#incbin weapon_bonus.dmp

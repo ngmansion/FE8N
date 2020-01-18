@@ -131,5 +131,5 @@
 #define StaffSavantID 134 //0x86 無限の杖
 #define SaviorID 135 //0x87 運び屋
 #define HeartseekerID 136//0x88 呪縛
-
+#define SoulbladeID 137//0x89 魔刃
 
