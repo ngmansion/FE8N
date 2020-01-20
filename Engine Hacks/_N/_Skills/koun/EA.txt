@@ -7,11 +7,10 @@ POP
 
 ALIGN 4
 sli_koun:
-#incbin "koun.gba"
-    POIN hasNihil
+#incbin koun.dmp
     POIN hasFortune
     
 hasFortune:
-    HAS_SKILL
+    HAS_NIHIL
     WORD FortuneID
 ALIGN 4

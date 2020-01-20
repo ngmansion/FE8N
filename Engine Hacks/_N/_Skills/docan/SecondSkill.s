@@ -71,7 +71,7 @@ cancel:
 ikari: @怒り
 	    push {lr}
 	    ldr r0, [r7, #76]
-	    mov r1, #0x90
+	    mov r1, #0xC0
 	    and r0, r1
 	    bne falseW @反撃不可武器と魔法剣は無視
 	
@@ -86,26 +86,16 @@ ikari: @怒り
 
 		mov r0, r7
 		mov r1, r8
-			ldr r2, ADDRESS+4 @怒り
-			mov lr, r2
-			.short 0xF800
+		bl HasWrath
 		cmp r0, #0
 		beq falseW
 
 		mov r0, r8
-			ldr r1, ADDRESS+12 @強運
-			mov lr, r1
-			.short 0xF800
-		cmp r0, #0
-		beq gotWarth	@強運なし
+		mov r1, r7
+		bl HasFortune
+		cmp r0, #1
+		beq falseW	@強運所持
 
-		mov r0, r7
-			ldr r1, ADDRESS+8 @見切り
-			mov lr, r1
-			.short 0xF800
-		cmp r0, #0
-		beq falseW	@強運無効化失敗
-	gotWarth:
 	    mov r0, #0x13
 	    ldrb r0, [r7, r0]	@現在HP
 	    mov r1, #0x12
@@ -120,6 +110,14 @@ ikari: @怒り
 	    strh r0, [r5, #12]
 	falseW:
 	    pop {pc}
+
+HasWrath:
+	ldr r2, ADDRESS+4 @怒り
+	mov pc, r2
+HasFortune:
+	ldr r2, ADDRESS+8 @強運
+	mov pc, r2
+
 
 .align
 B_WEAPON_ABILITY:

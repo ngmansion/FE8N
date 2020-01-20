@@ -10,7 +10,6 @@ docan:
 #incbin SecondSkill.dmp
 POIN hasCancel
 POIN hasWrath
-POIN hasNihil
 POIN hasFortune
 
 hasCancel:
