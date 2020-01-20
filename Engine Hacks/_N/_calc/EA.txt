@@ -19,7 +19,7 @@ ORG	0x2a9c6
 #incbin "mahoken.gba"
 
 ORG 0x02a9dc
-#incbin 2a9dc.gba
+  BL(0x02acf0)
 
 ORG 0x02acf0
 jumpToHack(MagicDefDivide)
