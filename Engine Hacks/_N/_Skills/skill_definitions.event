@@ -77,7 +77,7 @@
 #define DragonFungID 80//0x50竜穿
 #define StealID 81//0x51盗む(表示のみ)
 #define LocktouchID 82//0x52カギ開け(表示のみ)
-#define CritUpID 83//0x53必殺上昇(表示のみ)
+#define CritUpID 83//0x53必殺上昇
 #define LethalityID 84//0x54瞬殺(表示のみ)
 #define SummonID 85//0x55召喚(表示のみ)
 #define DanceID 86//0x56踊る(表示のみ)
@@ -132,4 +132,5 @@
 #define SaviorID 135 //0x87 運び屋
 #define HeartseekerID 136//0x88 呪縛
 #define SoulbladeID 137//0x89 魔刃
+#define AvoidUpID 138 //0x8A 回避上昇
 

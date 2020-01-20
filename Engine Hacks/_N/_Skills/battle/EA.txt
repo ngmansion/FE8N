@@ -30,8 +30,8 @@ battle_before:
     POIN hasDefender
     POIN HasBladeSession
     POIN HasShieldSession
-    POIN 0
-    POIN 0
+    POIN HasAvoidUp
+    POIN HasCriticalUp
     POIN waryFighter_hasSkill
     POIN hasGrounder
     POIN hasHelmSplitter
@@ -67,6 +67,13 @@ battle_down:
   POIN hasSavageBlow
   POIN hasRagingStorm
 
+HasCriticalUp:
+    HAS_NIHIL
+    WORD CritUpID
+HasAvoidUp:
+    HAS_NIHIL
+    WORD AvoidUpID
+
 ChangeMagic:
  #incbin ChangeMagic.dmp
  POIN HasSoulblade
@@ -74,6 +81,7 @@ ChangeMagic:
 HasSoulblade:
     HAS_NIHIL
     WORD SoulbladeID
+
 HasBladeSession:
     HAS_NIHIL
     WORD BladeSessionID

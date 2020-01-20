@@ -4,6 +4,16 @@ PUSH
 ORG	0x2aae4
 #incbin "kousoku.gba"
 
+
+//////////////////回避計算
+ORG	0x02ab54
+#incbin avoid.dmp
+
+
+//////////////////必殺計算
+ORG	0x02ab94
+#incbin critical.dmp
+
 //////////////////魔法剣攻撃時の守備・魔防判定を武器種で切り換える
 ORG	0x2a9c6
 #incbin "mahoken.gba"

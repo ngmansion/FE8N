@@ -19,6 +19,8 @@ BL_GETITEMEFFECTIVE = (0x08017478)
 @ステータス画面にも影響がある
 @相手が存在するとは限らない(ダミーかもしれない)
 .thumb
+    bl AvoidUp
+    
 @闘技場チェック
 	bl GetAlinaAdr
     ldrh r0, [r0]
@@ -46,6 +48,7 @@ gotSkill:
 	bl Fort
     bl Bond
     bl BladeSession
+
 endNoEnemy:
 
 @相手の存在をチェック
@@ -81,6 +84,34 @@ RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+CriticalUp:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HasCriticalUp
+        cmp r0, #0
+        beq falseCritical    
+        mov r1, #102
+        ldrh r0, [r4, r1]
+        add r0, #15
+        strh r0, [r4, r1] @自分
+    falseCritical:
+        pop {pc}
+    
+AvoidUp:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HasAvoidUp
+        cmp r0, #0
+        beq falseAvoid    
+        mov r1, #98
+        ldrh r0, [r4, r1]
+        add r0, #15
+        strh r0, [r4, r1] @自分
+    falseAvoid:
+        pop {pc}
 
 ShieldSession:
         push {r5, r6, r7, lr}
@@ -1240,8 +1271,8 @@ SHISHI_ADR = (adr+4)
 
 BLADE_SESSION_ADDR = (adr+48)
 SHIELD_SESSION_ADDR = (adr+52)
-@AXE_F_ADR = (adr+56)
-@BOW_F_ADR = (adr+60)
+HAS_AVOIDUP_ADDR = (adr+56)
+HAS_CRITICALUP_ADDR = (adr+60)
 
 WARYFIGHTER_ADR = (adr+64)
 
@@ -1261,6 +1292,12 @@ DAUNT_ADR = (adr+116)
 HAS_BOND_ADR = (adr+120)
 HAS_ATROCITY_ADR = (adr+124)
 
+HasCriticalUp:
+    ldr r2, HAS_CRITICALUP_ADDR
+    mov pc, r2
+HasAvoidUp:
+    ldr r2, HAS_AVOIDUP_ADDR
+    mov pc, r2
 HasBladeSession:
     ldr r2, BLADE_SESSION_ADDR
 	mov pc, r2
