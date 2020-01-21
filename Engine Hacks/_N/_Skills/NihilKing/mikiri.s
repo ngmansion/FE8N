@@ -20,72 +20,52 @@ RETURN_ADR = 0x0802a4a6
 	ldrh	r1, [r0, #0]
 	mov	r0, #2
 	and	r0, r1
-	beq	start @独自処理
+	beq	check @独自処理
 	mov	r0, r2
 	bx	lr
-start:
+check:
 	mov r0, lr @戻りアドレス確認
 @除外判定
 	cmp r2, #0
-	bne return @r2は謎。通常は0が入る筈。気味が悪いから0以外なら除外
+	bne return
 	ldr r1, =0x0802b40B @必殺は対象外
 	cmp r0, r1
 	beq return
 	ldr r1, =0x0802b607	@デビルアクスも対象外
 	cmp r0, r1
 	beq return
-@除外判定終了
-	push	{r3, r4, lr}
-	mov	r3, sp
-	ldr r2, =0x0802AFD1 @汎用
-loop: @加攻撃者アドレス取得ループ
-	ldr	r0, [r3]
-	cmp	r0, r2
-	beq	gotA @汎用
-	add	r3, #4
-	b	loop
+	b main	@除外判定終了
 return:
 	push {lr}
 	ldr	r0, =RETURN_ADR
 	mov	pc, r0
 	
+main:
+	push {r3, r4, r5, lr}	@r3は確率。r4,r5は作業用
+	mov	r5, sp
+	ldr r4, =0x0802AFD1 @汎用
+loop: @加攻撃者アドレス取得ループ
+	ldr	r0, [r5]
+	cmp	r0, r4
+	beq	gotA @汎用
+	add	r5, #4
+	b	loop
+
 gotA: @汎用
-	sub r3, #4
-	ldr r2, [r3] @加攻撃者アドレス取得
+	sub r5, #4
+	ldr r4, [r5] @加攻撃者アドレス取得
 hokan:
-	ldr r3, =0x0203a568 @被攻撃者アドレス補間
-	cmp r2, r3
-	bne check
-	ldr r3, =0x0203a4e8 @被攻撃者アドレス補間
-check:
-@大盾チェック
-	mov	r0, sp
-	ldr	r0, [r0, #24]
-	ldr	r1, =0x0802B3B9	@(元の)大盾は専用
-	cmp	r0, r1
-	beq	Reverse
-@独自のディフェンスチェック
-	mov r0, r10
-	cmp r0, #DEFENSE_FLAG
-	beq Reverse
-	b nonTATE
-Reverse:
-	eor r3, r2
-	eor r2, r3
-	eor r3, r2
-nonTATE:
-@トライアングルチェック
-	ldr r0, =0x0203a604
-	ldr r0, [r0]
-	ldr r0, [r0]
-	mov r1, #128
-	lsl r1, r1, #3
-	and r0, r1
-	beq nonTri
-	mov r0, #0
-	str r0, [sp] @r3
-	b end
-nonTri:
+	ldr r5, =0x0203a568 @被攻撃者アドレス補間
+	cmp r4, r5
+	bne endHokan
+	ldr r5, =0x0203a4e8 @被攻撃者アドレス補間
+endHokan:
+	bl judgeActive
+	cmp r0, #1
+	bne FALSE
+
+	bl ReverseR4R5IfNeeded	@r4が発動判定者。r5が相手
+
 	mov r0, r10
 	cmp r0, #KORO_FLAG
 	bne notDeath	@瞬殺ではない
@@ -104,14 +84,14 @@ notDeath:
 	beq TRUE @発動率100%
 
 @■ジェノサイド判定
-	ldrb r0, [r3, #11]
+	ldrb r0, [r5, #11]
 	ldr r1, =0x0203a5e8 @ゲノ
 	ldrb r1, [r1]
 	cmp r0, r1
 	beq FALSE		@相手がジェノサイド発動中
 @■見切りチェック
-	mov r0, r3
-	mov r4, r2
+	mov r0, r5
+	mov r1, #0
 		ldr r3, ADDRESS
 		mov lr, r3
 		.short 0xF800
@@ -148,17 +128,69 @@ FALSE:
 	str r0, [sp]
 end:
 	mov r2, #0
-	pop {r3, r4}
+	pop {r3, r4, r5}	@r3は確率
 	ldr r0, =RETURN_ADR
 	mov pc, r0
 
-judgeWar:
-		push {r2, r3, lr}
+ReverseR4R5IfNeeded:
+	@大盾チェック
+		mov	r0, sp
+		ldr	r0, [r0, #24]
+		ldr	r1, =0x0802B3B9	@(元の)大盾は専用
+		cmp	r0, r1
+		beq	Reverse
+	@独自のディフェンスチェック
+		mov r0, r10
+		cmp r0, #DEFENSE_FLAG
+		bne notReverse
+	Reverse:
+		eor r5, r4
+		eor r4, r5
+		eor r5, r4
+	notReverse:
+		bx lr
 
-		ldrb r0, [r2, #27]
+judgeActive:
+		push {lr}
+
+        ldr r0, =0x0203a604
+        ldr r0, [r0]
+        ldr r0, [r0]
+        mov r1, #128
+        lsl r1, r1, #3
+        and r0, r1
+        bne inactive	@トライアングルアタック発動中は無効
+
+        ldr r0, [r4, #76]
+        mov r1, #0xC0
+        and r0, r1
+        bne inactive	@反撃不可武器と魔法剣は無効
+
+		mov r0, r4
+		add r0, #74
+		ldrh r0, [r0]
+		bl GetWeaponAbility
+		cmp r0, #3
+		beq inactive	@イクリプスは無効
+		mov r0, #1
+		b active
+
+	inactive:
+		mov r0, #0
+	active:
+		pop {pc}
+
+GetWeaponAbility:
+	ldr r1, =0x080174cc
+	mov pc, r1
+
+judgeWar:
+		push {lr}
+
+		ldrb r0, [r4, #27]
 		cmp r0, #0
 		bne jumpWar
-		ldr r0, [r2, #12]
+		ldr r0, [r4, #12]
 		mov r1, #0x10
 		and r0, r1
 		cmp r0, r1
@@ -170,11 +202,11 @@ judgeWar:
 		bne falseWar	@奥義以外は除外
 
 		mov r1, #WAR_ADR
-		ldrb r0, [r2, r1]
+		ldrb r0, [r4, r1]
 		cmp r0, #0xFF
 		bne falseWar
 
-		mov r0, r2
+		mov r0, r4
 		mov r1, #0
 		bl hasSunder
 		cmp r0, #0
@@ -185,7 +217,7 @@ judgeWar:
 	falseWar:
 		mov r0, #0
 	endWar:
-		pop {r2, r3, pc}
+		pop {pc}
 
 ace_func:
 		push {lr}
@@ -273,7 +305,7 @@ judgeDeath:
 	cmp r0, #0
 	beq falseDeath	@0なら不発
 	mov r1, #WAR_ADR
-	ldrb r0, [r2, r1]
+	ldrb r0, [r4, r1]
 	
 	mov r1, #WAR_FLAG
 	and r0, r1
