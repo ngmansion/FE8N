@@ -19,7 +19,6 @@ renzokua:
 #incbin "Adept_v01.dmp"
 POIN hasAdept
 POIN bolting_impl
-POIN hasNihil
 POIN hasDoubleLion
 
 yosoku:
@@ -29,7 +28,7 @@ yosoku:
 
 
 hasAdept:
-    HAS_SKILL
+    HAS_NIHIL
     WORD AdeptID
     
 bolting_impl:
