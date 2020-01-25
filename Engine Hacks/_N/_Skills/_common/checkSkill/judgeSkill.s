@@ -59,7 +59,7 @@ judgeList: @リストチェック
 		add r6, r0
 	@ユニット
 		add r6, #4
-		ldr r0, [r6]
+		ldr r2, [r6]
 		ldr r1, [r4]
 		ldrb r1, [r1, #4]
 		bl Listfunc
@@ -67,7 +67,7 @@ judgeList: @リストチェック
 		beq returnList
 	@クラス
 		add r6, #4
-		ldr r0, [r6]
+		ldr r2, [r6]
 		ldr r1, [r4, #4]
 		ldrb r1, [r1, #4]
 		bl Listfunc
@@ -76,12 +76,11 @@ judgeList: @リストチェック
 	@武器
 		add r6, #4
 		
-		mov r0, r4
 		bl GetWeapon
 		lsl r1, r0, #24
 		lsr r1, r1, #24
 
-		ldr r0, [r6]
+		ldr r2, [r6]
 		bl Listfunc
 		cmp r0, #1
 		beq returnList
@@ -94,38 +93,37 @@ judgeList: @リストチェック
 		pop {r6, pc}
 
 Listfunc:
-@r0 = リスト先頭ポインタ
+@r2 = リスト先頭ポインタ
 @r1 = 検索キー
 	whileLoop:
-		ldrb r2, [r0]
-		cmp r2, #0
-		beq falseLoop
-		cmp r1, r2
+		ldrb r0, [r2]
+		cmp r0, #0
+		beq endLoop
+		cmp r0, r1
 		beq trueLoop
-		add r0, #1
+		add r2, #1
 		b whileLoop
-	falseLoop:
-		mov r0, #0
-		bx lr
 	trueLoop:
 		mov r0, #1
+	endLoop:
 		bx lr
 
 GetWeapon:
 		ldr r1, =0x0203a4e8
-		cmp r0, r1
+		cmp r4, r1
 		beq notWeapon
 		ldr r1, =0x0203a568
-		cmp r0, r1
+		cmp r4, r1
 		beq notWeapon
 		push {lr}
+			mov r0, r4
 			ldr r1, =0x080168d0
 			mov lr, r1
 			.short 0xF800
 		pop {pc}
 	notWeapon:
 		mov r1, #74
-		ldrh r0, [r0, r1]
+		ldrh r0, [r4, r1]
 		bx lr
 
 JudgeWpLv:
