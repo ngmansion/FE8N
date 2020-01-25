@@ -24,9 +24,9 @@ ORG 0x02a9dc
 ORG 0x02acf0
 jumpToHack(MagicDefDivide)
 
-///////////////Sランク補正
-ORG	0x02acc8
-	jumpToHack(weapon_bonus)
+///////////////武器レベル補正
+ORG	0x02acc4
+	jumpToHack(weapon_bonus_func)
 
 ///////////////level_down
 
@@ -40,8 +40,22 @@ MagicDefDivide:
 #incbin DefDivide.dmp
 POIN ChangeMagic
 
-weapon_bonus:
+weapon_bonus_func:
 	#incbin weapon_bonus.dmp
+	POIN weapon_bonus_original
+	POIN weapon_bonus_three_house
+//	POIN weapon_bonus_N
+	POIN 0 //末尾
+	
+	
+weapon_bonus_original:
+#incbin weapon_bonus_original.dmp
+ALIGN 4
+weapon_bonus_three_house:
+#incbin weapon_bonus_three_house.dmp
+ALIGN 4
+weapon_bonus_N:
+#incbin weapon_bonus_N.dmp
 ALIGN 4
 
 
