@@ -33,12 +33,7 @@ ORG	0x02acc4
 ORG 0x075bb6	//CC画面の処理(実際の減少処理は別にある)
 	SHORT $7A18
 
-
 POP
-
-MagicDefDivide:
-#incbin DefDivide.dmp
-POIN ChangeMagic
 
 weapon_bonus_func:
 	#incbin weapon_bonus.dmp
@@ -46,16 +41,11 @@ weapon_bonus_func:
 	POIN weapon_bonus_three_house
 //	POIN weapon_bonus_N
 	POIN 0 //末尾
-	
-	
-weapon_bonus_original:
-#incbin weapon_bonus_original.dmp
-ALIGN 4
-weapon_bonus_three_house:
-#incbin weapon_bonus_three_house.dmp
-ALIGN 4
-weapon_bonus_N:
-#incbin weapon_bonus_N.dmp
-ALIGN 4
 
+MagicDefDivide:
+#incbin DefDivide.dmp
+POIN ChangeMagic
+
+
+#include "weapon_bonus\EA.txt"
 

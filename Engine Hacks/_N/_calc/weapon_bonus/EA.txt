@@ -1,0 +1,10 @@
+	
+weapon_bonus_original:
+#incbin weapon_bonus_original.dmp
+ALIGN 4
+weapon_bonus_three_house:
+#incbin weapon_bonus_three_house.dmp
+ALIGN 4
+weapon_bonus_N:
+#incbin weapon_bonus_N.dmp
+ALIGN 4
