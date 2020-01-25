@@ -757,11 +757,9 @@ CheckXY:
         cmp r2, r0
         bgt falseCheckXY    @r0マス以内に居ない
         mov r0, #1
-        b endCheckXY
-
+        bx lr
     falseCheckXY:
         mov r0, #0
-    endCheckXY:
         bx lr
 
 Get_Status:
@@ -772,16 +770,19 @@ Get_Status:
 
 Ace:
 	push {lr}
-	mov r0, r4
-	bl HasAce
-	cmp	r0, #0
-	beq	endAce
 
 	ldrb	r0, [r4, #0x13]	@NOW
 	ldrb	r1, [r4, #0x12]	@MAX
 	lsl	r0, r0, #1
 	cmp	r0, r1
 	bgt	endAce
+
+	mov r0, r4
+    mov r1, #0
+	bl HasAce
+	cmp	r0, #0
+	beq	endAce
+
     mov r1, #90
     ldrh r0, [r4, r1]
     add r0, #8
@@ -919,12 +920,6 @@ falseEffective_impl:
 Savior:
         push {lr}
         
-        mov r0, r4
-        mov r1, #0
-        bl HasSavior
-        cmp r0, #0
-        beq endSavior
-        
         ldr r0, [r4, #12]
         mov r1, #0x10
         and r0, r1
@@ -939,6 +934,12 @@ Savior:
         lsr r1, r1, #30
         cmp r0, r1
         bne endSavior
+
+        mov r0, r4
+        mov r1, #0
+        bl HasSavior
+        cmp r0, #0
+        beq endSavior
         
         mov r1, #92
         ldrh r0, [r4, r1]

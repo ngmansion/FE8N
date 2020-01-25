@@ -83,19 +83,19 @@ Listfunc:
 		cmp r0, #0
 		beq endLoop
 		cmp r1, #0
-		beq endLoop
+		beq falseLoop
 		mov r2, r0
 	whileLoop:
 		ldrb r0, [r2]
 		cmp r0, #0
-		beq falseLoop
+		beq endLoop
 		cmp r0, r1
 		beq trueLoop
 		add r2, #1
 		b whileLoop
 	falseLoop:
 		mov r0, #0
-		b endLoop
+		bx lr
 	trueLoop:
 		mov r0, #1
 	endLoop:

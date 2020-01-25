@@ -31,7 +31,7 @@ jumpUnit: @自軍以外チェック
     beq ouiUnit
 nonUnit:
 	mov r0, #0
-	b endUnit
+    pop {r4, pc}
 ouiUnit:
     mov r0, #1
 endUnit:

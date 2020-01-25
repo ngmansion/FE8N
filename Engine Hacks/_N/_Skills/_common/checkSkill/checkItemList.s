@@ -8,36 +8,36 @@
 	forItem:
 		cmp r5, #6
 		bge falseItem
-			mov r0, r6
-			lsl r1, r5, #1
-			add r1, #30
-			ldrb r1, [r4, r1]
+			lsl r0, r5, #1
+			ldrb r0, [r4, #30]
+			cmp r0, #0
+			beq endItem
+			mov r1, r6
 			bl Listfunc
 			cmp r0, #1
-			beq trueItem
+			beq endItem
 		add r5, #1
 		b forItem
 
 	falseItem:
 		mov r0, #0
 		b endItem
-	trueItem:
-		mov r0, #1
 	endItem:
 		pop {r4, r5, r6, pc}
 
 
 Listfunc:
-@r0 = リスト先頭ポインタ
-@r1 = 検索キー
+@r0 = 検索キー
+@r1 = リスト先頭ポインタ
+
 		cmp r0, #0
 		beq endLoop
 		cmp r1, #0
-		beq endLoop
-		mov r2, r0
+		beq falseLoop
+		mov r2, r1
 	whileLoop:
-		ldrb r0, [r2]
-		cmp r0, #0
+		ldrb r1, [r2]
+		cmp r1, #0
 		beq falseLoop
 		cmp r0, r1
 		beq trueLoop
@@ -45,8 +45,9 @@ Listfunc:
 		b whileLoop
 	falseLoop:
 		mov r0, #0
-		b endLoop
+		bx lr
 	trueLoop:
 		mov r0, #1
 	endLoop:
 		bx lr
+

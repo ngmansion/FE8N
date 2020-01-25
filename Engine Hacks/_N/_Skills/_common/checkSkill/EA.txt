@@ -29,7 +29,8 @@ judgeUnit:
 	
 judgeSkillInUnitData:
 	#incbin judgeSkillInUnitData.dmp
-
+	ALIGN 4
 checkItemList:
 	#incbin checkItemList.dmp
+	ALIGN 4
 

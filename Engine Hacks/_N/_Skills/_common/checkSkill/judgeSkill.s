@@ -11,49 +11,42 @@ CHECK_ITEM_FUNC = ADR+20
 @
 .thumb
 @ユニットデータとスキルIDから、発動可能かを判定する
+    cmp r0, #0
+    bne main
+    bx lr
+main:
     push {r4, r5, lr}
     mov r4, r0
-    lsl r1, r1, #24
-    lsr r1, r1, #24
     mov r5, r1
-@ダミーユニットチェック
-	cmp r4, #0
-    beq false
+
     ldr r0, [r4, #0]
     cmp r0, #0
-    beq false
+    beq return
     ldr r0, [r4, #4]
     cmp r0, #0
-    beq false
+    beq return
 @書チェック
     mov r0, r4
     mov r1, r5
     bl containsSkill
     cmp r0, #1
-    beq true
+    beq return
 @ユニットデータチェック
     mov r0, r4
     mov r1, r5
     bl judgeSkillInUnitData
     cmp r0, #1
-    beq true
+    beq return
 @リストチェック
     mov r0, r4
     mov r1, r5
     bl judgeList
-    cmp r0, #1
-    beq true
 @武器レベルチェック
-    mov r0, r4
-    mov r1, r5
-    bl JudgeWpLv
-    cmp r0, #1
-    beq true
-false:
-    mov r0, #0
-    b return
-true:
-    mov r0, #1
+@    mov r0, r4
+@    mov r1, r5
+@    bl JudgeWpLv
+@    cmp r0, #0
+@    bne true
 return:
     pop {r4, r5, pc}
 
@@ -71,7 +64,7 @@ judgeList: @リストチェック
 		ldrb r1, [r1, #4]
 		bl Listfunc
 		cmp r0, #1
-		beq trueList
+		beq returnList
 	@クラス
 		add r6, #4
 		ldr r0, [r6]
@@ -79,7 +72,7 @@ judgeList: @リストチェック
 		ldrb r1, [r1, #4]
 		bl Listfunc
 		cmp r0, #1
-		beq trueList
+		beq returnList
 	@武器
 		add r6, #4
 		
@@ -91,20 +84,13 @@ judgeList: @リストチェック
 		ldr r0, [r6]
 		bl Listfunc
 		cmp r0, #1
-		beq trueList
+		beq returnList
 	@アイテム
 		add r6, #4
 		mov r0, r4
 		ldr r1, [r6]
 		bl checkItemList	@5か所判定するので1層潜る
-		cmp r0, #1
-		beq trueList
-
-		mov r0, #0
-		b endList
-	trueList:
-		mov r0, #1
-	endList:
+	returnList:
 		pop {r6, pc}
 
 Listfunc:
@@ -113,41 +99,40 @@ Listfunc:
 		cmp r0, #0
 		beq endLoop
 		cmp r1, #0
-		beq endLoop
+		beq falseLoop
 		mov r2, r0
 	whileLoop:
 		ldrb r0, [r2]
 		cmp r0, #0
-		beq falseLoop
+		beq endLoop
 		cmp r0, r1
 		beq trueLoop
 		add r2, #1
 		b whileLoop
 	falseLoop:
 		mov r0, #0
-		b endLoop
+		bx lr
 	trueLoop:
 		mov r0, #1
 	endLoop:
 		bx lr
 
 getWeapon:
-		push {lr}
 		ldr r1, =0x0203a4e8
 		cmp r0, r1
 		beq notWeapon
 		ldr r1, =0x0203a568
 		cmp r0, r1
 		beq notWeapon
+		push {lr}
 			ldr r1, =0x080168d0
 			mov lr, r1
 			.short 0xF800
-		b endWeapon
+		pop {pc}
 	notWeapon:
 		mov r1, #74
 		ldrh r0, [r0, r1]
-	endWeapon:
-		pop {pc}
+		bx lr
 
 JudgeWpLv:
 	push {r4, r5, r6, lr}
