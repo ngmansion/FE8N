@@ -9,7 +9,8 @@
 		cmp r5, #6
 		bge falseItem
 			lsl r0, r5, #1
-			ldrb r0, [r4, #30]
+			add r0, #30
+			ldrb r0, [r4, r0]
 			cmp r0, #0
 			beq endItem
 			mov r1, r6
