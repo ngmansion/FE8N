@@ -77,7 +77,7 @@ judgeList: @リストチェック
 		add r6, #4
 		
 		mov r0, r4
-		bl getWeapon
+		bl GetWeapon
 		lsl r1, r0, #24
 		lsr r1, r1, #24
 
@@ -96,28 +96,22 @@ judgeList: @リストチェック
 Listfunc:
 @r0 = リスト先頭ポインタ
 @r1 = 検索キー
-		cmp r0, #0
-		beq endLoop
-		cmp r1, #0
-		beq falseLoop
-		mov r2, r0
 	whileLoop:
-		ldrb r0, [r2]
-		cmp r0, #0
-		beq endLoop
-		cmp r0, r1
+		ldrb r2, [r0]
+		cmp r2, #0
+		beq falseLoop
+		cmp r1, r2
 		beq trueLoop
-		add r2, #1
+		add r0, #1
 		b whileLoop
 	falseLoop:
 		mov r0, #0
 		bx lr
 	trueLoop:
 		mov r0, #1
-	endLoop:
 		bx lr
 
-getWeapon:
+GetWeapon:
 		ldr r1, =0x0203a4e8
 		cmp r0, r1
 		beq notWeapon
