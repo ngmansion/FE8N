@@ -20,6 +20,7 @@ StatusUpStrength:
 #incbin StatusUp.dmp
 WORD 0x08018ed4	//戻りアドレス
 POIN StrengthWp
+POIN StatusUpSkillStrengthFunc
 POIN SwordfaireFunc
 POIN LancefaireFunc
 POIN AxefaireFunc
@@ -32,32 +33,38 @@ POIN 0	//末尾判定用(追加したかったら上に差し込む)
 StatusUpSkill:
 #incbin StatusUpExceptStrMgc.dmp
 POIN DefaultSkill
+POIN StatusUpSkillSkillFunc
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 StatusUpSpeed:
 #incbin StatusUpExceptStrMgc.dmp
 POIN DefaultSpeed
+POIN StatusUpSkillSpeedFunc
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 
 StatusUpDefense:
 #incbin StatusUpExceptStrMgc.dmp
 POIN DefaultDefense
+POIN StatusUpSkillDefenceFunc
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 StatusUpResistance:
 #incbin StatusUpExceptStrMgc.dmp
 POIN DefaultResistance
+POIN StatusUpSkillResistanceFunc
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 StatusUpLuck:
 #incbin StatusUpExceptStrMgc.dmp
 POIN DefaultLuck
+POIN StatusUpSkillLuckFunc
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 StatusUpHp:
 #incbin StatusUpExceptStrMgc.dmp
 POIN DefaultHp
+POIN StatusUpSkillHPFunc
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 
@@ -65,6 +72,7 @@ StatusUpConstitution:	//魔力パッチ想定用
 #incbin StatusUp.dmp
 POIN ConstitutionStatus	//戻りアドレス
 POIN ConstitutionWp
+POIN StatusUpSkillMagicFunc
 POIN AnimafaireFunc
 POIN LightfaireFunc
 POIN DarkfaireFunc
