@@ -1,4 +1,6 @@
 PUSH
+ORG 0x018ea4
+   jumpToHack(StatusUpHp)
 ORG 0x018ec4
    jumpToHack(StatusUpStrength)
 ORG 0x018ee4
@@ -53,6 +55,11 @@ StatusUpLuck:
 POIN DefaultLuck
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
+StatusUpHp:
+#incbin StatusUpExceptStrMgc.dmp
+POIN DefaultHp
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
+
 
 StatusUpConstitution:	//魔力パッチ想定用
 #incbin StatusUp.dmp
@@ -94,4 +101,7 @@ DefaultLuck:
 #incbin DefaultFunc.dmp
 WORD 0x08018fb4
 
+DefaultHp:
+#incbin DefaultFunc.dmp
+WORD 0x08018eac
 
