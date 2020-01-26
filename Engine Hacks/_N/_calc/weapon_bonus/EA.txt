@@ -8,3 +8,6 @@ ALIGN 4
 weapon_bonus_N:
 #incbin weapon_bonus_N.dmp
 ALIGN 4
+weapon_bonus_AtkSpd:
+#incbin weapon_bonus_AtkSpd.dmp
+ALIGN 4
