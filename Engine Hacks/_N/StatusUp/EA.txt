@@ -1,6 +1,16 @@
 PUSH
 ORG 0x018ec4
    jumpToHack(StatusUpStrength)
+ORG 0x018ee4
+   jumpToHack(StatusUpSkill)
+ORG 0x018f24
+   jumpToHack(StatusUpSpeed)
+ORG 0x018f64
+   jumpToHack(StatusUpDefense)
+ORG 0x018f84
+   jumpToHack(StatusUpResistance)
+ORG 0x018fac
+   jumpToHack(StatusUpLuck)
 POP
 
 
@@ -15,7 +25,34 @@ POIN BowfaireFunc
 POIN AnimafaireFunc
 POIN LightfaireFunc
 POIN DarkfaireFunc
-POIN 0	//末尾判定用
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
+
+StatusUpSkill:
+#incbin StatusUpExceptStrMgc.dmp
+POIN DefaultSkill
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
+
+StatusUpSpeed:
+#incbin StatusUpExceptStrMgc.dmp
+POIN DefaultSpeed
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
+
+
+StatusUpDefense:
+#incbin StatusUpExceptStrMgc.dmp
+POIN DefaultDefense
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
+
+StatusUpResistance:
+#incbin StatusUpExceptStrMgc.dmp
+POIN DefaultResistance
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
+
+StatusUpLuck:
+#incbin StatusUpExceptStrMgc.dmp
+POIN DefaultLuck
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
+
 
 StatusUpConstitution:	//魔力パッチ想定用
 #incbin StatusUp.dmp
@@ -24,7 +61,7 @@ POIN ConstitutionWp
 POIN AnimafaireFunc
 POIN LightfaireFunc
 POIN DarkfaireFunc
-POIN 0	//末尾判定用
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 StrengthWp:
 #incbin StrengthWp.dmp
@@ -36,4 +73,25 @@ ALIGN 4
 ConstitutionStatus:
 #incbin ConstitutionStatus.dmp
 ALIGN 4
+
+DefaultSkill:
+#incbin DefaultFunc.dmp
+WORD 0x08018eec
+
+DefaultSpeed:
+#incbin DefaultFunc.dmp
+WORD 0x08018f2c
+
+DefaultDefense:
+#incbin DefaultFunc.dmp
+WORD 0x08018f6c
+
+DefaultResistance:
+#incbin DefaultFunc.dmp
+WORD 0x08018f8c
+
+DefaultLuck:
+#incbin DefaultFunc.dmp
+WORD 0x08018fb4
+
 

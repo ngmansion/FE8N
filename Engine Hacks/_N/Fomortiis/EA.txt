@@ -2,7 +2,7 @@ fodes_func:
  #incbin loop_func.dmp
  POIN judgeFodes	//フォデスならTRUE
  POIN ImmuneStatus	//スキル持ちならTRUE
- POIN 0	//末尾
+ POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 #define FODES_ID (0x66)
 
