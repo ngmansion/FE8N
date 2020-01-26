@@ -133,4 +133,12 @@
 #define HeartseekerID 136//0x88 呪縛
 #define SoulbladeID 137//0x89 魔刃
 #define AvoidUpID 138 //0x8A 回避上昇
+#define StrengthID 139 //0x8B 力+2
+#define SkillID 140 //0x8C 技+2
+#define SpeedID 141//0x8D 速さ+2
+#define DefenceID 142//0x8E 守備+2
+#define ResistanceID 143//0x8F 魔防+2
+#define LuckID 144//0x90 幸運+4
+#define HPID 145//0x91 HP+5
+#define MagicID 146//0x92 魔力+2
 

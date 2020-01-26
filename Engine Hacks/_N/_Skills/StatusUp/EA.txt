@@ -1,0 +1,60 @@
+
+StatusUpSkillStrengthFunc:
+#incbin StatusUp.dmp
+    WORD 2
+    POIN HasStrength
+StatusUpSkillSkillFunc:
+#incbin StatusUp.dmp
+    WORD 2
+    POIN HasSkill
+StatusUpSkillSpeedFunc:
+#incbin StatusUp.dmp
+    WORD 2
+    POIN HasSpeed
+StatusUpSkillDefenceFunc:
+#incbin StatusUp.dmp
+    WORD 2
+    POIN HasDefence
+StatusUpSkillResistanceFunc:
+#incbin StatusUp.dmp
+    WORD 2
+    POIN HasResistance
+StatusUpSkillLuckFunc:
+#incbin StatusUp.dmp
+    WORD 4
+    POIN HasLuck
+StatusUpSkillHPFunc:
+#incbin StatusUp.dmp
+    WORD 5
+    POIN HasHP
+StatusUpSkillMagicFunc:
+#incbin StatusUp.dmp
+    WORD 2
+    POIN HasMagic
+
+HasStrength:
+ HAS_NIHIL
+ WORD StrengthID
+HasSkill:
+ HAS_NIHIL
+ WORD SkillID
+HasSpeed:
+ HAS_NIHIL
+ WORD SpeedID
+HasDefence:
+ HAS_NIHIL
+ WORD DefenceID
+HasResistance:
+ HAS_NIHIL
+ WORD ResistanceID
+HasLuck:
+ HAS_NIHIL
+ WORD LuckID
+HasHP:
+ HAS_NIHIL
+ WORD HPID
+HasMagic:
+ HAS_NIHIL
+ WORD MagicID
+
+
