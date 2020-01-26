@@ -2,6 +2,7 @@
 
 main:
     push {lr}
+    mov r1, #0
     bl HasStatusUp
     cmp r0, #0
     beq end
