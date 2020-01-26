@@ -49,7 +49,7 @@ loopE:
 
 	bl SkillBook
 
-	bl WpLv	@武器レベル
+@	bl WpLv	@武器レベル
 
 	bl Unit
 
