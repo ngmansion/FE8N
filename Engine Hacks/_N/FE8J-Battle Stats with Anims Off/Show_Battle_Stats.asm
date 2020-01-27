@@ -80,9 +80,20 @@ mul		r2,r3
 ldr		r3,Const_203E1EC
 add		r2,r3
 ldr		r2,[r2]			@the other person
-add		r2,#0x5C
-ldrh	r2,[r2]			@other person's defense
-sub		r0,r0,r2		@damage
+@
+@Hack
+@
+	push {r1}
+	mov		r3,#0x5C
+	ldrh	r3,[r2,r3]		@other person's defense
+	sub		r0,r0,r3		@damage
+	mov r1, r6
+	mov r2, r2
+	bl DefDivide
+	pop {r1}
+@
+@Hacked
+@
 cmp		r0,#0x0
 bge		DisplayDamage
 mov		r0,#0x0
@@ -269,12 +280,17 @@ add		r0,r1
 lsl		r0,#0x1
 bx		r14
 
+DefDivide:
+ldr	r3, Addr
+mov	pc, r3
+
 Get_Battle_Name_Graphics:
-ldr		r0,Battle_Name_Graphics
-ldr		r1,Battle_Name_Graphics+4
+ldr		r0,Addr+4
+ldr		r1,Addr+8
 bx		r14
 
 .align
-Battle_Name_Graphics:
+Addr:
+@POIN
 @.long 0x088025D8
 @Palette
