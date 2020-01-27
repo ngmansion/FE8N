@@ -54,7 +54,7 @@ battle_before:
     
 battle_after:
     #incbin main.dmp
-    POIN 0
+    POIN hasLifeAndDeath
     POIN hasLightBless
     POIN hasDarkBless
     POIN hasNihil

@@ -41,7 +41,6 @@ endNoEnemy:
     beq endNeedEnemy	@相手いない
 
 	bl WarSkill
-	bl shisen_B
 	
     mov	r0, r5
 	bl HasMikiri
@@ -648,23 +647,6 @@ shisen_A:	@自分死線
         mov r0, #0
     endShisen:
         pop {pc}
-
-shisen_B:	@相手死線
-        push {lr}
-        mov r0, r5
-        mov r1, r4
-        bl HasShisen
-        cmp r0, #0
-        beq falseShisen
-        
-        mov r1, r4
-        mov r0, #90
-        ldrh r0, [r1, r0]
-        add r0, #10
-        add r1, #90
-        strh r0, [r1] @自分
-        mov r0, #1
-        b endShisen
 
 
 Solo:

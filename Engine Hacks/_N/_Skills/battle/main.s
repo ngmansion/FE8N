@@ -1,9 +1,5 @@
 PULSE_ID = (0x09) @奥義の鼓動
 
-NIHIL_ADR = (adr+12)
-LULL_ADR = (adr+16)
-
-
 .thumb
 @ 0802ad3c
 @イクリプス等の直前(自分の数値と相手の数値の計算後)
@@ -17,14 +13,13 @@ LULL_ADR = (adr+16)
 
     mov	r0, r6
         ldr r1, NIHIL_ADR
-	    mov lr, r1
-    	.short 0xF800
-    cmp r0, #0
-    bne next
+        mov lr, r1
+        .short 0xF800
+    cmp r0, #1
+    beq next
 
-    mov r0, r4
-    mov r1, r6
     bl Lull
+    bl Shisen_B
     bl QuickenedPulse
     
 next:
@@ -49,20 +44,21 @@ endZero:
     bx r0
 
 Lull:
-        push {r4, r5, lr}
-        mov r4, r0
-        mov r5, r1
+        push {lr}
+
+        mov r0, r4
+        mov r1, #0
         bl HasLull
         cmp r0, #0
         beq endLull
-        mov r0, r5
+        mov r0, r6
         mov r1, r4
         bl recalcAtk
-        mov r0, r5
+        mov r0, r6
         mov r1, r4
         bl recalcSpd
         
-        mov r1, r5
+        mov r1, r6
         add r1, #90
         ldrh r0, [r1]
         sub r0, #2
@@ -71,7 +67,7 @@ Lull:
     jumpAtk:
         strh r0, [r1] @威力
         
-        mov r1, r5
+        mov r1, r6
         add r1, #94
         ldrh r0, [r1]
         sub r0, #2
@@ -81,8 +77,24 @@ Lull:
         strh r0, [r1] @速さ
 
     endLull:
-        pop {r4, r5, pc}
+        pop {pc}
 
+
+Shisen_B:	@相手強化
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HasShisen
+        cmp r0, #0
+        beq endShisen
+        
+        mov r1, r6
+        add r1, #90
+        ldrh r0, [r1]
+        add r0, #10
+        strh r0, [r1] @相手
+    endShisen:
+        pop {pc}
 
 QuickenedPulse:
 	push {lr}
@@ -124,6 +136,14 @@ godBless:
 endBless:
     mov r0, #0
     pop {pc}
+
+SHISEN_ADR = (adr+0)
+NIHIL_ADR = (adr+12)
+LULL_ADR = (adr+16)
+
+HasShisen:
+    ldr r2, SHISEN_ADR
+    mov pc, r2
 
 recalcAtk:
     ldr r2, =0x0802aa28
