@@ -69,9 +69,11 @@ WarSkill:
 		mov	r0, r8
 		bl FodesFunc
 		beq	endWarSkill
-		ldr	r2, [r2]
-		ldr	r2, [r2, #40]
+		mov r0, r8
+		ldr r1, [r0]
 		ldr	r1, [r1, #40]
+		ldr r2, [r0, #4]
+		ldr	r2, [r2, #40]
 		orr	r1, r2
 		lsl	r1, r1, #16
 		bmi	endWarSkill		@敵将に無効
