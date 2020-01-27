@@ -611,7 +611,7 @@ Fort:
         mov r1, r4
         add r1, #92
         ldrh r0, [r1]
-        add r0, #4
+        add r0, #6
         strh r0, [r1] @自分
         
         mov r0, #1
