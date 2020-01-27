@@ -48,6 +48,9 @@ battle_before:
     POIN HasDaunt
     POIN hasBond
     POIN hasAtrocity
+    POIN HasFierceStance
+    POIN HasSteadyStance
+    POIN HasDartingStance
     
 battle_after:
     #incbin main.dmp
@@ -66,6 +69,16 @@ battle_down:
   POIN hasDoubleLion
   POIN hasSavageBlow
   POIN hasRagingStorm
+
+HasFierceStance:
+    HAS_NIHIL
+    WORD 0xFF
+HasSteadyStance:
+    HAS_NIHIL
+    WORD 0xFF
+HasDartingStance:
+    HAS_NIHIL
+    WORD 0xFF
 
 HasCriticalUp:
     HAS_NIHIL
@@ -126,7 +139,7 @@ hasDarkBless:
     WORD DarkBlessID
     
 hasLifeAndDeath:
-    HAS_SKILL
+    HAS_NIHIL
     WORD LifeAndDeathID
     
 hasDeathBlow:
