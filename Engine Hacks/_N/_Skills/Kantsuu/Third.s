@@ -8,16 +8,7 @@ WAR_FLAG2 = (0xFE)	@フラグ
 
 ORACLE_FLAG = (0xDD) 
 
-HAS_DRAGON_FUNC = (adr+0)
-HAS_COLOSSUS_FUNC = (adr+4)
-HAS_VENGEANCE_FUNC = (adr+8)
-HAS_STUN_FUNC = (adr+12)
-HAS_SCREAM_FUNC = (adr+16)
-HAS_IGNIS_FUNC = (adr+20)
-NIHIL = (adr+24)	@見切りアドレス
-SET_SKILLANIME_ATK_FUNC = (adr+28)
-HAS_MAGIC_BIND_FUNC = (adr+32)
-	
+
 	ldr	r2, [r6, #0]
 	ldr	r0, [r2, #0]
 	lsl	r0, r0, #13
@@ -36,9 +27,8 @@ MasterySkill:
 		push {lr}
 
 		mov r0, r8
-			ldr r2, NIHIL
-			mov lr, r2
-			.short 0xF800
+		mov r1, #0
+		bl HasNihil
 		cmp r0, #1
 		beq endMasterySkill @見切り持ち
 		
@@ -68,6 +58,12 @@ WarSkill:
 		cmp r0, r1
 		bne endWarSkill
 
+		mov r0, r8
+		mov r1, #0
+		bl HasNihil
+		cmp r0, #1
+		beq endWarSkill @見切り持ち
+
 		bl FallenStar
 
 		mov	r0, r8
@@ -79,12 +75,6 @@ WarSkill:
 		orr	r1, r2
 		lsl	r1, r1, #16
 		bmi	endWarSkill		@敵将に無効
-		mov r0, r8
-			ldr r1, NIHIL
-			mov lr, r1
-			.short 0xF800
-		cmp r0, #1
-		beq endWarSkill @見切り持ち
 
 		bl Stan
 		cmp r0, #1
@@ -102,9 +92,8 @@ WarSkill:
 Revenge:
 	push {lr}
     mov r0, r7
-        ldr r1, HAS_VENGEANCE_FUNC
-        mov lr, r1
-        .short 0xF800
+	mov r1, #0
+    bl HasVengeance
     cmp r0, #0
     beq endRevenge
 @奥義目印
@@ -124,10 +113,7 @@ Revenge:
 
     mov r0, r7
     ldr r1, HAS_VENGEANCE_FUNC
-    ldr r1, [r1, #12]
-        ldr r2, SET_SKILLANIME_ATK_FUNC
-        mov lr, r2
-        .short 0xF800
+    bl SetAtkSkillAnimation
 	mov r0, #1
 endRevenge:
 	pop {pc}
@@ -135,9 +121,8 @@ endRevenge:
 Dragon:
 	push {lr}
     mov r0, r7
-        ldr r1, HAS_DRAGON_FUNC
-        mov lr, r1
-        .short 0xF800
+    mov r1, #0
+	bl HasDragon
     cmp r0, #0
     beq endDragon
 @奥義目印
@@ -155,10 +140,7 @@ Dragon:
 
     mov r0, r7
     ldr r1, HAS_DRAGON_FUNC
-    ldr r1, [r1, #12]
-        ldr r2, SET_SKILLANIME_ATK_FUNC
-        mov lr, r2
-        .short 0xF800
+    bl SetAtkSkillAnimation
 	mov r0, #1
 endDragon:
 	pop {pc}
@@ -172,9 +154,8 @@ Meido:
 @	b	jump
 @   ボディリングは無視
     mov r0, r7
-        ldr r1, HAS_COLOSSUS_FUNC
-        mov lr, r1
-        .short 0xF800
+	mov r1, #0
+    bl HasColossus
     cmp r0, #0
     beq endMeido
 @奥義目印
@@ -195,10 +176,7 @@ Meido:
 
     mov r0, r7
     ldr r1, HAS_COLOSSUS_FUNC
-    ldr r1, [r1, #12]
-        ldr r2, SET_SKILLANIME_ATK_FUNC
-        mov lr, r2
-        .short 0xF800
+    bl SetAtkSkillAnimation
 	mov r0, #1
 endMeido:
 	pop {pc}
@@ -206,9 +184,8 @@ endMeido:
 Flower:
 	push {lr}
     mov r0, r7
-        ldr r1, HAS_IGNIS_FUNC
-        mov lr, r1
-        .short 0xF800
+	mov r1, #0
+    bl HasIgnis
     cmp r0, #0
     beq endFlower
 @奥義目印
@@ -239,10 +216,7 @@ addStrength:
 mergeFlower:
     mov r0, r7
     ldr r1, HAS_IGNIS_FUNC
-    ldr r1, [r1, #12]
-        ldr r2, SET_SKILLANIME_ATK_FUNC
-        mov lr, r2
-        .short 0xF800
+    bl SetAtkSkillAnimation
 	mov r0, #1
 endFlower:
 	pop {pc}
@@ -251,8 +225,8 @@ endFlower:
 FallenStar:
 		push {lr}
     	mov r0, r7
-		mov r1, r8
-		bl hasFallenStar
+		mov r1, #0
+		bl HasFallenStar
     	cmp r0, #0
     	beq endFallenStar
 		mov	r1, r7
@@ -266,10 +240,8 @@ MagicBind:
 	push {lr}
 
     mov r0, r7
-	mov r1, r8
-        ldr r2, HAS_MAGIC_BIND_FUNC
-        mov lr, r2
-        .short 0xF800
+	mov r1, #0
+    bl HasMagicBind
     cmp r0, #0
     beq endWar
 	
@@ -284,9 +256,8 @@ Stan:
 	push {lr}
 
     mov r0, r7
-        ldr r1, HAS_STUN_FUNC
-        mov lr, r1
-        .short 0xF800
+	mov r1, #0
+    bl HasStan
     cmp r0, #0
     beq endWar
 	
@@ -300,9 +271,8 @@ Stone:
 	push {lr}
 
     mov r0, r7
-        ldr r1, HAS_SCREAM_FUNC
-        mov lr, r1
-        .short 0xF800
+    mov r1, #0
+	bl HasScream
     cmp r0, #0
     beq endWar
 	
@@ -350,10 +320,56 @@ retrun:
 	ldr	r1, =0x0802b3f0
 	mov	pc, r1
 
+HAS_DRAGON_FUNC = (adr+0)
+HAS_COLOSSUS_FUNC = (adr+4)
+HAS_VENGEANCE_FUNC = (adr+8)
+HAS_STUN_FUNC = (adr+12)
+HAS_SCREAM_FUNC = (adr+16)
+HAS_IGNIS_FUNC = (adr+20)
+NIHIL = (adr+24)	@見切りアドレス
+SET_SKILLANIME_ATK_FUNC = (adr+28)
+HAS_MAGIC_BIND_FUNC = (adr+32)
 HAS_FALLENSTAR_FUNC = (adr+36)
 FODES_FUNC = (adr+40)
+	
+HasNihil:
+	ldr r2, NIHIL
+	mov pc, r2
 
-hasFallenStar:
+HasScream:
+	ldr r2, HAS_SCREAM_FUNC
+	mov pc, r2
+
+HasStan:
+	ldr r2, HAS_STUN_FUNC
+	mov pc, r2
+
+HasMagicBind:
+	ldr r2, HAS_MAGIC_BIND_FUNC
+	mov pc, r2
+
+HasIgnis:
+	ldr r2, HAS_IGNIS_FUNC
+	mov pc, r2
+
+HasColossus:
+	ldr r2, HAS_COLOSSUS_FUNC
+	mov pc, r2
+
+HasDragon:
+    ldr r2, HAS_DRAGON_FUNC
+    mov pc, r2
+
+HasVengeance:
+    ldr r2, HAS_VENGEANCE_FUNC
+    mov pc, r2
+
+SetAtkSkillAnimation:
+    ldr r1, [r1, #12]
+    ldr r2, SET_SKILLANIME_ATK_FUNC
+    mov pc, r2
+
+HasFallenStar:
 ldr r2, HAS_FALLENSTAR_FUNC
 mov pc, r2
 
