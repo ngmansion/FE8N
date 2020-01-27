@@ -1,8 +1,7 @@
 PUSH
 
-#ifdef RANDOM_SKILL
-
 ORG 0x017bd4
+#ifdef RANDOM_SKILL
 	jumpToHack(init_store)
 #else
 	SHORT $bc30 $bc01 $4700 $0000
