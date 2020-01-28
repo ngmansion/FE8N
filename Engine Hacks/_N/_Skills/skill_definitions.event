@@ -141,4 +141,7 @@
 #define LuckID 144//0x90 幸運+4
 #define HPID 145//0x91 HP+5
 #define MagicID 146//0x92 魔力+2
+#define FierceStanceID 147 //0x93 鬼神の構え
+#define SteadyStanceID 148 //0x94 金剛の構え
+#define DartingStanceID 149 //0x95 飛燕の構え
 
