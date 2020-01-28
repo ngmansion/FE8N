@@ -72,13 +72,13 @@ battle_down:
 
 HasFierceStance:
     HAS_NIHIL
-    WORD 0xFF
+    WORD FierceStanceID
 HasSteadyStance:
     HAS_NIHIL
-    WORD 0xFF
+    WORD SteadyStanceID
 HasDartingStance:
     HAS_NIHIL
-    WORD 0xFF
+    WORD DartingStanceID
 
 HasCriticalUp:
     HAS_NIHIL

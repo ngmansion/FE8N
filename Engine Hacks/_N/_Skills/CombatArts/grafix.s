@@ -10,7 +10,7 @@
 	add r0, #0x20
 	add r0, #0x80
 	add r0, #0x80
-	mov r1, #0xFD
+	ldr r1, =0x100	@無効スキルID
 	mov	r2, #0x60
 	lsl	r2, r2, #7
 	bl	Icon
@@ -23,7 +23,7 @@
 	mov r1, #0xFE
 	mov	r2, #0x60
 	lsl	r2, r2, #7
-	bl	Icon
+@	bl	Icon
 END:
 	pop	{r3, r4, r5}
 	mov	r8, r3

@@ -29,5 +29,6 @@
 #include "Savior\EA.txt"
 #include "Faire\EA.txt"
 #include "StatusUp\EA.txt"
+#include "CombatArts\EA.txt"
 
 //#include "my_skill\EA.txt"

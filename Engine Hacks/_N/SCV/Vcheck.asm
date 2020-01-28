@@ -226,6 +226,8 @@ mov     r14,r4
 nonArrow:
 	pop     {r4 r5 r6 r7}
 	
+	bl SideEffect
+	
 ;ここからオリジナルの処理
 	mov     r0,r4
 	add     r0,#0x30
@@ -289,6 +291,11 @@ NoSign:
 pop {r4-r7}
 pop {r0}
 bx r0
+
+@align 4
+SideEffect:
+	ldr r0, [adr+8]
+	mov pc, r0
 
 @ltorg
 CameraPos:
