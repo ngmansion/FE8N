@@ -1,9 +1,9 @@
 .thumb
-@0002a2bc
+@ 0802a2bc
 	
-.equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
-.equ FLAG, (0xFF)	@フラグ
-.equ SOUND_ID, (97)
+STR_ADR = (67)	@書き込み先(AI1カウンタ)
+FLAG = (0xFF)	@フラグ
+SOUND_ID = (97)
 	
 	
 	ldr r0, =0x0802a2d8
@@ -19,7 +19,7 @@
 	ldr r0, [r0, #36]
 	ldr r1, =0x08050803
 	cmp r0, r1
-	bne end	@;武器選択直前ではない
+	bne end	@武器選択直前ではない
 	
 	mov r2, r4
 	add r2, #STR_ADR
@@ -45,5 +45,6 @@ end:
 	pop {r2,r3}
 	ldr r0, =0x0802a2c6
 	mov pc, r0
+.align
 .ltorg
 
