@@ -1,8 +1,8 @@
-.equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
-.equ WAR_FLAG, (0xFF)	@フラグ
-.equ WAR_FLAG2, (0xFE)	@フラグ
+STR_ADR = (67)	@書き込み先(AI1カウンタ)
+WAR_FLAG = (0xFF)	@フラグ
+WAR_FLAG2 = (0xFE)	@フラグ
 
-@;ORG 0x022C60
+@.ORG 08022C60
 .thumb
 	
 	ldr r1, =0x03004df0
