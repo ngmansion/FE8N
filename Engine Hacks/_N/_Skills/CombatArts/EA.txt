@@ -15,7 +15,12 @@ PUSH
 POP
 grafix_ws:
 	#incbin grafix.dmp
+	WORD WAR_CONFIG
 	WORD ARROW_CONFIG
+	POIN skl_table
+	WORD ICON_LIST_SIZE
+	POIN getSkill
+	
 ALIGN 4
 
 
@@ -43,6 +48,7 @@ POP
 WarSkillSelector:
 	#incbin Selector.dmp
 	WORD ARROW_CONFIG
+	WORD WAR_CONFIG
 	ALIGN 4
 
 ////////////////////攻撃後処理

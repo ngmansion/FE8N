@@ -63,6 +63,13 @@ Right:
 Increase:
     ldr r1, ADDR
     ldrb r0, [r1]
+    cmp r0, #7
+    bge falseCount
+    ldr r3, ADDR+4
+    sub r3, #1
+    ldrb r2, [r3, r0]
+    cmp r2, #0
+    beq falseCount
     add r0, #1
     strb r0, [r1]
     b trueCount
