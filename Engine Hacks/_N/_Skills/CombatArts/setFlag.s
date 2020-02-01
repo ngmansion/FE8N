@@ -20,31 +20,46 @@ SOUND_ID = (97)
 	ldr r1, =0x08050803
 	cmp r0, r1
 	bne end	@武器選択直前ではない
+
+    ldr r0, ADDR+4
+	ldrb r0, [r0]
+	cmp r0, #0
+	beq end
+	cmp r0, #1
+	beq end
 	
+	bl GetSkill
 	mov r2, r4
 	add r2, #STR_ADR
-	
-	ldr r1, =0x02024CC0
-	ldrh r1, [r1, #4]
-	lsl r1, r1, #22
-	bpl nothing	@Lボタン押してるかどうか
-	
-	mov r0, #FLAG
 	strb r0, [r2]
-	
+@サウンド
 	mov	r0, #SOUND_ID
 	ldr	r1, =0x080d4ef4 @サウンド
 	mov	lr, r1
 	.short 0xf800
-	b end
-nothing:
-	mov r0, #0
-	strb r0, [r2]
-	
 end:
+    bl arrow_reset_func
+
 	pop {r2,r3}
 	ldr r0, =0x0802a2c6
 	mov pc, r0
+
+GetSkill:
+		nop
+		bx lr
+
+
+
+arrow_reset_func:
+    ldr r0, ADDR
+	mov r1, #0
+    str r1, [r0]
+    str r1, [r0, #4]
+    str r1, [r0, #8]
+    str r1, [r0, #12]
+	bx lr
+
 .align
 .ltorg
+ADDR:
 

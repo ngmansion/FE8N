@@ -1,4 +1,5 @@
 
+#define WAR_CONFIG (0x02003AF0)
 #define ARROW_CONFIG (0x02003AFF)
 
 
@@ -7,27 +8,44 @@ CombatSelector:
 	WORD ARROW_CONFIG
 ALIGN 4
 
-
+/////////////////////////////////////
 PUSH
 	ORG 0x01e684
 	jumpToHack(grafix_ws)
 POP
 grafix_ws:
 	#incbin grafix.dmp
+	WORD ARROW_CONFIG
 ALIGN 4
 
 
-////攻撃キャンセル時
+/////////////revert
 PUSH
 ORG 0x022c60
-	jumpToHack(cancelWarSkill)
+SHORT $b500 $f7fa $fd65 $2000
 POP
 
+////////////////
+PUSH
+ORG 0x022828
+	jumpToHack(cancelWarSkill)
+POP
 cancelWarSkill:
 	#incbin cancelWarSkill.dmp
+	WORD WAR_CONFIG
 	ALIGN 4
 
-////攻撃後処理
+////////////////////////
+PUSH
+ORG 0x050008
+	jumpToHack(WarSkillSelector)
+POP
+WarSkillSelector:
+	#incbin Selector.dmp
+	WORD ARROW_CONFIG
+	ALIGN 4
+
+////////////////////攻撃後処理
 PUSH
 	ORG 0x02b866
 	SHORT $46C0
@@ -66,6 +84,7 @@ afterAttack:
 	POIN InfiniteItem
 	ALIGN 4
 
+//////////////////////////
 PUSH
 
 ORG 0x2a2bc //setFlag
@@ -77,5 +96,7 @@ POP
 
 nagi_setFlag:
   #incbin setFlag.dmp
+	WORD WAR_CONFIG
+	WORD ARROW_CONFIG
 	ALIGN 4
 
