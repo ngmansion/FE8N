@@ -26,7 +26,7 @@ SOUND_ID = (97)
 	cmp r0, #0
 	beq end
 	cmp r0, #1
-	beq end
+	beq reset
 	
 	bl GetSkill
 	mov r2, r4
@@ -37,6 +37,12 @@ SOUND_ID = (97)
 	ldr	r1, =0x080d4ef4 @サウンド
 	mov	lr, r1
 	.short 0xf800
+	b end
+reset:
+	mov r0, #0
+	mov r2, r4
+	add r2, #STR_ADR
+	strb r0, [r2]
 end:
     bl arrow_reset_func
 

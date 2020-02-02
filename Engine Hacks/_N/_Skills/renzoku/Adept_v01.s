@@ -1,6 +1,5 @@
 .thumb
 STR_ADR = (67)	@書き込み先(AI1カウンタ)
-FLAG = (0xFF)	@フラグ
 
 ALINA_ADR = (0x0203a4d0)
 
@@ -106,13 +105,7 @@ renzoku:
     bl HasAdept
 	cmp r0, #0
 	beq endRenzoku
-got:
-    mov r0, r6
-	add r0, #STR_ADR
-	ldrb r0, [r0]
-	mov r1, #FLAG
-	cmp r0, r1
-	bne endRenzoku
+
 	mov r0, #1
 endRenzoku:
     pop {pc}

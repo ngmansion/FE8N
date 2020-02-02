@@ -1,4 +1,5 @@
 
+#include "CombatArts\EA.txt"
 #include "soltraether\EA.txt"
 #include "Kantsuu\EA.txt"
 #include "docan\EA.txt"
@@ -29,6 +30,5 @@
 #include "Savior\EA.txt"
 #include "Faire\EA.txt"
 #include "StatusUp\EA.txt"
-#include "CombatArts\EA.txt"
 
 //#include "my_skill\EA.txt"

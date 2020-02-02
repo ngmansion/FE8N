@@ -1,8 +1,6 @@
 PULSE_ID = (0x09)	@奥義の鼓動の状態異常
 PULSE_RESET = (0x39)	@奥義の鼓動の状態異常
 
-KORO_FLAG = (0xDC) @瞬殺目印
-ORACLE_FLAG = (0xDD) @奥義目印
 DEFENSE_FLAG = (0xDF) @防御目印
 WAR_ADR = (67)	@書き込み先(AI1カウンタ)
 WAR_FLAG = (0xFE)	@フラグ
@@ -66,8 +64,9 @@ endHokan:
 
 	bl ReverseR4R5IfNeeded	@r4が発動判定者。r5が相手
 
-	mov r0, r10
-	cmp r0, #KORO_FLAG
+	bl GetLethalityID
+	mov r1, r10
+	cmp r0, r1
 	bne notDeath	@瞬殺ではない
 @■瞬殺独自判定
 	ldr r0, [sp] @r3
@@ -79,7 +78,7 @@ endHokan:
 notDeath:
 
 @■戦技判定
-	bl judgeWar
+	bl JudgeCombat
 	cmp r0, #1
 	beq TRUE @発動率100%
 
@@ -98,9 +97,6 @@ notDeath:
 	cmp r0, #1
 	beq FALSE
 
-	bl pulse_func	@■奥義の鼓動
-	cmp r0, #1
-	beq TRUE	@確定発動
 @加算処理
 	bl king_func	@■王の器チェック
 	ldr r1, [sp]
@@ -128,27 +124,28 @@ FALSE:
 	str r0, [sp]
 end:
 	mov r2, #0
+	mov r10, r2
 	pop {r3, r4, r5}	@r3は確率
 	ldr r0, =RETURN_ADR
 	mov pc, r0
 
 ReverseR4R5IfNeeded:
-	@大盾チェック
-		mov	r0, sp
-		ldr	r0, [r0, #24]
-		ldr	r1, =0x0802B3B9	@(元の)大盾は専用
-		cmp	r0, r1
-		beq	Reverse
+		push {lr}
 	@独自のディフェンスチェック
-		mov r0, r10
-		cmp r0, #DEFENSE_FLAG
+		bl GetBigShieldID
+		mov r1, r10
+		cmp r0, r1
+		bne notReverse
+		bl GetHolyShieldID
+		mov r1, r10
+		cmp r0, r1
 		bne notReverse
 	Reverse:
 		eor r5, r4
 		eor r4, r5
 		eor r5, r4
 	notReverse:
-		bx lr
+		pop {pc}
 
 judgeActive:
 		push {lr}
@@ -184,33 +181,27 @@ GetWeaponAbility:
 	ldr r1, =0x080174cc
 	mov pc, r1
 
-judgeWar:
+JudgeCombat:
 		push {lr}
-
-		ldrb r0, [r4, #27]
-		cmp r0, #0
-		bne jumpWar
-		ldr r0, [r4, #12]
-		mov r1, #0x10
-		and r0, r1
-		cmp r0, r1
-		beq falseWar @捕獲攻撃中なら終了
-	jumpWar:
 	
-		mov r0, r10
-		cmp r0, #ORACLE_FLAG
-		bne falseWar	@奥義以外は除外
+		ldrb r0, [r4, #11]
+		mov r2, #0xC0
+		and r2, r0
+		bne falseWar @自軍以外は終了
 
-		mov r1, #WAR_ADR
-		ldrb r0, [r4, r1]
-		cmp r0, #0xFF
+		ldr r2, =0x03004df0
+		ldr r2, [r2]
+		ldrb r2, [r2, #11]
+		cmp r0, r2
 		bne falseWar
 
-		mov r0, r4
-		mov r1, #0
-		bl hasSunder
-		cmp r0, #0
-		beq falseWar
+		mov r1, #WAR_ADR
+		ldrb r1, [r4, r1]
+		cmp r1, #0
+		beq falseWar	@ゼロ
+		mov r0, r10
+		cmp r0, r1
+		bne falseWar	@不一致
 
 		mov r0, #1   @発動率100%
 		b endWar
@@ -268,49 +259,29 @@ king_func:
 		pop {pc}
 
 
-pulse_func:
-		push {lr}
-		mov r0, #48
-		ldrb r1, [r4, r0]
-		cmp r1, #PULSE_ID
-		bne falsePulse
-	@独自の奥義チェック
-		mov r0, r10
-		cmp r0, #ORACLE_FLAG
-		bne falsePulse
-	@鼓動リセット
-		mov r0, #48
-		mov r1, #PULSE_RESET
-		strb r1, [r4, r0] @状態異常治癒
-	@状態異常治癒
-		mov r0, #0xB
-		ldrb r0, [r4, r0]
-			ldr r1, =0x08019108	@部隊表IDから変換
-			mov lr, r1
-			.short 0xF800
-		add r0, #48
-		mov r1, #PULSE_RESET
-		strb r1, [r0]
-	truePulse:
-		mov r0, #1
-		b endPulse
-	falsePulse:
-		mov r0, #0
-	endPulse:
-		pop {pc}
-
-
 judgeDeath:
 @戦技チェック
 	cmp r0, #0
 	beq falseDeath	@0なら不発
+
 	mov r1, #WAR_ADR
-	ldrb r0, [r4, r1]
-	
-	mov r1, #WAR_FLAG
-	and r0, r1
+	ldrb r1, [r4, r1]
+	cmp r1, #0
+	beq falseDeath	@ゼロ
+	mov r0, r10
 	cmp r0, r1
-	bne falseDeath	@戦技ではないなら不発
+	bne falseDeath	@不一致なら不発
+
+	ldrb r0, [r4, #11]
+	mov r2, #0xC0
+	and r2, r0
+	bne falseDeath @自軍以外は終了
+
+    ldr r2, =0x03004df0
+    ldr r2, [r2]
+    ldrb r2, [r2, #11]
+    cmp r0, r2
+    bne falseDeath
 	
 	mov r0, #1
 	b endDeath
@@ -319,9 +290,15 @@ falseDeath:
 endDeath:
 	bx lr
 
-hasSunder:
-ldr r2, ADDRESS+16
-mov pc, r2
+GetLethalityID:
+ldr r0, ADDRESS+16
+bx lr
+GetBigShieldID:
+ldr r0, ADDRESS+20
+bx lr
+GetHolyShieldID:
+ldr r0, ADDRESS+24
+bx lr
 
 
 @non

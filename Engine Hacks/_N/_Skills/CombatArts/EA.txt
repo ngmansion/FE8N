@@ -91,6 +91,9 @@ POP
 afterAttack:
 	#incbin afterAttack.dmp
 	POIN InfiniteItem
+	POIN hasRagingStorm
+	POIN combat_art_table
+	WORD COMBAT_ART_LIST_SIZE
 	ALIGN 4
 
 //////////////////////////

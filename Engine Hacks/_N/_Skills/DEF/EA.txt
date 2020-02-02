@@ -58,11 +58,11 @@ hasInvincible:
 
 
 BigShield_hasSkill:
- HAS_SKILL
+ HAS_NIHIL
  WORD PaviseID
  
 HolyShield_hasSkill:
- HAS_SKILL
+ HAS_NIHIL
  WORD AegisID
  
 GodShield_hasSkill:

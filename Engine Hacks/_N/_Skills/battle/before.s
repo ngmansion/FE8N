@@ -478,52 +478,53 @@ Heartseeker_impl:
         strh r0, [r4, r1] @自分
         pop {pc}
 
+STR_ADR = (67)	@書き込み先(AI1カウンタ)
 
 WarSkill:
         push {lr}
-        mov r0, #67
-        ldrb r0, [r4, r0]
-        mov r1, #0xFE
-        and r0, r1
-        cmp r0, r1
+
+        ldrb r0, [r4, #11]
+        mov r2, #0xC0
+        and r2, r0
+        bne endWar @自軍以外は終了
+
+        bl GetAttackerAddr
+        ldr r2, [r0]
+        ldrb r2, [r2, #11]
+        ldrb r0, [r4, #11]
+        cmp r0, r2
         bne endWar
-    
-        ldrb r0, [r4, #27]
-        cmp r0, #0
-        bne jumpWarSkill
-        mov r1, #0x10
-        ldr r0, [r4, #12]
-        and r0, r1
-        cmp r0, r1
-        beq endWar @捕獲攻撃中なら終了
-    jumpWarSkill:
-    
-        mov r0, r4
-        mov r1, #0
-        bl HasWarSkill
+
+        mov r0, #STR_ADR
+        ldrb r0, [r4, r0]
+        bl GetWarList
         cmp r0, #0
         beq endWar
-        
-        bl GetDistance
-        ldrb r0, [r0]
-        cmp r0, #1
-        bne distantWar  @遠距離は弱体化
+        mov r3, r0
     
         mov r1, #90
         ldrh r0, [r4, r1]
-        add r0, #6
-        strh r0, [r4, r1] @自分
+        ldrb r2, [r3, #0]
+        add r0, r2
+        strh r0, [r4, r1] @力
     
         mov r1, #96
         ldrh r0, [r4, r1]
-        add r0, #10
-        strh r0, [r4, r1] @自分
-        b endWar
-    distantWar:
-        mov r1, #90
+        ldrb r2, [r3, #1]
+        add r0, r2
+        strh r0, [r4, r1] @命中
+
+        mov r1, #98
         ldrh r0, [r4, r1]
-        add r0, #3
-        strh r0, [r4, r1] @自分
+        ldrb r2, [r3, #3]
+        add r0, r2
+        strh r0, [r4, r1] @回避
+
+        mov r1, #102
+        ldrh r0, [r4, r1]
+        ldrb r2, [r3, #2]
+        add r0, r2
+        strh r0, [r4, r1] @必殺
     
     endWar:
         pop {pc}
@@ -779,12 +780,6 @@ BL_GETITEMEFFECTIVE = (0x08017478)
 
 EffectiveBonus:
         push {lr}
-        mov r0, #67
-        ldrb r0, [r4, r0]
-        mov r1, #0xFE
-        and r0, r1
-        cmp r0, r1
-        bne endEffective
         
         mov r1, r4
         add r1, #72
@@ -1244,6 +1239,17 @@ HAS_ATROCITY_ADR = (adr+124)
 HAS_KISHIN_R = (adr+128)
 HAS_KONGOU_R = (adr+132)
 HAS_HIEN_R = (adr+136)
+COMBAT_TBL = (adr+140)
+COMBAT_TBL_SIZE = (adr+144)
+
+GetWarList:
+
+    ldr r1, COMBAT_TBL_SIZE
+    mul r0, r1
+    ldr r1, COMBAT_TBL
+    add r0, r1
+    bx lr
+
 
 HasKishinR:
     ldr r2, HAS_KISHIN_R

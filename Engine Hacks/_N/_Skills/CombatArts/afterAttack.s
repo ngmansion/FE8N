@@ -1,8 +1,8 @@
 
-.equ STR_ADR, (67)	@書き込み先(AI1カウンタ)
-.equ WAR_FLAG, (0xFF)	@フラグ
+WAR_ADR = (67)	@書き込み先(AI1カウンタ)
+WAR_FLAG = (0xFF)	@フラグ
 
-@ORG 0x02b866
+@ORG 0802b86C
 .thumb
 
 @前処理
@@ -32,29 +32,43 @@ RETURN:
 	bx	r1
 
 WarSkill:
-	push {lr}
-@	mov r3, r13
-@	ldr r3, [r3, #16]	@r8が相手のアドレス
+	push {r5, lr}
 	
-	ldr r0, =0x03004df0
-	ldr r3, [r0]
-	
-	ldrb r0, [r3, #0xB]
-	mov r2, r13
-	ldr r2, [r2, #16]
+	mov r3, r13
+	ldr r3, [r3, #20]
+
+
+	ldrb r0, [r3, #11]
+	mov r2, #0xC0
+	and r2, r0
+	bne endWar @自軍以外は終了
+
+	ldr r2, =0x03004df0
+	ldr r2, [r2]
 	ldrb r1, [r2, #0xB]
 	cmp r0, r1
 	bne endWar	@選択者と攻撃者が違う
-	mov r3, r2
-	mov r1, #STR_ADR
-	ldrb r0, [r3, r1]
-	cmp r0, #0xFF
-	bne endWar
-	mov r0, #0xFE
+
+	mov r0, #WAR_ADR
+	ldrb r0, [r3, r0]
+	cmp r0, #0
+	beq endWar	@戦技なし
+
+	mov r0, r13
+	ldr r0, [r0, #20]
+	bl RagingStorm
+	mov r0, r13
+	ldr r0, [r0, #20]
+	bl GetDecreaseNum
+	mov r0, r13
+	ldr r3, [r0, #20]
+
+	mov r1, #WAR_ADR
+	mov r0, #0xFF
 	strb r0, [r3, r1]
 @無限の武器
 	mov r0, r13
-	ldr r0, [r0, #16]	@r8が相手のアドレス
+	ldr r0, [r0, #20]	@r8が相手のアドレス
 	mov	r1, #72	@装備中(74はトップアイテム)
 	ldrh r1, [r1, r0]
 	bl Infinity
@@ -76,9 +90,11 @@ WarSkill:
 	str r0, [r2]
 	
 @武器は損処理
-	mov r3, #0
+	cmp r5, #0
+	beq endWar	@減らない
+	mov r3, #1	@通常減る分
 	mov r1, r13
-	ldr r1, [r1, #16]	@r8が相手のアドレス
+	ldr r1, [r1, #20]	@r8が相手のアドレス
 	add	r1, #72	@装備中(74はトップアイテム)
 	ldrh	r0, [r1]
 	lsr r2, r0, #8
@@ -86,20 +102,20 @@ WarSkill:
 loop_top_break:
 	bl func_break
 	mov r1, r13
-	ldr r1, [r1, #16]	@r8が相手のアドレス
+	ldr r1, [r1, #20]	@r8が相手のアドレス
 	add	r1, #72
 	strh	r0, [r1]
 	lsr r2, r0, #8
 	beq breakWar
 	add r3, #1
-	cmp r3, #4		@4回壊す(通常合わせて5減る)
+	cmp r3, r5		@規定回数分壊す
 	blt loop_top_break
 endWar:
-	pop {pc}
+	pop {r5, pc}
 	
 breakWar:
 	mov r1, r13
-	ldr r1, [r1, #16]	@r8が相手のアドレス
+	ldr r1, [r1, #20]	@r8が相手のアドレス
 	add	r1, #125
 	mov	r0, #1
 	strb	r0, [r1, #0]
@@ -111,6 +127,66 @@ func_break:
 	mov lr, r3
 	.short 0xF800
 	pop {r3, pc}
+
+STORM    = (0b00100000) @狂嵐フラグ
+
+@アイムール
+RagingStorm:
+        push {r4, lr}
+		mov r4, r0
+
+		ldr	r2, =0x0203a604
+		ldr	r2, [r2]
+		sub	r2, #4	@スキルとかのアレの前の状態を取る
+		ldr r0, [r2]
+		
+		mov r1, #2	@外れフラグ
+		and r1, r0
+		bne endStorm	@外れフラグオンでジャンプ
+
+    @スキルを持っているか
+        mov r0, r4	@r1は既にセット済み
+		mov r1, #0
+        bl HasRagingStorm
+        cmp r0, #0
+        beq falseStorm
+
+		mov r0, r4
+		add r0, #69
+		ldrb r1, [r0]
+
+		mov r2, #STORM
+		orr r1, r2
+
+		strb r1, [r0] @狂嵐発動
+
+        mov r0, #1
+        b endStorm
+    falseStorm:
+        mov r0, #0
+    endStorm:
+        pop {r4, pc}
+
+COMBAT_LIST = (addr+8)
+COMBAT_LIST_SIZE = (addr+12)
+
+GetDecreaseNum:
+		add r0, #WAR_ADR
+		ldrb r0, [r0]
+		ldr r1, COMBAT_LIST_SIZE
+		mul r0, r1
+		ldr r1, COMBAT_LIST
+		add r0, r1
+
+		ldrb r5, [r0, #4]
+		bx lr
+
+
+HAS_RASINGSTORM = (addr+4)
+
+HasRagingStorm:
+ldr r2, HAS_RASINGSTORM
+mov pc, r2
 
 Infinity:
 	ldr r3, addr

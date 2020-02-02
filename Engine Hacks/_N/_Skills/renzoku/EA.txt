@@ -28,7 +28,7 @@ yosoku:
 
 
 hasAdept:
-    HAS_NIHIL
+    HAS_COMBAT
     WORD AdeptID
     
 bolting_impl:

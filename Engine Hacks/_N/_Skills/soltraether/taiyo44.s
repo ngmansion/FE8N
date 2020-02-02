@@ -1,6 +1,5 @@
 .thumb
 
-ORACLE_FLAG = (0xDD) @奥義目印
 MAX_BATTLE_NUM = (24)
 HAS_SOL_FUNC = (adr+4)
 
@@ -65,9 +64,7 @@ buki:
     mov pc, r0
 taiyo:
 @奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
-    
+
     mov r0, #21 @技(発動率)
     ldsb r0, [r5, r0]
     mov r1, #0

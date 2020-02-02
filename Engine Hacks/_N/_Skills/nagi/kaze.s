@@ -1,8 +1,6 @@
 .thumb
 @0802a834
 STR_ADR = (67)	@書き込み先(AI1カウンタ)
-FLAG = (0xFE)	@フラグ
-
     cmp r0, #0
     beq cancel @射程外
     ldr r0, =0x0203a4d0
@@ -65,14 +63,7 @@ WindSweep:
         bl hasWindSweep
         cmp r0, #0
         beq falseWindSweep @スキル無し
-    
-        ldr r0, =0x0203a4e8
-        add r0, #STR_ADR
-        ldrb r0, [r0]
-        mov r1, #FLAG
-        and r0, r1
-        cmp r0, r1
-        bne falseWindSweep
+
         mov r0, #1
         b endWindSweep
     falseWindSweep:

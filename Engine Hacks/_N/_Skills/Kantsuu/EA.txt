@@ -45,7 +45,7 @@ POIN hasFallenStar
 POIN fodes_func
     
 hasFallenStar:
-  HAS_NIHIL
+  HAS_COMBAT
   WORD FallenStarID
 hasDragonFung:
     HAS_OCCULT
@@ -57,15 +57,15 @@ hasVengeance:
     HAS_OCCULT
     WORD VengeanceID
 hasStun:
-    HAS_SKILL
+    HAS_COMBAT
     WORD StunID
 hasScream:
-    HAS_SKILL
+    HAS_COMBAT
     WORD ScreamID
 hasIgnis:
     HAS_OCCULT
     WORD IgnisID
 hasMagicBind:
-    HAS_NIHIL
+    HAS_COMBAT
     WORD MagicBindID
 

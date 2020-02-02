@@ -126,7 +126,7 @@ pulse_impl:
         POIN hasGaleCause
 
     hasRagingStorm:
-        HAS_NIHIL
+        HAS_COMBAT
         WORD RagingStormID
     hasRemove:
         HAS_SKILL

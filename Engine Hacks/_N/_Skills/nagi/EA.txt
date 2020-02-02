@@ -12,5 +12,5 @@ nagi_kaze:
   POIN waryFighter_hasSkill
 
 hasWindsweep:
- HAS_NIHIL
+ HAS_COMBAT
  WORD WindsweepID
