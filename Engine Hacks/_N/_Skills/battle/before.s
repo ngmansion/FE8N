@@ -504,26 +504,46 @@ WarSkill:
     
         mov r1, #90
         ldrh r0, [r4, r1]
-        ldrb r2, [r3, #0]
+        mov r2, #0
+        ldsb r2, [r3, r2]
         add r0, r2
+        cmp r0, #0
+        bge jumpWar1
+        mov r0, #0
+    jumpWar1:
         strh r0, [r4, r1] @力
     
         mov r1, #96
         ldrh r0, [r4, r1]
-        ldrb r2, [r3, #1]
+        mov r2, #1
+        ldsb r2, [r3, r2]
         add r0, r2
+        cmp r0, #0
+        bge jumpWar2
+        mov r0, #0
+    jumpWar2:
         strh r0, [r4, r1] @命中
 
         mov r1, #98
         ldrh r0, [r4, r1]
-        ldrb r2, [r3, #3]
+        mov r2, #3
+        ldsb r2, [r3, r2]
         add r0, r2
+        cmp r0, #0
+        bge jumpWar3
+        mov r0, #0
+    jumpWar3:
         strh r0, [r4, r1] @回避
 
         mov r1, #102
         ldrh r0, [r4, r1]
-        ldrb r2, [r3, #2]
+        mov r2, #2
+        ldsb r2, [r3, r2]
         add r0, r2
+        cmp r0, #0
+        bge jumpWar4
+        mov r0, #0
+    jumpWar4:
         strh r0, [r4, r1] @必殺
     
     endWar:

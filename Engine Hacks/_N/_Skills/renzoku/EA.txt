@@ -54,8 +54,6 @@ BYTE	$00 $48 $87 $46
 POIN	hitteiki
 
 
-ORG 0x02b3aa	//(r9を確保)
-SHORT $46C0
 ORG 0x02b3ea	//(r9を確保)
 SHORT $88E9
 
