@@ -146,4 +146,6 @@
 #define DartingStanceID 149 //0x95 飛燕の構え
 #define TempestLanceID 150 //0x96 旋風槍
 #define SmashID 151 //0x97 スマッシュ
+#define SlenderSwordID 152 //0x98 突剣
+#define HeavySwordID 153 //0x99 重剣
 

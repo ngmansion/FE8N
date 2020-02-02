@@ -21,15 +21,15 @@ judgeOccult:
         mov r1, #0
             ldr r2, ADR+0 @奥義の書
             mov lr, r2
-            .short $F800
-        cmp r0, #0
-        bne end
+            .short 0xF800
+        cmp r0, #1
+        beq end
         
         mov r0, #72
         ldrh r0, [r4, r0]
             ldr r1, =0x080172f0 @武器種類
             mov lr, r1
-            .short $F800
+            .short 0xF800
         cmp r0, #7
         bgt false
         add r0, #40

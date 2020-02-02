@@ -53,6 +53,8 @@ WarSkill:
 	ldrb r0, [r3, r0]
 	cmp r0, #0
 	beq endWar	@戦技なし
+	cmp r0, #0xFF
+	beq endWar	@戦技なし
 
 	mov r0, r13
 	ldr r0, [r0, #20]

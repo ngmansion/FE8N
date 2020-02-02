@@ -64,6 +64,11 @@ endHokan:
 
 	bl ReverseR4R5IfNeeded	@r4が発動判定者。r5が相手
 
+@■戦技判定
+	bl JudgeCombat
+	cmp r0, #0
+	beq skipWar
+
 	bl GetLethalityID
 	mov r1, r10
 	cmp r0, r1
@@ -74,14 +79,15 @@ endHokan:
 	cmp r0, #1
 	beq skipWar	@戦技の確定発動判定を飛ばす
 	b FALSE
-
 notDeath:
+	mov r0, #WAR_ADR
+	ldrb r0, [r4, r0]
+	mov r1, r10
+	cmp r0, r1
+	beq TRUE	@一致なので確定発動
+	b FALSE		@不一致なので確定不発
 
-@■戦技判定
-	bl JudgeCombat
-	cmp r0, #1
-	beq TRUE @発動率100%
-
+skipWar:
 @■ジェノサイド判定
 	ldrb r0, [r5, #11]
 	ldr r1, =0x0203a5e8 @ゲノ
@@ -182,8 +188,6 @@ GetWeaponAbility:
 	mov pc, r1
 
 JudgeCombat:
-		push {lr}
-	
 		ldrb r0, [r4, #11]
 		mov r2, #0xC0
 		and r2, r0
@@ -199,16 +203,15 @@ JudgeCombat:
 		ldrb r1, [r4, r1]
 		cmp r1, #0
 		beq falseWar	@ゼロ
-		mov r0, r10
-		cmp r0, r1
-		bne falseWar	@不一致
+		cmp r1, #0xFF
+		beq falseWar	@ゼロ
 
 		mov r0, #1   @発動率100%
-		b endWar
+		bx lr
 	falseWar:
 		mov r0, #0
 	endWar:
-		pop {pc}
+		bx lr
 
 ace_func:
 		push {lr}
@@ -266,28 +269,14 @@ judgeDeath:
 
 	mov r1, #WAR_ADR
 	ldrb r1, [r4, r1]
-	cmp r1, #0
-	beq falseDeath	@ゼロ
 	mov r0, r10
 	cmp r0, r1
 	bne falseDeath	@不一致なら不発
-
-	ldrb r0, [r4, #11]
-	mov r2, #0xC0
-	and r2, r0
-	bne falseDeath @自軍以外は終了
-
-    ldr r2, =0x03004df0
-    ldr r2, [r2]
-    ldrb r2, [r2, #11]
-    cmp r0, r2
-    bne falseDeath
 	
 	mov r0, #1
-	b endDeath
+	bx lr
 falseDeath:
 	mov r0, #0
-endDeath:
 	bx lr
 
 GetLethalityID:
