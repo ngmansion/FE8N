@@ -2,7 +2,7 @@
 #define WAR_CONFIG (0x02003AF0)
 #define ARROW_CONFIG (0x02003AFF)
 
-#include "config/combat_index.event"
+#include list_definitions.event
 
 CombatSelector:
 	#incbin Arrow.dmp

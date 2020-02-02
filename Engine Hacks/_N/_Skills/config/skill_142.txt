@@ -8,3 +8,13 @@ skill_142_item:
    BYTE $00 $00 0 
 #define SKL_HELP_142 $0000
 #define SKL_COLOR_142 $00
+ 
+#define COMBAT_ART_142_ATK 00 
+#define COMBAT_ART_142_HIT 00 
+#define COMBAT_ART_142_CRT 00 
+#define COMBAT_ART_142_AVO 00 
+#define COMBAT_ART_142_COST 05 
+#define COMBAT_ART_142_WEAPON $FF 
+#define COMBAT_ART_142_INFO 00 
+#define COMBAT_ART_142_DUMMY 00 
+ 
