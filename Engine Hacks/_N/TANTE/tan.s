@@ -1,6 +1,6 @@
 INVARID_ITEM = (0xFF)
 BREAK_NUM = (0xFF)
-DEAD_EYE_FLAG = (0xDE)
+DEAD_EYE_FLAG = (0x4C)
 
 .thumb
 @.org 0802b3b0
@@ -29,7 +29,7 @@ magic:
 	beq	RETURN
 	cmp	r1, #255
 	beq	RETURN	@壊れないならジャンプ
-	mov	r2, r10
+	mov	r2, r9
 	cmp	r2, #DEAD_EYE_FLAG
 	beq	force_break		@必的フラグオンならジャンプ
 	

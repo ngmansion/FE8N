@@ -1,5 +1,6 @@
 .thumb
 
+DEAD_EYE_ID = (0x4C)
 
 HAS_GOD_SHIELD_FUNC = (adr+8)
 HAS_NIHIL_FUNC = (adr+16)
@@ -51,9 +52,6 @@ SET_SKILLANIME_DEF_FUNC = (adr+20)
 	cmp r0, #1
 	beq end	@確率発動処理をスキップ
 
-	mov r1, #0xDF		@確率発動防御用
-	mov r10, r1
-
 	bl HolyShield
 	cmp r0, #1
 	beq end
@@ -70,8 +68,8 @@ end:
 	mov pc, r0
 
 checkSkip:
-		mov r1, r10
-		cmp r1, #0xDE
+		mov r1, r9
+		cmp r1, #DEAD_EYE_ID
 		beq trueSkip	@必的チェック
 		ldr r0, =0x0203a604
 		ldr r0, [r0]

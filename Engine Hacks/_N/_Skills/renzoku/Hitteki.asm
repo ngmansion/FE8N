@@ -3,4 +3,4 @@
 	cmp	r0, #1
 	@dcw	$d10a
 	mov	r0, #0x4c
-	mov	r10, r0
+	mov	r9, r0
