@@ -45,7 +45,11 @@ end:
 	mov pc, r0
 
 GetSkill:
-		nop
+		ldr r2, ADDR+4
+		ldrb r2, [r2]
+		sub r2, #2
+		ldr r1, ADDR
+		ldrb r0, [r1, r2]
 		bx lr
 
 
