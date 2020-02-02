@@ -203,26 +203,26 @@ JudgeCapture:
 		bx lr
 
 SetSkill:
-		push {r4, lr}
-		mov r4, r0
+		push {r6, lr}
+		mov r6, r0
 		bl DedupSkill
 		cmp r0, #1
 		beq endSet
 
-		mov r0, r4
+		mov r0, r6
 		bl IsCombatSkill
 		cmp r0, #0
 		beq endSet
 
-		mov r0, r4
+		mov r0, r6
 		bl MatchWeaponType
 		cmp r0, #0
 		beq endSet
 
-		strb r4, [r5]
+		strb r6, [r5]
 		add r5, #1
 	endSet:
-		pop {r4, pc}
+		pop {r6, pc}
 
 DedupSkill:
 		ldr r2, ADDR
@@ -252,8 +252,9 @@ MatchWeaponType:
 		cmp r5, #0xFF
 		beq trueType
 
-		mov r0, #72
-		ldrh r0, [r4, r0]
+		mov r0, r8
+		add r0, #72
+		ldrh r0, [r0]
 		bl GetWeaponType
 		cmp r0, r5
 		beq trueType

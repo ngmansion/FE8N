@@ -144,4 +144,6 @@
 #define FierceStanceID 147 //0x93 鬼神の構え
 #define SteadyStanceID 148 //0x94 金剛の構え
 #define DartingStanceID 149 //0x95 飛燕の構え
+#define TempestLanceID 150 //0x96 旋風槍
+#define SmashID 151 //0x97 スマッシュ
 
