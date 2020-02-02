@@ -2,6 +2,7 @@
 #define WAR_CONFIG (0x02003AF0)
 #define ARROW_CONFIG (0x02003AFF)
 
+#include "config/combat_index.event"
 
 CombatSelector:
 	#incbin Arrow.dmp
@@ -20,6 +21,8 @@ grafix_ws:
 	POIN skl_table
 	WORD ICON_LIST_SIZE
 	POIN getSkill
+	POIN combat_art_table
+	WORD COMBAT_ART_LIST_SIZE
 	
 ALIGN 4
 

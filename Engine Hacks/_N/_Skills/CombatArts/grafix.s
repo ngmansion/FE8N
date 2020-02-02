@@ -75,17 +75,14 @@ GatherSkill:
 		ldr r5, ADDR
 		bl JudgeCapture
 		cmp r0, #0
-		beq falseGather
+		beq endGather
 
 		bl GatherListWeapon	
 		bl GatherUnit	@Book and Unitdata
 		bl GatherListUC	@Ignore Weapon and Item
-
-		mov r0, #1
-		b endGather
-	falseGather:
-		mov r0, #0
 	endGather:
+		ldr r0, ADDR
+		ldrb r0, [r0]
 		pop {r4, r5, r6, r7, pc}
 
 GatherUnit:
@@ -217,6 +214,11 @@ SetSkill:
 		cmp r0, #0
 		beq endSet
 
+		mov r0, r4
+		bl MatchWeaponType
+		cmp r0, #0
+		beq endSet
+
 		strb r4, [r5]
 		add r5, #1
 	endSet:
@@ -239,17 +241,39 @@ DedupSkill:
 		mov r0, #0
 		bx lr
 
-IsCombatSkill:
-		ldr r2, SKL_TBL
-		ldr r3, SKL_TBL_SIZE
+MatchWeaponType:
+		push {r5, lr}
+
+		ldr r2, COMBAT_TBL
+		ldr r3, COMBAT_TBL_SIZE
 		mul r3, r0
 		add r3, r2
-@		ldrb r2, [r3, #2]
-	trueCombat:
-		mov r0, #1
-		bx lr
-	falseCombat:
+		ldrb r5, [r3, #5]
+		cmp r5, #0xFF
+		beq trueType
+
+		mov r0, #72
+		ldrh r0, [r4, r0]
+		bl GetWeaponType
+		cmp r0, r5
+		beq trueType
 		mov r0, #0
+		.short 0xE000
+trueType:
+		mov r0, #1
+		pop {r5, pc}
+
+COMBAT_TBL = (ADDR+20)
+COMBAT_TBL_SIZE = (ADDR+24)
+
+IsCombatSkill:
+		ldr r2, COMBAT_TBL
+		ldr r3, COMBAT_TBL_SIZE
+		mul r3, r0
+		add r3, r2
+		ldrb r2, [r3, #6]
+		mov r0, #1
+		and r0, r2
 		bx lr
 
 GetColor:
@@ -312,6 +336,9 @@ WrapIcon:
 	bl Icon
 	pop {pc}
 
+GetWeaponType:
+	ldr	r3, =0x080172f0
+	mov	pc, r3
 Icon:
 	ldr	r3, =0x08003608
 	mov	pc, r3
