@@ -300,10 +300,7 @@ random:
 	mov	pc, r3
 
 retrun:
-	mov	r1, r9
-	sub	r0, r1, r4
-	strh	r0, [r5, #4]
-	ldr	r1, =0x0802b3f0
+	ldr	r1, =0x0802b3ea
 	mov	pc, r1
 
 HAS_DRAGON_FUNC = (adr+0)
