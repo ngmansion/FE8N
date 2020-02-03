@@ -82,7 +82,7 @@ notDeath:
 	bl judgeWar
 	cmp r0, #1
 	beq TRUE @発動率100%
-
+skipWar:
 @■ジェノサイド判定
 	ldrb r0, [r5, #11]
 	ldr r1, =0x0203a5e8 @ゲノ
