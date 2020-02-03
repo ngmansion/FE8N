@@ -45,7 +45,11 @@ endZero:
 
 Lull:
         push {lr}
-
+        ldr r0, =0x0203a4d0
+        ldrh r0, [r0]
+        mov r1, #0x20
+        and r0, r1
+        bne endLull
         mov r0, r4
         mov r1, #0
         bl HasLull
