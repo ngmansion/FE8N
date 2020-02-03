@@ -1251,7 +1251,7 @@ KONSHIN_ADR = (adr+92)
 SOLO_ADR = (adr+96)
 SHISEN_ADR = (adr+100)
 FORT_ADR = (adr+104)
-WAR_ADR = (adr+108)
+@WAR_ADR = (adr+108)
 HEARTSEEKER_ADR = (adr+112)
 DAUNT_ADR = (adr+116)
 HAS_BOND_ADR = (adr+120)
@@ -1366,9 +1366,6 @@ HasShisen:
 	mov pc, r3
 HasFort:
 	ldr r3, FORT_ADR
-	mov pc, r3
-HasWarSkill:
-	ldr r3, WAR_ADR
 	mov pc, r3
 HasBond:
 	ldr r3, HAS_BOND_ADR

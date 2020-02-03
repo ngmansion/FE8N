@@ -43,7 +43,7 @@ battle_before:
     POIN hasSolo
     POIN hasLifeAndDeath
     POIN hasFort
-    POIN hasSunder
+    POIN 0
     POIN HasHeartseeker
     POIN HasDaunt
     POIN hasBond
@@ -194,8 +194,5 @@ hasSolo:
 hasFort:
     HAS_SKILL
     WORD FortID
-hasSunder:
-    HAS_COMBAT
-    WORD SunderID
 
 
