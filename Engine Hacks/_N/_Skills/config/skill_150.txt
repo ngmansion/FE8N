@@ -15,6 +15,6 @@ skill_150_item:
 #define COMBAT_ART_150_AVO 00 
 #define COMBAT_ART_150_COST 05 
 #define COMBAT_ART_150_WEAPON $01 
-#define COMBAT_ART_150_INFO 01 
+#define COMBAT_ART_150_INFO 02 
 #define COMBAT_ART_150_DUMMY 00 
  

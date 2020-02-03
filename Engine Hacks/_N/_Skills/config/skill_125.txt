@@ -15,6 +15,6 @@ skill_125_item:
 #define COMBAT_ART_125_AVO 00 
 #define COMBAT_ART_125_COST 05 
 #define COMBAT_ART_125_WEAPON $FF 
-#define COMBAT_ART_125_INFO 01 
+#define COMBAT_ART_125_INFO 02 
 #define COMBAT_ART_125_DUMMY 00 
  

@@ -210,12 +210,7 @@ SetSkill:
 		beq endSet
 
 		mov r0, r6
-		bl IsCombatSkill
-		cmp r0, #0
-		beq endSet
-
-		mov r0, r6
-		bl MatchWeaponType
+		bl JudgeCombatSkill
 		cmp r0, #0
 		beq endSet
 
@@ -241,41 +236,72 @@ DedupSkill:
 		mov r0, #0
 		bx lr
 
-MatchWeaponType:
-		push {r5, lr}
+COMBAT_TBL = (ADDR+20)
+COMBAT_TBL_SIZE = (ADDR+24)
 
+JudgeCombatSkill:
+		push {r6, lr}
 		ldr r2, COMBAT_TBL
-		ldr r3, COMBAT_TBL_SIZE
-		mul r3, r0
-		add r3, r2
-		ldrb r5, [r3, #5]
-		cmp r5, #0xFF
+		ldr r0, COMBAT_TBL_SIZE
+		mul r6, r0
+		add r6, r2
+		ldrb r2, [r6, #6]
+		cmp r2, #0
+		beq falseCombat
+
+		bl JudgeRange
+		cmp r0, #0
+		beq falseCombat
+
+		bl MatchWeaponType
+		cmp r0, #0
+		beq falseCombat
+
+		mov r0, #1
+		.short 0xE000
+	falseCombat:
+		mov r0, #0
+		pop {r6, pc}
+
+JudgeRange:
+		push {lr}
+
+		ldrb r0, [r6, #6]
+		cmp r0, #2
+		bne trueRange
+
+		mov r0, r8
+		add r0, #72
+		ldrh r0, [r0]
+		bl GetWeaponRange
+		mov r1, #0b00001111
+		and r0, r1
+		cmp r0, #1
+		beq trueRange
+		mov r0, #0
+		.short 0xE000
+trueRange:
+		mov r0, #1
+		pop {pc}
+
+MatchWeaponType:
+		push {r6, lr}
+
+		ldrb r6, [r6, #5]
+		cmp r6, #0xFF
 		beq trueType
 
 		mov r0, r8
 		add r0, #72
 		ldrh r0, [r0]
 		bl GetWeaponType
-		cmp r0, r5
+		cmp r0, r6
 		beq trueType
 		mov r0, #0
 		.short 0xE000
 trueType:
 		mov r0, #1
-		pop {r5, pc}
-
-COMBAT_TBL = (ADDR+20)
-COMBAT_TBL_SIZE = (ADDR+24)
-
-IsCombatSkill:
-		ldr r2, COMBAT_TBL
-		ldr r3, COMBAT_TBL_SIZE
-		mul r3, r0
-		add r3, r2
-		ldrb r2, [r3, #6]
-		mov r0, #1
-		and r0, r2
-		bx lr
+		pop {r6, pc}
 
 GetColor:
 	ldr r2, SKL_TBL
@@ -340,6 +366,11 @@ WrapIcon:
 GetWeaponType:
 	ldr	r3, =0x080172f0
 	mov	pc, r3
+
+GetWeaponRange:
+	ldr	r3, =0x08017448	@武器の射程
+	mov	pc, r3
+
 Icon:
 	ldr	r3, =0x08003608
 	mov	pc, r3

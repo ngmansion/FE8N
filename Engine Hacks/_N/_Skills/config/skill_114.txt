@@ -15,6 +15,6 @@ skill_114_item:
 #define COMBAT_ART_114_AVO 00 
 #define COMBAT_ART_114_COST 03 
 #define COMBAT_ART_114_WEAPON $00 
-#define COMBAT_ART_114_INFO 01 
+#define COMBAT_ART_114_INFO 02 
 #define COMBAT_ART_114_DUMMY 00 
  
