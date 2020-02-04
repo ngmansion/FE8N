@@ -1,13 +1,8 @@
-PULSE_ID = (0x09)	@奥義の鼓動の状態異常
-PULSE_RESET = (0x39)	@奥義の鼓動の状態異常
-
-DEFENSE_FLAG = (0xDF) @防御目印
 WAR_ADR = (67)	@書き込み先(AI1カウンタ)
-WAR_FLAG = (0xFE)	@フラグ
 
 RETURN_ADR = 0x0802a4a6
 
-@0802A490
+@ 0802A490
 .thumb
 	lsl	r0, r0, #16
 	lsr	r3, r0, #16
@@ -64,30 +59,15 @@ endHokan:
 
 	bl ReverseR4R5IfNeeded	@r4が発動判定者。r5が相手
 
-@■戦技判定
-	bl JudgeCombat
-	cmp r0, #0
-	beq skipWar
-
-	bl GetLethalityID
-	mov r1, r10
-	cmp r0, r1
-	bne notDeath	@瞬殺ではない
-@■瞬殺独自判定
 	ldr r0, [sp] @r3
-	bl judgeDeath
-	cmp r0, #1
-	beq skipWar	@戦技の確定発動判定を飛ばす
-	b FALSE
-notDeath:
-	mov r0, #WAR_ADR
-	ldrb r0, [r4, r0]
-	mov r1, r10
-	cmp r0, r1
-	beq TRUE	@一致なので確定発動
-	b FALSE		@不一致なので確定不発
+	cmp r0, #0
+	beq FALSE	@確率0なら終了(瞬殺対策)
 
-skipWar:
+@■奥義確定発動判定
+	bl JudgeCombat
+	cmp r0, #1
+	beq TRUE
+
 @■ジェノサイド判定
 	ldrb r0, [r5, #11]
 	ldr r1, =0x0203a5e8 @ゲノ
@@ -188,6 +168,7 @@ GetWeaponAbility:
 	mov pc, r1
 
 JudgeCombat:
+		push {lr}
 		ldrb r0, [r4, #11]
 		mov r2, #0xC0
 		and r2, r0
@@ -206,12 +187,36 @@ JudgeCombat:
 		cmp r1, #0xFF
 		beq falseWar	@ゼロ
 
-		mov r0, #1   @発動率100%
-		bx lr
+		mov r1, r10
+		cmp r0, r1
+		bne falseWar
+
+		bl JudgeAssassinate
+		cmp r0, #1
+		beq falseWar	@暗殺なので確定発動しない
+
+		mov r0, #1
+		.short 0xE000
 	falseWar:
-		mov r0, #0
+		mov r0, #0	@通常判定
 	endWar:
-		bx lr
+		pop {pc}
+
+
+JudgeAssassinate:
+		push {lr}
+
+		bl GetAssassinateID
+
+		mov r1, r10
+		cmp r0, r1
+		bne falseAssassinate	@暗殺ではないならジャンプ
+
+		mov r0, #1
+		.short 0xE000
+	falseAssassinate:
+		mov r0, #0
+		pop {pc}
 
 ace_func:
 		push {lr}
@@ -261,25 +266,7 @@ king_func:
 	endKing:
 		pop {pc}
 
-
-judgeDeath:
-@戦技チェック
-	cmp r0, #0
-	beq falseDeath	@0なら不発
-
-	mov r1, #WAR_ADR
-	ldrb r1, [r4, r1]
-	mov r0, r10
-	cmp r0, r1
-	bne falseDeath	@不一致なら不発
-	
-	mov r0, #1
-	bx lr
-falseDeath:
-	mov r0, #0
-	bx lr
-
-GetLethalityID:
+GetAssassinateID:
 ldr r0, ADDRESS+16
 bx lr
 GetBigShieldID:
