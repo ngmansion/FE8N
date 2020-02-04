@@ -180,11 +180,11 @@ JudgeCombat:
 		cmp r0, r2
 		bne falseWar
 
-		mov r1, #WAR_ADR
-		ldrb r1, [r4, r1]
-		cmp r1, #0
+		mov r0, #WAR_ADR
+		ldrb r0, [r4, r0]
+		cmp r0, #0
 		beq falseWar	@ゼロ
-		cmp r1, #0xFF
+		cmp r0, #0xFF
 		beq falseWar	@ゼロ
 
 		mov r1, r10
