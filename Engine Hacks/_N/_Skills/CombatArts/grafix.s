@@ -6,11 +6,15 @@ ICON_POS = (0x0202F86)
 	ldr r1, =0x08022D5B
 	cmp r0, r1
 	bne END
-	bl arrow_reset_func
-	bl GatherSkill
-	cmp r0, #0
-	beq END
-	
+		bl arrow_reset_func
+		bl GatherSkill
+		cmp r0, #0
+		beq start
+
+		ldr r1, ADDR+4
+		mov r0, #1
+		strb r0, [r1]
+	start:
 		mov r0, #0x0
 		mov r1, #2
 		neg r1, r1
@@ -52,11 +56,6 @@ ICON_POS = (0x0202F86)
 		ldrb r1, [r1, #5]
 		bl GetColor	@need ID in r1
 		bl WrapIcon
-
-	finish:
-        ldr r0, ADDR+4
-		mov r1, #1
-        strb r1, [r0]
 END:
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -190,10 +189,10 @@ JudgeCapture:
 		ldr r0, [r4, #0xC]
 		mov r1, #0x10
 		and r0, r1
-		beq trueCapture	@救出していない
+		beq trueCapture         @救出していない
 		ldrb r0, [r4, #27]
 		cmp r0, #0
-		beq falseCapture @誰も担いでいない
+		beq falseCapture        @誰も担いでいない
 		b trueCapture
 	trueCapture:
 		mov r0, #1
@@ -223,10 +222,10 @@ DedupSkill:
 		ldr r2, ADDR
 	loopDedup:
 		cmp r2, r5
-		beq falseDedup	@末尾まで到達
+		beq falseDedup      @末尾まで到達
 		ldrb r1, [r2]
 		cmp r0, r1
-		beq trueDedup	@重複あり
+		beq trueDedup       @重複あり
 		add r2, #1
 		b loopDedup
 	trueDedup:
@@ -337,7 +336,7 @@ Listfunc:
 
 arrow_reset_func:
     ldr r0, ADDR
-	mov r1, #0
+    mov r1, #0
     str r1, [r0]
     str r1, [r0, #4]
     str r1, [r0, #8]
@@ -359,21 +358,21 @@ WrapIcon:
 	add r1, #0x80
 	add r1, #0x80
 
-	lsl	r2, r2, #7
+	lsl r2, r2, #7
 	bl Icon
 	pop {pc}
 
 GetWeaponType:
-	ldr	r3, =0x080172f0
-	mov	pc, r3
+	ldr r3, =0x080172f0
+	mov pc, r3
 
 GetWeaponRange:
-	ldr	r3, =0x08017448	@武器の射程
-	mov	pc, r3
+	ldr r3, =0x08017448     @武器の射程
+	mov pc, r3
 
 Icon:
-	ldr	r3, =0x08003608
-	mov	pc, r3
+	ldr r3, =0x08003608
+	mov pc, r3
 .align
 .ltorg
 ADDR:
