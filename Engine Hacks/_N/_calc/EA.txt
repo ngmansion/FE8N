@@ -42,6 +42,7 @@ POP
 Assassinate_func:
 	#incbin Assassinate.dmp
 	POIN HasAssassinate
+	POIN mergeOccult
 
 weapon_bonus_func:
 	#incbin weapon_bonus.dmp
