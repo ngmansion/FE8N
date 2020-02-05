@@ -23,6 +23,7 @@ grafix_ws:
 	POIN getSkill
 	POIN combat_art_table
 	WORD COMBAT_ART_LIST_SIZE
+	POIN mergeOccult
 	
 ALIGN 4
 

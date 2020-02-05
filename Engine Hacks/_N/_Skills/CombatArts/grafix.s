@@ -29,37 +29,37 @@ ICON_POS = (0x0202F86)
         mov r0, #4
         ldr r1, ADDR
         ldrb r1, [r1, #0]
-        bl GetColor	@need ID in r1
+        bl GetColor     @need ID in r1
         bl WrapIcon
 
         mov r0, #8
         ldr r1, ADDR
         ldrb r1, [r1, #1]
-        bl GetColor	@need ID in r1
+        bl GetColor     @need ID in r1
         bl WrapIcon
 
         mov r0, #12
         ldr r1, ADDR
         ldrb r1, [r1, #2]
-        bl GetColor	@need ID in r1
+        bl GetColor     @need ID in r1
         bl WrapIcon
 
         mov r0, #16
         ldr r1, ADDR
         ldrb r1, [r1, #3]
-        bl GetColor	@need ID in r1
+        bl GetColor     @need ID in r1
         bl WrapIcon
 
         mov r0, #20
         ldr r1, ADDR
         ldrb r1, [r1, #4]
-        bl GetColor	@need ID in r1
+        bl GetColor     @need ID in r1
         bl WrapIcon
         
         mov r0, #24
         ldr r1, ADDR
         ldrb r1, [r1, #5]
-        bl GetColor	@need ID in r1
+        bl GetColor     @need ID in r1
         bl WrapIcon
 END:
     pop	{r3, r4, r5}
@@ -81,9 +81,9 @@ GatherSkill:
         cmp r0, #0
         beq endGather
 
-        bl GatherListWeapon	
-        bl GatherUnit	@Book and Unitdata
-        bl GatherListUC	@Ignore Weapon and Item
+        bl GatherListWeapon
+        bl GatherUnit       @Book and Unitdata
+        bl GatherListUC     @Ignore Weapon and Item
     endGather:
         ldr r0, ADDR
         ldrb r0, [r0]
@@ -211,12 +211,12 @@ SetSkill:
         mov r6, r0
         bl DedupSkill
         cmp r0, #1
-        beq endSet
+        beq endSet  @重複
 
         mov r0, r6
         bl JudgeCombatSkill
         cmp r0, #0
-        beq endSet
+        beq endSet  @戦技ではない
 
         strb r6, [r5]
         add r5, #1
@@ -257,6 +257,10 @@ JudgeCombatSkill:
         cmp r0, #0
         beq falseCombat
 
+        bl JudgeOracle
+        cmp r0, #0
+        beq falseCombat
+
         bl MatchWeaponType
         cmp r0, #0
         beq falseCombat
@@ -267,12 +271,31 @@ JudgeCombatSkill:
         mov r0, #0
         pop {r6, pc}
 
+LEVEL_S = (6)
+
+JudgeOracle:
+        push {r4, lr}
+        mov r4, r8  @必要
+
+        ldrb r0, [r6, #6]
+        mov r1, #4
+        tst r0, r1
+        beq trueOracle
+
+        mov r0, r4
+        bl OracleFunc
+        .short 0xE000
+trueOracle:
+        mov r0, #1
+        pop {r4, pc}
+
 JudgeRange:
         push {lr}
 
         ldrb r0, [r6, #6]
-        cmp r0, #2
-        bne trueRange
+        mov r1, #2
+        tst r0, r1
+        beq trueRange
 
         mov r0, r8
         add r0, #72
@@ -378,6 +401,12 @@ GetWeaponRange:
 Icon:
     ldr r3, =0x08003608
     mov pc, r3
+
+OracleFunc:
+    ldr r3, ADDR+28
+    add r3, #26
+    mov pc, r3
+
 .align
 .ltorg
 ADDR:

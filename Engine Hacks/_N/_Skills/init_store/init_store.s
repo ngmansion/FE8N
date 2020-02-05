@@ -1,5 +1,4 @@
-.equ SKILL_MAX, (0x37)	@絆
-
+SKILL_MAX = (0x38)	@盾
 
 .thumb
 @	00017bd4
@@ -94,7 +93,7 @@ Ok:
 	beq Retry
 	cmp r0, #0x24	@死線
 	beq Retry
-	cmp r0, #0x22	@電撃戦闘
+	cmp r0, #0x28	@没
 	beq Retry
 	cmp r0, #0x2F	@相性激化
 	beq Retry
@@ -166,6 +165,8 @@ emOk:
 	cmp r0, #0x1E	@戦技
 	beq emRetry
 	cmp r0, #0x23	@生命吸収
+	beq emRetry
+	cmp r0, #0x28	@没
 	beq emRetry
 	cmp r0, #0x29	@杖スキル
 	beq emRetry

@@ -22,7 +22,7 @@
         mov r1, r0
         cmp r1, #0 
         bne false   @剣以外は終了
-        mov r0, r4
+        mov r0, r3
         add r0, #40
         add r0, r0, r1
         ldrb r0, [r0, #0]

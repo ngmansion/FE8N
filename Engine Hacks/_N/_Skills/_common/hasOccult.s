@@ -25,11 +25,8 @@ judgeOccult:
         cmp r0, #1
         beq end
         
-        mov r0, #72
-        ldrh r0, [r4, r0]
-            ldr r1, =0x080172f0 @武器種類
-            mov lr, r1
-            .short 0xF800
+        mov r0, #0x50
+        ldrb r0, [r4, r0]
         cmp r0, #7
         bgt false
         add r0, #40
