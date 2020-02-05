@@ -1,6 +1,6 @@
 
-#define WAR_CONFIG (0x02003AF0)
-#define ARROW_CONFIG (0x02003AFF)
+#define WAR_CONFIG (0x0203AF00)
+#define ARROW_CONFIG (WAR_CONFIG+0x7)
 
 #include list_definitions.event
 
