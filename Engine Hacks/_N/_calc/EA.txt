@@ -45,7 +45,7 @@ Assassinate_func:
 
 weapon_bonus_func:
 	#incbin weapon_bonus.dmp
-	POIN weapon_bonus_original
+//	POIN weapon_bonus_original
 	POIN weapon_bonus_three_house
 //	POIN weapon_bonus_N
 	POIN weapon_bonus_AtkSpd
