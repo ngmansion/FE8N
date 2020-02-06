@@ -18,6 +18,10 @@
             mov r2, #0
             cmp r0, #0
             beq false
+            ldr r0, =0x0203a4d2
+            ldrb r0, [r0]
+            cmp r0, #1
+            bne false   @射程外
 
         ldr r0, [r3, #0]
         ldr r1, [r3, #4]
