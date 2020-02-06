@@ -282,10 +282,28 @@ JudgeOracle:
         tst r0, r1
         beq trueOracle
 
+
+        mov r0, r8
+        ldr r0, [r0, #76]
+        mov r1, #0x80
+        and r0, r1
+        bne falseOracle    @反撃不可武器は無効
+
+        mov r0, r8
+        add r0, #74
+        ldrh r0, [r0]
+        bl GetWeaponAbility
+        cmp r0, #3
+        beq falseOracle
+
         mov r0, r4
         bl OracleFunc
+        pop {r4, pc}
+
+    falseOracle:
+        mov r0, #0
         .short 0xE000
-trueOracle:
+    trueOracle:
         mov r0, #1
         pop {r4, pc}
 
@@ -298,7 +316,7 @@ JudgeRange:
         beq trueRange
 
         mov r0, r8
-        add r0, #72
+        add r0, #74
         ldrh r0, [r0]
         bl GetWeaponRange
         mov r1, #0b00001111
@@ -389,6 +407,10 @@ WrapIcon:
     lsl r2, r2, #7
     bl Icon
     pop {pc}
+
+GetWeaponAbility:
+    ldr r1, =0x080174cc
+    mov pc, r1
 
 GetWeaponType:
     ldr r3, =0x080172f0
