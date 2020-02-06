@@ -14,6 +14,10 @@ ORG	0x02ab54
 ORG	0x02ab94
 #incbin critical.dmp
 
+//////////////////瞬殺率計算
+ORG 0x02ac68
+	jumpToHack(Assassinate_func)
+
 //////////////////魔法剣攻撃時の守備・魔防判定を武器種で切り換える
 ORG	0x2a9c6
 #incbin "mahoken.gba"
@@ -34,6 +38,11 @@ ORG 0x075bb6	//CC画面の処理(実際の減少処理は別にある)
 	SHORT $7A18
 
 POP
+
+Assassinate_func:
+	#incbin Assassinate.dmp
+	POIN HasAssassinate
+	POIN mergeOccult
 
 weapon_bonus_func:
 	#incbin weapon_bonus.dmp

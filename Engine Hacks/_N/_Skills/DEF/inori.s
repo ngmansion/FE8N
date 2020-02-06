@@ -1,7 +1,7 @@
 .thumb
 
-HAS_BIG_SHIELD_FUNC = (adr+0)
-HAS_HOLY_SHIELD_FUNC = (adr+4)
+DEAD_EYE_ID = (0x4C)
+
 HAS_GOD_SHIELD_FUNC = (adr+8)
 HAS_NIHIL_FUNC = (adr+16)
 SET_SKILLANIME_DEF_FUNC = (adr+20)
@@ -52,9 +52,6 @@ SET_SKILLANIME_DEF_FUNC = (adr+20)
 	cmp r0, #1
 	beq end	@確率発動処理をスキップ
 
-	mov r1, #0xDF		@確率発動防御用
-	mov r10, r1
-
 	bl HolyShield
 	cmp r0, #1
 	beq end
@@ -71,8 +68,8 @@ end:
 	mov pc, r0
 
 checkSkip:
-		mov r1, r10
-		cmp r1, #0xDE
+		mov r1, r9
+		cmp r1, #DEAD_EYE_ID
 		beq trueSkip	@必的チェック
 		ldr r0, =0x0203a604
 		ldr r0, [r0]
@@ -227,21 +224,7 @@ Deflect:
 
 BigShield:
 	push {lr}
-	mov r0, r8
-		ldr r1, HAS_BIG_SHIELD_FUNC
-		mov lr, r1
-		.short 0xF800
-	cmp r0, #0
-	beq falseShield
 	
-	mov r0, r7
-		ldr r1, HAS_NIHIL_FUNC
-		mov lr, r1
-		.short 0xF800
-	cmp r0, #1
-	beq falseShield	@見切り持ちなら終了
-	
-	mov	r3, r8
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	@魔法判定
 	cmp	r0, #0
@@ -254,6 +237,16 @@ BigShield:
 	beq	ouiShield
 	b falseShield
 ouiShield:
+	mov r0, r8
+	mov r1, r7
+	bl HasBigShield
+	cmp r0, #0
+	beq falseShield
+
+	ldr r1, HAS_BIG_SHIELD_FUNC
+	mov r10, r1
+
+	mov	r3, r8
 	ldrb	r0, [r3, #21]	@技
 	mov	r1, #0
 	bl	random
@@ -283,21 +276,7 @@ endShield:
 	
 HolyShield:
 	push {lr}
-	mov r0, r8
-		ldr r1, adr+4 @聖盾
-		mov lr, r1
-		.short 0xF800
-	cmp r0, #0
-	beq falseHoly
-	
-	mov r0, r7
-		ldr r1, HAS_NIHIL_FUNC
-		mov lr, r1
-		.short 0xF800
-	cmp r0, #1
-	beq falseHoly	@見切り持ちなら終了
-	
-	mov	r3, r8
+
 	mov	r0, #0x50
 	ldrb	r0, [r7, r0]	@物理判定
 	cmp	r0, #0
@@ -308,7 +287,17 @@ HolyShield:
 	beq	falseHoly
 	cmp	r0, #4
 	beq	falseHoly
-ouiHoly:
+
+	mov r0, r8
+	mov r1, r7
+	bl HasHolyShield
+	cmp r0, #0
+	beq falseHoly
+
+    ldr r1, HAS_HOLY_SHIELD_FUNC
+	mov r10, r1
+
+	mov	r3, r8
 	ldrb	r0, [r3, #21]	@技
 	mov	r1, #0
 	bl	random
@@ -506,11 +495,21 @@ Xeno:
 	endXeno:
 		bx lr
 
+HAS_BIG_SHIELD_FUNC = (adr+0)
+HAS_HOLY_SHIELD_FUNC = (adr+4)
 DEF_DIVIDE_FUNC = (adr+8)
 HAS_INORI_FUNC = (adr+12)
 HAS_INVINCIBLE_FUNC = (adr+28)
 HAS_WARYFIGHTER_FUNC = (adr+36)
 HAS_INORI_OLD_FUNC = (adr+40)
+
+HasBigShield:
+	ldr	r3, HAS_BIG_SHIELD_FUNC
+	mov	pc, r3
+
+HasHolyShield:
+	ldr	r3, HAS_HOLY_SHIELD_FUNC
+	mov	pc, r3
 
 DefDivide:
 	ldr	r3, DEF_DIVIDE_FUNC

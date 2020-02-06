@@ -1,11 +1,10 @@
 .thumb
 
 WAR_ADR = (67)	@書き込み先(AI1カウンタ)
-WAR_FLAG = (0xFE)	@フラグ
 
 HAS_DARTING_FUNC = (Adr+36)
 
-@.org 0002af18
+@.org 0802af18
     mov r5, r0
     ldr r0, =0x0203a4d0
     ldrh r0, [r0]
@@ -122,17 +121,25 @@ followup_skill:
         pop {pc}
 
 WarSkill:
+        ldrb r1, [r0, #0xB]
+        mov r2, #0xC0
+        and r2, r1
+        bne falseWar
+
+        ldr r2, =0x03004df0
+        ldr r2, [r2]
+        ldrb r2, [r2, #11]
+        cmp r1, r2
+        bne falseWar
+
         add r0, #WAR_ADR
         ldrb r0, [r0]
-        mov r1, #WAR_FLAG
-        and r0, r1
-        cmp r0, r1
-        beq cancelWar
-        mov r0, #0
-        b endWar
-    cancelWar:
+        cmp r0, #0
+        beq falseWar
         mov r0, #1
-    endWar:
+        bx lr
+    falseWar:
+        mov r0, #0
         bx lr
 
 

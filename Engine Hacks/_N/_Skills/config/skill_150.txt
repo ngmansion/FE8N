@@ -1,5 +1,5 @@
 skill_150_unit:
-   BYTE $00 $00 0 
+   BYTE $01 $02 $03 $04 $05 $06 $07 $08 $09 $0A $0B $0C $0D $0E $0F $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $1A $1B $1C $1D $1E $1F $20 $21 $22 $23 $24 $25 $26 $27 $28 $29 $2A $2B $2C 0
 skill_150_class:
    BYTE $00 $00 0 
 skill_150_weapon:
@@ -7,4 +7,14 @@ skill_150_weapon:
 skill_150_item:
    BYTE $00 $00 0 
 #define SKL_HELP_150 $0000
-#define SKL_COLOR_150 $00
+#define SKL_COLOR_150 $FF
+ 
+#define COMBAT_ART_150_ATK 08 
+#define COMBAT_ART_150_HIT 10 
+#define COMBAT_ART_150_CRT 00 
+#define COMBAT_ART_150_AVO 00 
+#define COMBAT_ART_150_COST 05 
+#define COMBAT_ART_150_WEAPON $01 
+#define COMBAT_ART_150_INFO 02 
+#define COMBAT_ART_150_DUMMY 00 
+ 

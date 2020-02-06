@@ -43,7 +43,7 @@ battle_before:
     POIN hasSolo
     POIN hasLifeAndDeath
     POIN hasFort
-    POIN hasSunder
+    POIN 0
     POIN HasHeartseeker
     POIN HasDaunt
     POIN hasBond
@@ -51,6 +51,8 @@ battle_before:
     POIN HasFierceStance
     POIN HasSteadyStance
     POIN HasDartingStance
+    POIN combat_art_table
+    WORD COMBAT_ART_LIST_SIZE
     
 battle_after:
     #incbin main.dmp
@@ -68,7 +70,6 @@ battle_down:
   POIN hasCounter
   POIN hasDoubleLion
   POIN hasSavageBlow
-  POIN hasRagingStorm
 
 HasFierceStance:
     HAS_NIHIL
@@ -92,7 +93,7 @@ ChangeMagic:
  POIN HasSoulblade
 
 HasSoulblade:
-    HAS_NIHIL
+    HAS_COMBAT
     WORD SoulbladeID
 
 HasBladeSession:
@@ -111,7 +112,7 @@ HasHeartseeker:
     WORD HeartseekerID
 
 hasAtrocity:
-    HAS_NIHIL
+    HAS_COMBAT
     WORD AtrocityID
 
 hasSavageBlow:
@@ -153,7 +154,7 @@ hasDartingBlow:
     WORD DartingBlowID
 
 hasMonsterBlast:
-    HAS_SKILL
+    HAS_COMBAT
     WORD MonsterBlastID
     
 hasCloseDef:
@@ -169,13 +170,13 @@ hasDefender:
  WORD DefenderID
 
 hasGrounder:
- HAS_SKILL
+ HAS_COMBAT
  WORD GrounderID
 hasHelmSplitter:
- HAS_SKILL
+ HAS_COMBAT
  WORD HelmSplitterID
 hasKnightkneeler:
- HAS_SKILL
+ HAS_COMBAT
  WORD KnightkneelerID
 
 hasPoisonStrike:
@@ -193,8 +194,5 @@ hasSolo:
 hasFort:
     HAS_SKILL
     WORD FortID
-hasSunder:
-    HAS_SKILL
-    WORD SunderID
 
 

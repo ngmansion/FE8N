@@ -1,4 +1,4 @@
-ORACLE_FLAG = (0xDC) @瞬殺目印
+ORACLE_FLAG = (0x9A) @暗殺目印
 
 .thumb
 .org	0x0802a490

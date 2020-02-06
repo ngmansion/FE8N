@@ -81,7 +81,7 @@ taiyo4:
 	#incbin "taiyo44.dmp"
     WORD SOL_WORK_ADDRESS
     POIN hasSOL
-    POIN judgeOccult
+    POIN 0
     POIN set_skillanime_attack
     POIN hasNihil
 

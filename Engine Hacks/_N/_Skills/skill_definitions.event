@@ -39,7 +39,7 @@
 #define DeathBlowID 37 //0x25鬼神の一撃
 #define ArmoredBlowID 38 //0x26金剛の一撃
 #define CounterID 39 //0x27 応撃
-#define QuickenedPulseID 40 //0x28奥義の鼓動
+//#define QuickenedPulseID 40 //0x28奥義の鼓動
 #define GaleCauseID 41 //0x29 神風招来(自軍のみ)
 #define ChargeID 42 //0x2A 突撃
 #define ImbueID 43 //0x2B 治癒
@@ -108,7 +108,7 @@
 #define Effective4ID 111 //0x6F特効4
 #define CancelAffinityID 112 //0x70相性相殺
 #define QuickChangeID 113 //0x71 持ち替え
-#define SunderID 114 //0x72 両断
+#define WrathStrikeID 114 //0x72 剛撃
 #define LightfaireID 115 //0x73 光魔の達人
 #define DarkfaireID 116 //0x74 闇魔の達人
 #define ReverseGenocideID 117 //0x75裏ジェノサイド
@@ -144,4 +144,9 @@
 #define FierceStanceID 147 //0x93 鬼神の構え
 #define SteadyStanceID 148 //0x94 金剛の構え
 #define DartingStanceID 149 //0x95 飛燕の構え
+#define TempestLanceID 150 //0x96 旋風槍
+#define SmashID 151 //0x97 スマッシュ
+#define SlenderSwordID 152 //0x98 突剣
+#define HeavySwordID 153 //0x99 重剣
+#define AssassinateID 154 //0x9A 暗殺
 

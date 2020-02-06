@@ -8,3 +8,13 @@ skill_206_item:
    BYTE $00 $00 0 
 #define SKL_HELP_206 $0000
 #define SKL_COLOR_206 $00
+ 
+#define COMBAT_ART_206_ATK 00 
+#define COMBAT_ART_206_HIT 00 
+#define COMBAT_ART_206_CRT 00 
+#define COMBAT_ART_206_AVO 00 
+#define COMBAT_ART_206_COST 05 
+#define COMBAT_ART_206_WEAPON $FF 
+#define COMBAT_ART_206_INFO 00 
+#define COMBAT_ART_206_DUMMY 00 
+ 

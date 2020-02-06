@@ -1,4 +1,3 @@
-ORACLE_FLAG = (0xDD) @奥義目印
 
 SWORD = (0)
 
@@ -82,9 +81,6 @@ jihad_impl:
         .short 0xF800
     cmp r0, #0
     beq falseJihad
-@奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
     
     ldrb r1, [r7, #0x13] @nowHP
     ldrb r0, [r7, #0x12] @maxHP
@@ -172,9 +168,7 @@ ecripse_impl:
         .short 0xF800
     cmp r0, #0
     beq falseEcripse
-@奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
+
     ldrb r0, [r7, #21]	@技
     mov r1, #0
     bl random
@@ -217,8 +211,6 @@ impale_impl:
     cmp r0, #0
     beq falseImpale
 @奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
     ldrb r0, [r7, #21]	@技
     mov r1, #0
     bl random
@@ -280,9 +272,6 @@ ouiAstra:
 	ldrh	r0, [r5, #12]	@必殺
 	cmp	r0, #0
 	beq	falseAstra	@必殺率がゼロなら終了
-
-    mov r1, #ORACLE_FLAG
-    mov r10, r1	@奥義目印
 
     ldrb r0, [r7, #21]	@技
 @	ldrb r0, [r7, #8]	@レベル
@@ -376,8 +365,7 @@ TENKU:
     cmp r0, #0x11
     bne falseTenku @@手斧チェック
 jump:
-    mov r1, #ORACLE_FLAG	@奥義目印
-    mov r10, r1
+
     ldrb r0, [r7, #21]	@技
 @    ldrb r0, [r7, #8]	@レベル
     mov r1, #0
@@ -465,8 +453,7 @@ RYUSEI:
 	mov	r7, #0
 ryuloop:
 @奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
+
 	ldrh	r0, [r5, #10]	@命中
 	mov	r1, #1
 		ldr	r2, =0x0802a4c0

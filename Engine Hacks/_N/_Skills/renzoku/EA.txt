@@ -28,7 +28,7 @@ yosoku:
 
 
 hasAdept:
-    HAS_NIHIL
+    HAS_COMBAT
     WORD AdeptID
     
 bolting_impl:
@@ -52,6 +52,11 @@ ORG	0x2b1be
 ORG	0x2B360
 BYTE	$00 $48 $87 $46
 POIN	hitteiki
+
+
+ORG 0x02b3ea	//(r9を確保)
+SHORT $88E9
+
 POP
 
 hitteiki:

@@ -5,17 +5,15 @@
 
 #define HAS_NIHIL "BYTE $02 $4A $01 $4B $9F $46 $C0 $46; POIN checkNihil"
 
+#define HAS_COMBAT "BYTE $02 $4A $01 $4B $9F $46 $C0 $46; POIN checkCombat"
+
 #include "checkSkill/EA.txt"
 #include "SkillBook/EA.txt"
 
 mergeOccult:
     #incbin hasOccult.dmp
-    POIN judgeOccult
+    POIN hasOccult
     POIN judgeSkill
-judgeOccult:
-	#incbin judgeOccult.gba
-	POIN hasOccult
-	WORD $080172f0
     
 hasOccult:
 	HAS_SKILL
@@ -25,7 +23,12 @@ checkNihil:
     #incbin checkNihil.dmp
     POIN hasNihil
     POIN judgeSkill
-    
+
+checkCombat:
+    #incbin checkCombat.dmp
+    POIN hasNihil
+    POIN judgeSkill
+
 ALIGN 4
 
 

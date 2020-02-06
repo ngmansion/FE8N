@@ -12,7 +12,7 @@ check:
 flip:
 	ldr r1, =$02024CC0
 	ldrh r1, [r1, #4]
-	lsl r1, r1, #29
+	lsl r1, r1, #22
 	bpl end
 	sub r0, r0, #1
 	beq end

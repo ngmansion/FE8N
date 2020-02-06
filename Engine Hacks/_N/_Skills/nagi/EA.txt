@@ -1,71 +1,10 @@
 
 PUSH
 
-ORG 0x2a2bc //setFlag
-BYTE	$00 $49 $8F $46
-POIN	nagi_setFlag
-
 ORG 0x02a834
 	jumpToHack(nagi_kaze)
 
 POP
-
-////攻撃後処理
-PUSH
-	ORG 0x02b866
-	SHORT $46C0
-	SHORT $2000
-//統合
-	SHORT $46C0
-	jumpToHack(afterAttack)
-
-//以下エフェクト関連
-//必的を貫通エフェクトに変更
-ORG 0x02b174
-	BYTE $6D $02
-
-//必的の前エフェクト削除
-ORG 0x059e44
-	BYTE $12 $E0
-
-//必的でも貫通ヒット音ON
-ORG 0x074318
-	BYTE $00 $05 $01 $D4 $80 $00 $0C $D5
-ORG 0x074384
-	BYTE $00 $05 $01 $D4 $80 $00 $0C $D5
-ORG 0x0743F0
-	BYTE $00 $05 $01 $D4 $80 $00 $0C $D5
-ORG 0x07496a
-	BYTE $80 $21
-	BYTE $00 $05 $01 $D4 $80 $00 $0B $D5
-
-//ORG 0x06ebbc
-//	BYTE $80 $25 $AD $00 $05 $40 $02 $D1 $00 $05 $04 $D5 $C0 $46
-
-POP
-
-afterAttack:
-	#incbin afterAttack.dmp
-	POIN InfiniteItem
-	ALIGN 4
-
-////攻撃キャンセル時
-PUSH
-ORG 0x022c60
-	jumpToHack(cancelWarSkill)
-POP
-
-cancelWarSkill:
-	#incbin cancelWarSkill.dmp
-	ALIGN 4
-
-PUSH
-	ORG 0x01e684
-	jumpToHack(grafix_ws)
-POP
-grafix_ws:
-	#incbin grafix.dmp
-ALIGN 4
 
 nagi_kaze:
   #incbin kaze.dmp
@@ -73,8 +12,5 @@ nagi_kaze:
   POIN waryFighter_hasSkill
 
 hasWindsweep:
- HAS_NIHIL
+ HAS_COMBAT
  WORD WindsweepID
-
-nagi_setFlag:
-  #incbin setFlag.dmp

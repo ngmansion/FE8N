@@ -17,7 +17,9 @@ mirikiri:
  POIN hasRightfulKing
  POIN hasResolve
  POIN hasRightfulGod
- POIN hasSunder
+ WORD AssassinateID
+ WORD PaviseID
+ WORD AegisID
 
 hasRightfulKing:
  HAS_SKILL
@@ -30,7 +32,7 @@ hasRightfulGod:
  WORD RightfulGodID
 hasQuickenedPulse:
  HAS_SKILL
- WORD QuickenedPulseID
+ WORD 0xFF
  
 ////////////////////KingFix
 PUSH
@@ -47,4 +49,9 @@ ORG 0x2B448
 	SHORT 0x207F	//ダメージ
 	SHORT 0xE016
 POP
+
+HasAssassinate:
+	HAS_COMBAT
+	WORD AssassinateID
+
 

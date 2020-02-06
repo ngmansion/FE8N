@@ -8,3 +8,13 @@ skill_084_item:
    BYTE $00 $00 0 
 #define SKL_HELP_084 $05A7
 #define SKL_COLOR_084 $FF
+ 
+#define COMBAT_ART_084_ATK 00 
+#define COMBAT_ART_084_HIT 00 
+#define COMBAT_ART_084_CRT 00 
+#define COMBAT_ART_084_AVO 00 
+#define COMBAT_ART_084_COST 05 
+#define COMBAT_ART_084_WEAPON $FF 
+#define COMBAT_ART_084_INFO 00 
+#define COMBAT_ART_084_DUMMY 00 
+ 

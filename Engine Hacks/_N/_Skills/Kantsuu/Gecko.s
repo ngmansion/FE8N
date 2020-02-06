@@ -1,6 +1,5 @@
 .thumb
 
-ORACLE_FLAG = (0xDD) @奥義目印
 SET_SKILLANIME_ATK_FUNC = (adr+4)
 HAS_NIHIL_FUNC = (adr+8)
 
@@ -25,8 +24,6 @@ HAS_NIHIL_FUNC = (adr+8)
     beq end
     
 @奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
 
     ldrb    r0, [r2, #0x15] @@月光発動率
     mov r1, #0

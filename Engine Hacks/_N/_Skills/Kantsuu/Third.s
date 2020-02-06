@@ -6,7 +6,6 @@ STR_ADR = (67)	@書き込み先(AI1カウンタ)
 WAR_FLAG = (0xFF)	@フラグ
 WAR_FLAG2 = (0xFE)	@フラグ
 
-ORACLE_FLAG = (0xDD) 
 
 
 	ldr	r2, [r6, #0]
@@ -51,13 +50,6 @@ MasterySkill:
 WarSkill:
 		push {lr}
 
-		mov r0, r7
-		add r0, #STR_ADR
-		ldrb r0, [r0]
-		mov r1, #WAR_FLAG
-		cmp r0, r1
-		bne endWarSkill
-
 		mov r0, r8
 		mov r1, #0
 		bl HasNihil
@@ -99,8 +91,6 @@ Revenge:
     cmp r0, #0
     beq endRevenge
 @奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
     ldrb r0, [r7, #21]	@技
     mov r1, #0
     bl random
@@ -128,8 +118,6 @@ Dragon:
     cmp r0, #0
     beq endDragon
 @奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
     ldrb r0, [r7, #21]	@技
     mov r1, #0
     bl random
@@ -161,8 +149,6 @@ Meido:
     cmp r0, #0
     beq endMeido
 @奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
     ldrb r0, [r7, #21]	@技
     mov r1, #0
     bl random
@@ -191,8 +177,6 @@ Flower:
     cmp r0, #0
     beq endFlower
 @奥義目印
-    mov r1, #ORACLE_FLAG
-    mov r10, r1
     ldrb r0, [r7, #21]	@技
     mov r1, #0
     bl random
@@ -316,10 +300,7 @@ random:
 	mov	pc, r3
 
 retrun:
-	mov	r1, r9
-	sub	r0, r1, r4
-	strh	r0, [r5, #4]
-	ldr	r1, =0x0802b3f0
+	ldr	r1, =0x0802b3ea
 	mov	pc, r1
 
 HAS_DRAGON_FUNC = (adr+0)

@@ -2,9 +2,9 @@
 @0802B3A4
 	bl main
 
-    mov r1, #6
-    ldsh r0, [r5, r1]
-    mov r9, r0
+@    mov r1, #6
+@    ldsh r0, [r5, r1]
+@    mov r9, r0
     ldr r3, =0x0802b3ac
     mov pc, r3
 
