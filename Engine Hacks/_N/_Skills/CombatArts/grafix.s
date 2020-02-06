@@ -253,15 +253,19 @@ JudgeCombatSkill:
         cmp r2, #0
         beq falseCombat
 
-        bl JudgeRange
-        cmp r0, #0
-        beq falseCombat
-
-        bl JudgeOracle
+        bl JudgeSpecialWeapon
         cmp r0, #0
         beq falseCombat
 
         bl MatchWeaponType
+        cmp r0, #0
+        beq falseCombat
+
+        bl JudgeRange       @2
+        cmp r0, #0
+        beq falseCombat
+
+        bl JudgeOracle      @4
         cmp r0, #0
         beq falseCombat
 
@@ -271,7 +275,27 @@ JudgeCombatSkill:
         mov r0, #0
         pop {r6, pc}
 
-LEVEL_S = (6)
+JudgeSpecialWeapon:
+        push {lr}
+
+        mov r0, r8
+        ldr r0, [r0, #76]
+        mov r1, #0x80
+        tst r0, r1
+        bne falseSpecial    @反撃不可武器は無効
+
+        mov r0, r8
+        add r0, #74
+        ldrh r0, [r0]
+        bl GetWeaponAbility
+        cmp r0, #3
+        beq falseSpecial
+    trueSpecial:
+        mov r0, #1
+        .short 0xE000
+    falseSpecial:
+        mov r0, #0
+        pop {pc}
 
 JudgeOracle:
         push {r4, lr}
@@ -282,23 +306,8 @@ JudgeOracle:
         tst r0, r1
         beq trueOracle
 
-        ldr r0, [r4, #76]
-        mov r1, #0x80
-        and r0, r1
-        bne falseOracle    @反撃不可武器は無効
-
-        mov r0, #74
-        ldrh r0, [r4, r0]
-        bl GetWeaponAbility
-        cmp r0, #3
-        beq falseOracle
-
         mov r0, r4
         bl OracleFunc
-        pop {r4, pc}
-
-    falseOracle:
-        mov r0, #0
         .short 0xE000
     trueOracle:
         mov r0, #1
