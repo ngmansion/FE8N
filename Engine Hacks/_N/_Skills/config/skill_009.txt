@@ -15,6 +15,6 @@ skill_009_item:
 #define COMBAT_ART_009_AVO 00 
 #define COMBAT_ART_009_COST 04 
 #define COMBAT_ART_009_WEAPON $FF 
-#define COMBAT_ART_009_INFO 01 
+#define COMBAT_ART_009_INFO 02 
 #define COMBAT_ART_009_DUMMY 00 
  

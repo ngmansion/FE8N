@@ -10,6 +10,12 @@
             pop {r3}
             cmp r0, #1
             beq $0002ac8a
+            push {r3}
+            bl HasCombatSkill
+            pop {r3}
+            mov r2, #0
+            cmp r0, #1
+            beq false   @別の戦技発動中は無効
 
             mov r0, r3
             push {r3}
@@ -71,6 +77,32 @@
         pop {r4}
         pop {r0}
         bx r0
+
+WAR_ADR = (67)	@書き込み先(AI1カウンタ)
+
+HasCombatSkill:
+		ldrb r0, [r3, #11]
+		mov r2, #0xC0
+		and r2, r0
+		bne falseCombat @自軍以外は終了
+
+		ldr r2, =0x03004df0
+		ldr r2, [r2]
+		ldrb r2, [r2, #11]
+		cmp r0, r2
+		bne falseCombat
+
+		mov r0, #WAR_ADR
+		ldrb r0, [r3, r0]
+		cmp r0, #0
+		beq falseCombat
+		cmp r0, #0xFF
+		beq falseCombat
+        mov r0, #1
+        .short 0xE000
+    falseCombat:
+        mov r0, #0
+        bx lr
 
 GetWeaponType:
     ldr r2, =0x080172f0

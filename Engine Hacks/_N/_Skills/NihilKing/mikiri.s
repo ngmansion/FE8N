@@ -67,6 +67,8 @@ endHokan:
 	bl JudgeCombat
 	cmp r0, #1
 	beq TRUE
+	cmp r0, #0xFF
+	beq FALSE
 
 @■ジェノサイド判定
 	ldrb r0, [r5, #11]
@@ -189,14 +191,19 @@ JudgeCombat:
 
 		mov r1, r10
 		cmp r0, r1
-		bne falseWar
+		bne inactiveCombat
 
 		bl JudgeAssassinate
 		cmp r0, #1
 		beq falseWar	@暗殺なので確定発動しない
 
 		mov r0, #1
-		.short 0xE000
+		b endWar    @確定発動
+
+    inactiveCombat:
+        mov r0, #0xFF
+        b endWar    @確定不発
+
 	falseWar:
 		mov r0, #0	@通常判定
 	endWar:
