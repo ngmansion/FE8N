@@ -1,27 +1,42 @@
 
 PUSH
 
+ORG 0x02c708
+  jumpToHack(SwitchTriangle)
+
+
 ORG 0x02c754
   jumpToHack(skill_triangle)
 
 POP
 
+ALIGN 4
+SwitchTriangle:
+  #incbin triangle.dmp
+  POIN HasSlenderSword
+  POIN HasHeavySword
+
+ALIGN 4
 skill_triangle:
   #incbin main.dmp
-  POIN hasNihil
-  POIN hasTriangleAdept
-  POIN hasCancelAffinity
-  
+  POIN HasTriangleAdept
+  POIN HasCancelAffinity
 
-hasTriangleAdept:
-  HAS_SKILL
+
+HasTriangleAdept:
+  HAS_NIHIL
   WORD TriangleAdeptID
-hasCancelAffinity:
-  HAS_SKILL
+HasCancelAffinity:
+  HAS_NIHIL
   WORD CancelAffinityID
 
+HasSlenderSword:
+  HAS_NIHIL
+  WORD SlenderSwordID
 
-
+HasHeavySword:
+  HAS_NIHIL
+  WORD HeavySwordID
 
 
 
