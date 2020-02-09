@@ -33,10 +33,10 @@ battle_before:
     POIN HasAvoidUp
     POIN HasCriticalUp
     POIN waryFighter_hasSkill
-    POIN hasGrounder
-    POIN hasHelmSplitter
-    POIN hasKnightkneeler
-    POIN hasMonsterBlast
+    POIN 0
+    POIN 0
+    POIN 0
+    POIN 0
     POIN hasDartingBlow
     POIN hasResolve
     POIN hasPush
@@ -47,7 +47,7 @@ battle_before:
     POIN HasHeartseeker
     POIN HasDaunt
     POIN hasBond
-    POIN hasAtrocity
+    POIN 0
     POIN HasFierceStance
     POIN HasSteadyStance
     POIN HasDartingStance
@@ -63,6 +63,12 @@ battle_after:
     POIN hasLull
     POIN combat_art_table
     WORD COMBAT_ART_LIST_SIZE
+    POIN hasGrounder
+    POIN hasHelmSplitter
+    POIN hasKnightkneeler
+    POIN hasMonsterBlast
+    POIN hasAtrocity
+    
     
 battle_down:
   #incbin down.dmp

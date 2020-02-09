@@ -48,7 +48,6 @@ endNoEnemy:
     bne endNeedEnemy
     
     bl OtherSideSkill
-    bl EffectiveBonus
     bl koroshi
 
 endNeedEnemy:
@@ -781,117 +780,6 @@ Ace:
     endAce:
         pop {pc}
 
-FLY_E2_ID = (0x2D)	@てつのゆみ
-ARMOR_E2_ID = (0x26)	@ハンマー
-HORSE_E2_ID = (0x1B)	@ホースキラー
-MONSTER_E2_ID = (0xAA)	@竜石
-
-BL_GETITEMEFFECTIVE = (0x08017478)
-
-EffectiveBonus:
-        push {lr}
-        
-        mov r1, r4
-        add r1, #72
-        ldrh r0, [r1]
-        cmp r0, #0
-        beq endEffective
-        mov r1, r5
-        bl $08016994    @特効判定
-        cmp r0, #1
-        beq endEffective
-        
-        mov r0, r4
-        mov r1, r5
-        bl $08016a30 @魔物特効
-        cmp r0, #1
-        beq endEffective
-    @Grounder
-        mov r0, #FLY_E2_ID
-        ldr r1, FLY_E_ADR
-    
-        bl effective_impl
-        cmp r0, #1
-        beq getEffective
-    @HelmSplitter
-        mov r0, #ARMOR_E2_ID
-        ldr r1, ARMOR_E_ADR
-    
-        bl effective_impl
-        cmp r0, #1
-        beq getEffective
-    @@@@@
-        mov r0, #HORSE_E2_ID
-        ldr r1, HORSE_E_ADR
-        bl effective_impl
-        cmp r0, #1
-        beq getEffective
-    @@@@@
-        mov r0, #MONSTER_E2_ID
-        ldr r1, MONSTER_E_ADR
-        bl effective_impl
-        cmp r0, #1
-        beq getEffective
-    @無惨
-        mov r0, r4
-        mov r1, #0
-        bl HasAtrocity
-        cmp r0, #1
-        beq getEffective
-    
-        b endEffective
-    getEffective:
-        mov r1, r4
-        add r1, #72
-        ldrh r0, [r1]
-        bl $08017384
-        mov	r1, r4
-        add	r1, #84
-        ldrb	r1, [r1, #0]	@武器相性
-        lsl	r1, r1, #24
-        asr	r1, r1, #24
-        add	r1, r1, r0
-        mov	r2, r4
-        add	r2, #90
-        ldrh	r0, [r2]
-        add r0, r0, r1
-        strh	r0, [r2]
-        
-    endEffective:
-        pop {pc}
-
-effective_impl:
-    @r0に特効リストを利用する武器のID
-    @r1にとび先
-        push {r4, r5, r6, lr}
-    
-        eor r4, r0
-        eor r0, r4
-        eor r4, r0
-            mov lr, r1
-            .short 0xF800
-        cmp r0, #0
-        beq falseEffective_impl
-        mov r0, r4
-        bl GetItemEffective
-    @r4に装備武器
-    @r5に相手アドレス
-    @r6に特効リスト
-        mov r6, r0
-        mov r3, r4
-        mov r1, r6
-        mov r4, r5
-        ldr r2, [r4, #4]
-        ldrb r2, [r2, #4]	@r2に相手兵種ID
-        ldr r5, =0x080161B8
-        ldr r5, [r5]	@r5にアイテムリスト先頭アドレス
-        ldr r0, =0x080169c8
-        mov pc, r0
-    falseEffective_impl:
-        mov r0, #0
-        pop	{r4, r5, r6}
-        pop	{r1}
-        bx	r1
 
 DEFENDER_DAMAGE = (10)
 
@@ -1231,10 +1119,10 @@ SHIELD_SESSION_ADDR = (adr+52)
 HAS_AVOIDUP_ADDR = (adr+56)
 HAS_CRITICALUP_ADDR = (adr+60)
 WARYFIGHTER_ADR = (adr+64)
-FLY_E_ADR = (adr+68)
-ARMOR_E_ADR = (adr+72)
-HORSE_E_ADR = (adr+76)
-MONSTER_E_ADR = (adr+80)
+@FLY_E_ADR = (adr+68)
+@ARMOR_E_ADR = (adr+72)
+@HORSE_E_ADR = (adr+76)
+@MONSTER_E_ADR = (adr+80)
 HIEN_ADR = (adr+84)
 ACE_ADR = (adr+88)
 KONSHIN_ADR = (adr+92)
@@ -1245,7 +1133,7 @@ FORT_ADR = (adr+104)
 HEARTSEEKER_ADR = (adr+112)
 DAUNT_ADR = (adr+116)
 HAS_BOND_ADR = (adr+120)
-HAS_ATROCITY_ADR = (adr+124)
+@HAS_ATROCITY_ADR = (adr+124)
 HAS_KISHIN_R = (adr+128)
 HAS_KONGOU_R = (adr+132)
 HAS_HIEN_R = (adr+136)
@@ -1347,28 +1235,12 @@ HasFort:
 HasBond:
 	ldr r3, HAS_BOND_ADR
 	mov pc, r3
-HasAtrocity:
-    ldr r2, HAS_ATROCITY_ADR
-    mov pc, r2
-
-$08016994:
-    ldr r2, =0x08016994
-    mov pc, r2
-$08016a30:
-    ldr r2, =0x08016a30 @魔物特効
-    mov pc, r2
-$08017384:
-    ldr r1, =0x08017384
-    mov pc, r1
 
 GetAttackerAddr:
     ldr r0, =0x03004df0
     bx lr
 GetWeaponSp:
 	ldr r1, =0x080172f0
-	mov pc, r1
-GetItemEffective:
-	ldr r1, =BL_GETITEMEFFECTIVE
 	mov pc, r1
 GetAlinaAdr:
 	ldr r0, =0x0203a4d0
