@@ -48,8 +48,6 @@ ARMOR_E2_ID = (0x26)    @ハンマー
 HORSE_E2_ID = (0x1B)    @ホースキラー
 MONSTER_E2_ID = (0xAA)  @竜石
 
-BL_GETITEMEFFECTIVE = (0x08017478)
-
 EffectiveBonus:
         push {lr}
         
@@ -136,7 +134,7 @@ effective_impl:
         cmp r0, #0
         beq falseEffective_impl
         mov r0, r4
-        bl GetItemEffective
+        bl $08017478
     @r4に装備武器
     @r5に相手アドレス
     @r6に特効リスト
@@ -166,8 +164,8 @@ $08017384:
     ldr r1, =0x08017384
     mov pc, r1
 
-GetItemEffective:
-    ldr r1, =BL_GETITEMEFFECTIVE
+$08017478:
+    ldr r1, =0x08017478
     mov pc, r1
 
 STR_ADR = (67)	@書き込み先(AI1カウンタ)
