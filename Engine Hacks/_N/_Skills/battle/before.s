@@ -501,18 +501,8 @@ WarSkill:
         cmp r0, #0
         beq endWar
         mov r3, r0
-    
-        mov r1, #90
-        ldrh r0, [r4, r1]
-        mov r2, #0
-        ldsb r2, [r3, r2]
-        add r0, r2
-        cmp r0, #0
-        bge jumpWar1
-        mov r0, #0
-    jumpWar1:
-        strh r0, [r4, r1] @力
-    
+
+@攻撃はここではなく凪の後
         mov r1, #96
         ldrh r0, [r4, r1]
         mov r2, #1
@@ -1263,7 +1253,6 @@ COMBAT_TBL = (adr+140)
 COMBAT_TBL_SIZE = (adr+144)
 
 GetWarList:
-
     ldr r1, COMBAT_TBL_SIZE
     mul r0, r1
     ldr r1, COMBAT_TBL
@@ -1310,15 +1299,6 @@ HasKonshin:
 HasShishi:
     ldr r2, SHISHI_ADR
     mov pc, r2
-$08016994:
-    ldr r2, =0x08016994
-    mov pc, r2
-$08016a30:
-    ldr r2, =0x08016a30 @魔物特効
-    mov pc, r2
-$08017384:
-    ldr r1, =0x08017384
-    mov pc, r1
 HasDistantDef:
     ldr r2, (adr+40)
     mov pc, r2
@@ -1337,9 +1317,6 @@ HasBladeSession:
 HasShieldSession:
     ldr r2, SHIELD_SESSION_ADDR
 	mov pc, r2
-GetAttackerAddr:
-    ldr r0, =0x03004df0
-    bx lr
 HasWaryFighter:
     ldr r2, WARYFIGHTER_ADR
 	mov pc, r2
@@ -1374,6 +1351,19 @@ HasAtrocity:
     ldr r2, HAS_ATROCITY_ADR
     mov pc, r2
 
+$08016994:
+    ldr r2, =0x08016994
+    mov pc, r2
+$08016a30:
+    ldr r2, =0x08016a30 @魔物特効
+    mov pc, r2
+$08017384:
+    ldr r1, =0x08017384
+    mov pc, r1
+
+GetAttackerAddr:
+    ldr r0, =0x03004df0
+    bx lr
 GetWeaponSp:
 	ldr r1, =0x080172f0
 	mov pc, r1

@@ -1,5 +1,3 @@
-PULSE_ID = (0x09) @奥義の鼓動
-
 .thumb
 @ 0802ad3c
 @イクリプス等の直前(自分の数値と相手の数値の計算後)
@@ -20,9 +18,9 @@ PULSE_ID = (0x09) @奥義の鼓動
 
     bl Lull
     bl Shisen_B
-    bl QuickenedPulse
     
 next:
+    bl WarSkill
     bl godBless
 	
 Return:
@@ -42,6 +40,48 @@ endZero:
     pop {r4, r5, r6}
     pop {r0}
     bx r0
+
+STR_ADR = (67)	@書き込み先(AI1カウンタ)
+
+WarSkill:
+        push {lr}
+
+        ldrb r0, [r4, #11]
+        mov r2, #0xC0
+        and r2, r0
+        bne endWar @自軍以外は終了
+
+        bl GetAttackerAddr
+        ldr r2, [r0]
+        ldrb r2, [r2, #11]
+        ldrb r0, [r4, #11]
+        cmp r0, r2
+        bne endWar
+
+        mov r0, #STR_ADR
+        ldrb r0, [r4, r0]
+        bl GetWarList
+        cmp r0, #0
+        beq endWar
+        mov r3, r0
+    
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        mov r2, #0
+        ldsb r2, [r3, r2]
+        add r0, r2
+        cmp r0, #0
+        bge jumpWar1
+        mov r0, #0
+    jumpWar1:
+        strh r0, [r4, r1] @力
+    
+    endWar:
+        pop {pc}
+
+GetAttackerAddr:
+    ldr r0, =0x03004df0
+    bx lr
 
 Lull:
         push {lr}
@@ -100,20 +140,6 @@ Shisen_B:	@相手強化
     endShisen:
         pop {pc}
 
-QuickenedPulse:
-	push {lr}
-	mov r0, #48
-	ldrb r1, [r4, r0]
-	cmp r1, #PULSE_ID
-	bne endPulse
-	
-	mov r1, r4
-	add r1, #100
-	mov r0, #100
-	strh r0, [r1]
-endPulse:
-	pop {pc}
-
 godBless:
     push {lr}
     mov r0, r4
@@ -144,6 +170,15 @@ endBless:
 SHISEN_ADR = (adr+0)
 NIHIL_ADR = (adr+12)
 LULL_ADR = (adr+16)
+COMBAT_TBL = (adr+20)
+COMBAT_TBL_SIZE = (adr+24)
+
+GetWarList:
+    ldr r1, COMBAT_TBL_SIZE
+    mul r0, r1
+    ldr r1, COMBAT_TBL
+    add r0, r1
+    bx lr
 
 HasShisen:
     ldr r2, SHISEN_ADR

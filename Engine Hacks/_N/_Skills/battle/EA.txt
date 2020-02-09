@@ -61,6 +61,8 @@ battle_after:
     POIN hasDarkBless
     POIN hasNihil
     POIN hasLull
+    POIN combat_art_table
+    WORD COMBAT_ART_LIST_SIZE
     
 battle_down:
   #incbin down.dmp
