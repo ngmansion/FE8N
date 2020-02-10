@@ -149,4 +149,4 @@
 #define SlenderSwordID 152 //0x98 突剣
 #define HeavySwordID 153 //0x99 重剣
 #define AssassinateID 154 //0x9A 暗殺
-
+#define CurvedShotID 155 //0x9B 曲射
