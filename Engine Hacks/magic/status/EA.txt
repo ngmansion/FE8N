@@ -1,0 +1,38 @@
+
+PUSH
+ORG	0x18ec4
+WORD	$468F4900
+POIN	magic_strong
+
+ORG	0x18ecc
+WORD	$468F4900
+POIN	StatusUpConstitution
+
+//被救出値
+ORG	0x1804a
+SHORT	$2100
+//救出値
+ORG	0x186ee
+SHORT	$2100
+ORG	0x1870c
+SHORT	$2000
+ORG	0x18720
+SHORT	$2000
+
+ORG	0x34992	//救出前表示
+SHORT	$2000
+
+POP
+magic_strong:
+#incbin "..\..\_N\StatusUp\StatusUp.dmp"
+POIN magicn_end	//戻りアドレス
+POIN StrengthWp
+POIN StatusUpSkillStrengthFunc
+POIN SwordfaireFunc
+POIN LancefaireFunc
+POIN AxefaireFunc
+POIN BowfaireFunc
+POIN 0	//末尾判定用
+
+magicn_end:
+	#incbin "strong.gba"
