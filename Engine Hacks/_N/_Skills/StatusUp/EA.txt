@@ -1,36 +1,83 @@
+#include _config.txt
+
+HasAllStats1List:
+BYTE AllStats1HP AllStats1Str AllStats1Skl AllStats1Spd AllStats1Def AllStats1Res AllStats1Luc 0 AllStats1Mag
+HasAllStats2List:
+BYTE AllStats2HP AllStats2Str AllStats2Skl AllStats2Spd AllStats2Def AllStats2Res AllStats2Luc 0 AllStats2Mag
+ALIGN 4
 
 StatusUpSkillStrengthFunc:
 #incbin StatusUp.dmp
     WORD 2
     POIN HasStrength
+    POIN HasAllStats1
+    POIN HasAllStats2
+    WORD 1
+    POIN HasAllStats1List
+    POIN HasAllStats2List
 StatusUpSkillSkillFunc:
 #incbin StatusUp.dmp
     WORD 2
     POIN HasSkill
+    POIN HasAllStats1
+    POIN HasAllStats2
+    WORD 2
+    POIN HasAllStats1List
+    POIN HasAllStats2List
 StatusUpSkillSpeedFunc:
 #incbin StatusUp.dmp
     WORD 2
     POIN HasSpeed
+    POIN HasAllStats1
+    POIN HasAllStats2
+    WORD 3
+    POIN HasAllStats1List
+    POIN HasAllStats2List
 StatusUpSkillDefenceFunc:
 #incbin StatusUp.dmp
     WORD 2
     POIN HasDefence
+    POIN HasAllStats1
+    POIN HasAllStats2
+    WORD 4
+    POIN HasAllStats1List
+    POIN HasAllStats2List
 StatusUpSkillResistanceFunc:
 #incbin StatusUp.dmp
     WORD 2
     POIN HasResistance
+    POIN HasAllStats1
+    POIN HasAllStats2
+    WORD 5
+    POIN HasAllStats1List
+    POIN HasAllStats2List
 StatusUpSkillLuckFunc:
 #incbin StatusUp.dmp
     WORD 4
     POIN HasLuck
+    POIN HasAllStats1
+    POIN HasAllStats2
+    WORD 6
+    POIN HasAllStats1List
+    POIN HasAllStats2List
 StatusUpSkillHPFunc:
 #incbin StatusUp.dmp
     WORD 5
     POIN HasHP
+    POIN HasAllStats1
+    POIN HasAllStats2
+    WORD 0
+    POIN HasAllStats1List
+    POIN HasAllStats2List
 StatusUpSkillMagicFunc:
 #incbin StatusUp.dmp
     WORD 2
     POIN HasMagic
+    POIN HasAllStats1
+    POIN HasAllStats2
+    WORD 8
+    POIN HasAllStats1List
+    POIN HasAllStats2List
 
 HasStrength:
  HAS_NIHIL
@@ -57,4 +104,12 @@ HasMagic:
  HAS_NIHIL
  WORD MagicID
 
+HasAllStats1:
+ HAS_NIHIL
+ WORD AllStats1ID
+HasAllStats2:
+ HAS_NIHIL
+ WORD AllStats2ID
+
+ALIGN 4
 

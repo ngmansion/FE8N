@@ -150,3 +150,5 @@
 #define HeavySwordID 153 //0x99 重剣
 #define AssassinateID 154 //0x9A 暗殺
 #define CurvedShotID 155 //0x9B 曲射
+#define AllStats1ID 156 //0x9C 全能力+1
+#define AllStats2ID 157 //0x9D 全能力+2

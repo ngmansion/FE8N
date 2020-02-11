@@ -1,0 +1,18 @@
+#define AllStats1HP 0
+#define AllStats1Str 1
+#define AllStats1Mag 1
+#define AllStats1Skl 1
+#define AllStats1Spd 1
+#define AllStats1Luc 1
+#define AllStats1Def 1
+#define AllStats1Res 1
+
+#define AllStats2HP 0
+#define AllStats2Str 2
+#define AllStats2Mag 2
+#define AllStats2Skl 2
+#define AllStats2Spd 2
+#define AllStats2Luc 2
+#define AllStats2Def 2
+#define AllStats2Res 2
+
