@@ -106,7 +106,7 @@ HasTriangle:
             mov lr, r2
             .short 0xF800
         mov r1, #TRIANGLE_ADEPT
-        mul r0, r3
+        mul r0, r1
         pop {pc}
 
 HasCancelAffinity:
