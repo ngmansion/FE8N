@@ -174,38 +174,38 @@ JudgeCombat:
 		ldrb r0, [r4, #11]
 		mov r2, #0xC0
 		and r2, r0
-		bne falseWar @自軍以外は終了
+		bne falseWar            @自軍以外は通常確率計算
 
 		ldr r2, =0x03004df0
 		ldr r2, [r2]
 		ldrb r2, [r2, #11]
 		cmp r0, r2
-		bne falseWar
+		bne falseWar            @攻めてないので通常確率計算
 
 		mov r0, #WAR_ADR
 		ldrb r0, [r4, r0]
 		cmp r0, #0
-		beq falseWar	@ゼロ
+		beq falseWar            @戦技未選択なので通常確率計算
 		cmp r0, #0xFF
-		beq falseWar	@ゼロ
+		beq inactiveCombat      @戦技発動済みなので、絶対不発
 
 		mov r1, r10
 		cmp r0, r1
-		bne inactiveCombat
+		bne inactiveCombat      @戦技選択かつ不一致は、絶対不発
 
 		bl JudgeAssassinate
 		cmp r0, #1
-		beq falseWar	@暗殺なので確定発動しない
+		beq falseWar            @暗殺なので通常確率計算
 
 		mov r0, #1
-		b endWar    @確定発動
+		b endWar                @確定発動
 
     inactiveCombat:
         mov r0, #0xFF
-        b endWar    @確定不発
+        b endWar
 
 	falseWar:
-		mov r0, #0	@通常判定
+		mov r0, #0
 	endWar:
 		pop {pc}
 
