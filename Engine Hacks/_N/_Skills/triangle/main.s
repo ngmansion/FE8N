@@ -1,6 +1,6 @@
 @ 0802c754
 
-TRIANGLE_ADEPT = 3
+TRIANGLE_ADEPT = (3)
 
 .thumb
     bl CancelAffinity
@@ -54,13 +54,13 @@ CancelAffinity:
 triangle:
         push {r6, lr}
         mov r6, #0
-        bl HasTriangleAdept
+        bl TriangleAdept
         add r6, r0
         eor r4, r5
         eor r5, r4
         eor r4, r5
         
-        bl HasTriangleAdept
+        bl TriangleAdept
         add r6, r0
         eor r4, r5
         eor r5, r4
@@ -98,14 +98,15 @@ triangle:
         pop {r6, pc}
 
 
-HasTriangleAdept:
+TriangleAdept:
         push {lr}
         mov r0, r4
         mov r1, r5
             ldr r2, adr
             mov lr, r2
             .short 0xF800
-        lsl r0, r0, #1
+        mov r1, #TRIANGLE_ADEPT
+        mul r0, r1
         pop {pc}
 
 HasCancelAffinity:
