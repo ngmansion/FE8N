@@ -54,20 +54,20 @@ CancelAffinity:
 triangle:
         push {r6, lr}
         mov r6, #0
-        bl HasTriangle
+        bl HasTriangleAdept
         add r6, r0
         eor r4, r5
         eor r5, r4
         eor r4, r5
         
-        bl HasTriangle
+        bl HasTriangleAdept
         add r6, r0
         eor r4, r5
         eor r5, r4
         eor r4, r5
         
-        cmp r6, #0
-        ble falseTriangle
+        cmp r6, #1
+        ble falseTriangle   @0は不発なので無視。1倍は無意味なので無視
         
         mov r1, r4
         add r1, #83
@@ -98,15 +98,14 @@ triangle:
         pop {r6, pc}
 
 
-HasTriangle:
+HasTriangleAdept:
         push {lr}
         mov r0, r4
         mov r1, r5
             ldr r2, adr
             mov lr, r2
             .short 0xF800
-        mov r1, #TRIANGLE_ADEPT
-        mul r0, r1
+        lsl r0, r0, #1
         pop {pc}
 
 HasCancelAffinity:
