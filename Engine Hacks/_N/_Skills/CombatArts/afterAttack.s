@@ -95,8 +95,8 @@ WarSkill:
 	str r0, [r2]
 	
 @武器は損処理
-	cmp r5, #0
-	beq endWar	@減らない
+	cmp r5, #1
+	ble endWar	@COSTが1以下なので追加減少はない
 	mov r3, #1	@通常減る分
 	mov r1, r13
 	ldr r1, [r1, #20]	@r8が相手のアドレス
