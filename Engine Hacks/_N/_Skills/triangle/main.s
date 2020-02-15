@@ -66,7 +66,7 @@ triangle:
         eor r5, r4
         eor r4, r5
         
-        cmp r6, #1
+        cmp r6, #0
         ble falseTriangle
         
         mov r1, r4
