@@ -49,6 +49,7 @@ endNoEnemy:
     
     bl OtherSideSkill
     bl koroshi
+    bl Trample
 
 endNeedEnemy:
 
@@ -60,6 +61,41 @@ RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+Trample:
+        push {lr}
+        ldr r0, [r4]
+        ldr r1, [r4, #4]
+        ldr r0, [r0, #40]
+        ldr r1, [r1, #40]
+        orr r0, r1
+        mov r1, #0x1C
+        lsl r1, r1, #8  @0x1C00
+        tst r0, r1
+        beq endTrample  @自分が歩兵なら終了
+
+        ldr r0, [r5]
+        ldr r1, [r5, #4]
+        ldr r0, [r0, #40]
+        ldr r1, [r1, #40]
+        orr r0, r1
+        mov r1, #0x1C
+        lsl r1, r1, #8  @0x1C00
+        tst r0, r1
+        bne endTrample  @相手が騎兵なら終了
+
+        mov r0, r4
+        mov r1, #0
+        bl HasTrample
+        cmp r0, #0
+        beq endTrample
+
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #5
+        strh r0, [r4, r1]
+    endTrample:
+        pop {pc}
 
 OtherSideSkill:
         push {lr}
@@ -477,7 +513,7 @@ Heartseeker_impl:
         strh r0, [r4, r1] @自分
         pop {pc}
 
-STR_ADR = (67)	@書き込み先(AI1カウンタ)
+STR_ADDR = (67)	@書き込み先(AI1カウンタ)
 
 WarSkill:
         push {lr}
@@ -494,7 +530,7 @@ WarSkill:
         cmp r0, r2
         bne endWar
 
-        mov r0, #STR_ADR
+        mov r0, #STR_ADDR
         ldrb r0, [r4, r0]
         bl GetWarList
         cmp r0, #0
@@ -819,7 +855,7 @@ Savior:
 
 DistantDef:
         push {lr}
-        ldr r0, Range_Adr
+        ldr r0, Range_ADDR
         ldrb r0, [r0] @距離
         cmp r0, #1
         ble endDistantDef
@@ -843,7 +879,7 @@ DistantDef:
 
 CloseDef:
         push {lr}
-        ldr r0, Range_Adr
+        ldr r0, Range_ADDR
         ldrb r0, [r0] @距離
         cmp r0, #1
         bne endCloseDef
@@ -1108,37 +1144,37 @@ breaker_impl:
         pop {pc}
 
 .align
-Range_Adr:
+Range_ADDR:
 .long 0x0203a4d2
 
 
-SHISHI_ADR = (adr+4)
-SAVIOR_ADR = (adr+44)
-BLADE_SESSION_ADDR = (adr+48)
-SHIELD_SESSION_ADDR = (adr+52)
-HAS_AVOIDUP_ADDR = (adr+56)
-HAS_CRITICALUP_ADDR = (adr+60)
-WARYFIGHTER_ADR = (adr+64)
-@FLY_E_ADR = (adr+68)
-@ARMOR_E_ADR = (adr+72)
-@HORSE_E_ADR = (adr+76)
-@MONSTER_E_ADR = (adr+80)
-HIEN_ADR = (adr+84)
-ACE_ADR = (adr+88)
-KONSHIN_ADR = (adr+92)
-SOLO_ADR = (adr+96)
-SHISEN_ADR = (adr+100)
-FORT_ADR = (adr+104)
-@WAR_ADR = (adr+108)
-HEARTSEEKER_ADR = (adr+112)
-DAUNT_ADR = (adr+116)
-HAS_BOND_ADR = (adr+120)
-@HAS_ATROCITY_ADR = (adr+124)
-HAS_KISHIN_R = (adr+128)
-HAS_KONGOU_R = (adr+132)
-HAS_HIEN_R = (adr+136)
-COMBAT_TBL = (adr+140)
-COMBAT_TBL_SIZE = (adr+144)
+SHISHI_ADDR = (addr+4)
+SAVIOR_ADDR = (addr+44)
+BLADE_SESSION_ADDR = (addr+48)
+SHIELD_SESSION_ADDR = (addr+52)
+HAS_AVOIDUP_ADDR = (addr+56)
+HAS_CRITICALUP_ADDR = (addr+60)
+WARYFIGHTER_ADDR = (addr+64)
+@FLY_E_ADDR = (addr+68)
+@ARMOR_E_ADDR = (addr+72)
+@HORSE_E_ADDR = (addr+76)
+@MONSTER_E_ADDR = (addr+80)
+HIEN_ADDR = (addr+84)
+ACE_ADDR = (addr+88)
+KONSHIN_ADDR = (addr+92)
+SOLO_ADDR = (addr+96)
+SHISEN_ADDR = (addr+100)
+FORT_ADDR = (addr+104)
+TRAMPLE_ADDR = (addr+108)
+HEARTSEEKER_ADDR = (addr+112)
+DAUNT_ADDR = (addr+116)
+HAS_BOND_ADDR = (addr+120)
+@HAS_ATROCITY_ADDR = (addr+124)
+HAS_KISHIN_R = (addr+128)
+HAS_KONGOU_R = (addr+132)
+HAS_HIEN_R = (addr+136)
+COMBAT_TBL = (addr+140)
+COMBAT_TBL_SIZE = (addr+144)
 
 GetWarList:
     ldr r1, COMBAT_TBL_SIZE
@@ -1147,6 +1183,9 @@ GetWarList:
     add r0, r1
     bx lr
 
+HasTrample:
+    ldr r2, TRAMPLE_ADDR
+    mov pc, r2
 
 HasKishinR:
     ldr r2, HAS_KISHIN_R
@@ -1158,40 +1197,40 @@ HasHienR:
     ldr r2, HAS_HIEN_R
     mov pc, r2
 HasBreakerSw:
-    ldr r2, adr+16
+    ldr r2, addr+16
     mov pc, r2
 HasBreakerSp:
-    ldr r2, adr+20
+    ldr r2, addr+20
     mov pc, r2
 HasBreakerAx:
-    ldr r2, adr+24
+    ldr r2, addr+24
     mov pc, r2
 HasBreakerBw:
-    ldr r2, adr+28
+    ldr r2, addr+28
     mov pc, r2
 HasBreakerMg:
-    ldr r2, adr+32
+    ldr r2, addr+32
     mov pc, r2
 HasHien:
-    ldr r2, HIEN_ADR
+    ldr r2, HIEN_ADDR
     mov pc, r2
 HasKongou:
-    ldr r2, adr+12
+    ldr r2, addr+12
     mov pc, r2
 HasKishin:
-    ldr r2, adr+8
+    ldr r2, addr+8
     mov pc, r2
 HasKonshin:
-    ldr r2, KONSHIN_ADR
+    ldr r2, KONSHIN_ADDR
     mov pc, r2
 HasShishi:
-    ldr r2, SHISHI_ADR
+    ldr r2, SHISHI_ADDR
     mov pc, r2
 HasDistantDef:
-    ldr r2, (adr+40)
+    ldr r2, (addr+40)
     mov pc, r2
 HasCloseDef:
-    ldr r2, (adr+36)
+    ldr r2, (addr+36)
     mov pc, r2
 HasCriticalUp:
     ldr r2, HAS_CRITICALUP_ADDR
@@ -1206,34 +1245,34 @@ HasShieldSession:
     ldr r2, SHIELD_SESSION_ADDR
 	mov pc, r2
 HasWaryFighter:
-    ldr r2, WARYFIGHTER_ADR
+    ldr r2, WARYFIGHTER_ADDR
 	mov pc, r2
 HasDaunt:
-    ldr r2, DAUNT_ADR
+    ldr r2, DAUNT_ADDR
 	mov pc, r2
 HasHeartseeker:
-    ldr r2, HEARTSEEKER_ADR
+    ldr r2, HEARTSEEKER_ADDR
 	mov pc, r2
 HasSavior:
-	ldr r2, SAVIOR_ADR
+	ldr r2, SAVIOR_ADDR
 	mov pc, r2
 HasMikiri:
-	ldr r1, adr	@見切り
+	ldr r1, addr	@見切り
 	mov pc, r1
 HasAce:
-	ldr r3, ACE_ADR
+	ldr r3, ACE_ADDR
 	mov pc, r3
 HasSolo:
-	ldr r3, SOLO_ADR
+	ldr r3, SOLO_ADDR
 	mov pc, r3
 HasShisen:
-	ldr r3, SHISEN_ADR
+	ldr r3, SHISEN_ADDR
 	mov pc, r3
 HasFort:
-	ldr r3, FORT_ADR
+	ldr r3, FORT_ADDR
 	mov pc, r3
 HasBond:
-	ldr r3, HAS_BOND_ADR
+	ldr r3, HAS_BOND_ADDR
 	mov pc, r3
 
 GetAttackerAddr:
@@ -1253,5 +1292,5 @@ GetExistFlagR1:
 	bx lr
 .align
 .ltorg
-adr:
+addr:
 
