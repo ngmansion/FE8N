@@ -1,4 +1,7 @@
 @ 0802c754
+
+TRIANGLE_ADEPT = 3
+
 .thumb
     bl CancelAffinity
     bl triangle
@@ -7,12 +10,8 @@
     lsl r6, r6, #1
     and r0, r6
     cmp r0, #0
-    beq ret2
 
-    ldr r0, =0x0802c75e
-    mov pc, r0
-ret2:
-    ldr r0, =0x0802c766
+    ldr r0, =0x0802c75c
     mov pc, r0
 
 CancelAffinity:
@@ -106,8 +105,8 @@ HasTriangle:
             ldr r2, adr
             mov lr, r2
             .short 0xF800
-        lsl r0, r0, #1
-        add r0, #1
+        mov r1, #TRIANGLE_ADEPT
+        mul r0, r3
         pop {pc}
 
 HasCancelAffinity:
