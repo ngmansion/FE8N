@@ -153,3 +153,4 @@
 #define AllStats1ID 156 //0x9C 全能力+1
 #define AllStats2ID 157 //0x9D 全能力+2
 #define TrampleID 158 // 0x9E 見下す者
+#define LungeID 159 // 0x9F 切り込み

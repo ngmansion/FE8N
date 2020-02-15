@@ -34,6 +34,8 @@ START:
 	mov	r1, r6
 	bl SavageBlow
 
+	bl Lunge
+
 	ldrb r0, [r6, #19]
 	cmp r0, #0
 	beq negative	@相手のHP0
@@ -45,6 +47,8 @@ START:
 	mov	r0, r7
 	mov	r1, r6
 	bl Counter
+
+
 
 negative:
 @受け側スキル→攻め
@@ -65,6 +69,45 @@ END:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
+
+LUNGE_FLAG    = (0b00010000) @切り込みフラグ
+
+Lunge:
+		push {lr}
+		ldr r1, [r6]
+		ldr r2, [r6, #4]
+		ldr r1, [r1, #40]
+		ldr r2, [r2, #40]
+		orr r1, r2
+		ldr r2, =0x8000
+		tst r1, r2
+		bne endLunge      @敵将なら終了
+
+		mov r0, r6
+		bl FodesFunc
+		cmp r0, #1
+		beq endLunge      @敵将なら終了
+
+		mov r0, r5
+        add r0, #69
+        ldrb r0, [r0]
+        mov r1, #LUNGE_FLAG
+        tst r0, r1
+        beq endLunge      @持ってないので終了
+
+		ldrb r0, [r6, #16]
+		ldrb r1, [r6, #17]
+		ldrb r2, [r7, #16]
+		ldrb r3, [r7, #17]
+		strb r2, [r6, #16]   @相手
+		strb r3, [r6, #17]   @相手
+		ldr r2, =0x0203A954
+		strb r0, [r2, #14]
+		strb r1, [r2, #15]
+	endLunge:
+		pop {pc}
+
+
 
 DoubleLion:
 	push	{r4, lr}
@@ -360,6 +403,11 @@ retFury:
 
 DOUBLE_LION_ADR = (ADR+16)
 HAS_SAVAGE_FUNC = (ADR+20)
+FODES_FUNC = (ADR+24)
+
+FodesFunc:
+	ldr r1, FODES_FUNC
+	mov pc, r1
 
 hasDoubleLion:
 	ldr r2, DOUBLE_LION_ADR

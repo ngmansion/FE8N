@@ -61,6 +61,9 @@ WarSkill:
 	bl RagingStorm
 	mov r0, r13
 	ldr r0, [r0, #20]
+	bl Lunge
+	mov r0, r13
+	ldr r0, [r0, #20]
 	bl GetDecreaseNum
 	mov r0, r13
 	ldr r3, [r0, #20]
@@ -130,6 +133,42 @@ func_break:
 	.short 0xF800
 	pop {r3, pc}
 
+LUNGE_FLAG    = (0b00010000) @切り込みフラグ
+
+Lunge:
+        push {r4, lr}
+		mov r4, r0
+
+		ldr	r2, =0x0203a604
+		ldr	r2, [r2]
+		sub	r2, #4	@スキルとかのアレの前の状態を取る
+		ldr r0, [r2]
+		
+		mov r1, #2	@外れフラグ
+		and r1, r0
+		bne falseLunge	@外れフラグオンでジャンプ
+
+    @スキルを持っているか
+        mov r0, r4
+		mov r1, #0
+        bl HasLunge
+        cmp r0, #0
+        beq falseLunge
+
+		mov r0, r4
+		add r0, #69
+		ldrb r1, [r0]
+
+		mov r2, #LUNGE_FLAG
+		orr r1, r2
+		strb r1, [r0] @切り込み
+
+        mov r0, #1
+        .short 0xE000
+    falseLunge:
+        mov r0, #0
+        pop {r4, pc}
+
 STORM    = (0b00100000) @狂嵐フラグ
 
 @アイムール
@@ -144,7 +183,7 @@ RagingStorm:
 		
 		mov r1, #2	@外れフラグ
 		and r1, r0
-		bne endStorm	@外れフラグオンでジャンプ
+		bne falseStorm	@外れフラグオンでジャンプ
 
     @スキルを持っているか
         mov r0, r4	@r1は既にセット済み
@@ -163,10 +202,9 @@ RagingStorm:
 		strb r1, [r0] @狂嵐発動
 
         mov r0, #1
-        b endStorm
+        .short 0xE000
     falseStorm:
         mov r0, #0
-    endStorm:
         pop {r4, pc}
 
 COMBAT_LIST = (addr+8)
@@ -185,6 +223,11 @@ GetDecreaseNum:
 
 
 HAS_RASINGSTORM = (addr+4)
+HAS_LUNGE = (addr+16)
+
+HasLunge:
+ldr r2, HAS_LUNGE
+mov pc, r2
 
 HasRagingStorm:
 ldr r2, HAS_RASINGSTORM

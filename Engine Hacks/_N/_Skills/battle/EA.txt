@@ -78,6 +78,11 @@ battle_down:
   POIN hasCounter
   POIN hasDoubleLion
   POIN hasSavageBlow
+  POIN fodes_func
+
+HasLunge:
+    HAS_COMBAT
+    WORD LungeID
 
 HasTrample:
     HAS_NIHIL

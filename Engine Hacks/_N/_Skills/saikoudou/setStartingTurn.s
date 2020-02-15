@@ -20,6 +20,7 @@ RETURN:
 DEFEAT   = (0b10000000) @撃破フラグ
 DEFEATED = (0b01000000) @迅雷済みフラグ
 STORM    = (0b00100000) @狂嵐フラグ
+LUNGE_FLAG    = (0b00010000) @切り込みフラグ
 
 Jinrai_back:
 @迅雷系のフラグをオフ
@@ -34,6 +35,9 @@ Jinrai_back:
         bic r0, r2
 
         mov r2, #STORM
+        bic r0, r2
+
+        mov r2, #LUNGE_FLAG
         bic r0, r2
     
         strb r0, [r1]

@@ -95,6 +95,7 @@ afterAttack:
 	POIN hasRagingStorm
 	POIN combat_art_table
 	WORD COMBAT_ART_LIST_SIZE
+	POIN HasLunge
 	ALIGN 4
 
 //////////////////////////
