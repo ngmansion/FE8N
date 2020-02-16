@@ -77,6 +77,16 @@ END:
 KNOCK_BACK_FLAG    = (0b00000100) @叩き込みフラグ
 KnockBack:
         push {lr}
+
+        mov r2, r5
+        add r2, #69
+        ldrb r0, [r2]
+        mov r1, #KNOCK_BACK_FLAG
+        tst r0, r1
+        beq endKnockBack      @持ってないので終了
+        bic r0, r1
+        strb r0, [r2]
+
         ldr r1, [r6]
         ldr r2, [r6, #4]
         ldr r1, [r1, #40]
@@ -90,14 +100,6 @@ KnockBack:
         bl FodesFunc
         cmp r0, #1
         beq endKnockBack      @無効敵なら終了
-
-        mov r2, r5
-        add r2, #69
-        ldrb r0, [r2]
-        mov r1, #KNOCK_BACK_FLAG
-        bic r0, r1
-        beq endKnockBack      @持ってないので終了
-        strb r0, [r2]
 
         ldrb r0, [r7, #16]
         ldrb r2, [r6, #16]   @相手
@@ -143,8 +145,9 @@ HitAndRun:
         add r2, #69
         ldrb r0, [r2]
         mov r1, #HITANDRUN_FLAG
-        bic r0, r1
+        tst r0, r1
         beq endHitAndRun      @持ってないので終了
+        bic r0, r1
         strb r0, [r2]
 
         ldrb r0, [r6, #16]   @相手
@@ -186,6 +189,16 @@ LUNGE_FLAG    = (0b00010000) @切り込みフラグ
 
 Lunge:
         push {lr}
+
+        mov r2, r5
+        add r2, #69
+        ldrb r0, [r2]
+        mov r1, #LUNGE_FLAG
+        tst r0, r1
+        beq endLunge      @持ってないので終了
+        bic r0, r1
+        strb r0, [r2]
+
         ldr r1, [r6]
         ldr r2, [r6, #4]
         ldr r1, [r1, #40]
@@ -199,14 +212,6 @@ Lunge:
         bl FodesFunc
         cmp r0, #1
         beq endLunge      @無効敵なら終了
-
-        mov r2, r5
-        add r2, #69
-        ldrb r0, [r2]
-        mov r1, #LUNGE_FLAG
-        bic r0, r1
-        beq endLunge      @持ってないので終了
-        strb r0, [r2]
 
         ldrb r0, [r6, #16]   @相手
         ldrb r1, [r6, #17]   @相手
