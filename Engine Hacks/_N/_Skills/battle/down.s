@@ -35,6 +35,8 @@ START:
     bl SavageBlow
 
     bl Lunge
+    bl HitAndRun
+    bl KnockBack
 
     ldrb r0, [r6, #19]
     cmp r0, #0
@@ -70,6 +72,114 @@ END:
     pop	{r0}
     bx	r0
 
+
+
+KNOCK_BACK_FLAG    = (0b00000100) @叩き込みフラグ
+KnockBack:
+        push {lr}
+        ldr r1, [r6]
+        ldr r2, [r6, #4]
+        ldr r1, [r1, #40]
+        ldr r2, [r2, #40]
+        orr r1, r2
+        ldr r2, =0x8200
+        tst r1, r2
+        bne endKnockBack      @敵将or輸送隊なら終了
+
+        mov r0, r6
+        bl FodesFunc
+        cmp r0, #1
+        beq endKnockBack      @無効敵なら終了
+
+        mov r0, r5
+        add r0, #69
+        ldrb r0, [r0]
+        mov r1, #KNOCK_BACK_FLAG
+        tst r0, r1
+        beq endKnockBack      @持ってないので終了
+
+        ldrb r0, [r7, #16]
+        ldrb r2, [r6, #16]   @相手
+        sub r0, r2
+        neg r0, r0
+        add r0, r2
+
+        ldrb r1, [r7, #17]
+        ldrb r3, [r6, #17]   @相手
+        sub r1, r3
+        neg r1, r1
+        add r1, r3
+        
+        mov r2, r6
+        bl CanLocate
+        cmp r0, #0
+        beq endKnockBack    @立てない
+
+        ldrb r0, [r7, #16]
+        ldrb r2, [r6, #16]   @相手
+        sub r0, r2
+        neg r0, r0
+        add r0, r2
+
+        ldrb r1, [r7, #17]
+        ldrb r3, [r6, #17]   @相手
+        sub r1, r3
+        neg r1, r1
+        add r1, r3
+
+        strb r0, [r6, #16]   @相手
+        strb r1, [r6, #17]   @相手
+
+    endKnockBack:
+        pop {pc}
+
+HITANDRUN_FLAG    = (0b00001000) @一撃離脱フラグ
+
+HitAndRun:
+        push {lr}
+
+        mov r0, r5
+        add r0, #69
+        ldrb r0, [r0]
+        mov r1, #HITANDRUN_FLAG
+        tst r0, r1
+        beq endHitAndRun      @持ってないので終了
+
+        ldrb r0, [r6, #16]   @相手
+        ldrb r2, [r7, #16]
+        sub r0, r2
+        neg r0, r0
+        add r0, r2
+
+        ldrb r1, [r6, #17]   @相手
+        ldrb r3, [r7, #17]
+        sub r1, r3
+        neg r1, r1
+        add r1, r3
+
+        mov r2, r7
+        bl CanLocate
+        cmp r0, #0
+        beq endHitAndRun    @立てない
+
+        ldrb r0, [r6, #16]   @相手
+        ldrb r2, [r7, #16]
+        sub r0, r2
+        neg r0, r0
+        add r0, r2
+
+        ldrb r1, [r6, #17]   @相手
+        ldrb r3, [r7, #17]
+        sub r1, r3
+        neg r1, r1
+        add r1, r3
+
+        ldr r2, =0x0203A954
+        strb r0, [r2, #14]
+        strb r1, [r2, #15]
+    endHitAndRun:
+        pop {pc}
+
 LUNGE_FLAG    = (0b00010000) @切り込みフラグ
 
 Lunge:
@@ -79,14 +189,14 @@ Lunge:
         ldr r1, [r1, #40]
         ldr r2, [r2, #40]
         orr r1, r2
-        ldr r2, =0x8000
+        ldr r2, =0x8200
         tst r1, r2
-        bne endLunge      @敵将なら終了
+        bne endLunge      @敵将or輸送隊なら終了
 
         mov r0, r6
         bl FodesFunc
         cmp r0, #1
-        beq endLunge      @敵将なら終了
+        beq endLunge      @無効敵なら終了
 
         mov r0, r5
         add r0, #69
@@ -98,14 +208,14 @@ Lunge:
         ldrb r0, [r6, #16]   @相手
         ldrb r1, [r6, #17]   @相手
         mov r2, r7
-        bl CanLocate
+        bl CanLocateMinus
         cmp r0, #0
         beq endLunge    @立てない
 
         ldrb r0, [r7, #16]
         ldrb r1, [r7, #17]
         mov r2, r6
-        bl CanLocate
+        bl CanLocateMinus
         cmp r0, #0
         beq endLunge    @立てない
 
@@ -429,16 +539,17 @@ CanLocate:
         mov r5, r1
         mov r6, r2
 
-@        ldr r0, =0x0202e4d4
-@        ldr r0, [r0, #0]
-@        lsl r3, r5, #2
-@        add r0, r3, r0
-@        ldr r0, [r0, #0]
-@        add r0, r0, r4
-@        ldrb r0, [r0, #0]
-@        cmp r0, #0
-@        bne falseLocate
+        ldr r1, =0x0202e4d4
+        ldr r1, [r1, #0]
+        lsl r2, r5, #2
+        add r1, r2, r1
+        ldr r1, [r1, #0]
+        add r1, r1, r4
+        ldrb r1, [r1, #0]
+        cmp r1, #0
+        bne falseLocate     @人がいる
 
+jumpLocate:
         ldr r1, =0x0202e4d8
         ldr r1, [r1, #0]
         lsl r2, r5, #2
@@ -454,7 +565,12 @@ CanLocate:
     falseLocate:
         mov r0, #0
         pop {r4, r5, r6, pc}
-
+CanLocateMinus:
+        push {r4, r5, r6, lr}
+        mov r4, r0
+        mov r5, r1
+        mov r6, r2
+        b jumpLocate
 
 DOUBLE_LION_ADR = (ADR+16)
 HAS_SAVAGE_FUNC = (ADR+20)

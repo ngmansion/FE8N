@@ -59,9 +59,17 @@ WarSkill:
 	mov r0, r13
 	ldr r0, [r0, #20]
 	bl RagingStorm
+
 	mov r0, r13
 	ldr r0, [r0, #20]
 	bl Lunge
+	mov r0, r13
+	ldr r0, [r0, #20]
+	bl HitAndRun
+	mov r0, r13
+	ldr r0, [r0, #20]
+	bl KnockBack
+
 	mov r0, r13
 	ldr r0, [r0, #20]
 	bl GetDecreaseNum
@@ -133,8 +141,85 @@ func_break:
 	.short 0xF800
 	pop {r3, pc}
 
-LUNGE_FLAG    = (0b00010000) @切り込みフラグ
 
+
+
+KNOCK_BACK_FLAG    = (0b00000100) @叩き込みフラグ
+KnockBack:
+        push {r4, lr}
+		mov r4, r0
+
+		ldr	r2, =0x0203a604
+		ldr	r2, [r2]
+		sub	r2, #4	@スキルとかのアレの前の状態を取る
+		ldr r0, [r2]
+		
+		mov r1, #2	@外れフラグ
+		and r1, r0
+		bne falseKnockBack	@外れフラグオンでジャンプ
+
+    @スキルを持っているか
+        mov r0, r4
+		mov r1, #0
+        bl HasKnockBack
+        cmp r0, #0
+        beq falseKnockBack
+
+		mov r0, r4
+		add r0, #69
+		ldrb r1, [r0]
+
+		mov r2, #KNOCK_BACK_FLAG
+		orr r1, r2
+		strb r1, [r0] @一撃離脱
+
+        mov r0, #1
+        .short 0xE000
+    falseKnockBack:
+        mov r0, #0
+        pop {r4, pc}
+
+
+
+HITANDRUN_FLAG    = (0b00001000) @一撃離脱フラグ
+HitAndRun:
+        push {r4, lr}
+		mov r4, r0
+
+		ldr	r2, =0x0203a604
+		ldr	r2, [r2]
+		sub	r2, #4	@スキルとかのアレの前の状態を取る
+		ldr r0, [r2]
+		
+		mov r1, #2	@外れフラグ
+		and r1, r0
+		bne falseHitAndRun	@外れフラグオンでジャンプ
+
+    @スキルを持っているか
+        mov r0, r4
+		mov r1, #0
+        bl HasHitAndRun
+        cmp r0, #0
+        beq falseHitAndRun
+
+		mov r0, r4
+		add r0, #69
+		ldrb r1, [r0]
+
+		mov r2, #HITANDRUN_FLAG
+		orr r1, r2
+		strb r1, [r0] @一撃離脱
+
+        mov r0, #1
+        .short 0xE000
+    falseHitAndRun:
+        mov r0, #0
+        pop {r4, pc}
+
+
+
+
+LUNGE_FLAG    = (0b00010000) @切り込みフラグ
 Lunge:
         push {r4, lr}
 		mov r4, r0
@@ -224,7 +309,15 @@ GetDecreaseNum:
 
 HAS_RASINGSTORM = (addr+4)
 HAS_LUNGE = (addr+16)
+HAS_HITANDRUN = (addr+20)
+HAS_KNOCKBACK = (addr+24)
 
+HasHitAndRun:
+ldr r2, HAS_HITANDRUN
+mov pc, r2
+HasKnockBack:
+ldr r2, HAS_KNOCKBACK
+mov pc, r2
 HasLunge:
 ldr r2, HAS_LUNGE
 mov pc, r2

@@ -7,14 +7,14 @@ skill_161_weapon:
 skill_161_item:
    BYTE $00 $00 0 
 #define SKL_HELP_161 $0000
-#define SKL_COLOR_161 $00
+#define SKL_COLOR_161 $FF
  
-#define COMBAT_ART_161_ATK 00 
-#define COMBAT_ART_161_HIT 00 
+#define COMBAT_ART_161_ATK 04 
+#define COMBAT_ART_161_HIT 10 
 #define COMBAT_ART_161_CRT 00 
-#define COMBAT_ART_161_AVO 00 
-#define COMBAT_ART_161_COST 05 
+#define COMBAT_ART_161_AVO 20 
+#define COMBAT_ART_161_COST 04 
 #define COMBAT_ART_161_WEAPON $FF 
-#define COMBAT_ART_161_INFO 00 
+#define COMBAT_ART_161_INFO 02 
 #define COMBAT_ART_161_DUMMY 00 
  

@@ -83,6 +83,12 @@ battle_down:
 HasLunge:
     HAS_COMBAT
     WORD LungeID
+HasHitAndRun:
+    HAS_COMBAT
+    WORD HitAndRunID
+HasKnockBack:
+    HAS_COMBAT
+    WORD KnockBackID
 
 HasTrample:
     HAS_NIHIL

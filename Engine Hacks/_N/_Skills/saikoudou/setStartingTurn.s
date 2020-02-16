@@ -24,12 +24,19 @@ LUNGE_FLAG    = (0b00010000) @切り込みフラグ
 
 Jinrai_back:
 @迅雷系のフラグをオフ
+        ldrb r0, [r4, #11]
+        mov r2, #0xC0
+        tst r2, r0
+        bne endJinrai @自軍以外は終了
+
         mov r1, r4
         add r1, #69
         ldrb r0, [r1]
-    
-        mov r2, #DEFEAT
+
+        mov r2, #0xFF
         bic r0, r2
+        strb r0, [r1]
+        b endJinrai
 
         mov r2, #DEFEATED
         bic r0, r2
@@ -39,9 +46,8 @@ Jinrai_back:
 
         mov r2, #LUNGE_FLAG
         bic r0, r2
-    
         strb r0, [r1]
-    jump:
+    endJinrai:
         bx lr
     
     

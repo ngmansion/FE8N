@@ -96,6 +96,8 @@ afterAttack:
 	POIN combat_art_table
 	WORD COMBAT_ART_LIST_SIZE
 	POIN HasLunge
+	POIN HasHitAndRun
+	POIN HasKnockBack
 	ALIGN 4
 
 //////////////////////////
