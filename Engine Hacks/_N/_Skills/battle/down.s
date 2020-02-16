@@ -91,12 +91,13 @@ KnockBack:
         cmp r0, #1
         beq endKnockBack      @無効敵なら終了
 
-        mov r0, r5
-        add r0, #69
-        ldrb r0, [r0]
+        mov r2, r5
+        add r2, #69
+        ldrb r0, [r2]
         mov r1, #KNOCK_BACK_FLAG
-        tst r0, r1
+        bic r0, r1
         beq endKnockBack      @持ってないので終了
+        strb r0, [r2]
 
         ldrb r0, [r7, #16]
         ldrb r2, [r6, #16]   @相手
@@ -138,12 +139,13 @@ HITANDRUN_FLAG    = (0b00001000) @一撃離脱フラグ
 HitAndRun:
         push {lr}
 
-        mov r0, r5
-        add r0, #69
-        ldrb r0, [r0]
+        mov r2, r5
+        add r2, #69
+        ldrb r0, [r2]
         mov r1, #HITANDRUN_FLAG
-        tst r0, r1
+        bic r0, r1
         beq endHitAndRun      @持ってないので終了
+        strb r0, [r2]
 
         ldrb r0, [r6, #16]   @相手
         ldrb r2, [r7, #16]
@@ -198,12 +200,13 @@ Lunge:
         cmp r0, #1
         beq endLunge      @無効敵なら終了
 
-        mov r0, r5
-        add r0, #69
-        ldrb r0, [r0]
+        mov r2, r5
+        add r2, #69
+        ldrb r0, [r2]
         mov r1, #LUNGE_FLAG
-        tst r0, r1
+        bic r0, r1
         beq endLunge      @持ってないので終了
+        strb r0, [r2]
 
         ldrb r0, [r6, #16]   @相手
         ldrb r1, [r6, #17]   @相手
