@@ -34,8 +34,9 @@ endBrave:
 Addition:
     mov r0, r6
     mov r1, r8
-    ldr r2, ADDRESS
-    mov pc, r2
+    mov r2, #0  @獅子連判定用
+    ldr r3, ADDRESS
+    mov pc, r3
 
 .align
 .ltorg

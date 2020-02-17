@@ -1,3 +1,5 @@
+@ 08036784
+
 .thumb
     push {r2, r3}
 
@@ -21,8 +23,13 @@ non:
 adept:
         mov r0, r4
         ldr r1, =0x0203a568
-        ldr r2, addr
-        mov pc, r2
+        cmp r0, r1
+        bne jump
+        ldr r1, =0x0203a4e8
+    jump:
+        mov r2, #1  @獅子連判定用
+        ldr r3, addr
+        mov pc, r3
 
 .align
 .ltorg

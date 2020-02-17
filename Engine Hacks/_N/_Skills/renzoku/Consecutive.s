@@ -1,9 +1,10 @@
 .thumb
 
 main:
-        push {r4, r5, lr}
+        push {r4, r5, r6, lr}
         mov r4, r0
         mov r5, r1
+        mov r6, r2
         bl JudgeAddition
         cmp r0, #0
         beq return
@@ -15,7 +16,7 @@ main:
         beq return
         bl Adept
     return:
-        pop {r4, r5, pc}
+        pop {r4, r5, r6, pc}
 
 ALINA_ADDR = (0x0203a4d0)
 
@@ -44,10 +45,11 @@ JudgeAddition:
         mov r0, #0
         pop {pc}
 
-DoubleLion:
+DoubleLion: @戦闘予測だと、減少分しか
         push {lr}
-        ldrb r1, [r4, #18]	@最大HP
-        ldrb r0, [r4, #19]	@現在HP
+        bl SwitchLion
+        ldrb r1, [r0, #18]	@最大HP
+        ldrb r0, [r0, #19]	@現在HP
         cmp r0, r1
         blt falseDouble
 
@@ -57,6 +59,19 @@ DoubleLion:
         .short 0xE000
     falseDouble:
         mov r0, #0
+        pop {pc}
+
+SwitchLion:
+        push {lr}
+        cmp r6, #0
+        beq jumpSwitch
+        ldrb r0, [r4, #0xB]
+            ldr r1, =0x08019108
+            mov lr, r1
+            .short 0xF800
+        .short 0xE000
+    jumpSwitch:
+        mov r0, r4
         pop {pc}
 
 Adept:
