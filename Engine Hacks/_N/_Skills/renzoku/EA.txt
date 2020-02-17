@@ -17,27 +17,27 @@ ORG	0x36784
 POP
 renzokua:
 #incbin "Adept_v01.dmp"
-POIN hasAdept
-POIN bolting_impl
-POIN hasDoubleLion
+POIN ConsecutiveSkill
+
+
 
 yosoku:
     #incbin "yosoku.dmp"
-    POIN bolting_impl
+    POIN ConsecutiveSkill
 
 
+ConsecutiveSkill:
+#incbin Consecutive.dmp
+POIN hasAdept
+POIN hasDoubleLion
+POIN hasBlitzkrieg
 
 hasAdept:
     HAS_COMBAT
     WORD AdeptID
     
-bolting_impl:
-#incbin "bolt.gba"
-POIN hasNihil
-POIN hasBlitzkrieg
-    
 hasBlitzkrieg:
-    HAS_SKILL
+    HAS_NIHIL
     WORD BlitzkriegID
 
 hasDoubleLion:

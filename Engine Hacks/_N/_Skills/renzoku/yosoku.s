@@ -6,23 +6,25 @@
     and r0, r1
     cmp r0, #0
     bne got
-    ldr r0, =0x0203a4e8
-    ldr r1, =0x0203a568
-        ldr r3, adr @bolt
-        mov lr, r3
-        .short 0xF800
+    bl adept
     cmp r0, #0
     beq non
     
 got:
     ldr r0, =0x0803678e @continue
-    b end
+    .short 0xE000
 non:
     ldr r0, =0x0803679a @end
-end:
     pop {r2, r3}
     mov pc, r0
+
+adept:
+        mov r0, r4
+        ldr r1, =0x0203a568
+        ldr r2, addr
+        mov pc, r2
+
 .align
 .ltorg
-adr:
+addr:
 
