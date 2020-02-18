@@ -9,14 +9,12 @@
     cmp r0, #0
     bne got
     bl adept
-    cmp r0, #0
-    beq non
-    
+    cmp r0, #1
+    beq got
+    ldr r0, =0x0803679a @end
+    .short 0xE000
 got:
     ldr r0, =0x0803678e @continue
-    .short 0xE000
-non:
-    ldr r0, =0x0803679a @end
     pop {r2, r3}
     mov pc, r0
 
