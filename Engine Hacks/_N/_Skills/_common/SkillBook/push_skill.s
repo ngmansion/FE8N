@@ -3,15 +3,13 @@
 .thumb
 pushSkill:
 @I	r0 = ベースアドレス
-@	r1 = スキルID
+@	r1 = BookData
 @O	-
 @
 	push {r4, r5, r6, lr}
 	mov r4, r0
+    mov r6, r1
 
-    mov r0, r1
-    bl EncodeSkill
-    mov r6, r0
 	bl pushSkill_impl
 	pop {r4, r5, r6, pc}
 	
@@ -155,14 +153,7 @@ get_skill:
 getExSkillBaseAdr:
 	ldr r3, addr+4
 	mov pc, r3
-EncodeSkill:
-    ldr r3, addr+4
-    add r3, #2
-    mov pc, r3
-DecodeSkill:
-    ldr r3, addr+4
-    add r3, #4
-    mov pc, r3
+
 .align
 .ltorg
 addr:

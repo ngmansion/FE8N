@@ -34,11 +34,11 @@ EncodeSkill:
         bge falseEncode
 
         ldr r2, addr
-        mov r3, #0
+        mov r3, #1
     loopEncode:
             
             cmp r3, #63
-            bge falseEncode
+            bgt falseEncode
             ldrb r1, [r2, r3]
             cmp r0, r1
             beq trueEncode
@@ -46,7 +46,7 @@ EncodeSkill:
             b loopEncode
 
     trueEncode:
-        mov r0, r1
+        mov r0, r3
         .short 0xE000
     falseEncode:
         mov r0, #0
@@ -58,7 +58,6 @@ DecodeSkill:
         cmp r0, #63
         bgt falseDecode
 
-        sub r0, #1
         ldr r2, addr
         ldrb r0, [r2, r0]
         .short 0xE000

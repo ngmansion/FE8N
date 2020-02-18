@@ -2,12 +2,11 @@
 .thumb
 popSkill:
 @I	r0 = ベースアドレス
-@O	r0 = 取得したskillID。0は失敗。
+@O	r0 = 取得したBookData。0は失敗。
 @
 	push {r4, r5, lr}
 	mov r4, r0
 	bl popSkill_impl
-	bl DecodeSkill
 	pop {r4, r5, pc}
 	
 	
@@ -161,14 +160,6 @@ get_skill:
 getExSkillBaseAdr:
 	ldr r3, addr+4
 	mov pc, r3
-EncodeSkill:
-    ldr r3, addr+4
-    add r3, #2
-    mov pc, r3
-DecodeSkill:
-    ldr r3, addr+4
-    add r3, #4
-    mov pc, r3
 .align
 .ltorg
 addr:

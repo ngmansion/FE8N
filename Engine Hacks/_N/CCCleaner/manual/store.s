@@ -32,7 +32,6 @@ manual:
 @▼スキル書の処理
     
 not_eraser:
-    bl DecodeSkillID
     mov r6, r0
 	ldr r1, MAX_NUM
 	sub r1, #1
@@ -148,7 +147,6 @@ GetMatchingSkillBook:
             cmp r0, #0
             beq nextMatching
 
-            bl DecodeSkillID
             cmp r0, r6
             beq trueMatching
             b nextMatching
@@ -172,7 +170,6 @@ DEDUPSKILL = ADR+16
 PUSHSKILL = ADR+20
 POPSKILL = ADR+24
 REMOVESKILL = ADR+28
-COMMONSKILL = ADR+32
 
 ex_getSkill:
 	ldr r3, GETSKILL
@@ -189,14 +186,7 @@ ex_popSkill:
 ex_removeSkill:
 	ldr r3, REMOVESKILL
 	mov pc, r3
-EncodeSkillID:
-	ldr r3, COMMONSKILL
-    add r3, #2
-	mov pc, r3
-DecodeSkillID:
-	ldr r3, COMMONSKILL
-    add r3, #4
-	mov pc, r3
+
 .align
 .ltorg
 ADR:
