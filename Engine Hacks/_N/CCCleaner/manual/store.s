@@ -32,6 +32,7 @@ manual:
 @▼スキル書の処理
     
 not_eraser:
+    bl DecodeSkillID
     mov r6, r0
 	ldr r1, MAX_NUM
 	sub r1, #1
@@ -187,6 +188,10 @@ ex_popSkill:
 	mov pc, r3
 ex_removeSkill:
 	ldr r3, REMOVESKILL
+	mov pc, r3
+EncodeSkillID:
+	ldr r3, COMMONSKILL
+    add r3, #2
 	mov pc, r3
 DecodeSkillID:
 	ldr r3, COMMONSKILL
