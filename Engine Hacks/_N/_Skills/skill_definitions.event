@@ -39,7 +39,7 @@
 #define DeathBlowID 37 //0x25鬼神の一撃
 #define ArmoredBlowID 38 //0x26金剛の一撃
 #define CounterID 39 //0x27 応撃
-//#define QuickenedPulseID 40 //0x28奥義の鼓動
+#define ShieldSessionID 40 //0x28 盾のセッション
 #define GaleCauseID 41 //0x29 神風招来(自軍のみ)
 #define ChargeID 42 //0x2A 突撃
 #define ImbueID 43 //0x2B 治癒
@@ -55,7 +55,7 @@
 #define FortID 53 //0x35 城塞
 #define LullID 54 //0x36 凪
 #define BondID 55 //0x37 絆
-#define ShieldSessionID 56 //0x38 盾のセッション
+//0x38-0x3F (free)
 
 
 #define AstraID 64 //0x40流星
