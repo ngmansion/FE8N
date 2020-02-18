@@ -10,7 +10,7 @@ pushSkill:
 	mov r4, r0
 
     mov r0, r1
-    bl EncodeSkill
+    @bl EncodeSkill
     mov r6, r0
 	bl pushSkill_impl
 	pop {r4, r5, r6, pc}
