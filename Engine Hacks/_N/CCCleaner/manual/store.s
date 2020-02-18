@@ -1,13 +1,6 @@
 PRESS_INPUT_ADR = (0x085775cc)
 
 
-MAX_NUM = ADR+8
-GETSKILL = ADR+12
-DEDUPSKILL = ADR+16
-PUSHSKILL = ADR+20
-POPSKILL = ADR+24
-REMOVESKILL = ADR+28
-
 .thumb
 @0802f740
 	cmp r0, #0x89
@@ -119,29 +112,8 @@ dedup:
 	mov r1, r0
     mov r0, r4
     bl ex_removeSkill
-	
 merge:
-	mov r6, r0
-    ldr r3, =0x080172d4	@アイテムのテーブル格納アドレス
-    ldr r3, [r3]
-    
-    mov r0, #1
-    lsl r1, r0, #3
-    add r1, r1, r0
-    lsl r1, r1, #2	@r1 = アイテム1個分のデータサイズ
-
-    mov r5, #0 @カウンタ
-next:
-    add r5, #1
-    add r3, r3, r1
-    ldrb	r0, [r3, #30] @アイテム効果
-    cmp r0, #0x2e
-    bne next
-    ldrb r0, [r3, #21] @アイテム威力
-    cmp r0, r6
-    beq hit
-    b next
-hit:
+    bl GetMatchingSkillBook
     mov r0, r4
     add r0, #0x1E
     lsl r1, r7, #1
@@ -149,13 +121,57 @@ hit:
     strb r5, [r0]		@スキルの書のIDをストア。
     mov r1, #2			@この後に減算処理があるため、
     strb r1, [r0, #1]	@残り回数を1回にするには回数2をストア。
-	pop {pc}
+    cmp r5, #0
+    bne notVanish
+    mov r1, #1
+    strb r1, [r0, #1]
+notVanish:
+    pop {pc}
+
+GetMatchingSkillBook:
+        push {lr}
+        mov r6, r0
+        mov r5, #0 @カウンタ
+    nextMatching:
+            add r5, #1
+            cmp r5, #255
+            bgt falseMatching
+
+            mov r0, r5
+            bl getItemEffect
+            cmp r0, #0x2e
+            bne nextMatching
+
+            mov r0, r5
+            bl getItemATK
+            cmp r0, #0
+            beq nextMatching
+
+            bl DecodeSkillID
+            cmp r0, r6
+            beq trueMatching
+            b nextMatching
+    falseMatching:
+        mov r5, #0
+    trueMatching:
+        pop {pc}
+
 getItemEffect:
 	ldr r1, =0x080174E4
 	mov pc, r1
 getItemATK:
 	ldr r1, =0x08017384
 	mov pc, r1
+
+
+
+MAX_NUM = ADR+8
+GETSKILL = ADR+12
+DEDUPSKILL = ADR+16
+PUSHSKILL = ADR+20
+POPSKILL = ADR+24
+REMOVESKILL = ADR+28
+COMMONSKILL = ADR+32
 
 ex_getSkill:
 	ldr r3, GETSKILL
@@ -171,6 +187,10 @@ ex_popSkill:
 	mov pc, r3
 ex_removeSkill:
 	ldr r3, REMOVESKILL
+	mov pc, r3
+DecodeSkillID:
+	ldr r3, COMMONSKILL
+    add r3, #4
 	mov pc, r3
 .align
 .ltorg

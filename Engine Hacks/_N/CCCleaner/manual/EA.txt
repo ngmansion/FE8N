@@ -41,6 +41,7 @@ s_scroll:
  POIN pushSkill
  POIN popSkill
  POIN removeSkill
+ POIN commonSkill
  
 ALIGN 4
 

@@ -1,0 +1,63 @@
+#define	SKILL_BOOK_01	PaviseID	//0x1大盾
+#define	SKILL_BOOK_02	MiracleID	//0x2祈り
+#define	SKILL_BOOK_03	NihilID	//0x3見切り
+#define	SKILL_BOOK_04	NullifyID	//0x4練達
+#define	SKILL_BOOK_05	CancelID	//0x5キャンセル
+#define	SKILL_BOOK_06	WrathID	//0x6怒り
+#define	SKILL_BOOK_07	ResolveID	//0x7勇将
+#define	SKILL_BOOK_08	VantageID	//0x8待ち伏せ
+#define	SKILL_BOOK_09	AdeptID	//0x9連続
+#define	SKILL_BOOK_10	ParagonID	//0xaエリート
+#define	SKILL_BOOK_11	RemoveID	//0xb再動(自軍のみ)
+#define	SKILL_BOOK_12	PassID	//0xcすり抜け
+#define	SKILL_BOOK_13	RenewalID	//0xd回復
+#define	SKILL_BOOK_14	DauntID	//0xe恐怖
+#define	SKILL_BOOK_15	FortuneID	//0xf強運
+#define	SKILL_BOOK_16	GaleforceID	//0x10疾風迅雷(自軍のみ)
+#define	SKILL_BOOK_17	AegisID	//0x11聖盾
+#define	SKILL_BOOK_18	StafffaireID	//0x12杖射程＋
+#define	SKILL_BOOK_19	SwordbreakerID	//0x13剣殺し
+#define	SKILL_BOOK_20	LancebreakerID	//0x14槍殺し
+#define	SKILL_BOOK_21	AxebreakerID	//0x15斧殺し
+#define	SKILL_BOOK_22	BowbreakerID	//0x16弓殺し
+#define	SKILL_BOOK_23	TomebreakerID	//0x17魔殺し
+#define	SKILL_BOOK_24	BoldFighterID	//0x18差し違え
+#define	SKILL_BOOK_25	VengefulFighterID	//0x19切り返し
+#define	SKILL_BOOK_26	WaryFighterID	//0x1a守備隊形
+#define	SKILL_BOOK_27	GrounderID	//0x1Bつばめ返し
+#define	SKILL_BOOK_28	HelmSplitterID	//0x1C兜割り
+#define	SKILL_BOOK_29	KnightkneelerID	//0x1D葬騎の一撃
+#define	SKILL_BOOK_30	MonsterBlastID	//0x1E魔物撃ち
+#define	SKILL_BOOK_31	DistantDefID	//0x1f遠距離防御
+#define	SKILL_BOOK_32	DeflectID	//0x20連撃防御
+#define	SKILL_BOOK_33	DesperationID	//0x21攻め立て
+#define	SKILL_BOOK_34	BladeSessionID	//0x22刃のセッション
+#define	SKILL_BOOK_35	LifetakerID	//0x23生命吸収
+#define	SKILL_BOOK_36	LifeAndDeathID	//0x24死線
+#define	SKILL_BOOK_37	DeathBlowID	//0x25鬼神の一撃
+#define	SKILL_BOOK_38	ArmoredBlowID	//0x26金剛の一撃
+#define	SKILL_BOOK_39	CounterID	//0x27応撃
+#define	SKILL_BOOK_40	ShieldSessionID	//0x28盾のセッション
+#define	SKILL_BOOK_41	GaleCauseID	//0x29神風招来(自軍のみ)
+#define	SKILL_BOOK_42	ChargeID	//0x2A突撃
+#define	SKILL_BOOK_43	ImbueID	//0x2B治癒
+#define	SKILL_BOOK_44	WindsweepID	//0x2C風薙ぎ
+#define	SKILL_BOOK_45	CloseDefID	//0x2D近距離防御
+#define	SKILL_BOOK_46	FuryID	//0x2E獅子奮迅
+#define	SKILL_BOOK_47	TriangleAdeptID	//0x2F相性激化
+#define	SKILL_BOOK_48	DefenderID	//0x30護り手
+#define	SKILL_BOOK_49	PoisonStrikeID	//0x31蛇毒
+#define	SKILL_BOOK_50	DartingBlowID	//0x32飛燕の一撃
+#define	SKILL_BOOK_51	PushID	//0x33渾身
+#define	SKILL_BOOK_52	SoloID	//0x34孤軍
+#define	SKILL_BOOK_53	FortID	//0x35城塞
+#define	SKILL_BOOK_54	LullID	//0x36凪
+#define	SKILL_BOOK_55	BondID	//0x37絆
+#define	SKILL_BOOK_56	FierceStanceID	//0x93 鬼神の構え
+#define	SKILL_BOOK_57	SteadyStanceID	//0x94 金剛の構え
+#define	SKILL_BOOK_58	DartingStanceID	//0x95 飛燕の構え
+#define	SKILL_BOOK_59	AllStats2ID	//0x9D 全能力+2
+#define	SKILL_BOOK_60	TrampleID	// 0x9E 見下す者
+#define	SKILL_BOOK_61	LungeID	// 0x9F 切り込み
+#define	SKILL_BOOK_62	HitAndRunID	//0xA0 一撃離脱
+#define	SKILL_BOOK_63	KnockBackID	//0xA1 叩き込み

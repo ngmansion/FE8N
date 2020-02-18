@@ -22,9 +22,12 @@ expand:
 @▼3-6スキル
 	bl get_unitSkillEx
 	b end
+    nop
+end:
+    bl DecodeSkill
+    .short 0xE000
 false:
 	mov r0, #0
-end:
 	pop {r4, pc}
 	
 	
@@ -100,13 +103,21 @@ true:
 	and r0, r1
 end2:
 	bx lr
+
+getExSkillBaseAdr:
+	ldr r3, addr+0
+	mov pc, r3
+EncodeSkill:
+    ldr r3, addr+0
+    add r3, #2
+    mov pc, r3
+DecodeSkill:
+    ldr r3, addr+0
+    add r3, #4
+    mov pc, r3
 .align
 .ltorg
-getExSkillBaseAdr:
-	ldr r3, Adr+0
-	mov pc, r3
-
-Adr:
+addr:
 
 
 

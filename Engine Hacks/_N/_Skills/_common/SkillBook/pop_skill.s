@@ -7,10 +7,7 @@ popSkill:
 	push {r4, r5, lr}
 	mov r4, r0
 	bl popSkill_impl
-	b END
-FALSE:
-	mov r0, #0
-END:
+	bl DecodeSkill
 	pop {r4, r5, pc}
 	
 	
@@ -158,14 +155,21 @@ end_unit_ex:
 	and r0, r1
 	bx lr
 	
-.align
 get_skill:
-	ldr r3, Adr
+	ldr r3, addr
 	mov pc, r3
 getExSkillBaseAdr:
-	ldr r3, Adr+4
+	ldr r3, addr+4
 	mov pc, r3
+EncodeSkill:
+    ldr r3, addr+4
+    add r3, #2
+    mov pc, r3
+DecodeSkill:
+    ldr r3, addr+4
+    add r3, #4
+    mov pc, r3
 .align
 .ltorg
-Adr:
+addr:
 
