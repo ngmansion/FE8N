@@ -27,7 +27,7 @@ false:
 end:
 	bx lr
 
-EncodeSkill:
+EncodeSkill:    @現状は利用箇所なし…
         cmp r0, #0
         beq falseEncode
         cmp r0, #255
