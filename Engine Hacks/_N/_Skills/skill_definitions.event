@@ -78,7 +78,7 @@
 #define StealID 81//0x51盗む(表示のみ)
 #define LocktouchID 82//0x52カギ開け(表示のみ)
 #define CritUpID 83//0x53必殺上昇(表示のみ)
-#define LethalityID 84//0x54瞬殺(表示のみ)
+#define LethalityID 84//0x54滅殺(表示のみ)
 #define SummonID 85//0x55召喚(表示のみ)
 #define DanceID 86//0x56踊る(表示のみ)
 #define SafeguardID 87//0x57メンテナンス(表示のみ)
