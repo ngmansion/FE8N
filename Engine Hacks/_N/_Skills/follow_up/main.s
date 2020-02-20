@@ -184,16 +184,6 @@ waryFighter_judgeActivate:
         bl HasWaryFighter
         orr r7, r0
 
-        mov r0, r6
-        mov r1, r5
-        bl HasWaryFighterOrg
-        orr r7, r0
-        
-        mov r0, r5
-        mov r1, r6
-        bl HasWaryFighterOrg
-        orr r7, r0
-
         mov r0, r7
         pop {r7, pc}
         
@@ -333,10 +323,6 @@ QuickRiposte: @切り返し
             pop {r4, r5, pc}
 
 HasWaryFighter:
-ldr r2, Adr+24 @守備隊形@見切り
-mov pc, r2
-
-HasWaryFighterOrg:
 ldr r2, Adr+40
 mov pc, r2
 
