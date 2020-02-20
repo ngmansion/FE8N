@@ -3,11 +3,13 @@
 pushSkill:						//inがBookData
 #incbin "push_Skill.dmp"
 POIN getSkill
+POIN commonSkill
 ALIGN 4
 
 popSkill:						//outがBookData
 #incbin "pop_Skill.dmp"
 POIN getSkill
+POIN commonSkill
 ALIGN 4
 
 getSkill:						//outがスキルID

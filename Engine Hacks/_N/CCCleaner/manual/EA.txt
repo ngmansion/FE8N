@@ -24,12 +24,13 @@ POIN scroll_check
 /////////
 POP
 scroll_check:
- #incbin "check.gba"
+ #incbin "check.dmp"
  WORD MAX_MANUAL_SKILL_NUM
  POIN getSkill
  POIN containsSkill
  POIN dedupSkill
  POIN judgeUnit
+ POIN commonSkill
 ALIGN 4
 s_scroll:
  #incbin "store.dmp"
