@@ -17,15 +17,14 @@ METIS_EFFECT = (0x2E)  @メティスの書の効果ID
         lsl r1, r1, #6
         and r0, r1
         cmp r0, #0
-        bne cant_use
-        b can_use
+        bne false
+        b true
+
     scroll:
-        
-    goto:
         mov r0, r5
         bl GET_WEAPON_EFFECT
         cmp r0, #METIS_EFFECT
-        bne cant_use
+        bne false
         
         mov r0, r5
         bl GET_WEAPON_MT
@@ -37,8 +36,8 @@ METIS_EFFECT = (0x2E)  @メティスの書の効果ID
         mov r1, #0
         bl GETSKILL
         cmp r0, #0
-        bne can_use     @何かあるから消せる
-        b cant_use
+        bne true     @何かあるから消せる
+        b false
         
     not_eraser:
         bl DECODE_BOOK
@@ -48,19 +47,19 @@ METIS_EFFECT = (0x2E)  @メティスの書の効果ID
         mov r1, r5
         bl CONTAINSKILL
         cmp r0, #1      @1なら習得済み
-        beq cant_use
+        beq false
         mov r0, r4
         mov r1, r5
         bl JUDGEUNIT
         cmp r0, #1      @1なら習得済み
-        beq cant_use
+        beq false
         
         mov r0, r4
         ldr r1, MAX_NUM
         sub r1, #1
         bl GETSKILL
         cmp r0, #0
-        beq can_use     @まだ余裕があるから使える
+        beq true        @まだ余裕があるから使える
     
         mov r0, r4
     
@@ -69,13 +68,12 @@ METIS_EFFECT = (0x2E)  @メティスの書の効果ID
     
         ldr r1, MAX_NUM
         cmp r0, r1
-        bne can_use     @ダブりがあるなら使える
-    cant_use:
-        mov r0, #1 @使用不可
-        b end
-    can_use:
-        mov r0, #0 @使用可能
-    end:
+        bne true        @ダブりがあるなら使える
+    false:
+        mov r0, #1      @使用不可
+        .short 0xE000
+    true:
+        mov r0, #0      @使用可能
         pop {r4, r5, pc}
 
 
