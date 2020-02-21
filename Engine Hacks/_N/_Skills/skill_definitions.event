@@ -156,3 +156,4 @@
 #define LungeID 159 // 0x9F 切り込み
 #define HitAndRunID 160 //0xA0 一撃離脱
 #define KnockBackID 161 //0xA1 叩き込み
+#define DiamondAxeID 162 //0xA2 金剛斧
