@@ -9,6 +9,21 @@ CombatSelector:
 	WORD ARROW_CONFIG
 ALIGN 4
 
+////////(help_beta)
+PUSH
+ ORG 0x08b5ac
+ jumpToHack(combat_help)
+POP
+ALIGN 4
+combat_help:
+#incbin help.dmp
+  WORD WAR_CONFIG
+  WORD ARROW_CONFIG
+  POIN skl_table
+  WORD ICON_LIST_SIZE
+  WORD 0
+  WORD 0x0203E775//0203E764(アイテムヘルプのベース)
+
 /////////////////////////////////////
 PUSH
 	ORG 0x01e684
