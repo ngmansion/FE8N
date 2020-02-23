@@ -15,12 +15,19 @@ WORD (MAX_MANUAL_SKILL_NUM-1)
 ALIGN 4
 
 getSkill:						//outがスキルID
-#incbin "get_skill.dmp"
+#incbin "get_bookskill.dmp"
 POIN commonSkill
 WORD (MAX_MANUAL_SKILL_NUM-1)
 ALIGN 4
-getBook:						//outがデータ
+
+getBookData:						//outがデータ
 #incbin "get_book.dmp"
+POIN commonSkill
+WORD 5		//指定可能な最大のINDEX
+ALIGN 4
+
+setBookData:
+#incbin "set_book.dmp"
 POIN commonSkill
 WORD 5		//指定可能な最大のINDEX
 ALIGN 4
