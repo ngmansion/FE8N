@@ -1,3 +1,5 @@
+#define MAX_MANUAL_SKILL_NUM (6)
+
 #define	SKILL_BOOK_01	PaviseID	//0x1大盾
 #define	SKILL_BOOK_02	MiracleID	//0x2祈り
 #define	SKILL_BOOK_03	NihilID	//0x3見切り

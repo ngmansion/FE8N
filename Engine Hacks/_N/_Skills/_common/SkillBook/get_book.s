@@ -1,4 +1,4 @@
-@変更時はGetBookも同時に修正する事
+@変更時はGetSkillも同時に修正する事
 
 .thumb
 @I	r0 = ベースアドレス
@@ -22,7 +22,7 @@ expand:
 	bl get_unitSkillEx
 	b end
 end:
-    bl DecodeSkill
+@    bl DecodeSkill
     .short 0xE000
 false:
 	mov r0, #0
