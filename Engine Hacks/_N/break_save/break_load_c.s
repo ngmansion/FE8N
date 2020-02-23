@@ -214,18 +214,13 @@ end:
 	add	r3, #26
 	mov	r4, r6
 	add	r4, #50
-@new(現在HPの最上位1bitをレベルとする)
-	ldrb r0, [r6, #8]
-	mov r1, sp
-	ldrb r1, [r1, #15]	@現在HP
-	lsr r1, r1, #7
-	lsl r1, r1, #5
-	orr r0, r1
-	strb r0, [r6, #8]
-	nop
-@	b 0x080aad00
+	b goto
 .align
 .ltorg
+
+.org 0x080aad00-BASE_ADR
+.align
+goto:
 
 .org 0x080aad84-BASE_ADR
 .align

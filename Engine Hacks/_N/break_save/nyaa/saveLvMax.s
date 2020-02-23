@@ -1,5 +1,7 @@
 .thumb
 
+DATA_MASK = (0b0111)
+
 main:
     push {r4, r5, lr}
     mov r4, #0
@@ -7,50 +9,120 @@ loop:
     add r4, #1
     cmp r4, #51
     bgt end
-    mov r0, r4
-    bl Get_Status
-    mov r2, r0
-    ldrb r0, [r2, #8]
-    lsl r0, r0, #26
-    lsr r1, r0, #31
 
     mov r0, r4
-    bl set_level_bit
+    bl CreateData
+
+    mov r1, r4
+    bl SeveData
 
     b loop
 end:
     pop {r4, r5, pc}
 
-set_level_bit:
+CreateData:
 @
-@r0 = ID
-@r1 = LVbit
+@[in]
+@r0=作りたい部隊表ID
+@[out]
+@r0=作ったデータ
 @
-        push {r4, r5, r6, lr}
-        mov r6, r1
+        push {lr}
+        bl Get_Status
+        mov r2, r0
+        ldrb r0, [r2, #8]
+        mov r1, #0b100000
+        and r0, r1
+        lsr r0, r0, #3
+
+        add r2, #71
+        ldrb r1, [r2]
+        mov r2, #0b11
+        and r1, r2
+
+        orr r0, r1
+        pop {pc}
+
+
+SeveData:
+@
+@[in]
+@r0=セットするデータ
+@r1=セットする部隊表ID
+@
+        push {r4, lr}
         mov r4, r0
-    
+        mov r0, r1
+        bl GetAddr @書き込み先アドレスとズラしビットを取得
+
+        mov r2, r1
+        mov r1, r0
         mov r0, r4
-        bl div_eight
+        bl SetData @
+
+        pop {r4, pc}
+
+SetData:
+        push {r4, lr}
+        mov r4, r1
+        mov r1, r2
+        bl MergeData
+
+        bl CpyData
+        pop {r4, pc}
+
+MergeData:
+        ldrb r2, [r4, #1]
+        lsl r2, #8
+        ldrb r3, [r4, #0]
+        orr r2, r3
+
+        mov r3, #DATA_MASK
+        lsl r3, r1
+        bic r2, r3
+
+        lsl r0, r1
+        orr r0, r2
+        bx lr
+
+CpyData:
+        strb r0, [r4, #0]
+        lsr r0, #8
+        strb r0, [r4, #1]
+        bx lr
+
+
+GetAddr:
+        push {r4, r5, lr}
+
         mov r5, r0
-    
-        mov r0, r4
-        bl mod_eight
+        bl GetBase
         mov r4, r0
 
-        ldr r1, addr
-        ldrb r0, [r1, r5]
-        
-        mov r2, #1
-        lsl r2, r2, r4
-        bic r0, r2      @念のためビットクリア
+        mov r0, r5
+        bl GetBit
 
-        lsl r6, r6, r4
-        orr r0, r6
+        mov r1, r0
+        mov r0, r4
+        pop {r4, r5, pc}
 
-        strb r0, [r1, r5]
-    end_set:
-        pop {r4, r5, r6, pc}
+GetBase:
+        push {lr}
+        sub r0, #1
+        mov r1, #3
+        mul r0, r1
+        bl div_eight
+        ldr r1, EXTRACT_SAVE_BASE
+        add r0, r1
+        pop {pc}
+
+GetBit:
+        push {lr}
+        sub r0, #1
+        mov r1, #3
+        mul r0, r1
+        bl mod_eight
+        pop {pc}
 
 
 div_eight:
@@ -74,6 +146,9 @@ mod_eight:
 Get_Status:
         ldr r1, =0x08019108
         mov pc, r1
+
+EXTRACT_SAVE_BASE = addr+0
+
 .align
 .ltorg
 addr:
