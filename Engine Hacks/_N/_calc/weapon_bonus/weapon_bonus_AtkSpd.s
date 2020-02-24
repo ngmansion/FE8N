@@ -32,6 +32,7 @@ LEVEL_S = (6)
 	push {r0}
 	mov r0, #0xFF
 	strb r0, [r4, #20]
+	mov r0, r4
 	bl AtkSpdFunc
 	pop {r0}
 	strb r0, [r4, #20]	@back
