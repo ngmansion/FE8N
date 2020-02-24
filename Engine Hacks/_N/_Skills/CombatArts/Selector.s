@@ -105,6 +105,7 @@ CheckHelp:  @ヘルプ中は動けなくする
             cmp r1, #6
             beq trueHelp
             b falseHelp
+    trueHelp:
         mov r0, #1
         .short 0xE000
     falseHelp:
