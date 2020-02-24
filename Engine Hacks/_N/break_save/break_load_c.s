@@ -219,7 +219,6 @@ end:
 .ltorg
 
 .org 0x080aad00-BASE_ADR
-.align
 goto:
 
 .org 0x080aad84-BASE_ADR
