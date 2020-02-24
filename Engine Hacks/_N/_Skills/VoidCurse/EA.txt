@@ -1,7 +1,8 @@
 
 PUSH
 ORG 0x02c45c
-  jumpToHack(ZeroExperience)
+BYTE $00 $49 $8F $46
+POIN ZeroExperience
 POP
 
 ALIGN 4
