@@ -1,0 +1,42 @@
+
+#define FATIGUE_SUFFIX (5)
+
+PUSH
+ORG 0x018ea4
+   jumpToHack(FatStatusUpHp)
+POP
+
+ALIGN 4
+FatStatusUpHp:
+#incbin "..\_N\StatusUp\StatusUpExceptStrMgc.dmp"
+POIN DefaultHp
+POIN StatusUpSkillHPFunc
+POIN Fatigue
+POIN 0	//末尾判定用(追加したかったら上に差し込む)
+
+PUSH
+ORG 0x0aefdc
+	jumpToHack(SaveWindow)
+POP
+SaveWindow:
+	#incbin "..\_N\BreakedWeapon\repair_sys.dmp"
+	POIN BreakedWeapon_impl
+	POIN FatigueCounter
+	POIN 0
+ALIGN 4
+
+
+Fatigue:
+#incbin half.dmp
+WORD FATIGUE_SUFFIX
+POIN getBookData
+POIN setBookData
+ALIGN 4
+
+FatigueCounter:
+#incbin counter.dmp
+WORD FATIGUE_SUFFIX
+POIN getBookData
+POIN setBookData
+ALIGN 4
+

@@ -8,3 +8,4 @@
 
 //#include "my_hack\EA.txt"
 //#include "magic\MAGICforN.txt"
+//#include "Fatigue\EA.txt"
