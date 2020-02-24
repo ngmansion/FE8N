@@ -71,7 +71,6 @@ Vcheck:
 	#incbin "Vcheck.gba"
 	POIN	HPFramePointers
 	POIN	WS_FrameData
-	POIN	CombatSelector
 PUSH
 
 /////////危険スイッチ

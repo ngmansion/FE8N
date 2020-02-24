@@ -4,6 +4,14 @@
 
 #include list_definitions.event
 
+//////////////////
+
+PUSH
+ORG 0x02763c
+ jumpToHack(CombatSelector)
+
+POP
+
 CombatSelector:
 	#incbin Arrow.dmp
 	WORD ARROW_CONFIG
