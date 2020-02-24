@@ -95,14 +95,16 @@ trueCount:
     bx lr
 
 CheckHelp:  @ヘルプ中は動けなくする
-        ldr r1, =0x0203E7AA
-        ldrb r0, [r1]
-        cmp r0, #0
-        bne falseHelp
-
-        ldrb r0, [r1, #1]
-        cmp r0, #0
-        beq falseHelp
+        ldr r2, =0x0203E7AA
+        ldrb r0, [r2]
+        ldrb r1, [r2, #1]
+            cmp r0, #0
+            bne falseHelp
+            cmp r1, #0
+            beq trueHelp
+            cmp r1, #6
+            beq trueHelp
+            b falseHelp
         mov r0, #1
         .short 0xE000
     falseHelp:
