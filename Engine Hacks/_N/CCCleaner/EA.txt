@@ -1,5 +1,5 @@
 
-
+#include "manual\EA.txt"
 ALIGN 4
 PUSH
 ///////////////マップ・選択後使うが出る条件(効果が指定されていると使うが出てくる)
@@ -135,5 +135,3 @@ BYTE 55
 */
 POP
 
-
-#include config.txt
