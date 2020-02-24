@@ -82,7 +82,7 @@
 #define SummonID 85//0x55召喚(表示のみ)
 #define DanceID 86//0x56踊る(表示のみ)
 #define SafeguardID 87//0x57メンテナンス(表示のみ)
-#define VoidCurseID 88//0x58虚無の呪い(表示のみ)
+#define VoidCurseID 88//0x58虚無の呪い
 #define DistantGuardID 89 //0x59遠距離無効
 #define RightfulGodID 90 //0x5a魔の器
 #define CantoPlusID 91 //0x5b再移動(自軍のみ)

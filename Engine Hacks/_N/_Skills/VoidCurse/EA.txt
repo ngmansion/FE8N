@@ -1,0 +1,14 @@
+
+PUSH
+ORG 0x02c45c
+  jumpToHack(ZeroExperience)
+POP
+
+ALIGN 4
+ZeroExperience:
+  #incbin ZeroExperience.dmp
+  POIN HasVoidCurse
+HasVoidCurse:
+  HAS_NIHIL
+  WORD VoidCurseID
+  
