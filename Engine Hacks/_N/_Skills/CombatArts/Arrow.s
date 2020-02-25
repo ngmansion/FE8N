@@ -9,13 +9,20 @@ main:
         cmp r0, #0
         beq $00027648
 
+        ldrb r0, [r4, #11]
+        ldr r1, =0x03004df0
+        ldr r1, [r1]
+        ldrb r1, [r1, #11]
+        cmp r0, r1
+        bne return
+
         ldr r0, ADDR
         ldrb r0, [r0]
         cmp r0, #0
         beq return
         mov r1, #0x10   @X coord
         mul r0, r1
-        mov r1, #125    @Y coord
+        mov r1, #0x80    @Y coord
         bl WRAMDisplay
     return:
         ldr r0, =0x08027994
@@ -36,8 +43,15 @@ WRAMDisplay:
     mov pc, r4
 .align
 ArrowData:
-.long 0x00030001
-.long 0x086F0004
+.byte 0x01
+.byte 0x00
+.byte 0xF8  @icon_coordY
+.byte 0x00  @icon_size(1)
+
+.byte 0x00  @icon_coordX(マイナス可)
+.byte 0x40  @icon_size(2)
+.byte 0x06  @icon_species
+.byte 0x08
 
 .align
 .ltorg
