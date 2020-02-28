@@ -122,17 +122,13 @@ JudgeDanger:
         ldr r1, =0x0203a4e8
         bl CALC_TRIANGLE_FUNC
 
-        ldr r0, =0x0203a4e8
-        mov r1, sp
-        bl CALC_TRIANGLE_FUNC
-
         mov r0, sp
         ldr r1, =0x0203a4e8
-        bl CALC_ALL_FUNC
+        bl CalcAttackFunc
 
         ldr r0, =0x0203a4e8
         mov r1, sp
-        bl CALC_ALL_FUNC
+        bl CalcDefenseFunc
 
         mov r0, sp
         ldr r1, =0x0203a4e8
@@ -156,7 +152,7 @@ JudgeDanger:
         ldrb r1, [r3, #18]  @最大HP
 
         cmp r1, r0
-        bgt notDanger       @HPの方が多い
+        bge notDanger       @HPの方が多い
         mov r0, #1
         .short 0xE000
     notDanger:
@@ -206,6 +202,13 @@ Initialize:
 
         ldr r0, [sp]
         bl EquipmentFunc
+
+        ldr r0, [sp]
+        ldr r1, =0x0203a4e8
+        cmp r0, r1
+        bne jumpInit            @自キャラ以外は不要
+        bl CALC_TERRAIN_FUNC
+    jumpInit:
         pop {r0, pc}
 
 MagicFuncIfNeed:
@@ -244,6 +247,44 @@ $08017314:
     mov pc, r1
 
 
+CalcAttackFunc:
+        push {r4, r5, lr}
+        mov r4, r0
+        mov r5, r1
+
+        ldr r2, =0x0802aa28
+        mov lr, r2
+        .short 0xF800
+
+        mov r0, r4
+        ldr r2, =0x0802acc4
+        mov lr, r2
+        .short 0xF800
+
+        mov r0, r4
+        ldr r2, =0x0802ad00
+        mov lr, r2
+        .short 0xF800
+
+        ldr r0, =0x0802a90c
+        mov pc, r0
+CalcDefenseFunc:
+        push {r4, r5, lr}
+        mov r4, r0
+        mov r5, r1
+
+        ldr r2, =0x0802a9b0
+        mov lr, r2
+        .short 0xF800
+
+        mov r0, r4
+        ldr r2, =0x0802ad00
+        mov lr, r2
+        .short 0xF800
+
+        ldr r0, =0x0802a90c
+        mov pc, r0
+
 
 HitPointFunc:
     ldr r2, =0x08018ea4
@@ -261,21 +302,18 @@ ResistFunc:
     ldr r2, =0x08018f84
     mov pc, r2
 
+CALC_TERRAIN_FUNC:
+    ldr r2, =0x0802a648
+    mov pc, r2
+
 CALC_TRIANGLE_FUNC:
     ldr r2, =0x0802c6f8
     mov pc, r2
-CALC_ALL_FUNC:
-    ldr r2, =0x0802a8c8
-    mov pc, r2
+@CALC_ALL_FUNC:
+@    ldr r2, =0x0802a8c8
+@    mov pc, r2
 CALC_VERSUS_FUNC:
-    ldr r2, =0x0802a914
-    mov pc, r2
-
-CALC_ATK_FUNC:
-    ldr r2, =0x0802aa28
-    mov pc, r2
-CALC_DEF_FUNC:
-    ldr r2, =0x0802a9b0
+    ldr r2, =0x0802ad3c
     mov pc, r2
 
 MEMCPY_R1toR0_FUNC:
