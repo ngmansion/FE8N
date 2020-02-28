@@ -1076,7 +1076,7 @@ Hien:
         
         mov r1, #98
         ldrh r0, [r4, r1]
-        add r0, #30
+        add r0, #20
         strh r0, [r4, r1]
     endHien:
         pop {pc}

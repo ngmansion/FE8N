@@ -1,0 +1,10 @@
+
+UnitSetting_Fatigue:	//ユニットIDが以下と一致するとき、疲労を0にする
+  BYTE $01 $0F 0
+
+ChapterSetting_Fatigue:	//次章ID(現在ではない)が以下と一致するとき、全員の疲労を0にする
+  BYTE $01 $02 $03 $07 0
+
+#define FATIGUE_WORD $04A7
+
+

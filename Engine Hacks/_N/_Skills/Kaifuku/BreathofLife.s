@@ -81,21 +81,25 @@ BreathofLife:
 
 
 Heal:
-        push {r4, lr}
+        push {r4, r5, lr}
         mov	r4, r0
         bl	getMaxHp    @$00018ea4=最大HP
+        mov r5, r0
+
         mov r1, #20     @回復パーセント
+        mul r0, r1
+        mov r1, #100
         bl divFunc
 
         ldrb r1, [r4, #19]  @現在HP
         add r0, r1
-        ldrb r2, [r4, #18]  @最大HP
+        mov r2, r5  @最大HP
         cmp r0, r2
         blt jumpHeal    @最大HPより小さいなら
         mov r0, r2
     jumpHeal:
         strb r0, [r4, #19]  @現在HP
-        pop {r4, pc}
+        pop {r4, r5, pc}
 
 CheckXY:
 @r1とr2がr0マス以内に居るならr0=TRUE
@@ -121,7 +125,7 @@ CheckXY:
         cmp r2, r0
         bgt falseCheckXY    @r0マス以内に居ない
         mov r0, #1
-        b endCheckXY
+        bx lr
 
     falseCheckXY:
         mov r0, #0

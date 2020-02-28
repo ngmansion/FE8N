@@ -1,0 +1,15 @@
+
+PUSH
+ORG 0x02c45c
+BYTE $00 $49 $8F $46
+POIN ZeroExperience
+POP
+
+ALIGN 4
+ZeroExperience:
+  #incbin ZeroExperience.dmp
+  POIN HasVoidCurse
+HasVoidCurse:
+  HAS_NIHIL
+  WORD VoidCurseID
+  

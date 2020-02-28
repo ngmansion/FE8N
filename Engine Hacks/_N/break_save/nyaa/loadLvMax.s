@@ -1,5 +1,7 @@
 .thumb
 
+DATA_MASK = (0b0111)
+
 main:
     push {r4, r5, lr}
     mov r4, #0
@@ -8,40 +10,92 @@ loop:
     cmp r4, #51
     bgt end
     mov r0, r4
-    bl get_level_bit
-    lsl r5, r0, #5
-    mov r0, r4
-    bl Get_Status
-    mov r2, r0
-    ldrb r0, [r2, #8]
-    orr r0, r5
-    strb r0, [r2, #8]
+    bl LoadData
+    mov r1, r4
+    bl GenerateData
     b loop
 end:
     pop {r4, r5, pc}
 
-get_level_bit:
-@
-@r0 = ID
-@
-        push {r4, r5, lr}
+GenerateData:
+@[in]
+@r0 = データ
+@r1 = 部隊表ID
+        push {r4, lr}
         mov r4, r0
-    
-        mov r0, r4
-        bl div_eight
+        mov r0, r1
+        bl Get_Status
+        mov r3, r0
+
+        mov r1, #0b0100
+        and r1, r4
+        lsl r1, r1, #3
+
+        ldrb r0, [r3, #8]
+        orr r0, r1
+        strb r0, [r3, #8]
+
+        mov r0, #0b0011
+        and r0, r4
+        add r3, #71
+        strb r0, [r3]
+
+        pop {r4, pc}
+
+
+LoadData:
+@[in]
+@r0 = 部隊表ID
+@[out]
+@r0 = データ
+        push {r4, lr}
+        mov r4, r0
+        bl GetAddr
+
+        ldrb r2, [r0, #1]
+        lsl r2, #8
+        ldrb r0, [r0, #0]
+        orr r0, r2
+        lsr r0, r1
+        mov r1, #0b0111
+        and r0, r1
+
+        pop {r4, pc}
+
+
+
+GetAddr:
+        push {r4, r5, lr}
+
         mov r5, r0
-    
-        mov r0, r4
-        bl mod_eight
+        bl GetBase
         mov r4, r0
 
-        ldr r0, addr
-        ldrb r0, [r0, r5]
-        lsr r0, r0, r4
-        lsl r0, r0, #31
-        lsr r0, r0, #31
-    
+        mov r0, r5
+        bl GetBit
+
+        mov r1, r0
+        mov r0, r4
         pop {r4, r5, pc}
+
+GetBase:
+        push {lr}
+        sub r0, #1
+        mov r1, #3
+        mul r0, r1
+        bl div_eight
+        ldr r1, EXTRACT_SAVE_BASE
+        add r0, r1
+        pop {pc}
+
+GetBit:
+        push {lr}
+        sub r0, #1
+        mov r1, #3
+        mul r0, r1
+        bl mod_eight
+        pop {pc}
+
 
 
 div_eight:
@@ -65,6 +119,9 @@ mod_eight:
 Get_Status:
         ldr r1, =0x08019108
         mov pc, r1
+
+EXTRACT_SAVE_BASE = addr+0
+
 .align
 .ltorg
 addr:

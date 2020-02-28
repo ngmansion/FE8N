@@ -25,7 +25,7 @@
 #define TomebreakerID 23 //0x17魔殺し
 #define BoldFighterID 24 //0x18差し違え
 #define VengefulFighterID 25 //0x19切り返し
-#define WaryFighterID 26 //0x1a守備隊形
+#define ImpregnableWallID 26 //0x1a鉄壁
 #define GrounderID 27 //0x1B つばめ返し
 #define HelmSplitterID 28 // 0x1C 兜割り
 #define KnightkneelerID 29 // 0x1D 葬騎の一撃
@@ -82,7 +82,7 @@
 #define SummonID 85//0x55召喚(表示のみ)
 #define DanceID 86//0x56踊る(表示のみ)
 #define SafeguardID 87//0x57メンテナンス(表示のみ)
-#define VoidCurseID 88//0x58虚無の呪い(表示のみ)
+#define VoidCurseID 88//0x58虚無の呪い
 #define DistantGuardID 89 //0x59遠距離無効
 #define RightfulGodID 90 //0x5a魔の器
 #define CantoPlusID 91 //0x5b再移動(自軍のみ)
@@ -123,7 +123,7 @@
 #define AtrocityID 126 //0x7E 無惨
 #define FallenStarID 127//0x7F 落星
 #define BlitzkriegID 128 //0x80電撃戦
-#define WaryFighterOrgID 129 //0x81 元守備隊形
+#define WaryFighterID 129 //0x81 守備隊形
 #define MiracleOldID 130 //0x82 旧祈り
 #define RecoverID 131 //0x83 完治
 #define ImmuneStatusID 132 //0x84 守護
@@ -156,3 +156,4 @@
 #define LungeID 159 // 0x9F 切り込み
 #define HitAndRunID 160 //0xA0 一撃離脱
 #define KnockBackID 161 //0xA1 叩き込み
+#define DiamondAxeID 162 //0xA2 金剛斧

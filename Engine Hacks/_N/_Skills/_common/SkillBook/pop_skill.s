@@ -13,8 +13,11 @@ popSkill:
 popSkill_impl:
 @▼本処理
 	push {lr}
-	mov r5, #1	@index0はあり得ないので
+	mov r5, #0
 loop:
+	ldr r3, MAX_MANUAL_SKILL_INDEX
+	cmp r5, r3
+	bge FALSE_impl
 	mov r0, r4
 	mov r1, r5
 	bl get_skill
@@ -23,7 +26,6 @@ loop:
 	add r5, #1
 	b loop
 loop_end:
-	sub r5, #1 @消すスキルに合わせる
 @indexごとの内部処理へ分岐
 	cmp r5, #0
 	beq one
@@ -160,6 +162,8 @@ get_skill:
 getExSkillBaseAdr:
 	ldr r3, addr+4
 	mov pc, r3
+
+MAX_MANUAL_SKILL_INDEX = addr+8
 .align
 .ltorg
 addr:

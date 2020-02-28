@@ -1,3 +1,5 @@
+@変更時はGetSkillも同時に修正する事
+
 .thumb
 @I	r0 = ベースアドレス
 @	r1 = 0 is Skill1, 1 is Skill2, ...
@@ -5,13 +7,10 @@
 	push {r4, lr}
 	mov r2, r0
 	mov r4, r1
-	
 
-	mov r0, r2
-	mov r1, r4
-	
-	cmp r1, #5   @要求スキルindex
-	bgt false
+	ldr r3, MAX_MANUAL_SKILL_INDEX
+	cmp r1, r3
+	bge false
 @▼本処理
 	cmp r1, #1
 	bgt expand
@@ -22,9 +21,8 @@ expand:
 @▼3-6スキル
 	bl get_unitSkillEx
 	b end
-    nop
 end:
-    bl DecodeSkill
+@    bl DecodeSkill
     .short 0xE000
 false:
 	mov r0, #0
@@ -115,6 +113,9 @@ DecodeSkill:
     ldr r3, addr+0
     add r3, #4
     mov pc, r3
+
+MAX_MANUAL_SKILL_INDEX = addr+4
+
 .align
 .ltorg
 addr:

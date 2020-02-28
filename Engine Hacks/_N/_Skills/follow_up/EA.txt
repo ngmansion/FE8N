@@ -23,7 +23,7 @@ breaker_main:
     POIN breaker_hasSkill4
     POIN breaker_hasSkill5
     POIN hasNihil
-    POIN waryFighter_hasSkill
+    POIN 0
     POIN boldFighter_hasSkill
     POIN vengefulFighter_hasSkill
     POIN hasDartingBlow
@@ -56,10 +56,10 @@ breaker_hasSkill5:
     
 waryFighter_hasSkill:
     HAS_NIHIL
-    WORD WaryFighterID
+    WORD ImpregnableWallID
 HasWaryFighterOrg:
     HAS_NIHIL
-    WORD WaryFighterOrgID
+    WORD WaryFighterID
     
 boldFighter_hasSkill:
     HAS_NIHIL

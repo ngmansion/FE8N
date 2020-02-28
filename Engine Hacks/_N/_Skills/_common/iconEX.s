@@ -510,6 +510,11 @@ limitter3:
 	cmp r0, #ICON_NUM_LIMIT @アイコン上限
 	beq end3
 
+	ldrb r0, [r5, #3]
+	mov r1, #1
+	tst r0, r1
+	bne end3
+
 	ldrh r0, [r5]
 	cmp r0, #0
 	beq end3 @ヘルプが無ければ終了
@@ -575,6 +580,12 @@ limitter4: @上限チェック
 	lsr r1, r1, #24
 	cmp r1, #ICON_NUM_LIMIT @アイコン上限
 	beq end4
+
+	ldrb r0, [r5, #3]
+	mov r1, #1
+	tst r0, r1
+	bne next4
+
 	ldrh r0, [r5]
 	cmp r0, #0
 	beq next4 @ヘルプが無ければ次へ

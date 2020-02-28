@@ -30,6 +30,10 @@ loop_end:
 	mov r1, #0x3F	@%00111111
 	and r6, r1
 @indexごとの内部処理へ分岐
+	ldr r3, MAX_MANUAL_SKILL_INDEX
+	cmp r5, r3
+	bge FALSE_impl
+
 	cmp r5, #0
 	beq one
 	cmp r5, #1
@@ -153,6 +157,8 @@ get_skill:
 getExSkillBaseAdr:
 	ldr r3, addr+4
 	mov pc, r3
+
+MAX_MANUAL_SKILL_INDEX = addr+8
 
 .align
 .ltorg

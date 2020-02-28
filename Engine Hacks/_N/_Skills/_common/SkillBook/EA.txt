@@ -1,20 +1,35 @@
 #include _config.txt
 
 pushSkill:						//inがBookData
-#incbin "push_Skill.dmp"
+#incbin "push_skill.dmp"
 POIN getSkill
 POIN commonSkill
+WORD (MAX_MANUAL_SKILL_NUM-1)
 ALIGN 4
 
 popSkill:						//outがBookData
-#incbin "pop_Skill.dmp"
+#incbin "pop_skill.dmp"
 POIN getSkill
 POIN commonSkill
+WORD (MAX_MANUAL_SKILL_NUM-1)
 ALIGN 4
 
 getSkill:						//outがスキルID
-#incbin "get_Skill.dmp"
+#incbin "get_bookskill.dmp"
 POIN commonSkill
+WORD (MAX_MANUAL_SKILL_NUM-1)
+ALIGN 4
+
+getBookData:						//outがデータ
+#incbin "get_book.dmp"
+POIN commonSkill
+WORD 5		//指定可能な最大のINDEX
+ALIGN 4
+
+setBookData:
+#incbin "set_book.dmp"
+POIN commonSkill
+WORD 5		//指定可能な最大のINDEX
 ALIGN 4
 
 containsSkill:

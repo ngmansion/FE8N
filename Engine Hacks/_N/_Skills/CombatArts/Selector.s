@@ -14,6 +14,9 @@ main:
         ldrb r0, [r1]
         cmp r0, #0
         beq false
+        bl CheckHelp
+        cmp r0, #0
+        beq false
 
         bl Left
         cmp r0, #1
@@ -90,6 +93,27 @@ falseCount:
 trueCount:
     mov r0, #1
     bx lr
+
+CheckHelp:  @ヘルプ中は動けなくする
+        ldr r2, =0x0203E7AA
+        ldrb r0, [r2]
+        ldrb r1, [r2, #1]
+            cmp r0, #0
+            bne falseHelp
+            cmp r1, #0
+            beq trueHelp
+            cmp r1, #6
+            beq trueHelp
+            b falseHelp
+    trueHelp:
+        mov r0, #1
+        .short 0xE000
+    falseHelp:
+        mov r0, #0
+        bx lr
+
+
+
 
 Sound:
 mov r0, #102

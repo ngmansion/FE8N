@@ -1,4 +1,4 @@
-SKILL_MAX = (0x38)	@盾
+BOOK_MAX = (63)
 
 .thumb
 @	00017bd4
@@ -59,7 +59,7 @@ GetSkill:
 	ldrb r7, [r0, r7]
 	
 Retry:
-	mov r0, #SKILL_MAX-1  
+	mov r0, #BOOK_MAX-1  
 	ldr r2, =0x08000c58
 	mov lr, r2
 	.short 0xf800
@@ -69,9 +69,9 @@ Retry:
 	add r0, r0, r2
 	
 loop:
-	cmp r0, #SKILL_MAX-1
+	cmp r0, #BOOK_MAX-1
 	ble Ok
-	sub r0, #SKILL_MAX-1
+	sub r0, #BOOK_MAX-1
 	b loop
 	
 Ok:
@@ -122,7 +122,7 @@ GetSkill_em:
 	ldrb r6, [r0, r6]
 	ldrb r7, [r0, r7]
 emRetry:
-	mov r0, #SKILL_MAX-1  
+	mov r0, #BOOK_MAX-1  
 	ldr r2, =0x08000c58
 	mov lr, r2
 	.short 0xf800
@@ -132,9 +132,9 @@ emRetry:
 	add r0, r0, r2
 	
 emloop:
-	cmp r0, #SKILL_MAX-1
+	cmp r0, #BOOK_MAX-1
 	ble emOk
-	sub r0, #SKILL_MAX-1
+	sub r0, #BOOK_MAX-1
 	b emloop
 	
 emOk:
@@ -166,13 +166,17 @@ emOk:
 	beq emRetry
 	cmp r0, #0x23	@生命吸収
 	beq emRetry
-	cmp r0, #0x28	@没
-	beq emRetry
 	cmp r0, #0x29	@杖スキル
 	beq emRetry
 	cmp r0, #0x2C	@戦技
 	beq emRetry
 	cmp r0, #0x30	@護り手
+	beq emRetry
+	cmp r0, #0x3F	@戦技
+	beq emRetry
+	cmp r0, #0x3E	@戦技
+	beq emRetry
+	cmp r0, #0x3D	@戦技
 	beq emRetry
 
 	ldr r2, [r4]
