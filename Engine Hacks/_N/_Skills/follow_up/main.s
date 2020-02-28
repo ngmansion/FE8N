@@ -219,6 +219,12 @@ QuickRiposte: @切り返し
         mov r4, r0
         mov r5, r1
 
+        ldrb r0, [r4, #18]
+        ldrb r1, [r4, #19]
+        lsl r1, #1
+        cmp r1, r0
+        bge non_vengeful
+
         mov r0, r4
         mov r1, r5
             ldr r2, Adr+32 @切り返し@見切り
