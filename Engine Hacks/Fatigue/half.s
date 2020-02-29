@@ -1,6 +1,6 @@
 .thumb
 
-VALID_BIT =         0b00011111
+VALID_BIT =         0b0011
 
 
     push {r4, lr}
@@ -8,7 +8,7 @@ VALID_BIT =         0b00011111
 
     mov r0, #71
     ldrb r0, [r4, r0]
-    mov r1, #0b0011
+    mov r1, #VALID_BIT
     and r0, r1
 
     cmp r0, #1

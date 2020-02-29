@@ -19,8 +19,15 @@ ORG 0x0aefdc
 
 ORG 0x08963c
 	jumpToHack(FatigueLayout)
+ORG 0x08ad18
+	jumpToHack(FatigueHelp)
 
 POP
+
+FatigueHelp:
+	#incbin FatigueHelp.dmp
+	WORD FATIGUE_HELP
+
 SaveWindow:
 	#incbin "..\_N\BreakedWeapon\repair_sys.dmp"
 	POIN BreakedWeapon_impl
