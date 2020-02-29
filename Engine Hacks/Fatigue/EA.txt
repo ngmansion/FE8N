@@ -7,7 +7,7 @@ POP
 
 ALIGN 4
 FatStatusUpHp:
-#incbin "..\_N\StatusUp\StatusUpExceptStrMgc.dmp"
+#incbin "..\_N\StatusUp\StatusUpHP.dmp"
 POIN DefaultHp
 POIN StatusUpSkillHPFunc
 POIN Fatigue

@@ -58,9 +58,10 @@ BreathofLife:
         ldr r1, =0x1000C
         and r0, r1
         bne loopBreathofLife	@死亡フラグまたは非出撃フラグ
-        ldrb r0, [r4, #19]
-        ldrb r1, [r4, #18]
-        cmp r0, r1
+        mov r0, r4
+        bl GET_MAX_HP
+        ldrb r1, [r4, #19]
+        cmp r1, r0
         bge loopBreathofLife    @この人は全快
 
         mov r0, #2

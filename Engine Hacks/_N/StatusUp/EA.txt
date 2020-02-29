@@ -62,7 +62,7 @@ POIN StatusUpSkillLuckFunc
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
 
 StatusUpHp:
-#incbin StatusUpExceptStrMgc.dmp
+#incbin StatusUpHP.dmp
 POIN DefaultHp
 POIN StatusUpSkillHPFunc
 POIN 0	//末尾判定用(追加したかったら上に差し込む)
