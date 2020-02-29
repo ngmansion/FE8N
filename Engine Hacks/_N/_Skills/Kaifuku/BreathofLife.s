@@ -8,10 +8,10 @@ cmp r0, #1
 beq Got_Effect
 
 mov	r0, r5
-bl	getNowHp    @$00018e64=現在HP
+bl	GetNowHpCustomized
 mov	r4, r0
 mov	r0, r5
-bl	getMaxHp    @$00018ea4=最大HP
+bl	GET_MAX_HP    @$00018ea4=最大HP
 cmp	r4, r0
 beq	No_Effect
 
@@ -89,7 +89,7 @@ Heal:
         mov r1, #20     @回復パーセント
         mul r0, r1
         mov r1, #100
-        bl divFunc
+        swi #6      @(r0)/(r1)
 
         ldrb r1, [r4, #19]  @現在HP
         add r0, r1
@@ -132,11 +132,20 @@ CheckXY:
     endCheckXY:
         bx lr
 
-getNowHp:
-ldr r1, =0x08018e64
-mov pc, r1
+GetNowHpCustomized:
+        push {r5, lr}
+        mov r5, r0
+        bl GET_MAX_HP
+        ldrb r3, [r5, #19]
+        cmp r3, r0
+        ble endNowHp    @最大HPを超過していない
+        strb r0, [r5, #19]  @現在HP上書き
+        .short 0xE000
+    endNowHp:
+        mov r0, r3
+        pop {r5, pc}
 
-getMaxHp:
+GET_MAX_HP:
 ldr r1, =0x08018ea4
 mov pc, r1
 
