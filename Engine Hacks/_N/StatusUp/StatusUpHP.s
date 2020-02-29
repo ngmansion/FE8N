@@ -1,6 +1,6 @@
 .thumb
 GetMaxHp:
-        push {r4, lr}
+        push {r4, r5, r6, lr}
         mov r4, r0      @元の処理に合わせる
         ldrb r0, [r4, #0xB]
         bl GET_UNIT_DATA
@@ -8,13 +8,13 @@ GetMaxHp:
         beq main
 @@@@フェールセーフ処理
         ldrb r0, [r4, #18]
-        pop {r4, pc}
+        b return
 
 main:
         push {r5, r6}
 .align
 calc_addr:
-        mov r5, #(ADDR+4)-calc_addr-6
+        mov r5, #(ADDR+4)-calc_addr-10
         add r5, pc
         mov r6, #0
         .short 0xE000
@@ -22,16 +22,15 @@ calc_addr:
         add r5, #4
         ldr r3, [r5]
         cmp r3, #0
-        beq FINISH
+        beq END
         mov r0, r4
         bl GoToR3
         add r6, r0
         b loop
-    FINISH:
+    END:
         mov r0, r6
-        pop {r5, r6}
-        ldr r1, ADDR
-        mov pc, r1
+    return:
+        pop {r4, r5, r6, pc}
 
 
 GoToR3:
