@@ -11,10 +11,9 @@ GetMaxHp:
         b return
 
 main:
-        push {r5, r6}
 .align
 calc_addr:
-        mov r5, #ADDR-calc_addr-10
+        mov r5, #ADDR-calc_addr-6
         add r5, pc
         mov r6, #0
         .short 0xE000
