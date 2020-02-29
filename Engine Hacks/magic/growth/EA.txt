@@ -1,9 +1,8 @@
 PUSH
 
 //自軍成長
-ORG	0x2ba8c	//自軍成長処理追加
-WORD	$46874800
-POIN	grow
+ORG 0x02b9e8
+ jumpToHack(GrowthTableMagic)
 
 ORG	0x2c1b0	//判定後能力加算追加
 WORD	$46874800
@@ -40,14 +39,30 @@ ORG	0x17f82
 
 POP
 ALIGN 4
+RadiantGrowingMagic:
+#incbin "..\..\_N\growth\growth.dmp"
+POIN GrowthTableMagic
+WORD AVERAGE_GROWTH_MODE
+WORD MIN_STATUS_UP_NUM
+
+GrowthTableMagic:
+POIN GROWTH_FUNCTION_HP
+POIN GROWTH_FUNCTION_STR
+POIN GROWTH_FUNCTION_MAG
+POIN GROWTH_FUNCTION_SKL
+POIN GROWTH_FUNCTION_SPD
+POIN GROWTH_FUNCTION_DEF
+POIN GROWTH_FUNCTION_RES
+POIN GROWTH_FUNCTION_LUC
+POIN 0 //末尾
+
+
+ALIGN 4
 boost_enemy:
  #incbin "boost.dmp"
 ALIGN 4
 maxa:
  #incbin "maxa.gba"
-ALIGN 4
-grow:
- #incbin "grow.gba"
 ALIGN 4
 result:
  #incbin "result.gba"
