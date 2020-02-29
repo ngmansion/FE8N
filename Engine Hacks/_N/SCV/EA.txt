@@ -1,3 +1,6 @@
+
+#define LITE_DANGER_MODE (1)
+
 PUSH
 
 先頭指定
@@ -72,6 +75,7 @@ WORD	$086F0004
 
 Vcheck:
 	#incbin "WarningAndHpBars.dmp"
+	WORD	LITE_DANGER_MODE
 	POIN	HPFramePointers
 	POIN	PinFramePointers
 	WORD	0x0203B000

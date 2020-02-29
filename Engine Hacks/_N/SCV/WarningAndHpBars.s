@@ -130,6 +130,10 @@ JudgeDanger:
         mov r1, sp
         bl CalcDefenseFunc
 
+        ldr r0, LITE_MODE
+        cmp r0, #1
+        beq skipVersus
+
         mov r0, sp
         ldr r1, =0x0203a4e8
         bl CALC_VERSUS_FUNC
@@ -137,7 +141,7 @@ JudgeDanger:
         ldr r0, =0x0203a4e8
         mov r1, sp
         bl CALC_VERSUS_FUNC
-
+    skipVersus:
         mov r0, #90
         add r0, sp
         ldrh r0, [r0]
@@ -152,7 +156,7 @@ JudgeDanger:
         ldrb r1, [r3, #18]  @最大HP
 
         cmp r1, r0
-        bge notDanger       @HPの方が多い
+        bgt notDanger       @HPの方が多い
         mov r0, #1
         .short 0xE000
     notDanger:
@@ -186,11 +190,6 @@ Initialize:
         bl DefenseFunc
         ldr r1, [sp]
         strb r0, [r1, #23]
-
-        ldr r0, [sp]
-        bl SpeedFunc
-        ldr r1, [sp]
-        strb r0, [r1, #22]
 
         ldr r0, [sp]
         bl ResistFunc
@@ -256,6 +255,11 @@ CalcAttackFunc:
         mov lr, r2
         .short 0xF800
 
+        ldr r0, LITE_MODE
+        cmp r0, #1
+        bne continueCalcAtk
+        pop {r4, r5, pc}
+    continueCalcAtk:
         mov r0, r4
         ldr r2, =0x0802acc4
         mov lr, r2
@@ -277,6 +281,11 @@ CalcDefenseFunc:
         mov lr, r2
         .short 0xF800
 
+        ldr r0, LITE_MODE
+        cmp r0, #1
+        bne continueCalcDef
+        pop {r4, r5, pc}
+    continueCalcDef:
         mov r0, r4
         ldr r2, =0x0802ad00
         mov lr, r2
@@ -294,9 +303,6 @@ StrongFunc:
     mov pc, r2
 DefenseFunc:
     ldr r2, =0x08018f64
-    mov pc, r2
-SpeedFunc:
-    ldr r2, =0x08018f24
     mov pc, r2
 ResistFunc:
     ldr r2, =0x08018f84
@@ -582,10 +588,11 @@ CheckXY:
         mov r0, #0
         bx lr
 
-HPFramePointers = addr+0
-PinFramePointers = addr+4
-WarningCache = addr+8
-WS_FrameData = addr+12
+LITE_MODE = addr+0
+HPFramePointers = addr+4
+PinFramePointers = addr+8
+WarningCache = addr+12
+WS_FrameData = addr+16
 
 .align
 .ltorg
