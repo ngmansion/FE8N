@@ -88,7 +88,7 @@ UNIT_STATUS = (4)
 CLASS_GROWTH = (2)
 CLASS_MAX = (5)
 GROWTH_STORE = (3)
-ITEM_STATUS = (6)       @成長率上昇アイテム用予定
+ITEM_STATUS = (6)       @成長率上昇アイテム用
 
 InGrowth:
         push {r6, lr}
@@ -144,6 +144,7 @@ ldr r1, =0x08019108
 mov pc, r1
 
 GetGrowthRate:
+        push {lr}
         ldr r0, AVERAGE_GROWTH_MODE
         cmp r0, #1
         beq classAverageMode
@@ -165,7 +166,49 @@ GetGrowthRate:
         asr r0, r0, #1
     mergeGrowth:
         add r0, sl              @メティス上昇分
-        bx lr
+        bl AddItemGrowth
+        pop {pc}
+
+AddItemGrowth:
+        push {r4, r5, lr}
+        mov r4, r0
+        mov r5, #0
+        .short 0xE000
+    loopAddItem:
+        add r5, #1
+        cmp r5, #5
+        bge endAddItem
+        lsl r0, r5, #1
+        add r0, #30
+        ldrh r0, [r7, r0]
+        cmp r0, #0
+        beq endAddItem
+        
+        push {r0}
+        bl GET_ITEM_EFFECT
+        pop {r2}
+        ldr r1, GROWTH_ITEM_EFFECT_ID
+        cmp r0, r1
+        bne loopAddItem
+
+        mov r0, r2
+        bl GET_ITEM_STATUS_ADDR
+        cmp r0, #0
+        beq loopAddItem
+        ldrb r2, [r6, #ITEM_STATUS]   @アイテム成長率オフセット
+        ldrb r0, [r0, r2]
+        add r4, r0
+        b loopAddItem
+    endAddItem:
+        mov r0, r4
+        pop {r4, r5, pc}
+
+GET_ITEM_EFFECT:
+ldr r1, =0x080174e4
+mov pc, r1
+GET_ITEM_STATUS_ADDR:
+ldr r1, =0x08017490
+mov pc, r1
 
 RANDOM_GROWTH:
         ldr r1, =0x0802b8e8
@@ -179,6 +222,7 @@ mov pc, r1
 GrowthTable = addr+0
 AVERAGE_GROWTH_MODE = addr+4
 MIN_STATUS_UP_NUM = addr+8
+GROWTH_ITEM_EFFECT_ID = addr+12
 
 .align
 .ltorg
