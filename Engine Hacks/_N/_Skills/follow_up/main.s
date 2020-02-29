@@ -219,11 +219,11 @@ QuickRiposte: @切り返し
         mov r4, r0
         mov r5, r1
 
-        ldrb r0, [r4, #18]
-        ldrb r1, [r4, #19]
+        ldrb r0, [r4, #18]      @Max
+        ldrb r1, [r4, #19]      @Now
         lsl r1, #1
         cmp r1, r0
-        bge non_vengeful
+        blt non_vengeful
 
         mov r0, r4
         mov r1, r5
