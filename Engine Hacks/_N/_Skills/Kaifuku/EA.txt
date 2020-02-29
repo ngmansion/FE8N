@@ -4,6 +4,9 @@ ORG	0x19f28
 BYTE	$00 $4B $9F $46
 POIN	ski_kaifuku
 
+ORG 0x018e64
+    jumpToHack(GetNowHpCustomized)
+
 ORG 0x019f38
     jumpToHack(tiyu_main)
 
@@ -14,6 +17,10 @@ ORG 0x02594c
     jumpToHack(Boon)
 
 POP
+
+ALIGN 4
+GetNowHpCustomized:
+#incbin "GetNowHpCustomized.dmp"
 
 ALIGN 4
 ski_kaifuku:

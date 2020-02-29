@@ -8,12 +8,12 @@ cmp r0, #1
 beq Got_Effect
 
 mov	r0, r5
-bl	getNowHp    @$00018e64=現在HP
+bl	GET_NOW_HP
 mov	r4, r0
 mov	r0, r5
-bl	getMaxHp    @$00018ea4=最大HP
+bl	GET_MAX_HP    @$00018ea4=最大HP
 cmp	r4, r0
-beq	No_Effect
+bge	No_Effect
 
 Got_Effect:
 ldr r0, =0x08025916
@@ -83,13 +83,13 @@ BreathofLife:
 Heal:
         push {r4, r5, lr}
         mov	r4, r0
-        bl	getMaxHp    @$00018ea4=最大HP
+        bl	GET_MAX_HP    @$00018ea4=最大HP
         mov r5, r0
 
         mov r1, #20     @回復パーセント
         mul r0, r1
         mov r1, #100
-        bl divFunc
+        swi #6      @(r0)/(r1)
 
         ldrb r1, [r4, #19]  @現在HP
         add r0, r1
@@ -132,11 +132,11 @@ CheckXY:
     endCheckXY:
         bx lr
 
-getNowHp:
+GET_NOW_HP:
 ldr r1, =0x08018e64
 mov pc, r1
 
-getMaxHp:
+GET_MAX_HP:
 ldr r1, =0x08018ea4
 mov pc, r1
 
