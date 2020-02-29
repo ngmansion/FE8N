@@ -151,12 +151,20 @@ JudgeDanger:
         ldrh r1, [r3, r1]
         sub r0, r1
         ble notDanger
-
-        lsl r0, #1
-        ldrb r1, [r3, #18]  @最大HP
-
+        ldrb r1, [r3, #19]  @現在HP
         cmp r1, r0
-        bgt notDanger       @HPの方が多い
+        ble trueDanger      @即死する
+
+        mov r2, #10
+        mul r0, r2
+        ldrb r1, [r3, #18]  @最大HP
+        mov r2, #8
+        mul r1, r2
+        swi #6
+
+        cmp r0, #1
+        blt notDanger       @HP8割以上
+    trueDanger:
         mov r0, #1
         .short 0xE000
     notDanger:

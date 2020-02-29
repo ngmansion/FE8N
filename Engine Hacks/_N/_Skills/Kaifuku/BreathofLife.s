@@ -8,12 +8,12 @@ cmp r0, #1
 beq Got_Effect
 
 mov	r0, r5
-bl	GetNowHpCustomized
+bl	GET_NOW_HP
 mov	r4, r0
 mov	r0, r5
 bl	GET_MAX_HP    @$00018ea4=最大HP
 cmp	r4, r0
-beq	No_Effect
+bge	No_Effect
 
 Got_Effect:
 ldr r0, =0x08025916
@@ -83,7 +83,7 @@ BreathofLife:
 Heal:
         push {r4, r5, lr}
         mov	r4, r0
-        bl	getMaxHp    @$00018ea4=最大HP
+        bl	GET_MAX_HP    @$00018ea4=最大HP
         mov r5, r0
 
         mov r1, #20     @回復パーセント
@@ -132,18 +132,9 @@ CheckXY:
     endCheckXY:
         bx lr
 
-GetNowHpCustomized:
-        push {r5, lr}
-        mov r5, r0
-        bl GET_MAX_HP
-        ldrb r3, [r5, #19]
-        cmp r3, r0
-        ble endNowHp    @最大HPを超過していない
-        strb r0, [r5, #19]  @現在HP上書き
-        .short 0xE000
-    endNowHp:
-        mov r0, r3
-        pop {r5, pc}
+GET_NOW_HP:
+ldr r1, =0x08018e64
+mov pc, r1
 
 GET_MAX_HP:
 ldr r1, =0x08018ea4
