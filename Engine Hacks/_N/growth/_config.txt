@@ -1,0 +1,6 @@
+
+
+#define MIN_STATUS_UP_NUM (2)	//最低保証値(必ずこの数のステータスが上がります)
+#define AVERAGE_GROWTH_MODE (0)	//1に書き換えると、成長率が「ユニット成長率とクラス成長率の平均」になります
+
+
