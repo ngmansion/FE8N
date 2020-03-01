@@ -40,7 +40,7 @@ GoToR3:
 nop
 mov pc, r3
 
-GET_UNIT_DATA:
+GET_UNIT_DATA:          @これを使うチェックは一部不具合があった
 ldr r1, =0x08019108
 mov pc, r1
 
