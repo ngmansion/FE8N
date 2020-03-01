@@ -22,7 +22,12 @@ return:
     ldrb r0, [r4,r0]
     lsl r0, #0x1C
     lsr r0, #0x1C
-    b getback
+    ldr r1, return_addr
+    mov pc, r1
+
+.align
+return_addr:
+.long 0x08027660
 
 Always:
         push {lr}
@@ -92,12 +97,12 @@ IsDanger:
 BATTLE_SIZE = (128)
 
 JudgeDanger:
-        push {lr}
+        push {r6, lr}
         sub sp, #BATTLE_SIZE
 
         bl CheckXY
         cmp r0, #0
-        beq notJudgeDanger
+        beq falseJudgeDanger
 
         ldr r0, =0x0203a4e8
         ldr r1, =0x03004df0
@@ -140,7 +145,7 @@ JudgeDanger:
         mov r0, sp
         ldr r1, =0x0203a4e8
         bl DoubleAttack
-        mov r3, r0
+        mov r6, r0
 
         mov r0, #90
         add r0, sp
@@ -150,12 +155,17 @@ JudgeDanger:
         mov r1, #92
         ldrh r1, [r2, r1]   @防御
         sub r0, r1
-        ble notJudgeDanger  @ノーダメージなら終了
-        lsl r0, r3          @追撃や勇者を加味
+        ble falseJudgeDanger  @ノーダメージなら終了
+
+        mov r1, sp
+        ldr r2, =0x0203a4e8
+        bl DEF_DIVIDE
+        lsl r0, r6          @追撃や勇者を加味
+        ldr r2, =0x0203a4e8
         ldrb r1, [r2, #19]  @現在HP
         cmp r1, r0
         ble trueJudgeDanger      @即死する
-        b notJudgeDanger
+        b falseJudgeDanger
 
     skipVersus:
         mov r0, #90
@@ -166,27 +176,28 @@ JudgeDanger:
         mov r1, #92
         ldrh r1, [r3, r1]
         sub r0, r1
-        ble notJudgeDanger
+        ble falseJudgeDanger
         ldrb r1, [r3, #19]  @現在HP
         cmp r1, r0
         ble trueJudgeDanger      @即死する
 
-        mov r2, #10
-        mul r0, r2
-        ldrb r1, [r3, #18]  @最大HP
-        mov r2, #8
-        mul r1, r2
-        swi #6
-
-        cmp r0, #1
-        blt notJudgeDanger       @HP8割以上
+@        mov r2, #10
+@        mul r0, r2
+@        ldrb r1, [r3, #18]  @最大HP
+@        mov r2, #8
+@        mul r1, r2
+@        swi #6
+@
+@        cmp r0, #1
+@        blt falseJudgeDanger       @HP8割以上
+    falseJudgeDanger:
+        mov r0, #0
+        .short 0xE000
     trueJudgeDanger:
         mov r0, #1
-        .short 0xE000
-    notJudgeDanger:
-        mov r0, #0
+
         add sp, #BATTLE_SIZE
-        pop {pc}
+        pop {r6, pc}
 
 
 UNIT_SIZE = (72)
@@ -691,9 +702,6 @@ CheckXY:
         mov r0, #0
         bx lr
 
-getback:
-ldr r1, =0x08027660
-mov pc, r1
 
 GetWarningCache:
     ldr r0, WarningCache
@@ -769,6 +777,9 @@ HPFramePointers = addr+4
 PinFramePointers = addr+8
 WarningCache = addr+12
 WS_FrameData = addr+16
+DEF_DIVIDE:
+ldr r3, addr+20
+mov pc, r3
 
 .align
 .ltorg
