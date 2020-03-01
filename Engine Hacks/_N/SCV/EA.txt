@@ -75,7 +75,7 @@ WORD	$086F0004
 
 Vcheck:
 	#incbin "WarningAndHpBars.dmp"
-	WORD	LITE_DANGER_MODE
+	WORD	0x0203B002
 	POIN	HPFramePointers
 	POIN	PinFramePointers
 	WORD	0x0203B000
