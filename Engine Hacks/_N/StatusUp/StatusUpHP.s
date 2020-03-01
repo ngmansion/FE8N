@@ -2,11 +2,15 @@
 GetMaxHp:
         push {r4, r5, r6, lr}
         mov r4, r0      @元の処理に合わせる
-        ldrb r0, [r4, #0xB]
-        bl GET_UNIT_DATA
+        ldr r0, =0x0203a4e8
         cmp r0, r4
-        beq main
+        beq calced
+        ldr r0, =0x0203a568
+        cmp r0, r4
+        beq calced
+        b main
 @@@@フェールセーフ処理
+    calced:
         ldrb r0, [r4, #18]
         b return
 

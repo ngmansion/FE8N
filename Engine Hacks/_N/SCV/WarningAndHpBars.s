@@ -192,7 +192,10 @@ JudgeDanger:
 UNIT_SIZE = (72)
 
 SetInitDataR1toR0:
-        push {r0, lr}
+        push {r4, r5, lr}
+        mov r4, r0
+        mov r5, r1
+
         mov r2, #UNIT_SIZE
         ldr r3, LITE_MODE
         ldrb r3, [r3]
@@ -201,48 +204,42 @@ SetInitDataR1toR0:
         mov r2, #52              @LITEなら不要分は削除
     skipUnitSize:
         bl MEMCPY_R1toR0_FUNC
-        ldr r0, [sp]
+
         bl Initialize
-        pop {r0, pc}
+        pop {r4, r5, pc}
 
 Initialize:
-        push {r0, lr}
+        push {lr}
 
         ldr r0, LITE_MODE
         ldrb r0, [r0]
         cmp r0, #0
         beq skipSpeed
 
-        ldr r0, [sp]
-        bl SpeedFunc
-        ldr r1, [sp]
-        strb r0, [r1, #22]
+        mov r0, r5
+        bl SPEED_FUNC
+        strb r0, [r4, #22]
     skipSpeed:
 
-        ldr r0, [sp]
-        bl HitPointFunc
-        ldr r1, [sp]
-        strb r0, [r1, #18]
+        mov r0, r5
+        bl MAX_HIT_POINT_FUNC
+        strb r0, [r4, #18]
 
-        ldr r0, [sp]
-        bl StrongFunc
-        ldr r1, [sp]
-        strb r0, [r1, #20]
+        mov r0, r5
+        bl STRONG_FUNC
+        strb r0, [r4, #20]
 
-        ldr r0, [sp]
-        bl DefenseFunc
-        ldr r1, [sp]
-        strb r0, [r1, #23]
+        mov r0, r5
+        bl DEFENSE_FUNC
+        strb r0, [r4, #23]
 
-        ldr r0, [sp]
-        bl ResistFunc
-        ldr r1, [sp]
-        strb r0, [r1, #24]
+        mov r0, r5
+        bl RESIST_FUNC
+        strb r0, [r4, #24]
 
-        ldr r0, [sp]
         bl MagicFuncIfNeed
 
-        ldr r0, [sp]
+        mov r0, r4
         bl EquipmentFunc
 
         ldr r0, [sp]
@@ -251,20 +248,20 @@ Initialize:
         bne jumpInit            @自キャラ以外は不要
         bl CALC_TERRAIN_FUNC
     jumpInit:
-        pop {r0, pc}
+        pop {pc}
 
 MagicFuncIfNeed:
-        push {r0, lr}
+        push {lr}
         ldr r3, =0x08018ecc     @magic_func
         ldr r1, [r3]
         ldr r2, =0x468F4900
         cmp r1, r2
-        bne notMagic
+        bne notMagic        @魔力パッチなしならジャンプ
 
+        mov r0, r5
         mov lr, r3
         .short 0xF800
-        ldr r1, [sp]
-        strb r0, [r1, #26]
+        strb r0, [r4, #26]
         b endMagic
     notMagic:
         ldr r0, LITE_MODE
@@ -272,19 +269,18 @@ MagicFuncIfNeed:
         cmp r0, #0
         beq endMagic
 
-        ldr r1, [sp]
-        ldr r2, [r1, #0]
-        ldr r3, [r1, #4]
+        ldr r2, [r5, #0]
+        ldr r3, [r5, #4]
         ldrb r2, [r2, #19]
         ldrb r3, [r2, #17]
         add r0, r2, r3
 
-        ldrb r2, [r1, #26]
+        ldrb r2, [r5, #26]
         add r0, r2
 
-        strb r0, [r1, #26]
+        strb r0, [r4, #26]
     endMagic:
-        pop {r0, pc}
+        pop {pc}
 
 EquipmentFunc:
         push {r4, r5, r6, lr}
@@ -364,7 +360,7 @@ DoubleAttack:
 
         mov r0, r5
         mov r1, r6
-        bl CALC_BRAVE_FUNC
+        bl BraveFunc
         add r7, r0
 
         mov r0, r7
@@ -391,7 +387,7 @@ FllowUpFunc:
         mov r0, sp
         add r1, sp, #4
 
-        bl CALC_FOLLOW_UP_FUNC
+        bl CalcFollowUpFunc
         ldr r1, [sp]
         cmp r1, r4
         beq endFollowUp
@@ -707,19 +703,19 @@ GetOptionByte2:
     bx lr
 
 
-HitPointFunc:
+MAX_HIT_POINT_FUNC:
     ldr r2, =0x08018ea4
     mov pc, r2
-StrongFunc:
+STRONG_FUNC:
     ldr r2, =0x08018ec4
     mov pc, r2
-DefenseFunc:
+DEFENSE_FUNC:
     ldr r2, =0x08018f64
     mov pc, r2
-ResistFunc:
+RESIST_FUNC:
     ldr r2, =0x08018f84
     mov pc, r2
-SpeedFunc:
+SPEED_FUNC:
     ldr r2, =0x08018f24
     mov pc, r2
 
@@ -736,7 +732,7 @@ CALC_TRIANGLE_FUNC:
 CALC_VERSUS_FUNC:
     ldr r2, =0x0802ad3c
     mov pc, r2
-CALC_FOLLOW_UP_FUNC:
+CalcFollowUpFunc:
     push {r4, r5, r6, r7, lr}
     mov r4, r0
     mov r7, r1
@@ -748,10 +744,10 @@ CALC_FOLLOW_UP_FUNC:
     mov r3, #0
     ldsh r3, [r2, r3]
     cmp r3, #250
-    bgt END_FOLLOW_UP
+    bgt falseFollowUp
     ldr r1, =0x0802af18
     mov pc, r1
-END_FOLLOW_UP:
+falseFollowUp:
     mov r0, #0
     pop {r4, r5, r6, r7, pc}
 
