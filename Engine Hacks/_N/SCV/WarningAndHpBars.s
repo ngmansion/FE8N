@@ -221,9 +221,8 @@ SetInitDataR1toR0:
 
 Initialize:
         push {lr}
-        ldr r0, [sp]
         ldr r1, =0x0203a4e8
-        cmp r0, r1
+        cmp r4, r1
         bne atkSide            @自キャラ以外は不要
 
         mov r0, r5
