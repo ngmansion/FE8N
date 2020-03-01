@@ -221,24 +221,10 @@ SetInitDataR1toR0:
 
 Initialize:
         push {lr}
-
-        ldr r0, LITE_MODE
-        ldrb r0, [r0]
-        cmp r0, #0
-        beq skipSpeed
-
-        mov r0, r5
-        bl SPEED_FUNC
-        strb r0, [r4, #22]
-    skipSpeed:
-
-        mov r0, r5
-        bl MAX_HIT_POINT_FUNC
-        strb r0, [r4, #18]
-
-        mov r0, r5
-        bl STRONG_FUNC
-        strb r0, [r4, #20]
+        ldr r0, [sp]
+        ldr r1, =0x0203a4e8
+        cmp r0, r1
+        bne atkSide            @自キャラ以外は不要
 
         mov r0, r5
         bl DEFENSE_FUNC
@@ -248,17 +234,32 @@ Initialize:
         bl RESIST_FUNC
         strb r0, [r4, #24]
 
+        mov r0, r4
+        bl CALC_TERRAIN_FUNC
+
+        ldr r0, LITE_MODE
+        ldrb r0, [r0]
+        cmp r0, #0
+        beq mergeInitialize
+
+        mov r0, r5
+        bl SPEED_FUNC
+        strb r0, [r4, #22]
+
+        mov r0, r5
+        bl MAX_HIT_POINT_FUNC       @HP発動スキル用
+        strb r0, [r4, #18]
+        b mergeInitialize
+
+    atkSide:
+        mov r0, r5
+        bl STRONG_FUNC
+        strb r0, [r4, #20]
         bl MagicFuncIfNeed
 
+    mergeInitialize:
         mov r0, r4
         bl EquipmentFunc
-
-        ldr r0, [sp]
-        ldr r1, =0x0203a4e8
-        cmp r0, r1
-        bne jumpInit            @自キャラ以外は不要
-        bl CALC_TERRAIN_FUNC
-    jumpInit:
         pop {pc}
 
 MagicFuncIfNeed:
@@ -273,7 +274,12 @@ MagicFuncIfNeed:
         mov lr, r3
         .short 0xF800
         strb r0, [r4, #26]
-        b endMagic
+
+        ldr r0, LITE_MODE
+        ldrb r0, [r0]
+        cmp r0, #0
+        beq endMagic
+        b mergeMagic
     notMagic:
         ldr r0, LITE_MODE
         ldrb r0, [r0]
@@ -290,6 +296,14 @@ MagicFuncIfNeed:
         add r0, r2
 
         strb r0, [r4, #26]
+    mergeMagic:
+        mov r0, r5
+        bl SPEED_FUNC
+        strb r0, [r4, #22]
+        mov r0, r5
+        bl MAX_HIT_POINT_FUNC       @HP発動スキル用
+        strb r0, [r4, #18]
+
     endMagic:
         pop {pc}
 
