@@ -2,7 +2,7 @@ PUSH
 
 //自軍成長
 ORG 0x02b9e8
- jumpToHack(GrowthTableMagic)
+ jumpToHack(RadiantGrowingMagic)
 
 ORG	0x2c1b0	//判定後能力加算追加
 WORD	$46874800
