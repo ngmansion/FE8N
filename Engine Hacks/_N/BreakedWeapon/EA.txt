@@ -32,6 +32,9 @@ ORG 0x0aefdc
 ORG 0x025f8c
 	jumpToHack(a_restore)
 
+ORG 0x024794
+	jumpToHack(scv_staff_hp_heal)
+
 POP
 BreakedWeapon:
 	#incbin repair_sys.dmp
@@ -46,6 +49,10 @@ BreakedWeapon_impl:
 ALIGN 4
 a_restore:
 	#incbin a_restore.dmp
+ALIGN 4
+
+scv_staff_hp_heal:
+	#incbin staff_heal.dmp
 ALIGN 4
 
 needsBreak_func:
