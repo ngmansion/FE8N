@@ -3,6 +3,10 @@ PUSH
 ORG 0x02c45c
 BYTE $00 $49 $8F $46
 POIN ZeroExperience
+
+ORG 0x02bffc
+jumpToHack(void_curse_weapon)
+
 POP
 
 ALIGN 4
@@ -12,4 +16,10 @@ ZeroExperience:
 HasVoidCurse:
   HAS_NIHIL
   WORD VoidCurseID
-  
+
+
+void_curse_weapon:
+#incbin weapon.dmp
+ALIGN 4
+
+
