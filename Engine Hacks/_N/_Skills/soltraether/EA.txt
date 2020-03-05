@@ -33,18 +33,43 @@ ORG		0x2B666
 WORD	0x46874800
 POIN	taiyo4
 
+
+ORG 0x02b690
+SHORT 0x0291 0x0a89
+
+ORG 0x02b720
+SHORT 0x0291 0x0a89
+
+//ORG 0x02b740	//motikae
+//SHORT 0x0280 0x0a80
+
+ORG 0x05943c
+   BL(0x89310)  //sol_divide_anim_on
+ORG 0x0594a2
+   BL(0x89310)  //sol_divide_anim_on
+
+ORG 0x0839ea
+   SHORT 0x46C0
+   BL(0x89318)  //sol_divide_anim_off
+ORG 0x083a1c
+   SHORT 0x46C0
+   BL(0x89318)  //sol_divide_anim_of
+
 ORG		0x531D8
 WORD	0x468F4900
 POIN	taiyo1
 
 ORG		0x59456
-	BYTE	$1B $48 $87 $46 $00 $00
+	BYTE	$1B $48 $87 $46 $00 $00		//to taiyo3
 ORG		0x594C4
 POIN	taiyo3
 
 ORG		0x594bc
 	WORD	0x46874800
 	POIN	taiyo2
+
+
+
 
 /////////////////////////
 
@@ -84,6 +109,14 @@ taiyo4:
     POIN 0
     POIN set_skillanime_attack
     POIN hasNihil
+
+sol_divide_anim_on:
+#incbin sol_divide_anim_on.dmp
+ALIGN 4
+
+sol_divide_anim_off:
+#incbin sol_divide_anim_off.dmp
+ALIGN 4
 
 hasSOL:
     HAS_OCCULT

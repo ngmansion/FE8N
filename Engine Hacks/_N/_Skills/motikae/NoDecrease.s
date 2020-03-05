@@ -6,8 +6,8 @@ cmp r0, #1
 beq skip
 ldr r0, [r2, #0]
 ldr r0, [r0, #0]
-lsl r0, r0, #13
-lsr r0, r0, #13
+lsl r0, r0, #10
+lsr r0, r0, #10
 ldr r1, =0x0802b744 @NEXT
 mov pc, r1
 

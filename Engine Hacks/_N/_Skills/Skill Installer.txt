@@ -31,6 +31,10 @@ ORG 0x892FC
  POIN IsRescure
 ORG 0x89308
  jumpToHack(MiddleDef)
+ORG 0x89310
+ jumpToHack(sol_divide_anim_on)
+ORG 0x89318
+ jumpToHack(sol_divide_anim_off)
 
 
 //～0x089348
