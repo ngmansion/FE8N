@@ -7,21 +7,23 @@ SET_SKILLANIME_ATK_FUNC = (adr+12)
 HAS_NIHIL_FUNC = (adr+16)
 
 @(2B666 > )
-@フラグ初期化
-    mov r0, #0
-    mov r2, #0
-    ldr r1, adr @(勝手な太陽フラグ)
-clear_loop:
-    str r0, [r1]
-    add r1, #4
-    add r2, #1
-    cmp r2, #MAX_BATTLE_NUM
-    blt clear_loop
+
+    bl ClearFlag            @フラグ初期化
 
     ldr r0, =0x0203A4D0
     ldrb r0, [r0, #4]
     cmp r0, #0
-    beq buki
+    beq judge
+
+    ldrh r0, [r7]
+        ldr r1, =0x080174cc
+        mov lr, r1
+        .short 0xF800
+    cmp r0, #2
+    beq rizaia
+    b false
+
+judge:
 @太陽発動分岐
     ldr r3, [r6]
     ldr r2, [r3]
@@ -98,6 +100,19 @@ taiyo:
 
     ldr r3, =0x0802b67e
     mov pc, r3
+
+ClearFlag:
+        mov r0, #0
+        mov r2, #0
+        ldr r1, adr @(勝手な太陽フラグ)
+    clear_loop:
+        str r0, [r1]
+        add r1, #4
+        add r2, #1
+        cmp r2, #MAX_BATTLE_NUM
+        blt clear_loop
+        bx lr
+
 .align
 .ltorg
 adr:
