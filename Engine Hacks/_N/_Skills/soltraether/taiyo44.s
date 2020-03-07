@@ -7,6 +7,8 @@ SET_SKILLANIME_ATK_FUNC = (adr+12)
 HAS_NIHIL_FUNC = (adr+16)
 
 @(2B666 > )
+    mov r3, r10
+    push {r3}
 
     bl ClearFlag            @フラグ初期化
 
@@ -56,9 +58,13 @@ judge:
     cmp r0, #1
     beq taiyo
 false:
+    pop {r3}
+    mov r10, r3
     ldr r0, =0x0802b6a2
     mov pc, r0
 rizaia:
+    pop {r3}
+    mov r10, r3
     ldr r0, =0x0802B670
     mov pc, r0
 
@@ -98,6 +104,8 @@ taiyo:
     add r0, r0, r1
     strb r0, [r5, #19]
 
+    pop {r3}
+    mov r10, r3
     ldr r3, =0x0802b67e
     mov pc, r3
 
