@@ -24,7 +24,7 @@ SOUND_ID = (97)
     ldr r0, ADDR+4
 	ldrb r0, [r0]
 	cmp r0, #0
-	beq end
+	beq reset
 	cmp r0, #1
 	beq reset
 	
