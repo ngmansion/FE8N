@@ -13,7 +13,7 @@ HAS_NIHIL_FUNC = (adr+16)
     ldr r0, =0x0203A4D0
     ldrb r0, [r0, #4]
     cmp r0, #0
-    beq judge
+    bne judge
 
     ldrh r0, [r7]
         ldr r1, =0x080174cc
