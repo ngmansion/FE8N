@@ -32,11 +32,13 @@ end:
 
 
 Stay:
+    mov r1, #0x0
+    strb r1, [r0, #19]
+    str r1, [r0, #60]
+
     ldr r1, [r0, #0xC]
     ldr r2, =0x01000008
     orr r1, r2
     str r1, [r0, #0xC]
-    mov r1, #0xFF
-    strb r1, [r0, #16]
     bx lr
 

@@ -7,7 +7,7 @@ UNIT_MAX_NUM = (51)
 outLoopUnit:
     add r5, #1
     cmp r5, #UNIT_MAX_NUM
-    blt return
+    bgt return
     
     mov r0, r5
         ldr r1, =0x08019108
@@ -24,6 +24,8 @@ outLoopUnit:
     bne outLoopUnit
     bic r1, r2
     str r1, [r0, #0xC]
+    mov r1, #0xFF
+    strb r1, [r0, #16]
     b outLoopUnit
 return:
     pop {r5, pc}
