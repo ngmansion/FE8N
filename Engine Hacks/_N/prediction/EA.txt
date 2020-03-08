@@ -6,6 +6,9 @@ ORG 0x036de2	//簡易予測削除
 ORG 0x03741a	//簡易予測削除
    SHORT 0x2001
 
+ORG 0xa7315e	//戦闘予測HPのhelp
+   SHORT NOW_HP_HELP_ID
+
 ORG 0xa7317a	//戦闘予測HPのhelp
    SHORT RESULT_HP_HELP_ID
 ORG 0xa73196	//help

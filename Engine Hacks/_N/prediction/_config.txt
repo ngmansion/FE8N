@@ -1,2 +1,5 @@
+#define NOW_HP_WORD_ID $0479
+#define RESULT_HP_WORD_ID $0478
+#define NOW_HP_HELP_ID $066C
 #define RESULT_HP_HELP_ID $04D9
-#define RESULT_HP_WORD_ID $04C5
+
