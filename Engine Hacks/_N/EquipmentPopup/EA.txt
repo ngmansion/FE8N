@@ -36,14 +36,15 @@ POIN menu_gazou
 
 
 ORG	0xA92514
+//no use
+POP
 power_view:
-#incbin "power_view.gba"
+#incbin "power_view.dmp"
 ALIGN 4
 have_two:
 #incbin "have_two.gba"
 ALIGN 4
 
-POP
 
 menu_gazou:
 #incext Png2Dmp menu.png --lz77
