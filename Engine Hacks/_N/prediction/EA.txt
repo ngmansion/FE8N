@@ -37,8 +37,13 @@ ORG 0x036ce2
 ORG 0x036cd4
     SHORT 0x3013 0x2100 0x5642
     
+ORG 0x036d32	//文字位置
+    BYTE 0x08
+ORG 0x036d42	//文字位置
+    BYTE 0x8A
+    
 ORG 0x0dccf0
-    SHORT RESULT_HP_WORD_ID
+    SHORT $0479
 
 ORG 0x036d4c	//防御→威力
     SHORT 0x3818

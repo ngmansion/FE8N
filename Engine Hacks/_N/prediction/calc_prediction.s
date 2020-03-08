@@ -50,13 +50,16 @@ mov	r4, r0
 
 mov r0, #72
 ldrh	r0, [r5, r0]
+cmp r0, #0
+beq jump
 bl	$00017294
 cmp	r0, #181	@ストーン
 bne	$00036a62
+jump:
 mov	r4, #255
 
 $00036a62:
-cmp	r1, #0
+cmp	r4, #0
 bge	$00036a6c
 mov	r4, #0
 
