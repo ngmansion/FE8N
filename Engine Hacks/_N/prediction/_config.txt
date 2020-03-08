@@ -1,0 +1,2 @@
+#define RESULT_HP_HELP_ID $04D9
+#define RESULT_HP_WORD_ID $04C5
