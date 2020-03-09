@@ -108,6 +108,15 @@ GetAttack:
             ldr r2, =0x0802aa28     @攻撃
             mov lr, r2
             .short 0xF800
+        mov r0, r4
+        ldr r1, =0x0203a568
+            ldr r2, =0x0802aae4     @攻速
+            mov lr, r2
+            .short 0xF800
+        mov r0, r4
+            ldr r2, =0x0802acc4     @攻速
+            mov lr, r2
+            .short 0xF800
 
         mov r0, #90
         ldrh r0, [r4, r0]
@@ -130,6 +139,12 @@ AtkSideFunc:
         bl STRONG_FUNC
         strb r0, [r4, #20]
 
+        mov r0, r5
+        bl SPEED_FUNC
+        strb r0, [r4, #22]
+
+        bl MagicFuncIfNeed
+
         mov r2, #0
         mov r1, #83
         strb r2, [r4, r1]       @すくみ初期化
@@ -142,12 +157,38 @@ AtkSideFunc:
         ldr r1, =0x0802a894
         mov pc, r1
 
+
+MagicFuncIfNeed:
+        push {lr}
+        ldr r3, =0x08018ecc     @magic_func
+        ldr r1, [r3]
+        ldr r2, =0x468F4900
+        cmp r1, r2
+        bne notMagic        @魔力パッチなしならジャンプ
+
+        mov r0, r5
+            mov lr, r3
+            .short 0xF800
+        strb r0, [r4, #26]
+        b endMagic
+    notMagic:
+        ldr r2, [r5, #0]
+        ldr r3, [r5, #4]
+        ldrb r2, [r2, #19]
+        ldrb r3, [r2, #17]
+        add r0, r2, r3
+
+        ldrb r2, [r5, #26]
+        add r0, r2
+
+        strb r0, [r4, #26]
+    endMagic:
+        pop {pc}
+
+
 $080168d0:
     ldr r1, =0x080168d0
     mov pc, r1
-
-
-
 
 
 DefSideFunc:
@@ -158,6 +199,10 @@ DefSideFunc:
 
 STRONG_FUNC:
     ldr r2, =0x08018ec4
+    mov pc, r2
+
+SPEED_FUNC:
+    ldr r2, =0x08018f24
     mov pc, r2
 
 MEMCPY_R1toR0_FUNC:
