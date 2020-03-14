@@ -47,6 +47,7 @@ FatigueCounter:
 #incbin counter.dmp
 	POIN UnitSetting_Fatigue
 	POIN ChapterSetting_Fatigue
+	POIN ChapterIgnoreSetting_Fatigue
 	
 ALIGN 4
 

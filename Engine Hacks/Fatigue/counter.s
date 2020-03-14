@@ -6,6 +6,13 @@ REST_CONDITION =    0x02210004
 
 Unit:
         push {r4, lr}
+        ldr r1, =0x0202BCFA
+        ldrb r1, [r1]
+        ldr r2, ChapterIgnoreSetting_Fatigue
+        bl Listfunc
+        cmp r0, #1
+        beq endOutLoopUnit
+
         mov r4, #1	@部隊表IDは1から
     outLoopUnit:
         cmp r4, #UNIT_MAX_NUM
@@ -101,6 +108,7 @@ Listfunc:
 
 UnitSetting_Fatigue = addr+0
 ChapterSetting_Fatigue = addr+4
+ChapterIgnoreSetting_Fatigue = addr+8
 
 .align
 .ltorg
