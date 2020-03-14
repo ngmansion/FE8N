@@ -1,0 +1,1 @@
+#define DISTANT_ITEM_EFFECT_ID (0x45)

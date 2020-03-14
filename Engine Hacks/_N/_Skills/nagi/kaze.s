@@ -1,8 +1,14 @@
 .thumb
 @0802a834
 STR_ADR = (67)	@書き込み先(AI1カウンタ)
-    cmp r0, #0
+    push {r0}
+    bl DistantCounter
+    pop {r1}
+    cmp r0, #1
+    beq Skip
+    cmp r1, #0
     beq cancel @射程外
+Skip:
     ldr r0, =0x0203a4d0
     ldrh r0, [r0]
     mov r1, #0x20
@@ -28,6 +34,31 @@ cancel:
 end:
     ldr r0, =0x0802a84a
     mov pc, r0
+
+DistantCounter:
+        push {lr}
+        ldrh r0, [r4, #0]
+        bl GET_ITEM_EFFECT
+        ldr r1, DISTANT_ITEM_EFFECT_ID
+        cmp r0, r1
+        bne falseDistant
+
+        ldr r0, =0x03004df0
+        ldr r0, [r0]
+        mov r1, #0
+        bl HAS_NIHIL
+        cmp r0, #1
+        beq falseDistant
+
+        mov r0, #1
+        .short 0xE000
+    falseDistant:
+        mov r0, #0
+        pop {pc}
+
+GET_ITEM_EFFECT:
+ldr r1, =0x080174e4
+mov pc, r1
 
 WaryFighter:
         push {lr}
@@ -77,6 +108,12 @@ mov pc, r2
 
 hasWaryFighter:
 ldr r2, addr+4
+mov pc, r2
+
+DISTANT_ITEM_EFFECT_ID = addr+8
+
+HAS_NIHIL:
+ldr r2, addr+12
 mov pc, r2
 
 .align

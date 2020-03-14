@@ -1,3 +1,4 @@
+#include _config.txt
 
 PUSH
 
@@ -10,6 +11,8 @@ nagi_kaze:
   #incbin kaze.dmp
   POIN hasWindsweep
   POIN waryFighter_hasSkill
+  WORD DISTANT_ITEM_EFFECT_ID
+  POIN hasNihil
 
 hasWindsweep:
  HAS_COMBAT

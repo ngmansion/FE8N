@@ -157,3 +157,4 @@
 #define HitAndRunID 160 //0xA0 一撃離脱
 #define KnockBackID 161 //0xA1 叩き込み
 #define DiamondAxeID 162 //0xA2 金剛斧
+#define DistantCounterID 163 //0xA3 遠距離反撃(表示のみ)
