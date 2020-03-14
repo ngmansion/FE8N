@@ -2,13 +2,6 @@
 
     cmp r0, #0
     bne switch
-    ldr r0, =0x0202bd2e
-    ldrb r1, [r0]
-    mov r2, #0x18
-    bic r1, r2
-    mov r2, #0x08
-    orr r1, r2
-    strb r1, [r0]
 
     ldr r0, =0x0203a568
     ldr r1, =0x0203a4e8
@@ -48,10 +41,12 @@ mov r2, r3
 bl DEF_DIVIDE
 mov	r4, r0
 
-mov r0, #74
+mov r0, #72
 ldrh	r0, [r5, r0]
 cmp r0, #0
 beq jump
+mov r0, #74
+ldrh	r0, [r5, r0]
 bl	$00017294
 cmp	r0, #181	@ストーン
 bne	$00036a62

@@ -25,6 +25,12 @@ BL(pop_warp)
 
 ORG 0x08e79c
 jumpToHack(atas_view)
+ORG 0x08e7a4
+   BYTE $00 $4A $97 $46
+   POIN arrow_double
+ORG 0x08e7ac
+   BYTE $00 $4A $97 $46
+   POIN double_double
 
 ORG	0x8E660
 #incbin "8E660.gba"
