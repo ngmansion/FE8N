@@ -288,7 +288,7 @@ MagicFuncIfNeed:
         ldr r2, [r5, #0]
         ldr r3, [r5, #4]
         ldrb r2, [r2, #19]
-        ldrb r3, [r2, #17]
+        ldrb r3, [r3, #17]
         add r0, r2, r3
 
         ldrb r2, [r5, #26]

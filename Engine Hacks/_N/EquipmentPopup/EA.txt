@@ -23,6 +23,9 @@ BL(pop_warp)
 //ORG	0x8eb48
 //BL(pop_warp)
 
+ORG 0x08e79c
+jumpToHack(atas_view)
+
 ORG	0x8E660
 #incbin "8E660.gba"
 pop_warp:
@@ -37,14 +40,22 @@ POIN menu_gazou
 
 ORG	0xA92514
 //no use
+
+ORG 0x08e9d0
+short 0x46c0 0x46c0//hpバー削除
+
 POP
 power_view:
 #incbin "power_view.dmp"
+WORD 0x0203B000+0xd0
 ALIGN 4
 have_two:
 #incbin "have_two.gba"
 ALIGN 4
 
+atas_view:
+#incbin atas_view.dmp
+ALIGN 4
 
 menu_gazou:
 #incext Png2Dmp menu.png --lz77

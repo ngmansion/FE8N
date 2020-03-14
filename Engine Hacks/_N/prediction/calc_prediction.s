@@ -48,7 +48,7 @@ mov r2, r3
 bl DEF_DIVIDE
 mov	r4, r0
 
-mov r0, #72
+mov r0, #74
 ldrh	r0, [r5, r0]
 cmp r0, #0
 beq jump

@@ -6,9 +6,8 @@
     push    {r7}
     mov r4, r0
     mov r5, r1
-    add r0, #68
-    mov r1, #0
-    ldsh    r6, [r0, r1]
+    mov r0, #68
+    ldsh    r6, [r0, r4]
     
     mov r0, #63
     and r0, r6
@@ -27,6 +26,8 @@
     
     
 start:
+    bl SetNumber
+
     ldrb    r0, [r5, #8]    @レベル
     bl  NUMBER
     ldr r1, =0x02028e44
@@ -41,15 +42,16 @@ start:
     add r1, #82
     strb    r0, [r1, #0]
 
-
-    bl GetAttack
+    ldrb    r0, [r5, #9]    @Exp
     bl  NUMBER
     ldr r1, =0x02028e44
+    
     ldrb    r0, [r1, #6]
     sub r0, #48
     mov r2, r4
     add r2, #83
     strb    r0, [r2, #0]
+
     ldrb    r0, [r1, #7]
     sub r0, #48
     mov r1, r4
@@ -57,9 +59,7 @@ start:
     strb    r0, [r1, #0]
 @文字
     ldr r1, [r4, #64]
-    mov r0, r4
     mov r2, #0
-
     ldr r3, =0x2160
     strh    r3, [r1, #0]
     add r3, #1
@@ -70,6 +70,11 @@ start:
     strh    r3, [r1, #8]
     strh    r2, [r1, #10]
     strh    r2, [r1, #12]
+
+    ldr r1, [r4, #64]
+    add r1, #0x40
+    bl $0008e660    @HP文字
+
 dont:
     mov r0, #1
     ldr r1, =0x08001efc
@@ -82,136 +87,147 @@ check:
     lsl r0, r0, #24
     asr r0, r0, #24
     bne end
+    bl DrawNumber
     ldr r0, =0x0808e838
     mov pc, r0
 end:
     ldr r0, =0x0808e8b4
     mov pc, r0
 
-COPY_SIZE = (48)
 
-GetAttack:
-        push {r4, lr}
-        ldr r4, =0x0203a4e8
-
-        bl AtkSideFunc
-
-        mov r0, #72
-        ldrh r0, [r4, r0]
-        cmp r0, #0
-        beq falseAttack
-
-        bl DefSideFunc
-
-        mov r0, r4
-        ldr r1, =0x0203a568
-            ldr r2, =0x0802aa28     @攻撃
-            mov lr, r2
-            .short 0xF800
-        mov r0, r4
-        ldr r1, =0x0203a568
-            ldr r2, =0x0802aae4     @攻速
-            mov lr, r2
-            .short 0xF800
-        mov r0, r4
-            ldr r2, =0x0802acc4     @攻速
-            mov lr, r2
-            .short 0xF800
-
-        mov r0, #90
-        ldrh r0, [r4, r0]
-        .short 0xE000
-    falseAttack:
-        mov r0, #0xFF
-        pop {r4, pc}
-
-
-AtkSideFunc:
-        push {r4, r5, r6, lr}       @装備処理に合わせる
-        mov r6, r4
-
-        mov r0, r4
-        mov r1, r5
-        mov r2, #COPY_SIZE
-        bl MEMCPY_R1toR0_FUNC
-
-        mov r0, r5
-        bl STRONG_FUNC
-        strb r0, [r4, #20]
-
-        mov r0, r5
-        bl SPEED_FUNC
-        strb r0, [r4, #22]
-
-        bl MagicFuncIfNeed
-
-        mov r2, #0
-        mov r1, #83
-        strb r2, [r4, r1]       @すくみ初期化
-        mov r1, #84
-        strb r2, [r4, r1]       @すくみ初期化
-
-@以降装備処理
-        mov r0, r4
-        bl $080168d0
-        ldr r1, =0x0802a894
-        mov pc, r1
-
-
-MagicFuncIfNeed:
+ExtraNumber:
         push {lr}
-        ldr r3, =0x08018ecc     @magic_func
-        ldr r1, [r3]
-        ldr r2, =0x468F4900
-        cmp r1, r2
-        bne notMagic        @魔力パッチなしならジャンプ
-
-        mov r0, r5
-            mov lr, r3
-            .short 0xF800
-        strb r0, [r4, #26]
-        b endMagic
-    notMagic:
-        ldr r2, [r5, #0]
-        ldr r3, [r5, #4]
-        ldrb r2, [r2, #19]
-        ldrb r3, [r2, #17]
-        add r0, r2, r3
-
-        ldrb r2, [r5, #26]
-        add r0, r2
-
-        strb r0, [r4, #26]
-    endMagic:
+        mov r0, r4
+        add r0, #85
+        ldrb    r0, [r0, #0]
+        lsl r0, r0, #24
+        asr r0, r0, #24
+        bne endExtra
+        bl SetNumber
+        bl DrawNumber
+    endExtra:
         pop {pc}
 
+SetNumber:
+        push {lr}
+        ldrb    r0, [r5, #19]    @ヒットポイント
+        cmp r0, #99
+        .short 0xDD00
+        mov r0, #255
+        bl  NUMBER
+        ldr r1, =0x02028e44
+        ldrb    r0, [r1, #6]
+        sub r0, #48
+        ldr r2, EX_NUM_MEM
+        strb    r0, [r2, #0]
+        
+        ldrb    r0, [r1, #7]
+        sub r0, #48
+        ldr r2, EX_NUM_MEM
+        strb    r0, [r2, #1]
 
-$080168d0:
-    ldr r1, =0x080168d0
+        mov r0, r5
+        bl $00018ea4        @最大HP
+        cmp r0, #99
+        .short 0xDD00
+        mov r0, #255
+        bl  NUMBER
+        ldr r1, =0x02028e44
+
+        ldrb    r0, [r1, #6]
+        sub r0, #48
+        ldr r2, EX_NUM_MEM
+        strb    r0, [r2, #2]
+
+        ldrb    r0, [r1, #7]
+        sub r0, #48
+        ldr r2, EX_NUM_MEM
+        strb    r0, [r2, #3]
+        pop {pc}
+
+DrawNumber:
+        push {r5, lr}
+        mov r0, r4
+        add r0, #70
+        mov r1, #0
+        ldsh r0, [r0, r1]
+        lsl r5, r0, #3
+        mov r7, r5
+        add r7, #17
+        mov r0, r4
+        add r0, #72
+        mov r1, #0
+        ldsh r0, [r0, r1]
+        lsl r6, r0, #3
+        add r6, #8          @1段下にずらす
+
+        ldr r1, =0x82e0
+        mov r8, r1
+
+        ldr r3, EX_NUM_MEM
+        ldrb    r3, [r3, #0]
+        cmp r3, #240
+        beq $0008e86a
+        add r3, r8
+        mov r0, r7
+        mov r1, r6
+        ldr r2, =0x085b8cdc
+        bl $00002b08
+
+    $0008e86a:
+        mov r0, r5
+        add r0, #24
+        ldr r3, EX_NUM_MEM
+        ldrb    r3, [r3, #1]
+        add r3, r8
+        mov r1, r6
+        ldr r2, =0x085b8cdc
+        bl $00002b08
+
+        ldr r3, EX_NUM_MEM
+        ldrb    r3, [r3, #2]
+        cmp r3, #240
+        beq $0008e8a0
+        mov r0, r5
+        add r0, #41
+        add r3, r8
+        mov r1, r6
+        ldr r2, =0x085b8cdc
+        bl $00002b08
+
+    $0008e8a0:
+        mov r0, r5
+        add r0, #48
+        ldr r3, EX_NUM_MEM
+        ldrb    r3, [r3, #3]
+        add r3, r8
+        mov r1, r6
+        ldr r2, =0x085b8cdc
+        bl $00002b08
+
+        pop {r5, pc}
+      
+      
+$00002b08:
+    ldr r7, =0x08002b08
+    mov pc, r7
+
+$00018ea4:
+    ldr r1, =0x08018ea4
     mov pc, r1
 
-
-DefSideFunc:
-        ldr r0, =0x0203a568
-        mov r1, #0
-        str r1, [r0, #4]
-        bx lr
-
-STRONG_FUNC:
-    ldr r2, =0x08018ec4
+$0008e660:
+    ldr r2, =0x0808e660
     mov pc, r2
 
-SPEED_FUNC:
-    ldr r2, =0x08018f24
-    mov pc, r2
-
-MEMCPY_R1toR0_FUNC:
-    ldr r3, =0x080d6908
-    mov pc, r3
 
 NUMBER:
     ldr r1, =0x08003868
     mov pc, r1
     
 
-    
+EX_NUM_MEM = ADDR
+
+.ltorg
+.align
+ADDR:
