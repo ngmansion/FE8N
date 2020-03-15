@@ -45,10 +45,10 @@ WRAMDisplay:
 ArrowData:
 .byte 0x01
 .byte 0x00
-.byte 0xF8  @icon_coordY
+.byte 0xF4  @icon_coordY(マイナス可・4単位)
 .byte 0x00  @icon_size(1)
 
-.byte 0x00  @icon_coordX(マイナス可)
+.byte 0x00  @icon_coordX(マイナス可・4単位)
 .byte 0x40  @icon_size(2)
 .byte 0x06  @icon_species
 .byte 0x08

@@ -5,17 +5,22 @@ ICON_POS = (0x0202F86)
     ldr r0, [sp, #0x1C]
     ldr r1, =0x08022D5B
     cmp r0, r1
-    bne END
+    bne END             @アイテム選択なら終わり？
+
+        bl DrawWindow
+
         bl arrow_reset_func
         bl GatherSkill
-        cmp r0, #0
-        bne start
-        mov r0, #0x0
-        mov r1, #0
-        mov	r2, #0x60
-        bl	WrapIcon
-        b clear
-    start:
+
+@ウィンドウが無い頃の、不要ならアイコン全削除する処理
+@        cmp r0, #0
+@        bne start
+@        mov r0, #0x0
+@        mov r1, #0
+@        mov	r2, #0x60
+@        bl	WrapIcon
+@        b clear
+@    start:
         ldr r1, ADDR+4
         mov r0, #1
         strb r0, [r1]
@@ -25,7 +30,7 @@ ICON_POS = (0x0202F86)
         neg r1, r1
         mov	r2, #0x60
         bl	WrapIcon
-    clear:
+@    clear:
         mov r0, #4
         ldr r1, ADDR
         ldrb r1, [r1, #0]
@@ -69,6 +74,7 @@ END:
     pop	{r4, r5, r6, r7}
     pop	{r0}
     bx	r0
+
 
 SKL_TBL = (ADDR+8)
 SKL_TBL_SIZE = (ADDR+12)
@@ -413,6 +419,27 @@ WrapIcon:
     lsl r2, r2, #7
     bl Icon
     pop {pc}
+
+
+DrawWindow:
+        push {lr}
+        sub sp, #4
+
+        ldr r0, =0x0804f0ec
+        mov lr, r0
+
+        mov r0, #0          @モード？ 123なら使えそう
+        str r0, [sp, #0]
+
+        mov r0, #1      @開始横座標
+        mov r1, #0x10   @開始縦座標
+        mov r2, #14     @横の長さ
+        mov r3, #4      @縦の長さ
+        .short 0xF800
+        add sp, #4
+        pop {pc}
+
+
 
 GetWeaponAbility:
     ldr r1, =0x080174cc
