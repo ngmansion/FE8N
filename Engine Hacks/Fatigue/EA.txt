@@ -1,7 +1,5 @@
 #include _config.txt
 
-#define FATIGUE_STATUS_ADDR (0x0203B000+0xd4)       //Set関数にも影響
-
 ALIGN 4
 PUSH
 ORG 0x018ea4
@@ -51,7 +49,7 @@ FatigueCounter:
 	POIN UnitSetting_Fatigue
 	POIN ChapterSetting_Fatigue
 	POIN ChapterIgnoreSetting_Fatigue
-	WORD FATIGUE_STATUS_ADDR
+	WORD WORK_MEM_FOR_TRANSPORT_FATIGUE
 	
 ALIGN 4
 

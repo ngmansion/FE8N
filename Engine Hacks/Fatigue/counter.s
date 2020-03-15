@@ -2,10 +2,6 @@
 UNIT_MAX_NUM = (51)
 FATIGUE_MAX = (3)
 
-D_STATUS_NONE = 0x00
-D_STATUS_IGNORE = 0x01
-D_STATUS_CLEAR = 0x02
-
 REST_CONDITION =    0x02210004
 
 Unit:
@@ -32,30 +28,21 @@ Unit:
         b outLoopUnit
 
     endOutLoopUnit:
-        bl Finalize
         pop {r4, pc}
 
-Finalize:
-        mov r0, #D_STATUS_NONE
-        ldr r1, FATIGUE_STATUS
-        strb r0, [r1]
-        bx lr
 
 IsIgnoreMap:
         push {lr}
-        ldr r0, FATIGUE_STATUS
-        ldrb r0, [r0]
-        cmp r0, #D_STATUS_IGNORE
-        beq trueIgnore
 
-        ldr r1, =0x0202BCFA
+        ldr r1, FATIGUE_STATUS
         ldrb r1, [r1]
+        cmp r1, #0          @序章は無視
+        beq trueIgnore
         ldr r2, ChapterIgnoreSetting_Fatigue
         bl Listfunc
-        b endIgnore
+        .short 0xE000
     trueIgnore:
         mov r0, #1
-    endIgnore:
         pop {pc}
 
 
@@ -96,12 +83,7 @@ Count:
             and r1, r0
             bne trueClear
 
-            ldr r0, FATIGUE_STATUS
-            ldrb r0, [r0]
-            cmp r0, #D_STATUS_CLEAR
-            beq trueClear
-        
-            ldr r1, =0x0202BCFA
+            ldr r1, FATIGUE_STATUS
             ldrb r1, [r1]
             ldr r2, ChapterSetting_Fatigue
             bl Listfunc

@@ -18,7 +18,16 @@ loop:
 
     b loop
 end:
+    bl Chapter
     pop {r4, r5, pc}
+
+Chapter:
+@現在章で疲労判定するため
+        ldr r0, =0x0202BCFA
+        ldrb r0, [r0]
+        ldr r1, WORK_MEM_FOR_TRANSPORT_FATIGUE
+        strb r0, [r1]
+        bx lr
 
 CreateData:
 @
@@ -148,6 +157,7 @@ Get_Status:
         mov pc, r1
 
 EXTRACT_SAVE_BASE = addr+0
+WORK_MEM_FOR_TRANSPORT_FATIGUE = addr+4
 
 .align
 .ltorg
