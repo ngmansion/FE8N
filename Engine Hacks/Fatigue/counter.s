@@ -2,14 +2,15 @@
 UNIT_MAX_NUM = (51)
 FATIGUE_MAX = (3)
 
+D_STATUS_NONE = 0x00
+D_STATUS_IGNORE = 0x01
+D_STATUS_CLEAR = 0x02
+
 REST_CONDITION =    0x02210004
 
 Unit:
         push {r4, lr}
-        ldr r1, =0x0202BCFA
-        ldrb r1, [r1]
-        ldr r2, ChapterIgnoreSetting_Fatigue
-        bl Listfunc
+        bl IsIgnoreMap
         cmp r0, #1
         beq endOutLoopUnit
 
@@ -31,7 +32,32 @@ Unit:
         b outLoopUnit
 
     endOutLoopUnit:
+        bl Finalize
         pop {r4, pc}
+
+Finalize:
+        mov r0, #D_STATUS_NONE
+        ldr r1, FATIGUE_STATUS
+        strb r0, [r1]
+        bx lr
+
+IsIgnoreMap:
+        push {lr}
+        ldr r0, FATIGUE_STATUS
+        ldrb r0, [r0]
+        cmp r0, #D_STATUS_IGNORE
+        beq trueIgnore
+
+        ldr r1, =0x0202BCFA
+        ldrb r1, [r1]
+        ldr r2, ChapterIgnoreSetting_Fatigue
+        bl Listfunc
+        b endIgnore
+    trueIgnore:
+        mov r0, #1
+    endIgnore:
+        pop {pc}
+
 
 
 .align
@@ -70,6 +96,11 @@ Count:
             and r1, r0
             bne trueClear
 
+            ldr r0, FATIGUE_STATUS
+            ldrb r0, [r0]
+            cmp r0, #D_STATUS_CLEAR
+            beq trueClear
+        
             ldr r1, =0x0202BCFA
             ldrb r1, [r1]
             ldr r2, ChapterSetting_Fatigue
@@ -109,6 +140,7 @@ Listfunc:
 UnitSetting_Fatigue = addr+0
 ChapterSetting_Fatigue = addr+4
 ChapterIgnoreSetting_Fatigue = addr+8
+FATIGUE_STATUS = addr+12
 
 .align
 .ltorg
