@@ -1,1 +1,0 @@
-book_data_index 5を使うタイプ
