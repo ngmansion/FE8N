@@ -1,6 +1,9 @@
 .thumb
 
+    sub sp, #12
+    mov r0, sp
     bl SetPow
+    add sp, #12
 
     bl GetAttack
     cmp r0, #99
@@ -84,10 +87,14 @@ SetPow:
         push {r4, r5, lr}
         ldr r4, =0x0203a568
 
+        mov r1, r5
+        mov r5, r0
+        mov r0, r4
         bl AtkSideFunc
+
+        mov r0, r5
         bl DefSideFunc
 
-        ldr r5, =0x0203a4e8
         mov r0, r4
         mov r1, r5
             ldr r2, =0x0802aa28     @攻撃
@@ -104,6 +111,8 @@ SetPow:
 
 AtkSideFunc:
         push {r4, r5, r6, lr}       @装備処理に合わせる
+        mov r4, r0
+        mov r5, r1
         mov r6, r4
 
         mov r0, r4
@@ -171,9 +180,12 @@ $080168d0:
 
 
 DefSideFunc:
-        ldr r0, =0x0203a4e8 @@
         mov r1, #0
+        str r1, [r0, #0]
         str r1, [r0, #4]
+        str r1, [r0, #8]
+        mov r1, #0xFF
+        strb r1, [r0, #0xb]
         bx lr
 
 STRONG_FUNC:
