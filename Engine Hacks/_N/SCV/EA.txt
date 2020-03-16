@@ -80,8 +80,17 @@ Vcheck:
 	POIN	PinFramePointers
 	WORD	0x0203B000
 	POIN	WS_FrameData
-	POIN	DefDivide
+	POIN	JUDGE_DANGER
+	POIN	JUDGE_DANGER_LITE
 
+JUDGE_DANGER:
+  #incbin JudgeDanger.dmp
+  POIN DefDivide
+  ALIGN 4
+JUDGE_DANGER_LITE:
+  #incbin JudgeDangerLITE.dmp
+  POIN DefDivide
+  ALIGN 4
 PUSH
 
 /////////危険スイッチ
