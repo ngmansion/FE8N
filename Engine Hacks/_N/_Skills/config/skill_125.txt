@@ -18,3 +18,6 @@ skill_125_item:
 #define COMBAT_ART_125_INFO 02 
 #define COMBAT_ART_125_DUMMY 00 
  
+COMPLEX_SKILL_125:
+   BYTE $00 $00 0 
+

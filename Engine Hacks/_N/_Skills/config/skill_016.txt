@@ -18,3 +18,6 @@ skill_016_item:
 #define COMBAT_ART_016_INFO 00 
 #define COMBAT_ART_016_DUMMY 00 
  
+COMPLEX_SKILL_016:
+   BYTE $00 $00 0 
+

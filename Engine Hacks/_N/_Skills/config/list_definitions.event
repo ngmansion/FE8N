@@ -1,515 +1,771 @@
-#define ICON_LIST_SIZE (20)
+#define ICON_LIST_SIZE (24)
 skl_table:
 SHORT 0 0 
 POIN 0 0 0 0 
+POIN 0
 SHORT SKL_HELP_001 SKL_COLOR_001 
 POIN skill_001_unit skill_001_class skill_001_weapon skill_001_item
+POIN COMPLEX_SKILL_001
 SHORT SKL_HELP_002 SKL_COLOR_002 
 POIN skill_002_unit skill_002_class skill_002_weapon skill_002_item
+POIN COMPLEX_SKILL_002
 SHORT SKL_HELP_003 SKL_COLOR_003 
 POIN skill_003_unit skill_003_class skill_003_weapon skill_003_item
+POIN COMPLEX_SKILL_003
 SHORT SKL_HELP_004 SKL_COLOR_004 
 POIN skill_004_unit skill_004_class skill_004_weapon skill_004_item
+POIN COMPLEX_SKILL_004
 SHORT SKL_HELP_005 SKL_COLOR_005 
 POIN skill_005_unit skill_005_class skill_005_weapon skill_005_item
+POIN COMPLEX_SKILL_005
 SHORT SKL_HELP_006 SKL_COLOR_006 
 POIN skill_006_unit skill_006_class skill_006_weapon skill_006_item
+POIN COMPLEX_SKILL_006
 SHORT SKL_HELP_007 SKL_COLOR_007 
 POIN skill_007_unit skill_007_class skill_007_weapon skill_007_item
+POIN COMPLEX_SKILL_007
 SHORT SKL_HELP_008 SKL_COLOR_008 
 POIN skill_008_unit skill_008_class skill_008_weapon skill_008_item
+POIN COMPLEX_SKILL_008
 SHORT SKL_HELP_009 SKL_COLOR_009 
 POIN skill_009_unit skill_009_class skill_009_weapon skill_009_item
+POIN COMPLEX_SKILL_009
 SHORT SKL_HELP_010 SKL_COLOR_010 
 POIN skill_010_unit skill_010_class skill_010_weapon skill_010_item
+POIN COMPLEX_SKILL_010
 SHORT SKL_HELP_011 SKL_COLOR_011 
 POIN skill_011_unit skill_011_class skill_011_weapon skill_011_item
+POIN COMPLEX_SKILL_011
 SHORT SKL_HELP_012 SKL_COLOR_012 
 POIN skill_012_unit skill_012_class skill_012_weapon skill_012_item
+POIN COMPLEX_SKILL_012
 SHORT SKL_HELP_013 SKL_COLOR_013 
 POIN skill_013_unit skill_013_class skill_013_weapon skill_013_item
+POIN COMPLEX_SKILL_013
 SHORT SKL_HELP_014 SKL_COLOR_014 
 POIN skill_014_unit skill_014_class skill_014_weapon skill_014_item
+POIN COMPLEX_SKILL_014
 SHORT SKL_HELP_015 SKL_COLOR_015 
 POIN skill_015_unit skill_015_class skill_015_weapon skill_015_item
+POIN COMPLEX_SKILL_015
 SHORT SKL_HELP_016 SKL_COLOR_016 
 POIN skill_016_unit skill_016_class skill_016_weapon skill_016_item
+POIN COMPLEX_SKILL_016
 SHORT SKL_HELP_017 SKL_COLOR_017 
 POIN skill_017_unit skill_017_class skill_017_weapon skill_017_item
+POIN COMPLEX_SKILL_017
 SHORT SKL_HELP_018 SKL_COLOR_018 
 POIN skill_018_unit skill_018_class skill_018_weapon skill_018_item
+POIN COMPLEX_SKILL_018
 SHORT SKL_HELP_019 SKL_COLOR_019 
 POIN skill_019_unit skill_019_class skill_019_weapon skill_019_item
+POIN COMPLEX_SKILL_019
 SHORT SKL_HELP_020 SKL_COLOR_020 
 POIN skill_020_unit skill_020_class skill_020_weapon skill_020_item
+POIN COMPLEX_SKILL_020
 SHORT SKL_HELP_021 SKL_COLOR_021 
 POIN skill_021_unit skill_021_class skill_021_weapon skill_021_item
+POIN COMPLEX_SKILL_021
 SHORT SKL_HELP_022 SKL_COLOR_022 
 POIN skill_022_unit skill_022_class skill_022_weapon skill_022_item
+POIN COMPLEX_SKILL_022
 SHORT SKL_HELP_023 SKL_COLOR_023 
 POIN skill_023_unit skill_023_class skill_023_weapon skill_023_item
+POIN COMPLEX_SKILL_023
 SHORT SKL_HELP_024 SKL_COLOR_024 
 POIN skill_024_unit skill_024_class skill_024_weapon skill_024_item
+POIN COMPLEX_SKILL_024
 SHORT SKL_HELP_025 SKL_COLOR_025 
 POIN skill_025_unit skill_025_class skill_025_weapon skill_025_item
+POIN COMPLEX_SKILL_025
 SHORT SKL_HELP_026 SKL_COLOR_026 
 POIN skill_026_unit skill_026_class skill_026_weapon skill_026_item
+POIN COMPLEX_SKILL_026
 SHORT SKL_HELP_027 SKL_COLOR_027 
 POIN skill_027_unit skill_027_class skill_027_weapon skill_027_item
+POIN COMPLEX_SKILL_027
 SHORT SKL_HELP_028 SKL_COLOR_028 
 POIN skill_028_unit skill_028_class skill_028_weapon skill_028_item
+POIN COMPLEX_SKILL_028
 SHORT SKL_HELP_029 SKL_COLOR_029 
 POIN skill_029_unit skill_029_class skill_029_weapon skill_029_item
+POIN COMPLEX_SKILL_029
 SHORT SKL_HELP_030 SKL_COLOR_030 
 POIN skill_030_unit skill_030_class skill_030_weapon skill_030_item
+POIN COMPLEX_SKILL_030
 SHORT SKL_HELP_031 SKL_COLOR_031 
 POIN skill_031_unit skill_031_class skill_031_weapon skill_031_item
+POIN COMPLEX_SKILL_031
 SHORT SKL_HELP_032 SKL_COLOR_032 
 POIN skill_032_unit skill_032_class skill_032_weapon skill_032_item
+POIN COMPLEX_SKILL_032
 SHORT SKL_HELP_033 SKL_COLOR_033 
 POIN skill_033_unit skill_033_class skill_033_weapon skill_033_item
+POIN COMPLEX_SKILL_033
 SHORT SKL_HELP_034 SKL_COLOR_034 
 POIN skill_034_unit skill_034_class skill_034_weapon skill_034_item
+POIN COMPLEX_SKILL_034
 SHORT SKL_HELP_035 SKL_COLOR_035 
 POIN skill_035_unit skill_035_class skill_035_weapon skill_035_item
+POIN COMPLEX_SKILL_035
 SHORT SKL_HELP_036 SKL_COLOR_036 
 POIN skill_036_unit skill_036_class skill_036_weapon skill_036_item
+POIN COMPLEX_SKILL_036
 SHORT SKL_HELP_037 SKL_COLOR_037 
 POIN skill_037_unit skill_037_class skill_037_weapon skill_037_item
+POIN COMPLEX_SKILL_037
 SHORT SKL_HELP_038 SKL_COLOR_038 
 POIN skill_038_unit skill_038_class skill_038_weapon skill_038_item
+POIN COMPLEX_SKILL_038
 SHORT SKL_HELP_039 SKL_COLOR_039 
 POIN skill_039_unit skill_039_class skill_039_weapon skill_039_item
+POIN COMPLEX_SKILL_039
 SHORT SKL_HELP_040 SKL_COLOR_040 
 POIN skill_040_unit skill_040_class skill_040_weapon skill_040_item
+POIN COMPLEX_SKILL_040
 SHORT SKL_HELP_041 SKL_COLOR_041 
 POIN skill_041_unit skill_041_class skill_041_weapon skill_041_item
+POIN COMPLEX_SKILL_041
 SHORT SKL_HELP_042 SKL_COLOR_042 
 POIN skill_042_unit skill_042_class skill_042_weapon skill_042_item
+POIN COMPLEX_SKILL_042
 SHORT SKL_HELP_043 SKL_COLOR_043 
 POIN skill_043_unit skill_043_class skill_043_weapon skill_043_item
+POIN COMPLEX_SKILL_043
 SHORT SKL_HELP_044 SKL_COLOR_044 
 POIN skill_044_unit skill_044_class skill_044_weapon skill_044_item
+POIN COMPLEX_SKILL_044
 SHORT SKL_HELP_045 SKL_COLOR_045 
 POIN skill_045_unit skill_045_class skill_045_weapon skill_045_item
+POIN COMPLEX_SKILL_045
 SHORT SKL_HELP_046 SKL_COLOR_046 
 POIN skill_046_unit skill_046_class skill_046_weapon skill_046_item
+POIN COMPLEX_SKILL_046
 SHORT SKL_HELP_047 SKL_COLOR_047 
 POIN skill_047_unit skill_047_class skill_047_weapon skill_047_item
+POIN COMPLEX_SKILL_047
 SHORT SKL_HELP_048 SKL_COLOR_048 
 POIN skill_048_unit skill_048_class skill_048_weapon skill_048_item
+POIN COMPLEX_SKILL_048
 SHORT SKL_HELP_049 SKL_COLOR_049 
 POIN skill_049_unit skill_049_class skill_049_weapon skill_049_item
+POIN COMPLEX_SKILL_049
 SHORT SKL_HELP_050 SKL_COLOR_050 
 POIN skill_050_unit skill_050_class skill_050_weapon skill_050_item
+POIN COMPLEX_SKILL_050
 SHORT SKL_HELP_051 SKL_COLOR_051 
 POIN skill_051_unit skill_051_class skill_051_weapon skill_051_item
+POIN COMPLEX_SKILL_051
 SHORT SKL_HELP_052 SKL_COLOR_052 
 POIN skill_052_unit skill_052_class skill_052_weapon skill_052_item
+POIN COMPLEX_SKILL_052
 SHORT SKL_HELP_053 SKL_COLOR_053 
 POIN skill_053_unit skill_053_class skill_053_weapon skill_053_item
+POIN COMPLEX_SKILL_053
 SHORT SKL_HELP_054 SKL_COLOR_054 
 POIN skill_054_unit skill_054_class skill_054_weapon skill_054_item
+POIN COMPLEX_SKILL_054
 SHORT SKL_HELP_055 SKL_COLOR_055 
 POIN skill_055_unit skill_055_class skill_055_weapon skill_055_item
+POIN COMPLEX_SKILL_055
 SHORT SKL_HELP_056 SKL_COLOR_056 
 POIN skill_056_unit skill_056_class skill_056_weapon skill_056_item
+POIN COMPLEX_SKILL_056
 SHORT SKL_HELP_057 SKL_COLOR_057 
 POIN skill_057_unit skill_057_class skill_057_weapon skill_057_item
+POIN COMPLEX_SKILL_057
 SHORT SKL_HELP_058 SKL_COLOR_058 
 POIN skill_058_unit skill_058_class skill_058_weapon skill_058_item
+POIN COMPLEX_SKILL_058
 SHORT SKL_HELP_059 SKL_COLOR_059 
 POIN skill_059_unit skill_059_class skill_059_weapon skill_059_item
+POIN COMPLEX_SKILL_059
 SHORT SKL_HELP_060 SKL_COLOR_060 
 POIN skill_060_unit skill_060_class skill_060_weapon skill_060_item
+POIN COMPLEX_SKILL_060
 SHORT SKL_HELP_061 SKL_COLOR_061 
 POIN skill_061_unit skill_061_class skill_061_weapon skill_061_item
+POIN COMPLEX_SKILL_061
 SHORT SKL_HELP_062 SKL_COLOR_062 
 POIN skill_062_unit skill_062_class skill_062_weapon skill_062_item
+POIN COMPLEX_SKILL_062
 SHORT SKL_HELP_063 SKL_COLOR_063 
 POIN skill_063_unit skill_063_class skill_063_weapon skill_063_item
+POIN COMPLEX_SKILL_063
 SHORT SKL_HELP_064 SKL_COLOR_064 
 POIN skill_064_unit skill_064_class skill_064_weapon skill_064_item
+POIN COMPLEX_SKILL_064
 SHORT SKL_HELP_065 SKL_COLOR_065 
 POIN skill_065_unit skill_065_class skill_065_weapon skill_065_item
+POIN COMPLEX_SKILL_065
 SHORT SKL_HELP_066 SKL_COLOR_066 
 POIN skill_066_unit skill_066_class skill_066_weapon skill_066_item
+POIN COMPLEX_SKILL_066
 SHORT SKL_HELP_067 SKL_COLOR_067 
 POIN skill_067_unit skill_067_class skill_067_weapon skill_067_item
+POIN COMPLEX_SKILL_067
 SHORT SKL_HELP_068 SKL_COLOR_068 
 POIN skill_068_unit skill_068_class skill_068_weapon skill_068_item
+POIN COMPLEX_SKILL_068
 SHORT SKL_HELP_069 SKL_COLOR_069 
 POIN skill_069_unit skill_069_class skill_069_weapon skill_069_item
+POIN COMPLEX_SKILL_069
 SHORT SKL_HELP_070 SKL_COLOR_070 
 POIN skill_070_unit skill_070_class skill_070_weapon skill_070_item
+POIN COMPLEX_SKILL_070
 SHORT SKL_HELP_071 SKL_COLOR_071 
 POIN skill_071_unit skill_071_class skill_071_weapon skill_071_item
+POIN COMPLEX_SKILL_071
 SHORT SKL_HELP_072 SKL_COLOR_072 
 POIN skill_072_unit skill_072_class skill_072_weapon skill_072_item
+POIN COMPLEX_SKILL_072
 SHORT SKL_HELP_073 SKL_COLOR_073 
 POIN skill_073_unit skill_073_class skill_073_weapon skill_073_item
+POIN COMPLEX_SKILL_073
 SHORT SKL_HELP_074 SKL_COLOR_074 
 POIN skill_074_unit skill_074_class skill_074_weapon skill_074_item
+POIN COMPLEX_SKILL_074
 SHORT SKL_HELP_075 SKL_COLOR_075 
 POIN skill_075_unit skill_075_class skill_075_weapon skill_075_item
+POIN COMPLEX_SKILL_075
 SHORT SKL_HELP_076 SKL_COLOR_076 
 POIN skill_076_unit skill_076_class skill_076_weapon skill_076_item
+POIN COMPLEX_SKILL_076
 SHORT SKL_HELP_077 SKL_COLOR_077 
 POIN skill_077_unit skill_077_class skill_077_weapon skill_077_item
+POIN COMPLEX_SKILL_077
 SHORT SKL_HELP_078 SKL_COLOR_078 
 POIN skill_078_unit skill_078_class skill_078_weapon skill_078_item
+POIN COMPLEX_SKILL_078
 SHORT SKL_HELP_079 SKL_COLOR_079 
 POIN skill_079_unit skill_079_class skill_079_weapon skill_079_item
+POIN COMPLEX_SKILL_079
 SHORT SKL_HELP_080 SKL_COLOR_080 
 POIN skill_080_unit skill_080_class skill_080_weapon skill_080_item
+POIN COMPLEX_SKILL_080
 SHORT SKL_HELP_081 SKL_COLOR_081 
 POIN skill_081_unit skill_081_class skill_081_weapon skill_081_item
+POIN COMPLEX_SKILL_081
 SHORT SKL_HELP_082 SKL_COLOR_082 
 POIN skill_082_unit skill_082_class skill_082_weapon skill_082_item
+POIN COMPLEX_SKILL_082
 SHORT SKL_HELP_083 SKL_COLOR_083 
 POIN skill_083_unit skill_083_class skill_083_weapon skill_083_item
+POIN COMPLEX_SKILL_083
 SHORT SKL_HELP_084 SKL_COLOR_084 
 POIN skill_084_unit skill_084_class skill_084_weapon skill_084_item
+POIN COMPLEX_SKILL_084
 SHORT SKL_HELP_085 SKL_COLOR_085 
 POIN skill_085_unit skill_085_class skill_085_weapon skill_085_item
+POIN COMPLEX_SKILL_085
 SHORT SKL_HELP_086 SKL_COLOR_086 
 POIN skill_086_unit skill_086_class skill_086_weapon skill_086_item
+POIN COMPLEX_SKILL_086
 SHORT SKL_HELP_087 SKL_COLOR_087 
 POIN skill_087_unit skill_087_class skill_087_weapon skill_087_item
+POIN COMPLEX_SKILL_087
 SHORT SKL_HELP_088 SKL_COLOR_088 
 POIN skill_088_unit skill_088_class skill_088_weapon skill_088_item
+POIN COMPLEX_SKILL_088
 SHORT SKL_HELP_089 SKL_COLOR_089 
 POIN skill_089_unit skill_089_class skill_089_weapon skill_089_item
+POIN COMPLEX_SKILL_089
 SHORT SKL_HELP_090 SKL_COLOR_090 
 POIN skill_090_unit skill_090_class skill_090_weapon skill_090_item
+POIN COMPLEX_SKILL_090
 SHORT SKL_HELP_091 SKL_COLOR_091 
 POIN skill_091_unit skill_091_class skill_091_weapon skill_091_item
+POIN COMPLEX_SKILL_091
 SHORT SKL_HELP_092 SKL_COLOR_092 
 POIN skill_092_unit skill_092_class skill_092_weapon skill_092_item
+POIN COMPLEX_SKILL_092
 SHORT SKL_HELP_093 SKL_COLOR_093 
 POIN skill_093_unit skill_093_class skill_093_weapon skill_093_item
+POIN COMPLEX_SKILL_093
 SHORT SKL_HELP_094 SKL_COLOR_094 
 POIN skill_094_unit skill_094_class skill_094_weapon skill_094_item
+POIN COMPLEX_SKILL_094
 SHORT SKL_HELP_095 SKL_COLOR_095 
 POIN skill_095_unit skill_095_class skill_095_weapon skill_095_item
+POIN COMPLEX_SKILL_095
 SHORT SKL_HELP_096 SKL_COLOR_096 
 POIN skill_096_unit skill_096_class skill_096_weapon skill_096_item
+POIN COMPLEX_SKILL_096
 SHORT SKL_HELP_097 SKL_COLOR_097 
 POIN skill_097_unit skill_097_class skill_097_weapon skill_097_item
+POIN COMPLEX_SKILL_097
 SHORT SKL_HELP_098 SKL_COLOR_098 
 POIN skill_098_unit skill_098_class skill_098_weapon skill_098_item
+POIN COMPLEX_SKILL_098
 SHORT SKL_HELP_099 SKL_COLOR_099 
 POIN skill_099_unit skill_099_class skill_099_weapon skill_099_item
+POIN COMPLEX_SKILL_099
 SHORT SKL_HELP_100 SKL_COLOR_100 
 POIN skill_100_unit skill_100_class skill_100_weapon skill_100_item
+POIN COMPLEX_SKILL_100
 SHORT SKL_HELP_101 SKL_COLOR_101 
 POIN skill_101_unit skill_101_class skill_101_weapon skill_101_item
+POIN COMPLEX_SKILL_101
 SHORT SKL_HELP_102 SKL_COLOR_102 
 POIN skill_102_unit skill_102_class skill_102_weapon skill_102_item
+POIN COMPLEX_SKILL_102
 SHORT SKL_HELP_103 SKL_COLOR_103 
 POIN skill_103_unit skill_103_class skill_103_weapon skill_103_item
+POIN COMPLEX_SKILL_103
 SHORT SKL_HELP_104 SKL_COLOR_104 
 POIN skill_104_unit skill_104_class skill_104_weapon skill_104_item
+POIN COMPLEX_SKILL_104
 SHORT SKL_HELP_105 SKL_COLOR_105 
 POIN skill_105_unit skill_105_class skill_105_weapon skill_105_item
+POIN COMPLEX_SKILL_105
 SHORT SKL_HELP_106 SKL_COLOR_106 
 POIN skill_106_unit skill_106_class skill_106_weapon skill_106_item
+POIN COMPLEX_SKILL_106
 SHORT SKL_HELP_107 SKL_COLOR_107 
 POIN skill_107_unit skill_107_class skill_107_weapon skill_107_item
+POIN COMPLEX_SKILL_107
 SHORT SKL_HELP_108 SKL_COLOR_108 
 POIN skill_108_unit skill_108_class skill_108_weapon skill_108_item
+POIN COMPLEX_SKILL_108
 SHORT SKL_HELP_109 SKL_COLOR_109 
 POIN skill_109_unit skill_109_class skill_109_weapon skill_109_item
+POIN COMPLEX_SKILL_109
 SHORT SKL_HELP_110 SKL_COLOR_110 
 POIN skill_110_unit skill_110_class skill_110_weapon skill_110_item
+POIN COMPLEX_SKILL_110
 SHORT SKL_HELP_111 SKL_COLOR_111 
 POIN skill_111_unit skill_111_class skill_111_weapon skill_111_item
+POIN COMPLEX_SKILL_111
 SHORT SKL_HELP_112 SKL_COLOR_112 
 POIN skill_112_unit skill_112_class skill_112_weapon skill_112_item
+POIN COMPLEX_SKILL_112
 SHORT SKL_HELP_113 SKL_COLOR_113 
 POIN skill_113_unit skill_113_class skill_113_weapon skill_113_item
+POIN COMPLEX_SKILL_113
 SHORT SKL_HELP_114 SKL_COLOR_114 
 POIN skill_114_unit skill_114_class skill_114_weapon skill_114_item
+POIN COMPLEX_SKILL_114
 SHORT SKL_HELP_115 SKL_COLOR_115 
 POIN skill_115_unit skill_115_class skill_115_weapon skill_115_item
+POIN COMPLEX_SKILL_115
 SHORT SKL_HELP_116 SKL_COLOR_116 
 POIN skill_116_unit skill_116_class skill_116_weapon skill_116_item
+POIN COMPLEX_SKILL_116
 SHORT SKL_HELP_117 SKL_COLOR_117 
 POIN skill_117_unit skill_117_class skill_117_weapon skill_117_item
+POIN COMPLEX_SKILL_117
 SHORT SKL_HELP_118 SKL_COLOR_118 
 POIN skill_118_unit skill_118_class skill_118_weapon skill_118_item
+POIN COMPLEX_SKILL_118
 SHORT SKL_HELP_119 SKL_COLOR_119 
 POIN skill_119_unit skill_119_class skill_119_weapon skill_119_item
+POIN COMPLEX_SKILL_119
 SHORT SKL_HELP_120 SKL_COLOR_120 
 POIN skill_120_unit skill_120_class skill_120_weapon skill_120_item
+POIN COMPLEX_SKILL_120
 SHORT SKL_HELP_121 SKL_COLOR_121 
 POIN skill_121_unit skill_121_class skill_121_weapon skill_121_item
+POIN COMPLEX_SKILL_121
 SHORT SKL_HELP_122 SKL_COLOR_122 
 POIN skill_122_unit skill_122_class skill_122_weapon skill_122_item
+POIN COMPLEX_SKILL_122
 SHORT SKL_HELP_123 SKL_COLOR_123 
 POIN skill_123_unit skill_123_class skill_123_weapon skill_123_item
+POIN COMPLEX_SKILL_123
 SHORT SKL_HELP_124 SKL_COLOR_124 
 POIN skill_124_unit skill_124_class skill_124_weapon skill_124_item
+POIN COMPLEX_SKILL_124
 SHORT SKL_HELP_125 SKL_COLOR_125 
 POIN skill_125_unit skill_125_class skill_125_weapon skill_125_item
+POIN COMPLEX_SKILL_125
 SHORT SKL_HELP_126 SKL_COLOR_126 
 POIN skill_126_unit skill_126_class skill_126_weapon skill_126_item
+POIN COMPLEX_SKILL_126
 SHORT SKL_HELP_127 SKL_COLOR_127 
 POIN skill_127_unit skill_127_class skill_127_weapon skill_127_item
+POIN COMPLEX_SKILL_127
 SHORT SKL_HELP_128 SKL_COLOR_128 
 POIN skill_128_unit skill_128_class skill_128_weapon skill_128_item
+POIN COMPLEX_SKILL_128
 SHORT SKL_HELP_129 SKL_COLOR_129 
 POIN skill_129_unit skill_129_class skill_129_weapon skill_129_item
+POIN COMPLEX_SKILL_129
 SHORT SKL_HELP_130 SKL_COLOR_130 
 POIN skill_130_unit skill_130_class skill_130_weapon skill_130_item
+POIN COMPLEX_SKILL_130
 SHORT SKL_HELP_131 SKL_COLOR_131 
 POIN skill_131_unit skill_131_class skill_131_weapon skill_131_item
+POIN COMPLEX_SKILL_131
 SHORT SKL_HELP_132 SKL_COLOR_132 
 POIN skill_132_unit skill_132_class skill_132_weapon skill_132_item
+POIN COMPLEX_SKILL_132
 SHORT SKL_HELP_133 SKL_COLOR_133 
 POIN skill_133_unit skill_133_class skill_133_weapon skill_133_item
+POIN COMPLEX_SKILL_133
 SHORT SKL_HELP_134 SKL_COLOR_134 
 POIN skill_134_unit skill_134_class skill_134_weapon skill_134_item
+POIN COMPLEX_SKILL_134
 SHORT SKL_HELP_135 SKL_COLOR_135 
 POIN skill_135_unit skill_135_class skill_135_weapon skill_135_item
+POIN COMPLEX_SKILL_135
 SHORT SKL_HELP_136 SKL_COLOR_136 
 POIN skill_136_unit skill_136_class skill_136_weapon skill_136_item
+POIN COMPLEX_SKILL_136
 SHORT SKL_HELP_137 SKL_COLOR_137 
 POIN skill_137_unit skill_137_class skill_137_weapon skill_137_item
+POIN COMPLEX_SKILL_137
 SHORT SKL_HELP_138 SKL_COLOR_138 
 POIN skill_138_unit skill_138_class skill_138_weapon skill_138_item
+POIN COMPLEX_SKILL_138
 SHORT SKL_HELP_139 SKL_COLOR_139 
 POIN skill_139_unit skill_139_class skill_139_weapon skill_139_item
+POIN COMPLEX_SKILL_139
 SHORT SKL_HELP_140 SKL_COLOR_140 
 POIN skill_140_unit skill_140_class skill_140_weapon skill_140_item
+POIN COMPLEX_SKILL_140
 SHORT SKL_HELP_141 SKL_COLOR_141 
 POIN skill_141_unit skill_141_class skill_141_weapon skill_141_item
+POIN COMPLEX_SKILL_141
 SHORT SKL_HELP_142 SKL_COLOR_142 
 POIN skill_142_unit skill_142_class skill_142_weapon skill_142_item
+POIN COMPLEX_SKILL_142
 SHORT SKL_HELP_143 SKL_COLOR_143 
 POIN skill_143_unit skill_143_class skill_143_weapon skill_143_item
+POIN COMPLEX_SKILL_143
 SHORT SKL_HELP_144 SKL_COLOR_144 
 POIN skill_144_unit skill_144_class skill_144_weapon skill_144_item
+POIN COMPLEX_SKILL_144
 SHORT SKL_HELP_145 SKL_COLOR_145 
 POIN skill_145_unit skill_145_class skill_145_weapon skill_145_item
+POIN COMPLEX_SKILL_145
 SHORT SKL_HELP_146 SKL_COLOR_146 
 POIN skill_146_unit skill_146_class skill_146_weapon skill_146_item
+POIN COMPLEX_SKILL_146
 SHORT SKL_HELP_147 SKL_COLOR_147 
 POIN skill_147_unit skill_147_class skill_147_weapon skill_147_item
+POIN COMPLEX_SKILL_147
 SHORT SKL_HELP_148 SKL_COLOR_148 
 POIN skill_148_unit skill_148_class skill_148_weapon skill_148_item
+POIN COMPLEX_SKILL_148
 SHORT SKL_HELP_149 SKL_COLOR_149 
 POIN skill_149_unit skill_149_class skill_149_weapon skill_149_item
+POIN COMPLEX_SKILL_149
 SHORT SKL_HELP_150 SKL_COLOR_150 
 POIN skill_150_unit skill_150_class skill_150_weapon skill_150_item
+POIN COMPLEX_SKILL_150
 SHORT SKL_HELP_151 SKL_COLOR_151 
 POIN skill_151_unit skill_151_class skill_151_weapon skill_151_item
+POIN COMPLEX_SKILL_151
 SHORT SKL_HELP_152 SKL_COLOR_152 
 POIN skill_152_unit skill_152_class skill_152_weapon skill_152_item
+POIN COMPLEX_SKILL_152
 SHORT SKL_HELP_153 SKL_COLOR_153 
 POIN skill_153_unit skill_153_class skill_153_weapon skill_153_item
+POIN COMPLEX_SKILL_153
 SHORT SKL_HELP_154 SKL_COLOR_154 
 POIN skill_154_unit skill_154_class skill_154_weapon skill_154_item
+POIN COMPLEX_SKILL_154
 SHORT SKL_HELP_155 SKL_COLOR_155 
 POIN skill_155_unit skill_155_class skill_155_weapon skill_155_item
+POIN COMPLEX_SKILL_155
 SHORT SKL_HELP_156 SKL_COLOR_156 
 POIN skill_156_unit skill_156_class skill_156_weapon skill_156_item
+POIN COMPLEX_SKILL_156
 SHORT SKL_HELP_157 SKL_COLOR_157 
 POIN skill_157_unit skill_157_class skill_157_weapon skill_157_item
+POIN COMPLEX_SKILL_157
 SHORT SKL_HELP_158 SKL_COLOR_158 
 POIN skill_158_unit skill_158_class skill_158_weapon skill_158_item
+POIN COMPLEX_SKILL_158
 SHORT SKL_HELP_159 SKL_COLOR_159 
 POIN skill_159_unit skill_159_class skill_159_weapon skill_159_item
+POIN COMPLEX_SKILL_159
 SHORT SKL_HELP_160 SKL_COLOR_160 
 POIN skill_160_unit skill_160_class skill_160_weapon skill_160_item
+POIN COMPLEX_SKILL_160
 SHORT SKL_HELP_161 SKL_COLOR_161 
 POIN skill_161_unit skill_161_class skill_161_weapon skill_161_item
+POIN COMPLEX_SKILL_161
 SHORT SKL_HELP_162 SKL_COLOR_162 
 POIN skill_162_unit skill_162_class skill_162_weapon skill_162_item
+POIN COMPLEX_SKILL_162
 SHORT SKL_HELP_163 SKL_COLOR_163 
 POIN skill_163_unit skill_163_class skill_163_weapon skill_163_item
+POIN COMPLEX_SKILL_163
 SHORT SKL_HELP_164 SKL_COLOR_164 
 POIN skill_164_unit skill_164_class skill_164_weapon skill_164_item
+POIN COMPLEX_SKILL_164
 SHORT SKL_HELP_165 SKL_COLOR_165 
 POIN skill_165_unit skill_165_class skill_165_weapon skill_165_item
+POIN COMPLEX_SKILL_165
 SHORT SKL_HELP_166 SKL_COLOR_166 
 POIN skill_166_unit skill_166_class skill_166_weapon skill_166_item
+POIN COMPLEX_SKILL_166
 SHORT SKL_HELP_167 SKL_COLOR_167 
 POIN skill_167_unit skill_167_class skill_167_weapon skill_167_item
+POIN COMPLEX_SKILL_167
 SHORT SKL_HELP_168 SKL_COLOR_168 
 POIN skill_168_unit skill_168_class skill_168_weapon skill_168_item
+POIN COMPLEX_SKILL_168
 SHORT SKL_HELP_169 SKL_COLOR_169 
 POIN skill_169_unit skill_169_class skill_169_weapon skill_169_item
+POIN COMPLEX_SKILL_169
 SHORT SKL_HELP_170 SKL_COLOR_170 
 POIN skill_170_unit skill_170_class skill_170_weapon skill_170_item
+POIN COMPLEX_SKILL_170
 SHORT SKL_HELP_171 SKL_COLOR_171 
 POIN skill_171_unit skill_171_class skill_171_weapon skill_171_item
+POIN COMPLEX_SKILL_171
 SHORT SKL_HELP_172 SKL_COLOR_172 
 POIN skill_172_unit skill_172_class skill_172_weapon skill_172_item
+POIN COMPLEX_SKILL_172
 SHORT SKL_HELP_173 SKL_COLOR_173 
 POIN skill_173_unit skill_173_class skill_173_weapon skill_173_item
+POIN COMPLEX_SKILL_173
 SHORT SKL_HELP_174 SKL_COLOR_174 
 POIN skill_174_unit skill_174_class skill_174_weapon skill_174_item
+POIN COMPLEX_SKILL_174
 SHORT SKL_HELP_175 SKL_COLOR_175 
 POIN skill_175_unit skill_175_class skill_175_weapon skill_175_item
+POIN COMPLEX_SKILL_175
 SHORT SKL_HELP_176 SKL_COLOR_176 
 POIN skill_176_unit skill_176_class skill_176_weapon skill_176_item
+POIN COMPLEX_SKILL_176
 SHORT SKL_HELP_177 SKL_COLOR_177 
 POIN skill_177_unit skill_177_class skill_177_weapon skill_177_item
+POIN COMPLEX_SKILL_177
 SHORT SKL_HELP_178 SKL_COLOR_178 
 POIN skill_178_unit skill_178_class skill_178_weapon skill_178_item
+POIN COMPLEX_SKILL_178
 SHORT SKL_HELP_179 SKL_COLOR_179 
 POIN skill_179_unit skill_179_class skill_179_weapon skill_179_item
+POIN COMPLEX_SKILL_179
 SHORT SKL_HELP_180 SKL_COLOR_180 
 POIN skill_180_unit skill_180_class skill_180_weapon skill_180_item
+POIN COMPLEX_SKILL_180
 SHORT SKL_HELP_181 SKL_COLOR_181 
 POIN skill_181_unit skill_181_class skill_181_weapon skill_181_item
+POIN COMPLEX_SKILL_181
 SHORT SKL_HELP_182 SKL_COLOR_182 
 POIN skill_182_unit skill_182_class skill_182_weapon skill_182_item
+POIN COMPLEX_SKILL_182
 SHORT SKL_HELP_183 SKL_COLOR_183 
 POIN skill_183_unit skill_183_class skill_183_weapon skill_183_item
+POIN COMPLEX_SKILL_183
 SHORT SKL_HELP_184 SKL_COLOR_184 
 POIN skill_184_unit skill_184_class skill_184_weapon skill_184_item
+POIN COMPLEX_SKILL_184
 SHORT SKL_HELP_185 SKL_COLOR_185 
 POIN skill_185_unit skill_185_class skill_185_weapon skill_185_item
+POIN COMPLEX_SKILL_185
 SHORT SKL_HELP_186 SKL_COLOR_186 
 POIN skill_186_unit skill_186_class skill_186_weapon skill_186_item
+POIN COMPLEX_SKILL_186
 SHORT SKL_HELP_187 SKL_COLOR_187 
 POIN skill_187_unit skill_187_class skill_187_weapon skill_187_item
+POIN COMPLEX_SKILL_187
 SHORT SKL_HELP_188 SKL_COLOR_188 
 POIN skill_188_unit skill_188_class skill_188_weapon skill_188_item
+POIN COMPLEX_SKILL_188
 SHORT SKL_HELP_189 SKL_COLOR_189 
 POIN skill_189_unit skill_189_class skill_189_weapon skill_189_item
+POIN COMPLEX_SKILL_189
 SHORT SKL_HELP_190 SKL_COLOR_190 
 POIN skill_190_unit skill_190_class skill_190_weapon skill_190_item
+POIN COMPLEX_SKILL_190
 SHORT SKL_HELP_191 SKL_COLOR_191 
 POIN skill_191_unit skill_191_class skill_191_weapon skill_191_item
+POIN COMPLEX_SKILL_191
 SHORT SKL_HELP_192 SKL_COLOR_192 
 POIN skill_192_unit skill_192_class skill_192_weapon skill_192_item
+POIN COMPLEX_SKILL_192
 SHORT SKL_HELP_193 SKL_COLOR_193 
 POIN skill_193_unit skill_193_class skill_193_weapon skill_193_item
+POIN COMPLEX_SKILL_193
 SHORT SKL_HELP_194 SKL_COLOR_194 
 POIN skill_194_unit skill_194_class skill_194_weapon skill_194_item
+POIN COMPLEX_SKILL_194
 SHORT SKL_HELP_195 SKL_COLOR_195 
 POIN skill_195_unit skill_195_class skill_195_weapon skill_195_item
+POIN COMPLEX_SKILL_195
 SHORT SKL_HELP_196 SKL_COLOR_196 
 POIN skill_196_unit skill_196_class skill_196_weapon skill_196_item
+POIN COMPLEX_SKILL_196
 SHORT SKL_HELP_197 SKL_COLOR_197 
 POIN skill_197_unit skill_197_class skill_197_weapon skill_197_item
+POIN COMPLEX_SKILL_197
 SHORT SKL_HELP_198 SKL_COLOR_198 
 POIN skill_198_unit skill_198_class skill_198_weapon skill_198_item
+POIN COMPLEX_SKILL_198
 SHORT SKL_HELP_199 SKL_COLOR_199 
 POIN skill_199_unit skill_199_class skill_199_weapon skill_199_item
+POIN COMPLEX_SKILL_199
 SHORT SKL_HELP_200 SKL_COLOR_200 
 POIN skill_200_unit skill_200_class skill_200_weapon skill_200_item
+POIN COMPLEX_SKILL_200
 SHORT SKL_HELP_201 SKL_COLOR_201 
 POIN skill_201_unit skill_201_class skill_201_weapon skill_201_item
+POIN COMPLEX_SKILL_201
 SHORT SKL_HELP_202 SKL_COLOR_202 
 POIN skill_202_unit skill_202_class skill_202_weapon skill_202_item
+POIN COMPLEX_SKILL_202
 SHORT SKL_HELP_203 SKL_COLOR_203 
 POIN skill_203_unit skill_203_class skill_203_weapon skill_203_item
+POIN COMPLEX_SKILL_203
 SHORT SKL_HELP_204 SKL_COLOR_204 
 POIN skill_204_unit skill_204_class skill_204_weapon skill_204_item
+POIN COMPLEX_SKILL_204
 SHORT SKL_HELP_205 SKL_COLOR_205 
 POIN skill_205_unit skill_205_class skill_205_weapon skill_205_item
+POIN COMPLEX_SKILL_205
 SHORT SKL_HELP_206 SKL_COLOR_206 
 POIN skill_206_unit skill_206_class skill_206_weapon skill_206_item
+POIN COMPLEX_SKILL_206
 SHORT SKL_HELP_207 SKL_COLOR_207 
 POIN skill_207_unit skill_207_class skill_207_weapon skill_207_item
+POIN COMPLEX_SKILL_207
 SHORT SKL_HELP_208 SKL_COLOR_208 
 POIN skill_208_unit skill_208_class skill_208_weapon skill_208_item
+POIN COMPLEX_SKILL_208
 SHORT SKL_HELP_209 SKL_COLOR_209 
 POIN skill_209_unit skill_209_class skill_209_weapon skill_209_item
+POIN COMPLEX_SKILL_209
 SHORT SKL_HELP_210 SKL_COLOR_210 
 POIN skill_210_unit skill_210_class skill_210_weapon skill_210_item
+POIN COMPLEX_SKILL_210
 SHORT SKL_HELP_211 SKL_COLOR_211 
 POIN skill_211_unit skill_211_class skill_211_weapon skill_211_item
+POIN COMPLEX_SKILL_211
 SHORT SKL_HELP_212 SKL_COLOR_212 
 POIN skill_212_unit skill_212_class skill_212_weapon skill_212_item
+POIN COMPLEX_SKILL_212
 SHORT SKL_HELP_213 SKL_COLOR_213 
 POIN skill_213_unit skill_213_class skill_213_weapon skill_213_item
+POIN COMPLEX_SKILL_213
 SHORT SKL_HELP_214 SKL_COLOR_214 
 POIN skill_214_unit skill_214_class skill_214_weapon skill_214_item
+POIN COMPLEX_SKILL_214
 SHORT SKL_HELP_215 SKL_COLOR_215 
 POIN skill_215_unit skill_215_class skill_215_weapon skill_215_item
+POIN COMPLEX_SKILL_215
 SHORT SKL_HELP_216 SKL_COLOR_216 
 POIN skill_216_unit skill_216_class skill_216_weapon skill_216_item
+POIN COMPLEX_SKILL_216
 SHORT SKL_HELP_217 SKL_COLOR_217 
 POIN skill_217_unit skill_217_class skill_217_weapon skill_217_item
+POIN COMPLEX_SKILL_217
 SHORT SKL_HELP_218 SKL_COLOR_218 
 POIN skill_218_unit skill_218_class skill_218_weapon skill_218_item
+POIN COMPLEX_SKILL_218
 SHORT SKL_HELP_219 SKL_COLOR_219 
 POIN skill_219_unit skill_219_class skill_219_weapon skill_219_item
+POIN COMPLEX_SKILL_219
 SHORT SKL_HELP_220 SKL_COLOR_220 
 POIN skill_220_unit skill_220_class skill_220_weapon skill_220_item
+POIN COMPLEX_SKILL_220
 SHORT SKL_HELP_221 SKL_COLOR_221 
 POIN skill_221_unit skill_221_class skill_221_weapon skill_221_item
+POIN COMPLEX_SKILL_221
 SHORT SKL_HELP_222 SKL_COLOR_222 
 POIN skill_222_unit skill_222_class skill_222_weapon skill_222_item
+POIN COMPLEX_SKILL_222
 SHORT SKL_HELP_223 SKL_COLOR_223 
 POIN skill_223_unit skill_223_class skill_223_weapon skill_223_item
+POIN COMPLEX_SKILL_223
 SHORT SKL_HELP_224 SKL_COLOR_224 
 POIN skill_224_unit skill_224_class skill_224_weapon skill_224_item
+POIN COMPLEX_SKILL_224
 SHORT SKL_HELP_225 SKL_COLOR_225 
 POIN skill_225_unit skill_225_class skill_225_weapon skill_225_item
+POIN COMPLEX_SKILL_225
 SHORT SKL_HELP_226 SKL_COLOR_226 
 POIN skill_226_unit skill_226_class skill_226_weapon skill_226_item
+POIN COMPLEX_SKILL_226
 SHORT SKL_HELP_227 SKL_COLOR_227 
 POIN skill_227_unit skill_227_class skill_227_weapon skill_227_item
+POIN COMPLEX_SKILL_227
 SHORT SKL_HELP_228 SKL_COLOR_228 
 POIN skill_228_unit skill_228_class skill_228_weapon skill_228_item
+POIN COMPLEX_SKILL_228
 SHORT SKL_HELP_229 SKL_COLOR_229 
 POIN skill_229_unit skill_229_class skill_229_weapon skill_229_item
+POIN COMPLEX_SKILL_229
 SHORT SKL_HELP_230 SKL_COLOR_230 
 POIN skill_230_unit skill_230_class skill_230_weapon skill_230_item
+POIN COMPLEX_SKILL_230
 SHORT SKL_HELP_231 SKL_COLOR_231 
 POIN skill_231_unit skill_231_class skill_231_weapon skill_231_item
+POIN COMPLEX_SKILL_231
 SHORT SKL_HELP_232 SKL_COLOR_232 
 POIN skill_232_unit skill_232_class skill_232_weapon skill_232_item
+POIN COMPLEX_SKILL_232
 SHORT SKL_HELP_233 SKL_COLOR_233 
 POIN skill_233_unit skill_233_class skill_233_weapon skill_233_item
+POIN COMPLEX_SKILL_233
 SHORT SKL_HELP_234 SKL_COLOR_234 
 POIN skill_234_unit skill_234_class skill_234_weapon skill_234_item
+POIN COMPLEX_SKILL_234
 SHORT SKL_HELP_235 SKL_COLOR_235 
 POIN skill_235_unit skill_235_class skill_235_weapon skill_235_item
+POIN COMPLEX_SKILL_235
 SHORT SKL_HELP_236 SKL_COLOR_236 
 POIN skill_236_unit skill_236_class skill_236_weapon skill_236_item
+POIN COMPLEX_SKILL_236
 SHORT SKL_HELP_237 SKL_COLOR_237 
 POIN skill_237_unit skill_237_class skill_237_weapon skill_237_item
+POIN COMPLEX_SKILL_237
 SHORT SKL_HELP_238 SKL_COLOR_238 
 POIN skill_238_unit skill_238_class skill_238_weapon skill_238_item
+POIN COMPLEX_SKILL_238
 SHORT SKL_HELP_239 SKL_COLOR_239 
 POIN skill_239_unit skill_239_class skill_239_weapon skill_239_item
+POIN COMPLEX_SKILL_239
 SHORT SKL_HELP_240 SKL_COLOR_240 
 POIN skill_240_unit skill_240_class skill_240_weapon skill_240_item
+POIN COMPLEX_SKILL_240
 SHORT SKL_HELP_241 SKL_COLOR_241 
 POIN skill_241_unit skill_241_class skill_241_weapon skill_241_item
+POIN COMPLEX_SKILL_241
 SHORT SKL_HELP_242 SKL_COLOR_242 
 POIN skill_242_unit skill_242_class skill_242_weapon skill_242_item
+POIN COMPLEX_SKILL_242
 SHORT SKL_HELP_243 SKL_COLOR_243 
 POIN skill_243_unit skill_243_class skill_243_weapon skill_243_item
+POIN COMPLEX_SKILL_243
 SHORT SKL_HELP_244 SKL_COLOR_244 
 POIN skill_244_unit skill_244_class skill_244_weapon skill_244_item
+POIN COMPLEX_SKILL_244
 SHORT SKL_HELP_245 SKL_COLOR_245 
 POIN skill_245_unit skill_245_class skill_245_weapon skill_245_item
+POIN COMPLEX_SKILL_245
 SHORT SKL_HELP_246 SKL_COLOR_246 
 POIN skill_246_unit skill_246_class skill_246_weapon skill_246_item
+POIN COMPLEX_SKILL_246
 SHORT SKL_HELP_247 SKL_COLOR_247 
 POIN skill_247_unit skill_247_class skill_247_weapon skill_247_item
+POIN COMPLEX_SKILL_247
 SHORT SKL_HELP_248 SKL_COLOR_248 
 POIN skill_248_unit skill_248_class skill_248_weapon skill_248_item
+POIN COMPLEX_SKILL_248
 SHORT SKL_HELP_249 SKL_COLOR_249 
 POIN skill_249_unit skill_249_class skill_249_weapon skill_249_item
+POIN COMPLEX_SKILL_249
 SHORT SKL_HELP_250 SKL_COLOR_250 
 POIN skill_250_unit skill_250_class skill_250_weapon skill_250_item
+POIN COMPLEX_SKILL_250
 SHORT SKL_HELP_251 SKL_COLOR_251 
 POIN skill_251_unit skill_251_class skill_251_weapon skill_251_item
+POIN COMPLEX_SKILL_251
 SHORT SKL_HELP_252 SKL_COLOR_252 
 POIN skill_252_unit skill_252_class skill_252_weapon skill_252_item
+POIN COMPLEX_SKILL_252
 SHORT SKL_HELP_253 SKL_COLOR_253 
 POIN skill_253_unit skill_253_class skill_253_weapon skill_253_item
+POIN COMPLEX_SKILL_253
 SHORT SKL_HELP_254 SKL_COLOR_254 
 POIN skill_254_unit skill_254_class skill_254_weapon skill_254_item
+POIN COMPLEX_SKILL_254
 SHORT SKL_HELP_255 SKL_COLOR_255 
 POIN skill_255_unit skill_255_class skill_255_weapon skill_255_item
-WORD $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF
+POIN COMPLEX_SKILL_255
+WORD $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF $FFFFFFFF
