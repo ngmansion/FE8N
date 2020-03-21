@@ -148,4 +148,13 @@ pulse_impl:
         HAS_SKILL
         WORD 0
 
+PUSH
+ORG 0x01a09c
+jumpToHack(double_slow)
+POP
+double_slow:
+#incbin slow.dmp
+
+
+
 ALIGN 4
