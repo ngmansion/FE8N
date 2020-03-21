@@ -1,4 +1,3 @@
-
 SKL_TBL = ADR+0
 CONTAINS_SKILL = ADR+4
 JUDGE_UNIT_FUNC = ADR+8
@@ -11,6 +10,9 @@ CHECK_ITEM_FUNC = ADR+20
 @
 .thumb
 @ユニットデータとスキルIDから、発動可能かを判定する
+@I	r0 = ベースアドレス
+@	r1 = スキルID
+@O	-
     cmp r0, #0
     bne main
     bx lr
@@ -18,6 +20,14 @@ main:
     push {r4, r5, lr}
     mov r4, r0
     mov r5, r1
+@ダミーユニットチェック
+    ldr r0, [r4, #0]
+    cmp r0, #0
+    beq ret
+    ldr r0, [r4, #4]
+    cmp r0, #0
+    beq ret
+    
     bl impl
     cmp r0, #1
     beq ret
@@ -30,32 +40,25 @@ ret:
 
 impl:
     push {lr}
-
-    ldr r0, [r4, #0]
-    cmp r0, #0
-    beq return
-    ldr r0, [r4, #4]
-    cmp r0, #0
-    beq return
 @書チェック
     mov r0, r4
     mov r1, r5
     bl containsSkill
     cmp r0, #1
-    beq return
+    beq true
 @ユニットデータチェック
     mov r0, r4
     mov r1, r5
     bl judgeSkillInUnitData
     cmp r0, #1
-    beq return
+    beq true
 @リストチェック
     bl judgeList
+@    cmp r0, #1
+@    beq true
 @武器レベルチェック
 @    bl JudgeWpLv
-@    cmp r0, #0
-@    bne true
-return:
+true:
     pop {pc}
 
 ComplexSkill: @リストチェック
