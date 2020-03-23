@@ -5,11 +5,9 @@ OptionByte2 = 0x0202BD2D
     sub sp, #0x10
     mov r7, sp
 
-    bl GetOptionByte2
-    ldrb r0, [r0]
-    mov r1, #0x80
-    tst r0, r1
-    bne return
+    bl GetOptionByte10  @オリジナルは80
+    cmp r0, #1
+    beq return
 
     bl Always
 
@@ -75,11 +73,6 @@ CacheFunc:
 
 IsDanger:
         push {lr}
-        bl GetOptionByte2
-        ldrb r0, [r0]
-        mov r1, #0x10
-        tst r0, r1
-        bne falseDanger
 
         ldrb r0, [r4, #0xB]
         mov r1, #0x80
@@ -89,6 +82,11 @@ IsDanger:
         bl GetLiteModeFlag
         cmp r0, #1
         beq heavyDanger
+
+        bl GetOptionByte80      @オリジナルは10
+        cmp r0, #0
+        beq falseDanger
+
         bl JUDGE_DANGER_LITE
         b endDanger
     heavyDanger:
@@ -360,8 +358,19 @@ FinishedDrawing:
 GetWarningCache:
     ldr r0, WarningCache
     bx lr
-GetOptionByte2:
+GetOptionByte80:
     ldr r0, =OptionByte2
+    ldrb r0, [r0]
+    mov r1, #0x80
+    and r0, r1
+    lsr r0, r0, #7
+    bx lr
+GetOptionByte10:
+    ldr r0, =OptionByte2
+    ldrb r0, [r0]
+    mov r1, #0x10
+    and r0, r1
+    lsr r0, r0, #4
     bx lr
 
 GetLiteModeFlag:
