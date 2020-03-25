@@ -64,15 +64,15 @@ RETURN:
 
 Trample:
         push {lr}
-        ldr r0, [r4]
-        ldr r1, [r4, #4]
-        ldr r0, [r0, #40]
-        ldr r1, [r1, #40]
-        orr r0, r1
-        mov r1, #0x1C
-        lsl r1, r1, #8  @0x1C00
-        tst r0, r1
-        beq endTrample  @自分が歩兵なら終了
+@        ldr r0, [r4]
+@        ldr r1, [r4, #4]
+@        ldr r0, [r0, #40]
+@        ldr r1, [r1, #40]
+@        orr r0, r1
+@        mov r1, #0x1C
+@        lsl r1, r1, #8  @0x1C00
+@        tst r0, r1
+@        beq endTrample  @自分が歩兵なら終了
 
         ldr r0, [r5]
         ldr r1, [r5, #4]
@@ -329,9 +329,9 @@ BladeSessionOne:
     resultBladeSession:
         mov r2, #3
         mul r2, r7
-        cmp r2, #9
+        cmp r2, #7
         ble limitBladeSession
-        mov r2, #9
+        mov r2, #7
     limitBladeSession:
         mov r1, #90
         ldrh r0, [r4, r1]
@@ -647,7 +647,7 @@ Fort:
         mov r1, r4
         add r1, #90
         ldrh r0, [r1]
-        sub r0, #2
+        sub r0, #1
         bge jumpFort
         mov r0, #0
     jumpFort:
@@ -656,7 +656,7 @@ Fort:
         mov r1, r4
         add r1, #92
         ldrh r0, [r1]
-        add r0, #6
+        add r0, #3
         strh r0, [r1] @自分
         
         mov r0, #1
@@ -678,13 +678,13 @@ shisen_A:	@自分死線
         mov r1, r4
         mov r0, #90
         ldrh r0, [r1, r0]
-        add r0, #10
+        add r0, #5
         add r1, #90
         strh r0, [r1] @自分
         mov r1, r4
         mov r0, #94
         ldrh r0, [r1, r0]
-        add r0, #10
+        add r0, #5
         add r1, #94
         strh r0, [r1] @自分
         mov r0, #1

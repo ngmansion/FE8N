@@ -79,6 +79,10 @@ battle_down:
   POIN hasDoubleLion
   POIN hasSavageBlow
   POIN fodes_func
+  WORD LungeID
+  WORD HitAndRunID
+  WORD KnockBackID
+  
 
 HasLunge:
     HAS_COMBAT

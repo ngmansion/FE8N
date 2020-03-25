@@ -262,7 +262,7 @@ Shisen_B:	@相手強化
         mov r1, r6
         add r1, #90
         ldrh r0, [r1]
-        add r0, #10
+        add r0, #5
         strh r0, [r1] @相手
     endShisen:
         pop {pc}
