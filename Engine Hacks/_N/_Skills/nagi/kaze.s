@@ -9,21 +9,11 @@ STR_ADR = (67)	@書き込み先(AI1カウンタ)
     cmp r1, #0
     beq cancel @射程外
 Skip:
-    ldr r0, =0x0203a4d0
-    ldrh r0, [r0]
-    mov r1, #0x20
-    and r0, r1
-    bne normal @闘技場チェック
-
-    bl WindSweep
+    bl JudgeCancel
     cmp r0, #1
     beq cancel
 
-@    bl WaryFighter
-@    cmp r0, #1
-@    beq cancel
 
-normal:
     mov r1, r8
     ldrb r0, [r1, #0]
     cmp r0, #255
@@ -34,6 +24,39 @@ cancel:
 end:
     ldr r0, =0x0802a84a
     mov pc, r0
+
+
+JudgeCancel:
+        push {lr}
+        ldr r0, =0x0203a4d0
+        ldrh r0, [r0]
+        mov r1, #0x20
+        and r0, r1
+        bne falseCancel @闘技場チェック
+
+        ldrh r0, [r4, #0]
+        mov r1, #0xFF
+        and r0, r1
+        cmp r0, #181
+        beq trueCancel
+
+        bl WindSweep
+        cmp r0, #1
+        beq endCancel
+
+@       bl WaryFighter
+@       cmp r0, #1
+@       beq cancel
+
+    falseCancel:
+        mov r0, #0
+        .short 0xE000
+    trueCancel:
+        mov r0, #1
+    endCancel:
+        pop {pc}
+
+
 
 DistantCounter:
         push {lr}

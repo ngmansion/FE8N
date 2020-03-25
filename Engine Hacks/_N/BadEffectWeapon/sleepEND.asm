@@ -8,7 +8,7 @@
 	cmp	r0, #2
 	beq	$0802b836
 	cmp	r0, #11
-	beq	$0802b836
+//	beq	$0802b836
 	cmp	r0, #13
 	bne	$0802b860
 	ldr	r4, [$0802b85c]
