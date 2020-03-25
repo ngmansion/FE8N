@@ -1,6 +1,9 @@
 ////フレキシブルターンは、他のパッチに吸収される
 PUSH
 
+ORG 0x02ade6
+SHORT 0x46C0        //防御0をrevert
+
 ORG	0x17680
 #incbin "FlexibleTurn.gba"
 
