@@ -817,7 +817,7 @@ Ace:
         pop {pc}
 
 
-DEFENDER_DAMAGE = (10)
+DEFENDER_DAMAGE = (6)
 
 Savior:
         push {lr}
