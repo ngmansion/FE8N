@@ -50,13 +50,16 @@ WaryFighter:
 
 divide:
     mov r0, r6
-    asr r0, r0, #1
-    bne not_div
+    lsl r1, r0, #1
+    add r0, r1
+    mov r1, #5
+    swi #6      @4割
+    cmp r0, #0
+    bgt not_div
     mov r0, #1
 not_div:
     mov r6, r0
     bx lr
-    pop {pc}
 
 HasGodShield:
 ldr r2, addr+0

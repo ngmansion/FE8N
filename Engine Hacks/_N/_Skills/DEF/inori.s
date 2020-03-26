@@ -189,7 +189,7 @@ Deflect:
 		cmp r0, #1
 		beq falseDeflect	@見切り持ちなら終了
 		ldrh r0, [r4, #4]
-		asr r0, r0, #1
+		bl divide4
 		strh r0, [r4, #4]
 		mov r0, #1
 		.short 0xE000
@@ -253,10 +253,7 @@ ouiShield:
 	cmp	r0, #0
 	beq	falseShield
 	ldrh	r0, [r4, #4]
-	asr	r0, r0, #1
-	bne jumpShield
-	mov r0, #1
-jumpShield:
+	bl divide4
 	strh	r0, [r4, #4]
 	
     mov r0, r8
@@ -304,10 +301,7 @@ HolyShield:
 	cmp	r0, #0
 	beq	falseHoly
 	ldrh	r0, [r4, #4]
-	asr	r0, r0, #1
-	bne jumpHoly
-	mov r0, #1
-jumpHoly:
+	bl divide4
 	strh	r0, [r4, #4]
 	
     mov r0, r8
@@ -494,6 +488,19 @@ Xeno:
 		mov r0, #0
 	endXeno:
 		bx lr
+
+
+
+divide4:
+        lsl r1, r0, #1
+        add r0, r1
+        mov r1, #5
+        swi #6      @4割
+        cmp r0, #0
+        bgt not_div
+        mov r0, #1
+    not_div:
+        bx lr
 
 HAS_BIG_SHIELD_FUNC = (adr+0)
 HAS_HOLY_SHIELD_FUNC = (adr+4)
