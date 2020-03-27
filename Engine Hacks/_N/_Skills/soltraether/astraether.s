@@ -99,11 +99,8 @@ jihad_impl:
     ldsh r0, [r5, r0]
     cmp r0, #0
     ble not_dec @ノーダメ以下はなし
-    mov r1, #0
-loop_three:
-    add r1, #1
-    sub r0, #3
-    bgt loop_three
+    mov r1, #3
+    swi #6      @1/3
     strh r1, [r5, #4]
 not_dec:
     mov r0, #4
@@ -376,7 +373,6 @@ jump:
     mov r0, r8
     ldrb r0, [r0, #0x17] @守備
 
-@    bl divEight @8割減
     lsl r1, r0, #31
     lsr r1, r1, #31
     asr r0, r0, #1 @半減
@@ -396,18 +392,6 @@ jump:
         .short 0xF800
     
     b sol_crt
-
-divEight:
-    lsl r0, r0, #2
-    mov r1, #0
-loop_eight:
-    sub r0, #5
-    blt eight
-    add r1, #1
-    b loop_eight
-eight:
-    mov r0, r1
-    bx lr
 
 
 YOUKOU:
