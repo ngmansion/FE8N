@@ -1,6 +1,7 @@
 
 
 #define SOL_WORK_ADDRESS $0203ACAC 
+#define SOL_BIT (6)     //12h-無理 11-10 ?? 9-7reserved 6-5?? 4reserved
 
 //code
 ALIGN 4
@@ -34,26 +35,24 @@ WORD	0x46874800
 POIN	taiyo4
 
 
-ORG 0x02b690
-SHORT 0x0291 0x0a89
+ORG 0x02b690   //revert
+SHORT 0x0351 0x0b49
 
-ORG 0x02b720
-SHORT 0x0291 0x0a89
+ORG 0x02b720   //revert
+SHORT 0x0351 0x0b49
 
-//ORG 0x02b740	//motikae
-//SHORT 0x0280 0x0a80
 
-ORG 0x05943c
-   BL(0x89310)  //sol_divide_anim_on
-ORG 0x0594a2
-   BL(0x89310)  //sol_divide_anim_on
-
-ORG 0x0839ea
+ORG 0x05943a
    SHORT 0x46C0
-   BL(0x89318)  //sol_divide_anim_off
+   BL(0x89310)  //sol_divide_anim_on
+ORG 0x0594a0
+   SHORT 0x46C0
+   BL(0x89310)  //sol_divide_anim_on
+
+ORG 0x0839e8    //revert
+   SHORT 0x1c30 0x305d 0x2100 0x5641
 ORG 0x083a1c
-   SHORT 0x46C0
-   BL(0x89318)  //sol_divide_anim_of
+   jumpToHack(sol_divide_anim_off)
 
 ORG		0x531D8
 WORD	0x468F4900
@@ -106,16 +105,18 @@ taiyo4:
 	#incbin "taiyo44.dmp"
     WORD SOL_WORK_ADDRESS
     POIN hasSOL
-    POIN 0
+    WORD SOL_BIT
     POIN set_skillanime_attack
     POIN hasNihil
 
 sol_divide_anim_on:
 #incbin sol_divide_anim_on.dmp
+WORD SOL_BIT
 ALIGN 4
 
 sol_divide_anim_off:
 #incbin sol_divide_anim_off.dmp
+WORD SOL_BIT
 ALIGN 4
 
 hasSOL:

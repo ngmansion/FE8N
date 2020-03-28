@@ -2,7 +2,7 @@
 
 MAX_BATTLE_NUM = (24)
 HAS_SOL_FUNC = (adr+4)
-
+SOL_BIT = (adr+8)
 SET_SKILLANIME_ATK_FUNC = (adr+12)
 HAS_NIHIL_FUNC = (adr+16)
 
@@ -94,7 +94,8 @@ taiyo:
     ldr r0, [r2]
 
     mov r3, #0x80
-    lsl r3, #12      @anim_offでは#16~12まで保存
+    ldr r1, SOL_BIT
+    lsl r3, r1
     orr r0, r3
     str r0, [r2]
 

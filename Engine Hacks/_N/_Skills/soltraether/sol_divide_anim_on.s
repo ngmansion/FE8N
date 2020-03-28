@@ -1,8 +1,12 @@
 .thumb
 
+SOL_BIT = (addr+0)
 
-        ldrb r2, [r7, #2]
-        mov r3, #0x8      @anim_offでは#16~12まで保存(ここでは12)
+        mov r3, #0x80
+        ldr r2, SOL_BIT
+        lsl r3, r2
+
+        ldrh r2, [r7, #0]
         tst r2, r3
         beq normal
 
