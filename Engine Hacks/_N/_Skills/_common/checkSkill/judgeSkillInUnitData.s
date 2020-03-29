@@ -23,7 +23,12 @@ jumpUnit: @自軍以外チェック
     ldrb r1, [r4, #0xB]
     mov r0, #0xC0
     and r0, r1
-    beq nonUnit
+    bne elseUnit
+
+    ldrb r0, [r4, #8]
+    cmp r0, #20
+    ble nonUnit     @レベル20以下なら終了
+elseUnit:
     ldr r0, [r4]
     add r0, #0x31
     ldrb r0, [r0]

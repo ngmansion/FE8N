@@ -13,7 +13,27 @@ MAX_SKILL_NUM = (255)
 	push	{r4, r5, r6, r7, lr}
 @画像
 	mov	r4, #0
+	bl Initialize
 
+	bl SkillBook
+
+@	bl WpLv	@武器レベル
+
+	bl Unit
+
+	bl Class
+
+	bl Ability
+
+	bl Weapon
+
+	bl Item
+	
+	pop	{r4, r5, r6, r7, pc}
+
+
+Initialize:
+	push {lr}
 	bl getEquipmentPositionData
 	ldr r0, [r0]
 	
@@ -46,22 +66,7 @@ loopE:
 	str	r5, [r7, #4]
 	str	r5, [r7, #8]
 	str	r5, [r7, #12]
-
-	bl SkillBook
-
-@	bl WpLv	@武器レベル
-
-	bl Unit
-
-	bl Class
-
-	bl Ability
-
-	bl Weapon
-
-	bl Item
-	
-	pop	{r4, r5, r6, r7, pc}
+	pop {pc}
 
 SkillBook:
 		push {lr}
@@ -140,9 +145,14 @@ jumpUnit1:
 
 		ldr	r4, =0x02003BFC
 		ldr	r4, [r4, #12]
-		ldrb	r0, [r4, #0xB]
-		lsr	r0, r0, #6
-		beq jumpUnit2 @自軍外のみ
+		ldrb r1, [r4, #0xB]
+		mov r0, #0xC0
+		and r0, r1
+		bne elseUnit
+		ldrb r0, [r4, #8]
+		cmp r0, #20
+		ble jumpUnit2     @レベル20以下なら終了
+	elseUnit:
 		ldr	r4, [r4]
 		add	r4, #0x31
 		ldrb	r4, [r4]
