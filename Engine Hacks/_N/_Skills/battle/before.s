@@ -109,6 +109,7 @@ OtherSideSkill:
         bl Kishin
         bl Kongou
         bl Hien
+        bl Meikyou
         pop {pc}
     DefSkill:
         bl DistantDef
@@ -118,6 +119,7 @@ OtherSideSkill:
         bl KishinR
         bl KongouR
         bl HienR
+        bl MeikyouR
         pop {pc}
 
 CriticalUp:
@@ -1035,6 +1037,11 @@ KishinR:
 
 Kongou:
         push {lr}
+        mov r0, r5
+        bl IsMagic
+        cmp r0, #1
+        beq endKongou
+
         mov r0, r4
         mov r1, #0
         bl HasKongou
@@ -1049,6 +1056,11 @@ Kongou:
         pop {pc}
 KongouR:
         push {lr}
+        mov r0, r5
+        bl IsMagic
+        cmp r0, #1
+        beq endKongou
+
         mov r0, r4
         mov r1, #0
         bl HasKongouR
@@ -1057,10 +1069,65 @@ KongouR:
     
         mov r1, #92
         ldrh r0, [r4, r1]
-        add r0, #3
+        add r0, #6
         strh r0, [r4, r1]
         b endKongou
-	
+
+Meikyou:
+        push {lr}
+        mov r0, r5
+        bl IsMagic
+        cmp r0, #0
+        beq endMeikyou
+
+        mov r0, r4
+        mov r1, #0
+        bl HasMeikyou
+        cmp r0, #0
+        beq endMeikyou
+    
+        mov r1, #92
+        ldrh r0, [r4, r1]
+        add r0, #10
+        strh r0, [r4, r1]
+    endMeikyou:
+        pop {pc}
+MeikyouR:
+        push {lr}
+        mov r0, r5
+        bl IsMagic
+        cmp r0, #0
+        beq endMeikyou
+
+        mov r0, r4
+        mov r1, #0
+        bl HasMeikyouR
+        cmp r0, #0
+        beq endMeikyou
+    
+        mov r1, #92
+        ldrh r0, [r4, r1]
+        add r0, #6
+        strh r0, [r4, r1]
+        b endMeikyou
+
+IsMagic:
+        add r0, #80
+        ldrb r0, [r0]
+        cmp r0, #4
+        beq trueMagic
+        cmp r0, #5
+        beq trueMagic
+        cmp r0, #6
+        beq trueMagic
+        cmp r0, #7
+        beq trueMagic
+        mov r0, #0
+        bx lr
+    trueMagic:
+        mov r0, #1
+        bx lr
+
 Hien:
         push {lr}
         mov r0, r4
@@ -1158,7 +1225,9 @@ WARYFIGHTER_ADDR = (addr+64)
 @FLY_E_ADDR = (addr+68)
 @ARMOR_E_ADDR = (addr+72)
 @HORSE_E_ADDR = (addr+76)
-@MONSTER_E_ADDR = (addr+80)
+HasMeikyou:
+    ldr r3, (addr+80)
+    mov pc, r3
 HIEN_ADDR = (addr+84)
 ACE_ADDR = (addr+88)
 KONSHIN_ADDR = (addr+92)
@@ -1169,7 +1238,9 @@ TRAMPLE_ADDR = (addr+108)
 HEARTSEEKER_ADDR = (addr+112)
 DAUNT_ADDR = (addr+116)
 HAS_BOND_ADDR = (addr+120)
-@HAS_ATROCITY_ADDR = (addr+124)
+HasMeikyouR:
+    ldr r3, (addr+124)
+    mov pc, r3
 HAS_KISHIN_R = (addr+128)
 HAS_KONGOU_R = (addr+132)
 HAS_HIEN_R = (addr+136)
