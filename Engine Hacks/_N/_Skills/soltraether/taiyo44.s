@@ -45,6 +45,15 @@ judge:
     cmp r0, #2
     beq rizaia
 
+    ldr r0, [r6]
+    ldr r0, [r0]
+    lsl r0, r0, #13
+    lsr r0, r0, #13
+    mov r1, #128
+    lsl r1, r1, #9
+    and r0, r1
+    bne false       @奥義発動済み
+
     mov r0, r4
         ldr r1, HAS_NIHIL_FUNC
         mov lr, r1
