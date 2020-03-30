@@ -9,6 +9,7 @@ ECRIPSE_ADR = (adr+16)
 JIHAD_ADR = (adr+20)
 SET_SKILLANIME_ATK_FUNC = (adr+24)
 HAS_NIHIL_FUNC = (adr+28)
+HAS_RAPTURE =  (adr+36)
 
 .thumb
 @.org	0802b484
@@ -43,14 +44,19 @@ start:
 	cmp r0, #1
 	beq return
 	
+	bl RupturedSky  @破天
+	cmp r0, #1
+	beq return
+
+	bl impale_impl @撃破
+	cmp r0, #1
+	beq return
+
 	bl ecripse_impl @月食
 	cmp r0, #1
 	beq return
 	
-	bl impale_impl @撃破
-	cmp r0, #1
-	beq return
-	
+
 	b return
 
 return:
@@ -63,6 +69,50 @@ return:
 nonmax:
     ldr r0, =0x0802b48e
     mov pc, r0
+
+
+RupturedSky:
+    push {lr}
+@ユニットチェック
+    mov r0, r7
+        ldr r1, HAS_RAPTURE        @撃破
+        mov lr, r1
+        .short 0xF800
+    cmp r0, #0
+    beq falseRapture
+@奥義目印
+    ldrb r0, [r7, #21]	@技
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq falseRapture
+
+    mov r0, r8
+    add r0, #90
+    ldrh r0, [r0]
+
+    mov r1, #3
+    mul r0, r1
+    mov r1, #10
+    swi #6      @3割
+
+    mov r1, #4
+    ldsh r1, [r5, r1] @ ダメージ
+    add r0, r0, r1
+    strh r0, [r5, #4]
+    
+    mov r0, r7
+    ldr r1, HAS_RAPTURE        @撃破
+    ldr r1, [r1, #12]
+        ldr r2, SET_SKILLANIME_ATK_FUNC
+        mov lr, r2
+        .short 0xF800
+    
+    mov r0, #1
+    .short 0xE000
+falseRapture:
+    mov r0, #0
+    pop {pc}
 
 jihad_impl:
 @ジハド
