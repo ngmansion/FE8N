@@ -904,16 +904,20 @@ CloseDef:
 
 koroshi:
         push {lr}
+        mov r0, #83
+        ldsb r0, [r4, r0]
+        cmp r0, #0
+        blt falseKoroshi
+
         bl breaker_impl
         cmp r0, #0
         beq falseKoroshi
     gotKoroshi:
         bl setKoroshi
         mov r0, #1
-        b endKoroshi
+        .short 0xE000
     falseKoroshi:
         mov r0, #0
-    endKoroshi:
         pop {pc}
         
     setKoroshi:
