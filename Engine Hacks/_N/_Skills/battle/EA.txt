@@ -36,7 +36,7 @@ battle_before:
     POIN 0
     POIN 0
     POIN 0
-    POIN 0
+    POIN hasWardingBlow
     POIN hasDartingBlow
     POIN hasResolve
     POIN hasPush
@@ -47,7 +47,7 @@ battle_before:
     POIN HasHeartseeker
     POIN HasDaunt
     POIN hasBond
-    POIN 0
+    POIN HasWardingStance
     POIN HasFierceStance
     POIN HasSteadyStance
     POIN HasDartingStance
@@ -106,6 +106,9 @@ HasSteadyStance:
 HasDartingStance:
     HAS_NIHIL
     WORD DartingStanceID
+HasWardingStance:
+    HAS_NIHIL
+    WORD WardingStanceID
 
 HasCriticalUp:
     HAS_NIHIL
@@ -178,7 +181,10 @@ hasArmoredBlow:
 hasDartingBlow:
     HAS_SKILL
     WORD DartingBlowID
-
+hasWardingBlow:
+    HAS_SKILL
+    WORD WardingBlowID
+    
 hasMonsterBlast:
     HAS_COMBAT
     WORD MonsterBlastID
