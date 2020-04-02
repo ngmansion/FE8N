@@ -110,6 +110,7 @@ OtherSideSkill:
         bl Kongou
         bl Hien
         bl Meikyou
+        bl Charge
         pop {pc}
     DefSkill:
         bl DistantDef
@@ -779,6 +780,25 @@ CheckXY:
         mov r0, #0
         bx lr
 
+GetWalked:
+        mov r1, r0
+        ldr r2, =0x0202be44
+        ldrb r0, [r1, #16]
+        ldrb r3, [r2, #0]
+        sub r0, r0, r3
+        bge jump1Walked
+        neg r0, r0  @絶対値取得
+    jump1Walked:
+
+        ldrb r1, [r1, #17]
+        ldrb r2, [r2, #2]
+        sub r2, r1, r2
+        bge jump2Walked
+        neg r2, r2  @絶対値取得
+    jump2Walked:
+        add r0, r0, r2
+        bx lr
+
 Get_Status:
 	ldr r1, =0x08019108
 	mov pc, r1
@@ -1003,7 +1023,30 @@ Konshin:
     falseKonshin:
         mov r0, #0
         pop {pc}
-    
+
+Charge:
+        push {lr}
+        bl GetDistance
+        ldrb r0, [r0]
+        cmp r0, #1
+        bgt endCharge       @遠距離は無効
+        mov r0, r4
+        mov r1, #0
+        bl HAS_CHARGE
+        cmp r0, #0
+        beq endCharge
+        
+        mov r0, r4
+        bl GetWalked
+        lsl r0, #1
+
+        mov r1, #90
+        ldrh r2, [r4, r1]
+        add r2, r0
+        strh r2, [r4, r1] @自分
+    endCharge:
+        pop {pc}
+
 Kishin:
         push {lr}
         mov r0, r4
@@ -1226,7 +1269,9 @@ SHIELD_SESSION_ADDR = (addr+52)
 HAS_AVOIDUP_ADDR = (addr+56)
 HAS_CRITICALUP_ADDR = (addr+60)
 WARYFIGHTER_ADDR = (addr+64)
-@FLY_E_ADDR = (addr+68)
+HAS_CHARGE:
+    ldr r2, addr+68
+    mov pc, r2
 @ARMOR_E_ADDR = (addr+72)
 @HORSE_E_ADDR = (addr+76)
 HasMeikyou:

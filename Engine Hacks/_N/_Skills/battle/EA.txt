@@ -33,7 +33,7 @@ battle_before:
     POIN HasAvoidUp
     POIN HasCriticalUp
     POIN waryFighter_hasSkill
-    POIN 0
+    POIN HAS_CHARGE
     POIN 0
     POIN 0
     POIN hasWardingBlow
@@ -227,4 +227,7 @@ hasFort:
     HAS_SKILL
     WORD FortID
 
+HAS_CHARGE:
+    HAS_SKILL
+    WORD ChargingStrikeID
 
