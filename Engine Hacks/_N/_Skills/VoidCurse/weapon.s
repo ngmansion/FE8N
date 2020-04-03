@@ -56,12 +56,22 @@ Wizard:
         mov r1, #2
         and r0, r1
         cmp r0, #0
-        beq endWizard   @魔法ではない
+        beq endWizard   @攻撃魔法ではない
+
+        mov r0, #80
+        ldrb r0, [r7, r0]
+        add r0, #40
+
+        ldrb r0, [r7, r0]
+        cmp r0, #0
+        bgt endWizard   @経験値が既に1以上
 
         mov r0, r7
         mov r1, #0
         bl HAS_WIZARD
+        .short 0xE000
     endWizard:
+        mov r0, #0
         pop {pc}
 
 HAS_WIZARD:
