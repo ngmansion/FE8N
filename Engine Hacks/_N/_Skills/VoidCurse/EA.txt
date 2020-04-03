@@ -20,6 +20,7 @@ HasVoidCurse:
 
 void_curse_weapon:
 #incbin weapon.dmp
+POIN HasMasterWizard
 ALIGN 4
 
 

@@ -162,3 +162,4 @@
 #define WardingBlowID 165 //0xA5 明鏡の一撃
 #define WardingStanceID 166 //0xA6 明鏡の構え
 #define ChargingStrikeID 167 //0xA7 突進
+#define MasterWizardID 168 //0xA8 魔究者

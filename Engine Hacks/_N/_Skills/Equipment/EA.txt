@@ -1,0 +1,18 @@
+
+PUSH
+
+ORG 0x0164c8
+jumpToHack(equipment_wizard)
+
+POP
+
+ALIGN 4
+equipment_wizard:
+#incbin main.dmp
+POIN HasMasterWizard
+
+
+HasMasterWizard:
+    HAS_NIHIL
+    WORD MasterWizardID
+

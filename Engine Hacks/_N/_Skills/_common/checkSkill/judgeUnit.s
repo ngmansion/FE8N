@@ -150,12 +150,8 @@ GetWeapon:
         ldr r1, =0x0203a568
         cmp r4, r1
         beq notWeapon
-        push {lr}
-            mov r0, r4
-            ldr r1, =0x080168d0
-            mov lr, r1
-            .short 0xF800
-        pop {pc}
+        mov r0, #0
+        bx lr
     notWeapon:
         mov r1, #74
         ldrh r0, [r4, r1]
