@@ -218,11 +218,17 @@ endFlower:
 
 FallenStar:
 		push {lr}
-    	mov r0, r7
+		mov r0, #48
+		ldrb r0, [r7, r0]
+		cmp r0, #0
+		beq endFallenStar
+
+		mov r0, r7
 		mov r1, #0
 		bl HasFallenStar
-    	cmp r0, #0
-    	beq endFallenStar
+		cmp r0, #0
+		beq endFallenStar
+		
 		mov	r1, r7
 		add	r1, #111
 		mov	r0, #0x18		@@状態異常(5攻撃,6守備,7必殺,8回避)

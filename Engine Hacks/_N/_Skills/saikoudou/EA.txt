@@ -100,7 +100,6 @@ POP
 remove_impl:
 #incbin remove.dmp
 POIN hasRemove
-POIN hasGoodyBasket
 
 #else
 
@@ -119,11 +118,14 @@ pulse_impl:
 
     odorero:
         #incbin "main.dmp"
-        POIN 0
+        POIN HAS_HURRY
         POIN hasGaleforce
         POIN hasLifetaker
         POIN hasCantoPlus
         POIN hasGaleCause
+        POIN HAS_ALERT_STANCE
+        POIN HAS_DEFENSIVE_STANCE
+        POIN HAS_CATNAP
 
     hasRagingStorm:
         HAS_COMBAT
@@ -143,10 +145,18 @@ pulse_impl:
     hasCantoPlus:
         HAS_SKILL
         WORD CantoPlusID
-
-    hasGoodyBasket:
+    HAS_HURRY:
         HAS_SKILL
-        WORD 0
+        WORD HurryID
+    HAS_ALERT_STANCE:
+        HAS_SKILL
+        WORD AlertStanceID
+    HAS_DEFENSIVE_STANCE:
+        HAS_SKILL
+        WORD DefensiveStanceID
+    HAS_CATNAP:
+        HAS_SKILL
+        WORD CatnapID
 
 PUSH
 ORG 0x01a09c
