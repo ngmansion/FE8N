@@ -14,8 +14,9 @@ nagi_kaze:
   #incbin kaze.dmp
   POIN hasWindsweep
   POIN waryFighter_hasSkill
-  WORD DISTANT_ITEM_EFFECT_ID
+  WORD DISTANT_COUNTER_ITEM_EFFECT_ID
   POIN HAS_DISTANT_COUNTER
+  WORD DISTANT_COUNTER_INVALID_WEAPON_TYPE
 
 counter_effect:
   #incbin effect.dmp

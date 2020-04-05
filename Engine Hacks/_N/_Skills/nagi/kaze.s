@@ -70,17 +70,18 @@ DistantCounter:
         ldrb r0, [r0, #11]
         ldrb r1, [r5, #11]
         cmp r0, r1
-        beq falseWaryFighter    @r5は攻撃者なので終了
+        beq falseDistant    @r5は攻撃者なので終了
 
         ldrh r0, [r4, #0]
         bl GET_ITEM_EFFECT
-        ldr r1, DISTANT_ITEM_EFFECT_ID
+        ldr r1, DISTANT_COUNTER_ITEM_EFFECT_ID
         cmp r0, r1
         beq skipDistant
 
         ldrh r0, [r4, #0]
         bl GET_WEAPON_TYPE
-        cmp r0, #0x02
+        ldr r1, DISTANT_COUNTER_INVALID_WEAPON_TYPE
+        cmp r0, r1
         beq falseDistant        @斧は終了
     skipDistant:
 
@@ -149,11 +150,13 @@ hasWaryFighter:
 ldr r2, addr+4
 mov pc, r2
 
-DISTANT_ITEM_EFFECT_ID = addr+8
+DISTANT_COUNTER_ITEM_EFFECT_ID = addr+8
 
 HAS_DISTANT_COUNTER:
 ldr r2, addr+12
 mov pc, r2
+
+DISTANT_COUNTER_INVALID_WEAPON_TYPE = addr+16
 
 .align
 .ltorg
