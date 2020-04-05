@@ -7,6 +7,13 @@ ICON_POS = (0x0202F86)
     cmp r0, r1
     bne END             @アイテム選択なら終わり？
 
+    mov r0, r8
+    add r0, #72
+    ldrh r0, [r0]
+    bl GetWeaponType
+    cmp r0, #8
+    bgt END             @武器以外なら終わり
+
         bl DrawWindow
 
         bl arrow_reset_func
@@ -142,6 +149,17 @@ UnitDataFunc:
         .short 0xD001
         bl SetSkill
     jumpUnit:
+
+        ldrb r0, [r4, #8]
+        cmp r0, #20
+        ble jumpUnit2     @レベル20以下なら終了
+        ldr r0, [r4]
+        add r0, #0x31
+        ldrb r0, [r0]
+        cmp r0, #0
+        .short 0xD001
+        bl SetSkill
+    jumpUnit2:
         pop {pc}	
 
 GatherListWeapon:
