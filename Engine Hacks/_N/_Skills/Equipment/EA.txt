@@ -4,6 +4,10 @@ PUSH
 ORG 0x0164c8
 jumpToHack(equipment_wizard)
 
+ORG 0x01658c
+BYTE $00 $49 $8F $46
+POIN equipment_wizard_staff
+
 POP
 
 ALIGN 4
@@ -12,6 +16,9 @@ equipment_wizard:
 POIN HAS_WIZARD
 POIN HAS_ARMS
 
+equipment_wizard_staff:
+#incbin staff.dmp
+POIN HAS_WIZARD
 
 HAS_WIZARD:
     HAS_NIHIL

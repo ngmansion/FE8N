@@ -93,11 +93,13 @@ Arms:
         pop {pc}
 
 D_MAGIC = (0x02)
+D_STAFF = (0x04)
+D_MAGIC_AND_STAFF = (0x06)
 
 Wizard:
         push {lr}
         ldr r0, [r5, #8]
-        mov r1, #D_MAGIC
+        mov r1, #D_MAGIC_AND_STAFF
         and r0, r1
         beq falseWizard         @魔法じゃない
 
