@@ -5,15 +5,26 @@ PUSH
 ORG 0x02a834
 	jumpToHack(nagi_kaze)
 
+ORG 0x058fe0
+	jumpToHack(counter_effect)
+
 POP
 
 nagi_kaze:
   #incbin kaze.dmp
   POIN hasWindsweep
   POIN waryFighter_hasSkill
-  WORD DISTANT_ITEM_EFFECT_ID
-  POIN hasNihil
+  POIN HAS_DISTANT_COUNTER
+
+counter_effect:
+  #incbin effect.dmp
+  WORD DISTANT_COUNTER_EFFECT_ID
 
 hasWindsweep:
  HAS_COMBAT
  WORD WindsweepID
+
+HAS_DISTANT_COUNTER:
+ HAS_NIHIL
+ WORD DistantCounterID
+

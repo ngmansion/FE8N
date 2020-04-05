@@ -157,15 +157,15 @@
 #define HitAndRunID 160 //0xA0 一撃離脱
 #define KnockBackID 161 //0xA1 叩き込み
 #define DiamondAxeID 162 //0xA2 金剛斧
-#define DistantCounterID 163 //0xA3 遠距離反撃(表示のみ)
+#define DistantCounterID 163 //0xA3 遠距離反撃
 #define RupturedSkyID 164 //0xA4 破天
 #define WardingBlowID 165 //0xA5 明鏡の一撃
 #define WardingStanceID 166 //0xA6 明鏡の構え
 #define ChargingStrikeID 167 //0xA7 突進
 #define MasterWizardID 168 //0xA8 魔究者
-#define HurryID 169 //0xA9 全力移動
-#define AlertStanceID 170 //0xAA 警戒姿勢
-#define DefensiveStanceID 171 //0xAB 防御姿勢
-#define CatnapID 172 //0xAC 自己回復
+#define HurryID 169 //0xA9 全力移動(自軍のみ)
+#define AlertStanceID 170 //0xAA 警戒姿勢(自軍のみ)
+#define DefensiveStanceID 171 //0xAB 防御姿勢(自軍のみ)
+#define CatnapID 172 //0xAC 自己回復(自軍のみ)
 #define MasterOfArmsID 173 //0xAD 武芸者
 

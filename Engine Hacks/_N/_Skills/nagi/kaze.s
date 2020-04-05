@@ -19,7 +19,7 @@ Skip:
     cmp r0, #255
     bne end @アイテム無し？？
 cancel:
-    ldr r0, =0x0802a840	@反撃不可
+    ldr r0, =0x0802a840     @反撃不可
     mov pc, r0
 end:
     ldr r0, =0x0802a84a
@@ -61,26 +61,32 @@ JudgeCancel:
 DistantCounter:
         push {lr}
         ldrh r0, [r4, #0]
-        bl GET_ITEM_EFFECT
-        ldr r1, DISTANT_ITEM_EFFECT_ID
-        cmp r0, r1
-        bne falseDistant
+        bl GET_WEAPON_TYPE
+        cmp r0, #0x02
+        beq falseDistant        @斧は終了
+
+        ldr r0, =0x0203a4d2
+        ldrb r0, [r0]
+        cmp r0, #1
+        ble falseDistant        @近距離は終了
 
         ldr r0, =0x03004df0
         ldr r0, [r0]
-        mov r1, #0
-        bl HAS_NIHIL
-        cmp r0, #1
-        beq falseDistant
+        ldrb r0, [r0, #11]
+        ldrb r1, [r5, #11]
+        cmp r0, r1
+        beq falseWaryFighter    @r5は攻撃者なので終了
 
-        mov r0, #1
+        mov r0, r5
+        ldr r1, =0x0203a4e8
+        bl HAS_DISTANT_COUNTER
         .short 0xE000
     falseDistant:
         mov r0, #0
         pop {pc}
 
-GET_ITEM_EFFECT:
-ldr r1, =0x080174e4
+GET_WEAPON_TYPE:
+ldr r1, =0x080172f0
 mov pc, r1
 
 WaryFighter:
@@ -110,13 +116,13 @@ WindSweep:
         ldrb r0, [r0, #11]
         ldrb r1, [r5, #11]
         cmp r0, r1
-        beq falseWindSweep @r5は攻撃者
+        beq falseWindSweep      @r5は攻撃者
     
         ldr r0, =0x0203a4e8
         mov r1, r5
         bl hasWindSweep
         cmp r0, #0
-        beq falseWindSweep @スキル無し
+        beq falseWindSweep      @スキル無し
 
         mov r0, #1
         b endWindSweep
@@ -133,10 +139,8 @@ hasWaryFighter:
 ldr r2, addr+4
 mov pc, r2
 
-DISTANT_ITEM_EFFECT_ID = addr+8
-
-HAS_NIHIL:
-ldr r2, addr+12
+HAS_DISTANT_COUNTER:
+ldr r2, addr+8
 mov pc, r2
 
 .align
