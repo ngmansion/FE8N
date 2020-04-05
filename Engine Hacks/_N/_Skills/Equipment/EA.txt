@@ -9,10 +9,14 @@ POP
 ALIGN 4
 equipment_wizard:
 #incbin main.dmp
-POIN HasMasterWizard
+POIN HAS_WIZARD
+POIN HAS_ARMS
 
 
-HasMasterWizard:
+HAS_WIZARD:
     HAS_NIHIL
     WORD MasterWizardID
+HAS_ARMS:
+    HAS_NIHIL
+    WORD MasterOfArmsID
 

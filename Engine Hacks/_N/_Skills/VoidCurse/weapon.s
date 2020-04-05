@@ -18,7 +18,7 @@ main:
         cmp r0, #1
         beq end
         
-        bl Wizard
+        bl Master
     end:
         pop {pc}
 
@@ -38,8 +38,16 @@ VoidCurse:
         and r0, r1
         bx lr
 
-Wizard:
-        push {lr}
+Master:
+        push {r5, r6, lr}
+        mov r6, #0
+
+        mov r0, #80
+        ldrb r0, [r7, r0]
+        add r0, #40
+        ldrb r0, [r7, r0]
+        cmp r0, #0
+        bgt endMaster           @経験値が既に1以上
 
         ldr r3, =0x080164c4
         ldr r3, [r3]
@@ -52,30 +60,60 @@ Wizard:
         add r0, r0, r1
         lsl r0, r0, #2
         add r0, r0, r3
-        ldr r0, [r0, #8]
-        mov r1, #2
+
+        mov r5, r0
+        bl Wizard
+        orr r6, r0
+        bl Arms
+        orr r6, r0
+
+    endMaster:
+        mov r0, r6
+        pop {r5, r6, pc}
+
+Arms:
+        push {lr}
+        ldrb r0, [r5, #7]
+        cmp r0, #0
+        beq nextArms
+        cmp r0, #1
+        beq nextArms
+        cmp r0, #2
+        beq nextArms
+        cmp r0, #3
+        beq nextArms
+        b falseArms
+    nextArms:
+        mov r0, r7
+        mov r1, #0
+        bl HAS_ARMS
+        .short 0xE000
+    falseArms:
+        mov r0, #0
+        pop {pc}
+
+D_MAGIC = (0x02)
+
+Wizard:
+        push {lr}
+        ldr r0, [r5, #8]
+        mov r1, #D_MAGIC
         and r0, r1
-        cmp r0, #0
-        beq endWizard   @攻撃魔法ではない
-
-        mov r0, #80
-        ldrb r0, [r7, r0]
-        add r0, #40
-
-        ldrb r0, [r7, r0]
-        cmp r0, #0
-        bgt endWizard   @経験値が既に1以上
+        beq falseWizard         @魔法じゃない
 
         mov r0, r7
         mov r1, #0
         bl HAS_WIZARD
         .short 0xE000
-    endWizard:
+    falseWizard:
         mov r0, #0
         pop {pc}
 
 HAS_WIZARD:
     ldr r2, addr+0
+    mov pc, r2
+HAS_ARMS:
+    ldr r2, addr+4
     mov pc, r2
 
 .align

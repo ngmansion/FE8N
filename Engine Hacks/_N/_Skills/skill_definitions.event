@@ -167,4 +167,5 @@
 #define AlertStanceID 170 //0xAA 警戒姿勢
 #define DefensiveStanceID 171 //0xAB 防御姿勢
 #define CatnapID 172 //0xAC 自己回復
+#define MasterOfArmsID 173 //0xAD 武芸者
 
