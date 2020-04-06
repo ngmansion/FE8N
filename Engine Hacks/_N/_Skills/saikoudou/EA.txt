@@ -85,6 +85,9 @@ WORD $08411c80	//	真っ白を描写する為の適当な空き領域
 ORG 0x01cea8
     jumpToHack(odorero)
 
+ORG 0x018460
+    jumpToHack(AfterMove_Skill)
+
 ORG 0x1CED4
     BYTE $00 $48 $87 $46
     POIN canto_impl
@@ -116,6 +119,7 @@ canto_impl:
 pulse_impl:
 #incbin pulse.dmp
 
+ALIGN 4
     odorero:
         #incbin "main.dmp"
         POIN HAS_HURRY
@@ -123,6 +127,14 @@ pulse_impl:
         POIN hasLifetaker
         POIN hasCantoPlus
         POIN hasGaleCause
+        POIN WAIT_SKILLS
+        
+    AfterMove_Skill:
+        #incbin "AfterMove.dmp"
+        POIN WAIT_SKILLS
+        
+    WAIT_SKILLS:
+        #incbin WaitSkills.dmp
         POIN HAS_ALERT_STANCE
         POIN HAS_DEFENSIVE_STANCE
         POIN HAS_CATNAP

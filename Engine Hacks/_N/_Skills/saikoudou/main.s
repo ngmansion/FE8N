@@ -7,6 +7,7 @@ WEAPON_SP_ADDR = (0x080172f0)
 DEFEAT   = (0b10000000) @撃破フラグ
 DEFEATED = (0b01000000) @迅雷済みフラグ
 STORM    = (0b00100000) @狂嵐フラグ
+FIRST    = (0b00010000) @初撃フラグ
 
 DEFEAT2 = (0xC0)
 
@@ -41,7 +42,7 @@ DEFEAT2 = (0xC0)
     ldr r0, =0x0203a954
     ldrb r0, [r0, #17]
     cmp r0, #1
-    beq StanceSkill         @待機選択なら終了
+    beq WaitSkills         @待機選択なら終了
 
 
 
@@ -80,10 +81,9 @@ DEFEAT2 = (0xC0)
     bne pattern1
     b pattern2
 
-StanceSkill:
-    bl AlertStance
-    bl DefensiveStance
-    bl Catnap
+WaitSkills:
+    mov r0, r4
+    bl WAIT_SKILLS
 
 clearFALSE:
     bl clear_defeat
@@ -209,7 +209,23 @@ clear_defeat:
         mov r2, #STORM
         bic r0, r2
 
+        mov r2, #FIRST
+        bic r0, r2
+
         strb r0, [r1]
+
+@@@WarSkill_back
+        mov r1, r4
+        ldrb r0, [r1, #11]
+        mov r2, #0xC0
+        and r2, r0
+        bne war_end @自軍以外は終了
+
+        mov r1, r4
+        add r1, #67
+        mov r0, #0
+        strb r0, [r1]
+    war_end:
         bx lr
 
     
@@ -378,72 +394,6 @@ JudgeCanto:
         mov r0, #1
         pop {pc}
 
-AlertStance:
-        push {lr}
-        mov r0, #48
-        ldrb r0, [r4, r0]
-        cmp r0, #0
-        bne endAlertStance
-
-        mov	r0, r4
-        mov r1, #0
-        bl HAS_ALERT_STANCE
-        cmp r0, #0
-        beq endAlertStance
-
-        mov r1, #0x18
-        mov r0, #48
-        strb r1, [r4, r0]
-
-    endAlertStance:
-        pop {pc}
-
-DefensiveStance:
-        push {lr}
-        mov r0, #48
-        ldrb r0, [r4, r0]
-        cmp r0, #0
-        bne endDefensiveStance
-
-        mov	r0, r4
-        mov r1, #0
-        bl HAS_DEFENSIVE_STANCE
-        cmp r0, #0
-        beq endDefensiveStance
-
-        mov r1, #0x16
-        mov r0, #48
-        strb r1, [r4, r0]
-
-    endDefensiveStance:
-        pop {pc}
-
-Catnap:
-        push {lr}
-
-        mov	r0, r4
-        mov r1, #0
-        bl HAS_CATNAP
-        cmp r0, #0
-        beq endCatnap
-
-        ldrb r0, [r4, #19]
-        ldrb r1, [r4, #18]
-        add r0, #5
-        cmp r0, r1
-        blt jumpCatnap
-        mov r0, r1
-    jumpCatnap:
-        strb r0, [r4, #19]
-
-        mov r0, #0x89
-        mov r1, #0xB8
-            ldr r2, =0x08014B50 @音
-            mov lr, r2
-            .short 0xF800
-
-    endCatnap:
-        pop {pc}
 
 HAS_FULL_SPEED_AHEAD:
     ldr r2, addr+0
@@ -452,16 +402,10 @@ hasGaleforce = (addr+4)
 hasLifetaker = (addr+8)
 hasCantoPlus = (addr+12)
 hasGaleCause = (addr+16)
-HAS_ALERT_STANCE:
+
+WAIT_SKILLS:
     ldr r2, addr+20
     mov pc, r2
-HAS_DEFENSIVE_STANCE:
-    ldr r2, addr+24
-    mov pc, r2
-HAS_CATNAP:
-    ldr r2, addr+28
-    mov pc, r2
-
 
 .align
 .ltorg
