@@ -14,6 +14,9 @@ main:
         bl DoubleLion
         cmp r0, #1
         beq return
+        bl SwiftStrikes
+        cmp r0, #1
+        beq return
         bl Adept
     return:
         pop {r4, r5, r6, pc}
@@ -74,11 +77,11 @@ SwitchLion:
         mov r0, r4
         pop {pc}
 
-Adept:
+SwiftStrikes:
         push {lr}
         mov r0, r4
         mov r1, r5
-        bl HAS_ADEPT
+        bl HAS_SWIFT_STRIKES
         pop {pc}
 
 Blitzkrieg:
@@ -94,12 +97,30 @@ Blitzkrieg:
     endBlitz:
         pop {pc}
 
+Adept:
+        push {lr}
+        mov r0, r4
+        mov r1, r5
+        bl HAS_ADEPT
+        cmp r0, #0
+        beq endAdept
+        ldrb r0, [r7, #22]         @はやさ
+        mov r1, #0
+        bl RANDOM
+
+    endAdept:
+        pop {pc}
+
+RANDOM:
+    ldr r3, =0x0802a490
+    mov pc, r3
+
 
 GET_WEAPON_ABILITY:
     ldr r1, =0x080174cc
     mov pc, r1
 
-HAS_ADEPT:
+HAS_SWIFT_STRIKES:
     ldr r2, addr
     mov pc, r2
 HAS_DOUBLE_LION:
@@ -107,6 +128,9 @@ HAS_DOUBLE_LION:
     mov pc, r2
 HAS_BLITZKRIEG:
     ldr r2, addr+8
+    mov pc, r2
+HAS_ADEPT:
+    ldr r2, addr+12
     mov pc, r2
 
 .align

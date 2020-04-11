@@ -8,7 +8,7 @@
 #define WrathID 6 //0x6怒り
 #define ResolveID 7 //0x7勇将
 #define VantageID 8 //0x8待ち伏せ
-#define AdeptID 9 // 0x9連続
+#define SwiftStrikesID 9 // 0x9連撃
 #define ParagonID 10 //0xaエリート
 #define RemoveID 11 //0xb再動(自軍のみ)
 #define PassID 12 //0xcすり抜け

@@ -35,16 +35,28 @@ return:
 	
 main:
 	push {r3, r4, r5, lr}	@r3は確率。r4,r5は作業用
-	mov	r5, sp
-	ldr r4, =0x0802AFD1 @汎用
+	mov r5, sp
+	ldr r4, =0x0802AFD1
 loop: @加攻撃者アドレス取得ループ
-	ldr	r0, [r5]
-	cmp	r0, r4
-	beq	gotA @汎用
+	ldr r0, [r5]
+	cmp r0, r4
+	beq normalPath
+
+	bl JudgeGeneral
+	cmp r0, #1
+	beq general
 	add	r5, #4
 	b	loop
 
-gotA: @汎用
+general:
+	mov r5, r8
+	ldr r4, =0x0203a4e8 @攻撃者アドレス補間
+	cmp r4, r5
+	bne endHokan
+	ldr r4, =0x0203a568 @攻撃者アドレス補間
+	b endHokan
+
+normalPath:
 	sub r5, #4
 	ldr r4, [r5] @加攻撃者アドレス取得
 hokan:
@@ -272,6 +284,19 @@ king_func:
 		mov r0, #20
 	endKing:
 		pop {pc}
+
+JudgeGeneral:
+	ldr r1, =0x0802ae40
+	ldr r2, =0x0802af88
+	cmp r0, r1
+	blt falseGeneral
+	cmp r0, r2
+	bgt falseGeneral
+	mov r0, #1
+	.short 0xE000
+falseGeneral:
+	mov r0, #0
+	bx lr
 
 GetAssassinateID:
 ldr r0, ADDRESS+16

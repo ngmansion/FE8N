@@ -28,13 +28,16 @@ yosoku:
 
 ConsecutiveSkill:
 #incbin Consecutive.dmp
-POIN hasAdept
+POIN HasSwiftStrikes
 POIN hasDoubleLion
 POIN hasBlitzkrieg
+POIN HasAdept
 
-hasAdept:
+
+
+HasSwiftStrikes:
     HAS_COMBAT
-    WORD AdeptID
+    WORD SwiftStrikesID
     
 hasBlitzkrieg:
     HAS_NIHIL
@@ -43,6 +46,10 @@ hasBlitzkrieg:
 hasDoubleLion:
     HAS_NIHIL
     WORD DoubleLionID
+
+HasAdept:
+    HAS_NIHIL
+    WORD 0
 
 ////////////////必的の後処理
 PUSH

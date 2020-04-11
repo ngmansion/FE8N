@@ -27,6 +27,8 @@ main:
     ldr r0, [r4, #4]
     cmp r0, #0
     beq ret
+    cmp r1, #0
+    beq ret
     
     bl impl
     cmp r0, #1
