@@ -104,7 +104,7 @@ Adept:
         bl HAS_ADEPT
         cmp r0, #0
         beq endAdept
-        ldrb r0, [r7, #22]         @はやさ
+        ldrb r0, [r4, #22]         @はやさ
         mov r1, #0
         bl RANDOM
 
