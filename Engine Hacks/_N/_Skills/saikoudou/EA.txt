@@ -176,7 +176,14 @@ jumpToHack(double_slow)
 POP
 double_slow:
 #incbin slow.dmp
-
-
-
 ALIGN 4
+
+PUSH
+ORG 0x01cf1c
+jumpToHack(SetCantoFlag)
+POP
+
+SetCantoFlag:
+#incbin SetCantoFlag.dmp
+ALIGN 4
+

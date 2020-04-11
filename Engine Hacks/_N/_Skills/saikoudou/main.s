@@ -137,10 +137,15 @@ nop
 next:
     bl clear_defeat
 @スキル再移動による再移動化
-    bl JudgeCanto
-    cmp r0, #0
-    beq FALSE
-    b Canto
+    bl JudgeCantoPlus
+    cmp r0, #1
+    beq CantoPlus
+
+    ldr r2, =TARGET_UNIT
+    ldr r3, [r2]
+    mov r4, r2
+    ldr r0, =0x0801ceb0 @通常の再移動判定
+    mov pc, r0
 
 CantoHurry:
     ldr r0, [r4, #12]
@@ -151,11 +156,7 @@ CantoHurry:
     ldrb r0, [r4, #29]
     add r0, #2
     strb r0, [r4, #29]
-Canto:
-    ldr r0, [r4, #12]
-    ldr r1, =0x80000000
-    orr r0, r1
-    str r0, [r4, #12]
+CantoPlus:
 
     ldr r4, =TARGET_UNIT
     ldr r3, =0x0801cece
@@ -373,25 +374,13 @@ JudgeAhead:
         mov r0, #0
         pop {pc}
 
-JudgeCanto:
+JudgeCantoPlus:
         push {lr}
-        ldr r0, [r4, #0]
-        ldr r1, [r4, #4]
-        ldr r0, [r0, #40]
-        ldr r1, [r1, #40]
-        orr r0, r1
-        mov r1, #2
-        tst r0, r1
-        bne trueCanto
-
         mov r0, r4
         mov r1, #0
             ldr r2, addr+12 @再移動
             mov lr, r2
             .short 0xF800
-        .short 0xE000
-    trueCanto:
-        mov r0, #1
         pop {pc}
 
 
