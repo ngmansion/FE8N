@@ -259,7 +259,12 @@ RagingStorm:
 @
 shippuJinrai:
         push {lr}
+        ldr r0, =0x0203a4d2
+        ldrb r0, [r0]    @距離
+        cmp r0, #1
+        bne falseJinrai
         mov r0, r4
+        mov r1, #0
             ldr r2, hasGaleforce
             mov lr, r2
             .short 0xF800

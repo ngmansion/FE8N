@@ -396,8 +396,8 @@ tenku_impl:
     bne TENKU
     b falseTenku
 TENKU:
-    ldr r0,	=0x0203a4d2
-    ldrb r0, [r0]	@距離
+    ldr r0, =0x0203a4d2
+    ldrb r0, [r0]    @距離
     cmp r0, #1
     bne falseTenku
     mov r0, r7
