@@ -285,6 +285,10 @@ JudgeCombatSkill:
         cmp r0, #0
         beq falseCombat
 
+        bl JudgeCost
+        cmp r0, #0
+        beq falseCombat
+
         bl JudgeRange       @2
         cmp r0, #0
         beq falseCombat
@@ -377,6 +381,24 @@ MatchWeaponType:
 trueType:
         mov r0, #1
         pop {r6, pc}
+
+JudgeCost:
+        push {lr}
+
+        mov r0, r8
+        add r0, #72
+        ldrh r0, [r0]
+        lsr r0, #8
+
+        ldrb r1, [r6, #4]
+
+        cmp r0, r1
+        bge trueCost
+        mov r0, #0
+        .short 0xE000
+trueCost:
+        mov r0, #1
+        pop {pc}
 
 GetColor:
     ldr r2, SKL_TBL
