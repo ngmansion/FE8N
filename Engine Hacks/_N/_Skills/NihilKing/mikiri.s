@@ -286,16 +286,16 @@ king_func:
 		pop {pc}
 
 JudgeGeneral:
-	ldr r1, =0x0802ae40
-	ldr r2, =0x0802af88
+	ldr r1, =0x0802a385
+	ldr r2, =0x08031e5b
 	cmp r0, r1
-	blt falseGeneral
+	beq endGeneral
 	cmp r0, r2
-	bgt falseGeneral
-	mov r0, #1
-	.short 0xE000
-falseGeneral:
+	beq endGeneral
 	mov r0, #0
+	.short 0xE000
+endGeneral:
+	mov r0, #1
 	bx lr
 
 GetAssassinateID:
