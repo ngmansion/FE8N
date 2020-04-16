@@ -68,3 +68,26 @@ double_double:
 #incbin double_double.dmp
 ALIGN 4
 
+
+///////////////////////////////////////差し違え・切り返し予測対応
+PUSH
+
+ORG 0x036808
+SHORT 0x1c38     //mov r0, r7
+BL(0x89318)
+
+ORG 0x0368a8
+SHORT 0x1c30     //mov r0, r6
+BL(0x89318)
+
+//ORG 0x89318
+//jumpToHack(prediction_follow_up_2)
+
+POP
+
+prediction_follow_up_2:
+#incbin follow_up_2.dmp
+ALIGN 4
+
+
+

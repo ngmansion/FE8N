@@ -34,6 +34,7 @@ ORG 0x89308
 ORG 0x89310
  jumpToHack(sol_divide_anim_on)
 ORG 0x89318
+jumpToHack(prediction_follow_up_2)
 
 
 
