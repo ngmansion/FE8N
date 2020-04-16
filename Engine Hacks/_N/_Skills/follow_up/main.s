@@ -35,15 +35,15 @@ greater1:
     b normal
 
 greater2:
+    b disable           @新仕様だとここに入った時点でdisableで問題ない
     cmp r1, #0
     bgt active2 @絶対追撃
     blt disable @追撃不可
 @相手は追撃可能性あり、自分は追撃不可
-@    mov r1, r5
-@    mov r0, r6
-@    bl cancel
-@    b normal
-    b disable
+    mov r1, r5
+    mov r0, r6
+    bl cancel
+    b normal
 
 active1:
     ldr r0, =0x0802af56
