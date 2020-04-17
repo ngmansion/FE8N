@@ -210,13 +210,6 @@ Deflect:
 		beq falseDeflect
 
 		mov r0, r8
-			ldr r3, adr+32 @連撃防御
-			mov lr, r3
-			.short 0xF800
-		cmp r0, #0
-		beq falseDeflect
-		
-		mov r0, r8
 		ldrb r0, [r0, #11]
 			ldr r3, =0x08019108
 			mov lr, r3
@@ -226,13 +219,13 @@ Deflect:
 		ldrb r0, [r0, #0x13] @今のHP
 		cmp r0, r1
 		bge falseDeflect @HP減少(被攻撃)が無ければ終わり
+
+		mov r0, r8
+        mov r1, r7
+        bl HAS_DEFLECT
+		cmp r0, #0
+		beq falseDeflect
 		
-		mov r0, r7
-			ldr r1, HAS_NIHIL_FUNC
-			mov lr, r1
-			.short 0xF800
-		cmp r0, #1
-		beq falseDeflect	@見切り持ちなら終了
 		ldrh r0, [r4, #4]
 		bl divide4
 		strh r0, [r4, #4]
@@ -571,6 +564,10 @@ hasInvincible:
 
 HasPray:
 ldr r2, HAS_INORI_FUNC @祈り
+mov pc, r2
+
+HAS_DEFLECT:
+ldr r2, (adr+32)
 mov pc, r2
 
 HAS_IMPREGNABLE_WALL:

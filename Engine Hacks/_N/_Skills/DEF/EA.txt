@@ -47,7 +47,7 @@ shikkokunori:
  POIN set_skillanime_defence
  POIN hasDistantGuard
  POIN hasInvincible
- POIN hasDeflect
+ POIN HAS_DEFLECT
  POIN HAS_IMPREGNABLE_WALL
  POIN PrayOld_hasSkill
 
@@ -79,8 +79,8 @@ hasDistantGuard:
  HAS_SKILL
  WORD DistantGuardID
  
-hasDeflect:
- HAS_SKILL
+HAS_DEFLECT:
+ HAS_NIHIL
  WORD DeflectID
  
 
