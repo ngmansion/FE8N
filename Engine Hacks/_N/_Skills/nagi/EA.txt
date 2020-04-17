@@ -13,7 +13,7 @@ POP
 nagi_kaze:
   #incbin kaze.dmp
   POIN hasWindsweep
-  POIN waryFighter_hasSkill
+  POIN 0
   WORD DISTANT_COUNTER_ITEM_EFFECT_ID
   POIN HAS_DISTANT_COUNTER
   WORD DISTANT_COUNTER_INVALID_WEAPON_TYPE

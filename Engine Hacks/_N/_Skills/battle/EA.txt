@@ -32,7 +32,7 @@ battle_before:
     POIN HasShieldSession
     POIN HasAvoidUp
     POIN HasCriticalUp
-    POIN waryFighter_hasSkill
+    POIN HAS_IMPREGNABLE_WALL
     POIN HAS_CHARGE
     POIN 0
     POIN 0

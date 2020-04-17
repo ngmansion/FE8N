@@ -16,37 +16,14 @@
 
         mov r0, r5
         mov r1, r4
-        bl HasGodShield
+        bl HAS_GOD_SHIELD
         cmp r0, #0
-        beq jump1
+        .short 0xD001
         bl divide   @相手(r5)が神盾所持
-    jump1:
-        bl WaryFighter
-        cmp r0, #0
-        beq jump2
-        bl divide
-    jump2:
+
         mov r0, r6
     end:
         pop {r4, r5, r6, pc}
-
-WaryFighter:
-        push {lr}
-        ldrb r0, [r5, #0xb]
-        ldr r1, =0x03004df0
-        ldr r1, [r1]
-        ldrb r1, [r1, #0xb]
-        cmp r0, r1
-        beq falseWaryFighter
-    @r4が攻め。r5が守備隊形の場合、この攻撃は半減
-        mov r0, r5
-        mov r1, r4
-        bl HasWaryFighter
-        b endWaryFighter
-    falseWaryFighter:
-        mov r0, #0
-    endWaryFighter:
-        pop {pc}
 
 divide:
     mov r0, r6
@@ -61,11 +38,8 @@ not_div:
     mov r6, r0
     bx lr
 
-HasGodShield:
+HAS_GOD_SHIELD:
 ldr r2, addr+0
-mov pc, r2
-HasWaryFighter:
-ldr r2, addr+4
 mov pc, r2
 
 .align

@@ -33,7 +33,7 @@ SET_SKILLANIME_DEF_FUNC = (adr+20)
 	bne zero
 
 	bl Divide
-	
+	bl ImpregnableWall
 	bl Deflect
 
 	bl Xeno
@@ -83,6 +83,51 @@ checkSkip:
 	trueSkip:
 		mov r0, #1
 		bx lr
+
+ImpregnableWall:
+        push {lr}
+
+        bl checkSkip
+        cmp r0, #1
+        beq falseWall
+
+        mov r0, r8
+        ldrb r0, [r0, #0xb]
+        ldr r1, =0x03004df0
+        ldr r1, [r1]
+        ldrb r1, [r1, #0xb]
+        cmp r0, r1
+        beq falseWall
+
+		mov r0, r8
+		ldrb r0, [r0, #11]
+			ldr r3, =0x08019108
+			mov lr, r3
+			.short 0xF800
+		ldrb r1, [r0, #0x13]     @戦闘前のHP
+		mov r0, r8
+		ldrb r0, [r0, #0x13]    @今のHP
+		cmp r0, r1
+		blt falseDeflect    @HPが減っていれば終わり
+
+        mov r0, r8
+        mov r1, r7
+        bl HAS_IMPREGNABLE_WALL
+        cmp r0, #0
+        beq falseWall
+
+        ldrh r0, [r4, #4]
+        bl divide4
+        strh r0, [r4, #4]
+
+        mov r0, #1
+        .short 0xE000
+    falseWall:
+        mov r0, #0
+        pop {pc}
+
+
+
 
 Divide:	@神盾+守備隊形
 		push {lr}
@@ -507,8 +552,6 @@ HAS_HOLY_SHIELD_FUNC = (adr+4)
 DEF_DIVIDE_FUNC = (adr+8)
 HAS_INORI_FUNC = (adr+12)
 HAS_INVINCIBLE_FUNC = (adr+28)
-HAS_WARYFIGHTER_FUNC = (adr+36)
-HAS_INORI_OLD_FUNC = (adr+40)
 
 HasBigShield:
 	ldr	r3, HAS_BIG_SHIELD_FUNC
@@ -530,13 +573,13 @@ HasPray:
 ldr r2, HAS_INORI_FUNC @祈り
 mov pc, r2
 
-HasPrayOld:
-ldr r2, HAS_INORI_OLD_FUNC @旧祈り
+HAS_IMPREGNABLE_WALL:
+ldr r2, (adr+36)
 mov pc, r2
 
-HasWaryFighter:
-ldr	r2, HAS_WARYFIGHTER_FUNC
-mov	pc, r2
+HasPrayOld:
+ldr r2, (adr+40)
+mov pc, r2
 
 Get_Status:
 	ldr r1, =0x08019108

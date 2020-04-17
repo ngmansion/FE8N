@@ -36,7 +36,6 @@ POIN DefDivide
 DefDivide:
 #incbin Divide.dmp
  POIN GodShield_hasSkill
- POIN waryFighter_hasSkill
  
 shikkokunori:
  #incbin "inori.dmp"
@@ -49,7 +48,7 @@ shikkokunori:
  POIN hasDistantGuard
  POIN hasInvincible
  POIN hasDeflect
- POIN 0//waryFighter_hasSkill
+ POIN HAS_IMPREGNABLE_WALL
  POIN PrayOld_hasSkill
 
 hasInvincible:

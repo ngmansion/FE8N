@@ -54,7 +54,7 @@ breaker_hasSkill5:
     HAS_SKILL
     WORD TomebreakerID
     
-waryFighter_hasSkill:
+HAS_IMPREGNABLE_WALL:
     HAS_NIHIL
     WORD ImpregnableWallID
 HasWaryFighterOrg:

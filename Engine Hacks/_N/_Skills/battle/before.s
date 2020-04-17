@@ -116,7 +116,7 @@ OtherSideSkill:
         bl DistantDef
         bl CloseDef
         bl ShieldSession
-        bl WaryFighter
+        bl ImpregnableWall
         bl KishinR
         bl KongouR
         bl HienR
@@ -347,23 +347,22 @@ BladeSessionOne:
     falseBladeSession:
         pop {pc}
 
-WaryFighter:
+ImpregnableWall:
         push {lr}
 
         mov r0, r4
         mov r1, #0
-        bl HasWaryFighter
+        bl HAS_IMPREGNABLE_WALL
         cmp r0, #0
-        beq falseWaryFighter
+        beq falseImpregnableWall
         mov r0, #0
         mov r1, #98 @回避
         strh r0, [r4, r1]
 
         mov r0, #1
-        b endWaryFighter
-    falseWaryFighter:
+        .short 0xE000
+    falseImpregnableWall:
         mov r0, #0
-    endWaryFighter:
         pop {pc}
 
 Daunt:
@@ -1270,7 +1269,6 @@ BLADE_SESSION_ADDR = (addr+48)
 SHIELD_SESSION_ADDR = (addr+52)
 HAS_AVOIDUP_ADDR = (addr+56)
 HAS_CRITICALUP_ADDR = (addr+60)
-WARYFIGHTER_ADDR = (addr+64)
 HAS_CHARGE:
     ldr r2, addr+68
     mov pc, r2
@@ -1366,8 +1364,8 @@ HasBladeSession:
 HasShieldSession:
     ldr r2, SHIELD_SESSION_ADDR
 	mov pc, r2
-HasWaryFighter:
-    ldr r2, WARYFIGHTER_ADDR
+HAS_IMPREGNABLE_WALL:
+    ldr r2, (addr+64)
 	mov pc, r2
 HasDaunt:
     ldr r2, DAUNT_ADDR

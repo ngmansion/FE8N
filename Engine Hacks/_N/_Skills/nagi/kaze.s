@@ -44,10 +44,6 @@ JudgeCancel:
         cmp r0, #1
         beq endCancel
 
-@       bl WaryFighter
-@       cmp r0, #1
-@       beq cancel
-
     falseCancel:
         mov r0, #0
         .short 0xE000
@@ -100,26 +96,6 @@ GET_ITEM_EFFECT:
 ldr r1, =0x080174e4
 mov pc, r1
 
-WaryFighter:
-        push {lr}
-        ldr r0, =0x03004df0
-        ldr r0, [r0]
-        ldrb r0, [r0, #11]
-        ldrb r1, [r5, #11]
-        cmp r0, r1
-        beq falseWaryFighter @r5は攻撃者
-        mov r0, r5
-        ldr r1, =0x0203a4e8
-        bl hasWaryFighter
-        cmp r0, #0
-        beq falseWaryFighter @スキル無し
-        mov r0, #1
-        b endWaryFighter
-    falseWaryFighter:
-        mov r0, #0
-    endWaryFighter:
-        pop {pc}
-
 WindSweep:
         push {lr}
         ldr r0, =0x03004df0
@@ -144,10 +120,6 @@ WindSweep:
 
 hasWindSweep:
 ldr r2, addr
-mov pc, r2
-
-hasWaryFighter:
-ldr r2, addr+4
 mov pc, r2
 
 DISTANT_COUNTER_ITEM_EFFECT_ID = addr+8
