@@ -1,4 +1,5 @@
 #include WP_LV_SKL_TABLE.txt
+#include LUNATIC_TABLE.txt
 
 hasNihil:
 	HAS_SKILL
@@ -29,6 +30,12 @@ judgeUnit:
 	
 judgeSkillInUnitData:
 	#incbin judgeSkillInUnitData.dmp
+#ifdef LUNATIC_SKILL
+WORD 1
+#else
+WORD 0
+#endif
+	POIN LUNATIC_TABLE
 	ALIGN 4
 checkItemList:
 	#incbin checkItemList.dmp

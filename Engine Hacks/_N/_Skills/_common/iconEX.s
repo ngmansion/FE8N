@@ -4,13 +4,15 @@ GET_SKILL_FUNC = (adr+36)
 WP_LV_SKL_TABLE = (adr+40)
 ICON_LIST_SIZE = (adr+44)
 CHECK_ITEM_FUNC = (adr+48)
+LUNATIC_SKILL = (adr+52)
+LUNATIC_TABLE = (adr+56)
 ICON_NUM_LIMIT = (16) @上限数*2
 
 MAX_SKILL_NUM = (255)
 
 @.org	0x08089268
 	
-	push	{r4, r5, r6, r7, lr}
+	push {r4, r5, r6, r7, lr}
 @画像
 	mov	r4, #0
 	bl Initialize
@@ -32,45 +34,9 @@ MAX_SKILL_NUM = (255)
 	pop	{r4, r5, r6, r7, pc}
 
 
-Initialize:
-	push {lr}
-	bl getEquipmentPositionData
-	ldr r0, [r0]
-	
-	ldr	r6, =0x00007060
-	mov	r5, r6	
-	ldr	r1, =0x000002c2
-	add	r2, r0, r1
-	add	r6, #8
-	mov	r3, r6
-	ldr	r6, =0x00000302
-	add	r1, r0, r6
-loopE:
-	add	r0, r4, r5
-	strh	r0, [r2, #0]
-	add	r0, r4, r3
-	strh	r0, [r1, #0]
-	add	r2, #2
-	add	r1, #2
-	add	r4, #1
-	cmp	r4, #7
-	ble	loopE
-@アイコン
-	bl getIconPositionData
-	mov r6, r0
-	ldr r6, [r6]
-	ldr	r7, =0x02003B00	@help memory
-@r6,r7は以後、共通変数として用いる
-	mov	r5, #0
-	str	r5, [r7]
-	str	r5, [r7, #4]
-	str	r5, [r7, #8]
-	str	r5, [r7, #12]
-	pop {pc}
-
 SkillBook:
 		push {lr}
-		ldr r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr r0, [r4, #12]
 		
 		mov r1, #0
@@ -78,7 +44,7 @@ SkillBook:
 		mov r4, r0
 		bl	SKILL3 @スキル書1
 
-		ldr r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr r0, [r4, #12]
 		
 		mov r1, #1
@@ -87,7 +53,7 @@ SkillBook:
 		bl	SKILL3 @スキル書2
 	@ここからEXPAND_SKILL
 
-		ldr r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr r0, [r4, #12]
 		
 		mov r1, #2
@@ -95,7 +61,7 @@ SkillBook:
 		mov r4, r0
 		bl	SKILL3 @スキル書3
 
-		ldr r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr r0, [r4, #12]
 		
 		mov r1, #3
@@ -103,7 +69,7 @@ SkillBook:
 		mov r4, r0
 		bl	SKILL3 @スキル書4
 
-		ldr r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr r0, [r4, #12]
 		
 		mov r1, #4
@@ -111,7 +77,7 @@ SkillBook:
 		mov r4, r0
 		bl	SKILL3 @スキル書5
 
-		ldr r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr r0, [r4, #12]
 		
 		mov r1, #5
@@ -124,14 +90,14 @@ SkillBook:
 
 Unit:
 		push {lr}
-		ldr	r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr	r4, [r4, #12]
 		ldr	r4, [r4]
 		add	r4, #0x26
 		ldrb	r4, [r4]
 		bl	SKILL3 @下級スキル
 
-		ldr	r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr	r4, [r4, #12]
 		ldr	r0, [r4, #4] @class
 		ldr	r0, [r0, #40]
@@ -143,7 +109,7 @@ Unit:
 		bl	SKILL3 @上級スキル
 jumpUnit1:
 
-		ldr	r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr	r4, [r4, #12]
 		ldrb r1, [r4, #0xB]
 		mov r0, #0xC0
@@ -158,15 +124,43 @@ jumpUnit1:
 		ldrb	r4, [r4]
 		bl	SKILL3 @自軍外スキル
 jumpUnit2:
+		bl Set02003BFCtoR4
+		ldr	r4, [r4, #12]
+@@@@@@@@@@@@@@@@@ルナティック
+
+    ldr r0, LUNATIC_SKILL
+    cmp r0, #0
+    beq elseLunatic
+    
+    ldrb r1, [r4, #0xB]
+    mov r0, #0x80
+    and r0, r1
+    beq elseLunatic     @敵以外
+
+    ldr r0, =0x0202bcec
+    ldrb r1, [r0, #20]
+    mov r0, #64		@難易度ハード
+    and r0, r1
+    beq elseLunatic     @ハード以外
+
+    ldr r0, [r4, #4]
+    ldrb r0, [r0, #4]
+    ldr r1, LUNATIC_TABLE
+    ldrb r0, [r1, r0]
+
+        mov r4, r0
+		bl	SKILL3 @自軍外スキル
+elseLunatic:
+
 		ldr	r5, adr	@UNIT
-		ldr	r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr	r4, [r4, #12]
 		ldr	r4, [r4]
 		ldrb	r4, [r4, #4]
 		bl	SKILL	@表示のみ
 
 		ldr	r5, SKL_TBL	@UNIT2
-		ldr r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr r4, [r4, #12]
 		ldr r4, [r4]
 		ldrb r4, [r4, #4]
@@ -178,7 +172,7 @@ Ability:
 		push {lr}
 
 		ldr	r5, adr+12	@ABILITY
-		ldr	r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr	r0, [r4, #12]
 		ldr	r4, [r0, #4]	@兵種
 		ldr	r4, [r4, #40]
@@ -197,14 +191,14 @@ Class:
 		push {lr}
 
 		ldr	r5, adr+4	@CLASS
-		ldr	r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr	r4, [r4, #12]
 		ldr	r4, [r4, #4]
 		ldrb	r4, [r4, #4]
 		bl	SKILL	@表示のみ
 
 		ldr	r5, SKL_TBL	@CLASS2
-		ldr r4, =0x02003BFC
+		bl Set02003BFCtoR4
 		ldr r4, [r4, #12]
 		ldr r4, [r4, #4]
 		ldrb r4, [r4, #4]
@@ -627,6 +621,42 @@ next4:
 end4:
 	pop {r3, r4, pc}
 
+Initialize:
+	push {lr}
+	bl getEquipmentPositionData
+	ldr r0, [r0]
+	
+	ldr	r6, =0x00007060
+	mov	r5, r6	
+	ldr	r1, =0x000002c2
+	add	r2, r0, r1
+	add	r6, #8
+	mov	r3, r6
+	ldr	r6, =0x00000302
+	add	r1, r0, r6
+loopE:
+	add	r0, r4, r5
+	strh	r0, [r2, #0]
+	add	r0, r4, r3
+	strh	r0, [r1, #0]
+	add	r2, #2
+	add	r1, #2
+	add	r4, #1
+	cmp	r4, #7
+	ble	loopE
+@アイコン
+	bl getIconPositionData
+	mov r6, r0
+	ldr r6, [r6]
+	ldr	r7, =0x02003B00	@help memory
+@r6,r7は以後、共通変数として用いる
+	mov	r5, #0
+	str	r5, [r7]
+	str	r5, [r7, #4]
+	str	r5, [r7, #8]
+	str	r5, [r7, #12]
+	pop {pc}
+
 getEquipmentPositionData:
 	ldr r0, adr+20
 	bx lr
@@ -636,6 +666,10 @@ getIconPositionData:
 Get_WpLv:
 	ldr r1, =0x08016b04
 	mov pc, r1
+
+Set02003BFCtoR4:
+    ldr r4, =0x02003BFC
+    bx lr
 
 get_Skill:
 	ldr r2, GET_SKILL_FUNC

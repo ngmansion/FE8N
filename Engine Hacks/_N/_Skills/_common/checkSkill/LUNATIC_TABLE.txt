@@ -1,0 +1,158 @@
+LUNATIC_TABLE:
+BYTE 0
+
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+
+BYTE ArmoredBlowID      //ナイト
+BYTE ArmoredBlowID
+BYTE ArmoredBlowID
+BYTE ArmoredBlowID
+
+BYTE SteadyStanceID     //アーマー
+BYTE SteadyStanceID
+BYTE SteadyStanceID
+BYTE SteadyStanceID
+
+BYTE PassID    //盗賊
+BYTE PassID
+
+BYTE VantageID     //勇者
+BYTE VantageID
+BYTE VantageID
+BYTE VantageID
+
+BYTE VengefulFighterID  //ソドマス
+BYTE VengefulFighterID
+BYTE VengefulFighterID
+BYTE VengefulFighterID
+
+BYTE PassID     //盗賊
+BYTE PassID
+
+BYTE PoisonStrikeID     //スナイパー
+BYTE PoisonStrikeID
+BYTE PoisonStrikeID
+BYTE PoisonStrikeID
+BYTE PoisonStrikeID
+BYTE PoisonStrikeID
+
+BYTE DartingStanceID      //ドラゴン
+BYTE DartingStanceID
+BYTE DartingStanceID
+BYTE DartingStanceID
+BYTE DartingBlowID
+BYTE DartingBlowID
+
+BYTE TomebreakerID      //賢者
+BYTE TomebreakerID
+BYTE TomebreakerID
+BYTE TomebreakerID
+BYTE TomebreakerID
+BYTE TomebreakerID
+
+BYTE MiracleID     //司祭
+BYTE MiracleID
+
+BYTE HeartseekerID     //ダークマージ
+BYTE HeartseekerID
+BYTE HeartseekerID
+BYTE HeartseekerID
+BYTE HeartseekerID
+BYTE HeartseekerID
+
+BYTE PassID     //盗賊
+BYTE PassID
+
+BYTE ArmoredBlowID    //グレート
+BYTE ArmoredBlowID
+
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+
+BYTE WrathID    //戦士
+BYTE WrathID
+BYTE WrathID
+BYTE WrathID
+BYTE WrathID
+
+BYTE MiracleID     //司祭
+BYTE MiracleID
+
+BYTE 0
+BYTE 0
+
+BYTE DartingBlowID      //ペガサス
+BYTE DartingBlowID
+
+BYTE MiracleID     //司祭
+BYTE MiracleID
+BYTE MiracleID
+
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+
+BYTE 0//ゾンビ
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+BYTE 0
+
+ALIGN 4
