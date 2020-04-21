@@ -204,10 +204,10 @@ FllowUpFunc:
         add r1, sp, #4
 
         bl CalcFollowUpFunc
-        ldr r1, [sp]
-        cmp r1, r4
-        beq endFollowUp
-        mov r0, #0
+@        ldr r1, [sp]
+@        cmp r1, r4
+@        beq endFollowUp
+@        mov r0, #0
     endFollowUp:
         add sp, #8
         pop {r4, pc}
