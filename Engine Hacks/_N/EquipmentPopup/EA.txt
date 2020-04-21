@@ -1,3 +1,5 @@
+#define UNIT_WINDOW_CACHE (0x0203AF10)
+
 PUSH
 
 ORG	0x8eae8
@@ -53,7 +55,7 @@ short 0x46c0 0x46c0//hpバー削除
 POP
 power_view:
 #incbin "power_view.dmp"
-WORD 0x0203B000+0xd0
+WORD UNIT_WINDOW_CACHE
 ALIGN 4
 have_two:
 #incbin "have_two.gba"
