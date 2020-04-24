@@ -1,3 +1,5 @@
+NULL = 0
+
 .thumb
 SKL_TBL = (adr+16)
 GET_SKILL_FUNC = (adr+36)
@@ -14,7 +16,6 @@ MAX_SKILL_NUM = (255)
 	
 	push {r4, r5, r6, r7, lr}
 @画像
-	mov	r4, #0
 	bl Initialize
 
 	bl SkillBook
@@ -36,81 +37,58 @@ MAX_SKILL_NUM = (255)
 
 SkillBook:
 		push {lr}
-		bl Set02003BFCtoR4
-		ldr r0, [r4, #12]
-		
+		mov r0, r4
 		mov r1, #0
 		bl get_Skill
-		mov r4, r0
-		bl	SKILL3 @スキル書1
+		bl	SKILL0 @スキル書1
 
-		bl Set02003BFCtoR4
-		ldr r0, [r4, #12]
-		
+		mov r0, r4
 		mov r1, #1
 		bl get_Skill
-		mov r4, r0
-		bl	SKILL3 @スキル書2
+		bl	SKILL0 @スキル書1
 	@ここからEXPAND_SKILL
 
-		bl Set02003BFCtoR4
-		ldr r0, [r4, #12]
-		
+		mov r0, r4
 		mov r1, #2
 		bl get_Skill
-		mov r4, r0
-		bl	SKILL3 @スキル書3
+		bl	SKILL0 @スキル書1
 
-		bl Set02003BFCtoR4
-		ldr r0, [r4, #12]
-		
+		mov r0, r4
 		mov r1, #3
 		bl get_Skill
-		mov r4, r0
-		bl	SKILL3 @スキル書4
+		bl	SKILL0 @スキル書1
 
-		bl Set02003BFCtoR4
-		ldr r0, [r4, #12]
-		
+		mov r0, r4
 		mov r1, #4
 		bl get_Skill
-		mov r4, r0
-		bl	SKILL3 @スキル書5
+		bl	SKILL0 @スキル書1
 
-		bl Set02003BFCtoR4
-		ldr r0, [r4, #12]
-		
+		mov r0, r4
 		mov r1, #5
 		bl get_Skill
-		mov r4, r0
-		bl	SKILL3 @スキル書6
+		bl	SKILL0 @スキル書1
 
 	@ここまでEXPAND_SKILL
 		pop {pc}
 
 Unit:
 		push {lr}
-		bl Set02003BFCtoR4
-		ldr	r4, [r4, #12]
-		ldr	r4, [r4]
-		add	r4, #0x26
-		ldrb	r4, [r4]
-		bl	SKILL3 @下級スキル
+		ldr	r0, [r4]
+		add	r0, #0x26
+		ldrb	r0, [r0]
+		bl	SKILL0 @下級スキル
 
-		bl Set02003BFCtoR4
-		ldr	r4, [r4, #12]
+
 		ldr	r0, [r4, #4] @class
 		ldr	r0, [r0, #40]
 		lsl	r0, r0, #23
 		bpl jumpUnit1 @上級職のみ
-		ldr	r4, [r4]
-		add	r4, #0x27
-		ldrb	r4, [r4]
-		bl	SKILL3 @上級スキル
+		ldr	r0, [r4]
+		add	r0, #0x27
+		ldrb	r0, [r0]
+		bl	SKILL0 @上級スキル
 jumpUnit1:
 
-		bl Set02003BFCtoR4
-		ldr	r4, [r4, #12]
 		ldrb r1, [r4, #0xB]
 		mov r0, #0xC0
 		and r0, r1
@@ -119,13 +97,11 @@ jumpUnit1:
 		cmp r0, #20
 		ble jumpUnit2     @レベル20以下なら終了
 	elseUnit:
-		ldr	r4, [r4]
-		add	r4, #0x31
-		ldrb	r4, [r4]
-		bl	SKILL3 @自軍外スキル
+		ldr	r0, [r4]
+		add	r0, #0x31
+		ldrb	r0, [r0]
+		bl	SKILL0 @自軍外スキル
 jumpUnit2:
-		bl Set02003BFCtoR4
-		ldr	r4, [r4, #12]
 @@@@@@@@@@@@@@@@@ルナティック
 
     ldr r0, LUNATIC_SKILL
@@ -148,107 +124,108 @@ jumpUnit2:
     ldr r1, LUNATIC_TABLE
     ldrb r0, [r1, r0]
 
-        mov r4, r0
-		bl	SKILL3 @自軍外スキル
+		bl	SKILL0 @自軍外スキル
 elseLunatic:
 
-		ldr	r5, adr	@UNIT
-		bl Set02003BFCtoR4
-		ldr	r4, [r4, #12]
-		ldr	r4, [r4]
-		ldrb	r4, [r4, #4]
-		bl	SKILL	@表示のみ
+		ldr	r0, [r4]
+		ldrb	r0, [r0, #4]
+		ldr	r1, adr	@UNIT
+		bl	SKILLbin        @表示のみ
 
-		ldr	r5, SKL_TBL	@UNIT2
-		bl Set02003BFCtoR4
-		ldr r4, [r4, #12]
-		ldr r4, [r4]
-		ldrb r4, [r4, #4]
-		mov r3, #1@CLASS
+
+		ldr r0, [r4]
+		ldrb r0, [r0, #4]
+		mov r1, #1          @Unit
 		bl SKILL4
 		pop {pc}
 
 Ability:
 		push {lr}
-
-		ldr	r5, adr+12	@ABILITY
-		bl Set02003BFCtoR4
-		ldr	r0, [r4, #12]
-		ldr	r4, [r0, #4]	@兵種
-		ldr	r4, [r4, #40]
+		ldr	r0, [r4, #4]	@兵種
+		ldr	r0, [r0, #40]
 		mov	r2, #0x80
 		lsl	r2, r2, #17	@兵種EXP0
-		mvn	r2, r2
-		and	r4, r2
-		ldr	r0, [r0]	@個人
-		ldr	r0, [r0, #40]
-		orr	r4, r0
-		bl	SKILL2	@表示のみ
+		bic	r0, r2
+		ldr	r1, [r4]	@個人
+		ldr	r1, [r1, #40]
+		orr	r0, r1
+
+		ldr	r1, adr+12	@ABILITY
+		bl	SKILLabi       @表示のみ
 
 		pop {pc}
 
 Class:
 		push {lr}
 
-		ldr	r5, adr+4	@CLASS
-		bl Set02003BFCtoR4
-		ldr	r4, [r4, #12]
-		ldr	r4, [r4, #4]
-		ldrb	r4, [r4, #4]
-		bl	SKILL	@表示のみ
+		ldr	r0, [r4, #4]
+		ldrb	r0, [r0, #4]
+		ldr	r1, adr+4	@CLASS
+		bl	SKILLbin   @表示のみ
 
-		ldr	r5, SKL_TBL	@CLASS2
-		bl Set02003BFCtoR4
-		ldr r4, [r4, #12]
-		ldr r4, [r4, #4]
-		ldrb r4, [r4, #4]
-		mov r3, #2@CLASS
+		ldr r0, [r4, #4]
+		ldrb r0, [r0, #4]
+		mov r3, #2      @CLASS
 		bl SKILL4
 
 		pop {pc}
 
 Weapon:
-		push {lr}
+        push {lr}
 
-		ldr r5, adr+8	@WEAPON
-		ldr	r4, =0x0203a530
-		ldrb	r4, [r4]
-		cmp r4, #0
-		beq endWeapon
-		bl	SKILL	@表示のみ
+        mov r0, #72
+        ldrb r0, [r4, r0]
+        cmp r0, #0
+        beq endWeapon
+        ldr r1, adr+8       @WEAPON
+        bl SKILLbin        @表示のみ
 
-		ldr r5, SKL_TBL @weapon2
-		ldr r4, =0x0203a530
-		ldrb r4, [r4]
-		mov r3, #3 @weapon2
-		bl SKILL4
+        mov r0, #72
+        ldrb r0, [r4, r0]
+        mov r1, #3 @weapon2
+        bl SKILL4
 endWeapon:
-		pop {pc}
+        pop {pc}
 
 Item:
-		push {lr}
-		ldr r5, SKL_TBL
-		add r5, #16	@アイテムリストのオフセット
+        push {lr}
 
-		mov r4, #1
-	forItem:
-		cmp r4, #128
-		bge endItem
-			ldr	r0, =0x02003BFC
-			ldr	r0, [r0, #12]
-			ldr r1, ICON_LIST_SIZE
-			mul r1, r4
-			ldr r1, [r5, r1]
-			bl checkItemList
-			cmp r0, #0
-			beq jumpItem
+        mov r0, #30
+        ldrb r0, [r4, r0]
+        cmp r0, #0
+        beq endItem
+        mov r1, #4 @Item
+        bl SKILL4
 
-			bl	SKILL3 
-		jumpItem:
-			add r4, #1
-			b forItem
-	endItem:
-		pop {pc}
+        mov r0, #32
+        ldrb r0, [r4, r0]
+        cmp r0, #0
+        beq endItem
+        mov r1, #4 @Item
+        bl SKILL4
+
+        mov r0, #34
+        ldrb r0, [r4, r0]
+        cmp r0, #0
+        beq endItem
+        mov r1, #4 @Item
+        bl SKILL4
+
+        mov r0, #36
+        ldrb r0, [r4, r0]
+        cmp r0, #0
+        beq endItem
+        mov r1, #4 @Item
+        bl SKILL4
+
+        mov r0, #38
+        ldrb r0, [r4, r0]
+        cmp r0, #0
+        beq endItem
+        mov r1, #4 @Item
+        bl SKILL4
+    endItem:
+        pop {pc}
 
 
 WpLv:
@@ -345,284 +322,221 @@ endWpLv:
 	pop {pc}
 	
 
-SKILL: @旧仕様
-	push	{lr}
-	b	test
-restart:
-	mov	r0, r4
-	mov	r2, #0x10
-loop:
-	ldrb	r1, [r5, r2]
-	cmp	r1,	#0
-	beq jump
-	cmp	r0, r1
-	beq	skiller
-	add	r2, #1
-	cmp	r2, #0x20
-	beq	jump @LISTlimit
-	b loop
+SKILLbin: @旧仕様
+@
+@r0= ***ID
+@r1= ***.bin
+@
+        push {r4, r5, lr}
+        mov r4, r0
+        mov r5, r1
+        b testBin
+    restartBin:
+        mov r0, r4
+        mov r2, #0x10           @IDリスト部分へずらす
+    loopBin:
+        ldrb r1, [r5, r2]
+        cmp r1, #0
+        beq jumpBin            @リスト終端
+        cmp r0, r1
+        beq skillerBin         @ID一致
+        add r2, #1
+        cmp r2, #0x20
+        beq jumpBin            @LISTlimit
+        b loopBin
 
-skiller:
-	ldrh	r1, [r5, #2]
-	strh	r1, [r7]
-	ldrh	r1, [r5]
-	mov	r2, #0xA0
-	ldrb	r3, [r5, #4]
-	cmp	r3, #0xFF
-	bne	nonitem
-	sub	r2, #0x20
-nonitem:
-	lsl	r2, r2, #7
-	mov	r0, r6
-	bl	icon
 
-	ldr r0, adr+28 @ICON_GAP
-	ldr r0, [r0]
-	add r6, r6, r0
-	add	r7, #2	@HELP memory increment
-	
-jump:
-	add	r5, #0x20
-test:
-	ldr	r0, [r5]
-	ldr r1, =0xFFFFFFFF
-	cmp	r0, r1
-	bne	doublecount
-	pop	{pc}
-
-doublecount: @二重表示防止
-	ldrh r0, [r5, #2]
-	ldr r2, =0x02003B00
-loopyloopy:
-	cmp r2, r7
-	beq limitter
-	ldrh r1, [r2]
-	cmp r0, r1
-	beq jump @被っていたら無視
-	add r2, #2
-	b loopyloopy
-
-limitter:
-	lsl r0, r7, #24
-	lsr r0, r0, #24
-	cmp r0, #ICON_NUM_LIMIT @アイコン上限
-	bne restart
-	pop {pc}
+    skillerBin:
+        ldrh r0, [r5, #0]
+        bl SKILL0
+    jumpBin:
+        add r5, #0x20
+    testBin:
+        ldr r0, [r5]
+        ldr r1, =0xFFFFFFFF
+        cmp r0, r1
+        bne restartBin
+        pop {r4, r5, pc}
 
 icon:
-	ldr	r3, =0x08003608
-	mov	pc, r3
+    push {lr}
+        ldr r0, =0x08003608
+        mov lr, r0
+        mov r0, r6          @Icon position
+        .short 0xF800
+
+    ldr r0, adr+28 @ICON_GAP
+    ldr r0, [r0]
+    add r6, r6, r0      @Icon position increment
+    add r7, #2          @HELP memory increment
+    pop {pc}
 
 
+SKILLabi: @ability仕様
+@
+@r0= abilityBit
+@r1= ABILITY.binのポインタ
+@
+        push {r4, r5, lr}
+        cmp r0, #0
+        beq falseAbi
+        mov r4, r0
+        mov r5, r1
+        b testAbi
 
-SKILL2: @ability仕様
-	push	{lr}
-	cmp	r4, #0
-	bne	test2
-	pop	{pc}
 
-restart2:
-	mov	r0, r4
-	mov	r2, #0x10
-loop2:
-	ldr	r1, [r5, r2]
-	cmp	r1,	#0
-	beq	jump2
-	and r1, r0
-	bne	skiller2
-	add	r2, #4
-	cmp	r2, #0x20
-	beq	jump2 @LISTlimit
-	b	loop2
+    restartAbi:
+        mov r0, r4
+        mov r2, #0x10
+    loopAbi:
+        ldr r1, [r5, r2]
+        cmp r1, #0
+        beq jumpAbi
+        and r1, r0
+        bne skillerAbi      @BitOn
+        add r2, #4
+        cmp r2, #0x20
+        beq jumpAbi         @LISTlimit
+        b loopAbi
 
-skiller2:
-	ldrh	r1, [r5, #2]
-	strh	r1, [r7]
-	ldrh	r1, [r5]
-	mov	r2, #0xA0
-	ldrb	r3, [r5, #4]
-	cmp	r3, #0xFF
-	bne	nonitem2
-	sub	r2, #0x20
-nonitem2:
-	lsl	r2, r2, #7
-	mov	r0, r6
-	bl	icon
+    skillerAbi:
+        ldrh r0, [r5, #0]
+        bl SKILL0
 
-	ldr r0, adr+28 @ICON_GAP
-	ldr r0, [r0]
-	add r6, r6, r0
-	add	r7, #2	@HELP memory increment
-	
-jump2:
-	add	r5, #0x20
-test2:
-	ldr	r0, [r5]
-	ldr r1, =0xFFFFFFFF
-	cmp	r0, r1
-	bne	doublecount2
-	pop	{pc}
-
-doublecount2:
-	ldrh r0, [r5, #2]
-	ldr r2, =0x02003B00
-loopyloopy2:
-	cmp r2, r7
-	beq limitter2
-	ldrh r1, [r2]
-	cmp r0, r1
-	beq jump2
-	add r2, #2
-	b loopyloopy2
-limitter2:
-	lsl r0, r7, #24
-	lsr r0, r0, #24
-	cmp r0, #ICON_NUM_LIMIT @アイコン上限
-	bne restart2
-	pop {pc}
-	
-	
-SKILL3: @新仕様1
-	push {r4, r5, lr}
-	ldr	r5, SKL_TBL	@skl_icon_table
-	cmp r4, #0
-	bne test3
-end3:
-	b endSKILL3
-test3:
-	cmp r4, #MAX_SKILL_NUM
-	bge end3
-	ldr r0, ICON_LIST_SIZE
-	mul r0, r4
-	add r5, r5, r0
-	ldrh r0, [r5]
-	cmp r0, #0
-	beq end3
-
-	ldr r2, =0x02003B00
-loopyloopy3:
-	cmp r2, r7
-	beq limitter3
-	ldrh r1, [r2]
-	cmp r0, r1
-	beq end3
-	add r2, #2
-	b loopyloopy3
-limitter3:
-	lsl r0, r7, #24
-	lsr r0, r0, #24
-	cmp r0, #ICON_NUM_LIMIT @アイコン上限
-	beq end3
-
-	ldrb r0, [r5, #3]
-	mov r1, #1
-	tst r0, r1
-	bne end3
-
-	ldrh r0, [r5]
-	cmp r0, #0
-	beq end3 @ヘルプが無ければ終了
-	strh r0, [r7]
-	add r1, r4, #1
-	add r1, #255
-	mov r2, #0xA0
-	ldrb r3, [r5, #2]
-	cmp r3, #0xFF
-	bne nonitem3
-	sub r2, #0x20
-nonitem3:
-	lsl r2, r2, #7
-	mov r0, r6
-	bl icon
-
-	ldr r0, adr+28 @ICON_GAP
-	ldr r0, [r0]
-	add r6, r6, r0
-	add r7, #2	@HELP memory increment
-endSKILL3:
-	pop {r4, r5, pc}
-
+    jumpAbi:
+        add r5, #0x20
+    testAbi:
+        ldr r0, [r5]
+        ldr r1, =0xFFFFFFFF
+        cmp r0, r1
+        bne restartAbi
+    falseAbi:
+        pop {r4, r5, pc}
 
 SKILL4:
-	push {r3, r4, lr} @r4=判定ID
-	cmp r4, #0
-	beq end4
-	mov r4, #0 @以後r4はカウンタ
-	lsl r3, r3, #2 @リスト始点をずらす
-	b next4
-	
-loopstart4:
-	ldr r0, [r5, r3] @リストポインタロード
-	cmp r0, #0
-	beq next4
-@ダブりチェック
-	ldrh r0, [r5]
-	ldr r2, =0x02003B00
-loopyloopy4:
-	cmp r2, r7
-	beq list_checker
-	ldrh r1, [r2]
-	cmp r0, r1
-	beq next4
-	add r2, #2
-	b loopyloopy4
-	
-list_checker:
-	ldr r2, [r5, r3] @リストポインタロード
-	ldr r1, [sp, #4]  @IDをロード
-list_loop:
-	ldrb r0, [r2]
-	cmp r0, #0
-	beq next4
-	cmp r0, r1
-	beq limitter4 @IDが一致
-	add r2, #1
-	b list_loop
+@
+@ r0 = classID or WeaponID etc
+@ r1 = 1=Unit 2=class 3=weapon
+@
+@
+        push {r4, r5, lr}
+        sub sp, #4
+        cmp r0, #0
+        beq end4
 
-limitter4: @上限チェック
-	lsl r1, r7, #24
-	lsr r1, r1, #24
-	cmp r1, #ICON_NUM_LIMIT @アイコン上限
-	beq end4
+        str r0, [sp, #0]        @レジスタ足りない
+        mov r4, #0
+        mov r5, r1
+        lsl r5, r5, #2 @リスト始点をずらす
+    
+    loopstart4:
+        add r4, #1
+        cmp r4, #255
+        bge end4
 
-	ldrb r0, [r5, #3]
-	mov r1, #1
-	tst r0, r1
-	bne next4
+        ldr r0, ICON_LIST_SIZE
+        mul r0, r4
+        ldr r1, SKL_TBL     @skl_icon_table
+        add r0, r1
+    
+        ldr r2, [r0, r5]        @リストポインタロード
+        ldr r1, =0xFFFFFFFF
+        cmp r2, r1
+        beq end4                        @リスト末尾
+    
+        cmp r2, #NULL
+        beq loopstart4
+    
+    list_loop:
+        ldr r1, [sp, #0]        @レジスタ足りない
+        ldrb r0, [r2]
+        cmp r0, #0
+        beq loopstart4
+        cmp r0, r1
+        beq limitter4 @IDが一致
+        add r2, #1
+        b list_loop
 
-	ldrh r0, [r5]
-	cmp r0, #0
-	beq next4 @ヘルプが無ければ次へ
-	strh r0, [r7] @ヘルプストア
-	add r1, r4, #1
-	add r1, #255
-	mov r2, #0xA0
-	ldrb r0, [r5, #2]
-	cmp r0, #0xFF
-	bne nonitem4
-	sub r2, #0x20
-nonitem4:
-	lsl r2, r2, #7
-	mov r0, r6
-	bl icon
-	ldr r3, [sp]  @r3復帰
-	lsl r3, r3, #2 @リスト始点をずらす
+    limitter4:
+        mov r0, r4
+        bl SKILL0
+        b loopstart4
+    end4:
+        add sp, #4
+        pop {r4, r5, pc}
 
-	ldr r0, adr+28	@ICON_GAP
-	ldr r0, [r0]
-	add r6, r6, r0
-	add r7, #2	@HELP memory increment
-next4:
-	ldr r0, ICON_LIST_SIZE
-	add r5, r0
-	add r4, #1
-	cmp r4, #MAX_SKILL_NUM
-	ble loopstart4
-end4:
-	pop {r3, r4, pc}
+
+SKILL0:
+@
+@r0=SkillID
+@
+@
+@r7=
+@
+        push {r4, lr}
+        cmp r0, #0
+        beq FALSE
+        mov r1, #0xFF
+        and r0, r1
+        cmp r0, #MAX_SKILL_NUM
+        bge FALSE
+        mov r4, r0
+
+        ldr r3, SKL_TBL     @skl_icon_table
+        ldr r1, ICON_LIST_SIZE
+        mul r1, r4
+        add r3, r3, r1
+
+        ldrb r0, [r3, #3]
+        mov r1, #1
+        tst r0, r1
+        bne FALSE               @無視フラグ
+
+        ldrh r0, [r3]
+        cmp r0, #0
+        beq FALSE               @ヘルプ無し
+    @ヘルプ重複検索
+        ldr r2, =0x02003B00
+    loopDedup:
+        cmp r2, r7
+        beq notDouble
+        ldrh r1, [r2]
+        cmp r0, r1
+        beq FALSE               @ヘルプ重複
+        add r2, #2
+        b loopDedup
+
+    notDouble:
+        lsl r1, r7, #24
+        lsr r1, r1, #24
+        cmp r1, #ICON_NUM_LIMIT
+        beq FALSE               @アイコン上限
+
+        strh r0, [r7]       @ヘルプストア
+
+        ldr r1, =0x100
+        add r1, r4
+        mov r2, #0xA0       @color
+
+        ldrb r3, [r3, #2]
+        cmp r3, #0xFF
+        bne jump
+        mov r2, #0x80
+    jump:
+        lsl r2, r2, #7
+@        mov r0, r6
+        bl icon
+
+
+    FALSE:
+        pop {r4, pc}
+
+
+
 
 Initialize:
 	push {lr}
+	mov	r4, #0
 	bl getEquipmentPositionData
 	ldr r0, [r0]
 	
@@ -655,7 +569,11 @@ loopE:
 	str	r5, [r7, #4]
 	str	r5, [r7, #8]
 	str	r5, [r7, #12]
-	pop {pc}
+
+    ldr r4, =0x02003BFC
+    ldr r4, [r4, #12]
+    ldr r4, =0x0203a4e8
+    pop {pc}
 
 getEquipmentPositionData:
 	ldr r0, adr+20
@@ -667,9 +585,7 @@ Get_WpLv:
 	ldr r1, =0x08016b04
 	mov pc, r1
 
-Set02003BFCtoR4:
-    ldr r4, =0x02003BFC
-    bx lr
+
 
 get_Skill:
 	ldr r2, GET_SKILL_FUNC
