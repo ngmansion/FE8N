@@ -30,6 +30,9 @@ MasterySkill:
 		cmp r0, #1
 		beq endMasterySkill @見切り持ち
 		
+		bl Pierce
+		cmp r0, #1
+		beq endMasterySkill
 		bl Dragon
 		cmp r0, #1
 		beq endMasterySkill
@@ -112,11 +115,37 @@ Revenge:
 endRevenge:
 	pop {pc}
 
-Dragon:
-	push {lr}
+Pierce:
+    push {lr}
     mov r0, r7
     mov r1, #0
-	bl HasDragon
+    bl HAS_PIERCE_FUNC
+    cmp r0, #0
+    beq endPierce
+@奥義目印
+    ldrb r0, [r7, #21]	@技
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq endPierce
+
+    ldrh r0, [r5, #6]
+    asr r1, r0, #1
+    add r1, r0
+    strh r1, [r5, #6]
+
+    mov r0, r7
+    ldr r1, HAS_PIERCE
+    bl SetAtkSkillAnimation
+    mov r0, #1
+endPierce:
+    pop {pc}
+
+Dragon:
+    push {lr}
+    mov r0, r7
+    mov r1, #0
+    bl HasDragon
     cmp r0, #0
     beq endDragon
 @奥義目印
@@ -134,10 +163,10 @@ Dragon:
     mov r0, r7
     ldr r1, HAS_DRAGON_FUNC
     bl SetAtkSkillAnimation
-	mov r0, #1
+    mov r0, #1
 endDragon:
-	pop {pc}
-	
+    pop {pc}
+
 Meido:
 	push {lr}
 @	cmp	r3, #0xAA
@@ -328,7 +357,8 @@ SET_SKILLANIME_ATK_FUNC = (adr+28)
 HAS_MAGIC_BIND_FUNC = (adr+32)
 HAS_FALLENSTAR_FUNC = (adr+36)
 FODES_FUNC = (adr+40)
-	
+HAS_PIERCE = (adr+44)
+
 HasNihil:
 	ldr r2, NIHIL
 	mov pc, r2
@@ -372,6 +402,10 @@ mov pc, r2
 
 FodesFunc:
 ldr r2, FODES_FUNC
+mov pc, r2
+
+HAS_PIERCE_FUNC:
+ldr r2, HAS_PIERCE
 mov pc, r2
 
 .align

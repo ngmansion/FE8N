@@ -43,6 +43,7 @@ POIN set_skillanime_attack
 POIN hasMagicBind
 POIN hasFallenStar
 POIN fodes_func
+POIN HAS_PIERCE
     
 hasFallenStar:
   HAS_COMBAT
@@ -68,4 +69,8 @@ hasIgnis:
 hasMagicBind:
     HAS_COMBAT
     WORD MagicBindID
+
+HAS_PIERCE:
+    HAS_OCCULT
+    WORD PierceID
 
