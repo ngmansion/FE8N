@@ -7,7 +7,7 @@
 	mov r5,r1  @SkillID
 
 	cmp		r5,#128
-	blt		exit	@アニメーションを持っていない
+	bge		exit	@アニメーションを持っていない
 	@発動したスキルIDを記録したい.
 	@ただ、アニメーションを持っていないスキルIDは記録したくない.
 	ldr		r3,	adr	 @SkillAnimation* SkillAnimation[SKILL_ID] skillanimation@
