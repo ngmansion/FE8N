@@ -117,28 +117,32 @@ endRevenge:
 
 Pierce:
     push {lr}
+    ldr r0, =0x0203a4d2
+    ldrb r0, [r0]
+    cmp r0, #1
+    bgt falsePierce       @近距離じゃなければ終了
+
     mov r0, r7
     mov r1, #0
     bl HAS_PIERCE_FUNC
     cmp r0, #0
-    beq endPierce
+    beq falsePierce
 @奥義目印
     ldrb r0, [r7, #21]	@技
     mov r1, #0
     bl random
     cmp r0, #0
-    beq endPierce
+    beq falsePierce
 
-    ldrh r0, [r5, #6]
-    asr r1, r0, #1
-    add r1, r0
-    strh r1, [r5, #6]
+    mov r4, #0
 
     mov r0, r7
     ldr r1, HAS_PIERCE
     bl SetAtkSkillAnimation
     mov r0, #1
-endPierce:
+    .short 0xE000
+falsePierce:
+    mov r0, #0
     pop {pc}
 
 Dragon:
