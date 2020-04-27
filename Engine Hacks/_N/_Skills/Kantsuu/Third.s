@@ -128,13 +128,13 @@ Pierce:
     cmp r0, #0
     beq falsePierce
 @奥義目印
-    ldrb r0, [r7, #21]	@技
+    ldrb r0, [r7, #8]       @レベル
     mov r1, #0
     bl random
     cmp r0, #0
     beq falsePierce
 
-    mov r4, #0
+    mov r4, #0              @防御or耐魔0
 
     mov r0, r7
     ldr r1, HAS_PIERCE
