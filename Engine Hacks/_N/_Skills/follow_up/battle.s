@@ -25,23 +25,23 @@ retSemetate:
 
     ldr r0, [sp, #4]
     ldr r1, [sp, #0]
-    bl $0002af88
+    bl $0002af88        @二手目
     cmp r0, #0
     bne battle_end      @試合終了
 
 
     ldr r0, =0x0203a4e8
     ldr r1, =0x0203a568
-    bl FollowUpBattle
+    bl FollowUpBattle   @三手目
     cmp r0, #0
     bne battle_end      @試合終了
     b force_battle
 
-reverse:
+reverse:        @攻め立て発動。
 
     ldr r0, =0x0203a4e8
     ldr r1, =0x0203a568
-    bl FollowUpBattle
+    bl FollowUpBattle       @三手目
     cmp r0, #0
     bne battle_end      @試合終了
 
@@ -60,7 +60,7 @@ reverse:
 
     ldr r0, [sp, #4]
     ldr r1, [sp, #0]
-    bl $0002af88
+    bl $0002af88        @二手目
     cmp r0, #0
     bne battle_end      @試合終了
 
@@ -68,7 +68,7 @@ force_battle:
 
     ldr r1, =0x0203a4e8
     ldr r0, =0x0203a568
-    bl FollowUpBattle
+    bl FollowUpBattle       @四手目
 
 battle_end:         @敵機撃破
     ldr r0, =0x0802aec0

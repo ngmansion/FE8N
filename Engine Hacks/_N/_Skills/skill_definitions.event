@@ -169,3 +169,4 @@
 #define CatnapID 172 //0xAC 自己回復(自軍のみ)
 #define MasterOfArmsID 173 //0xAD 武芸者
 #define PierceID 174 //0xAE 貫通
+#define ChargingLanceID 167 //0xAF ランス

@@ -15,8 +15,8 @@ HAS_DARTING_FUNC = (Adr+36)
     bl followup_skill
 
     cmp r0, r1
-    bgt greater1
-    blt greater2
+    bgt greater1    @相手より追撃値が高い
+    blt greater2    @相手より追撃値が低い
 equal:
     cmp r0, #0
     bge normal
@@ -26,13 +26,13 @@ disable:
 
 greater1:
     cmp r0, #0
-    bgt active1 @絶対追撃
-    blt disable @追撃不可
+    bgt active1     @追撃値が+1以上なので絶対追撃
+    blt disable     @追撃値が-1以下なので追撃不可
 @自分は追撃可能性あり、相手は追撃不可
 @    mov r0, r5
 @    mov r1, r6
 @    bl cancel
-    b normal
+    b normal    @追撃値0。
 
 greater2:
     b disable           @新仕様だとここに入った時点でdisableで問題ない
@@ -75,7 +75,8 @@ followup_skill:
         push {r5, r6, lr}
         mov r5, #0
         mov r6, #0
-        
+
+    @守備隊形
         ldr r0, [r4]
         ldr r1, [r7]
         bl waryFighter_judgeActivate    @守備隊形
@@ -86,6 +87,7 @@ followup_skill:
         sub r6, #1
     jumpWaryFighter:
 
+    @差し違え
         ldr r0, [r4]
         ldr r1, [r7]
         bl BrashAssault @差し違え
@@ -94,6 +96,7 @@ followup_skill:
         add r5, #1
     jumpBrashAssault:
 
+    @切り返し
         ldr r1, [r4]
         ldr r0, [r7]
         bl QuickRiposte @切り返し
@@ -102,6 +105,7 @@ followup_skill:
         add r6, #1
     jumpQuickRiposte:
 
+    @瞬撃
         ldr r0, [r4]
         ldr r1, [r7]
         bl Impact   @瞬撃
@@ -109,6 +113,8 @@ followup_skill:
         beq jumpImpact
         sub r6, #1
     jumpImpact:
+
+    @戦技
         ldr r0, [r4]
         bl WarSkill @戦技
         cmp r0, #0
