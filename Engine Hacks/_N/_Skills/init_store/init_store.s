@@ -30,6 +30,16 @@ notAlly:
 	mov	r0, #64		@難易度ハード
 	and r0, r1
 	beq RETURN
+@ボスチェック
+    ldr r0, [r4]
+    ldr r1, [r4, #4]
+    ldr r0, [r0, #40]
+    ldr r1, [r1, #40]
+    orr r0, r1
+    ldr r1, =0x01008000
+    and r0, r1
+    beq RETURN       @ボスじゃない
+
 	mov r5, #0
 	bl GetSkill_em
 	mov r5, r0

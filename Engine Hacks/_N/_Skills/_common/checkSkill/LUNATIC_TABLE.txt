@@ -87,20 +87,20 @@ BYTE WrathID
 BYTE MiracleID     //司祭
 BYTE MiracleID
 
-BYTE 0
+BYTE 0     //バード
 BYTE 0
 
 BYTE DartingBlowID      //ペガサス
 BYTE DartingBlowID
 
-BYTE MiracleID     //司祭
-BYTE MiracleID
-BYTE MiracleID
+BYTE MiracleID     //シスター
+BYTE MiracleID     //トルバドール
+BYTE MiracleID     //ヴァルキュリア
 
 BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
+BYTE CancelAffinityID    //ソルジャー
+BYTE 0    //ネクロマンサー
+BYTE 0    //船団
 BYTE 0
 
 BYTE 0//ゾンビ
