@@ -23,7 +23,8 @@ next:
     bl WarSkill
     bl EffectiveBonus
     bl godBless
-	
+    bl ChagingLance
+
 Return:
     ldr r5, [r4, #76]
     ldr r0, =0x0802ad44
@@ -294,6 +295,56 @@ endBless:
     mov r0, #0
     pop {pc}
 
+ChagingLance:
+        push {r5, lr}
+        bl GetDistance
+        ldrb r0, [r0]
+        cmp r0, #1
+        bgt endCharge       @遠距離は無効
+        mov r0, r4
+        mov r1, #0
+        bl HAS_CHARGING_LANCE
+        cmp r0, #0
+        beq endCharge
+        
+        mov r0, r4
+        bl GetWalked
+        cmp r0, #8
+        ble jumpCharge
+        mov r0, #8
+    jumpCharge:
+        mov r5, r0
+        bl GET_CHARGING_COEF
+        mul r0, r5
+        mov r1, #90
+        ldrh r2, [r4, r1]
+        add r2, r0
+        strh r2, [r4, r1] @自分
+    endCharge:
+        pop {r5, pc}
+
+GetWalked:
+        mov r1, r0
+        ldr r2, =0x0202be44
+        ldrb r0, [r1, #16]
+        ldrb r3, [r2, #0]
+        sub r0, r0, r3
+        bge jump1Walked
+        neg r0, r0  @絶対値取得
+    jump1Walked:
+
+        ldrb r1, [r1, #17]
+        ldrb r2, [r2, #2]
+        sub r2, r1, r2
+        bge jump2Walked
+        neg r2, r2  @絶対値取得
+    jump2Walked:
+        add r0, r0, r2
+        bx lr
+GetDistance:
+    ldr r0, =0x0203a4d2
+    bx lr
+
 SHISEN_ADR = (adr+0)
 NIHIL_ADR = (adr+12)
 LULL_ADR = (adr+16)
@@ -331,6 +382,14 @@ recalcSpd:
 HasLull:
     ldr r2, LULL_ADR
     mov pc, r2
+
+HAS_CHARGING_LANCE:
+    ldr r2, (adr+48)
+    mov pc, r2
+GET_CHARGING_COEF:
+    ldr r0, (adr+52)
+    bx lr
+
 
 .ltorg
 .align

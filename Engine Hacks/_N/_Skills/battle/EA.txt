@@ -1,4 +1,4 @@
-
+#include config.txt
 
 
 PUSH
@@ -68,6 +68,8 @@ battle_after:
     POIN hasKnightkneeler
     POIN hasMonsterBlast
     POIN hasAtrocity
+    POIN HasChargingLance
+    WORD CHARGING_LANCE_COEF
     
     
 battle_down:
@@ -230,4 +232,7 @@ hasFort:
 HAS_CHARGE:
     HAS_SKILL
     WORD ChargingStrikeID
+HasChargingLance:
+    HAS_SKILL
+    WORD ChargingLanceID
 
