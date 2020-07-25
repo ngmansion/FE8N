@@ -165,7 +165,7 @@ Class:
 
 		ldr r0, [r4, #4]
 		ldrb r0, [r0, #4]
-		mov r3, #2      @CLASS
+		mov r1, #2      @CLASS
 		bl SKILL4
 
 		pop {pc}
