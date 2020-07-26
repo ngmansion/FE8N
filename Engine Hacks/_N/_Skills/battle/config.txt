@@ -1,2 +1,0 @@
-#define CHARGING_LANCE_COEF (2)     //ランス系武器攻撃係数
-

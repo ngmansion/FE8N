@@ -1,0 +1,2 @@
+#define CHARGING_LANCE_COEF            (3)              //ランス系武器攻撃係数
+#define CHARGING_LANCE_ITEM_EFFECT_ID  (0x46)           //アイテム効果がこの値だと、ランス系武器になる

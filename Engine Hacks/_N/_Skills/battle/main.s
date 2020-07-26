@@ -296,16 +296,22 @@ endBless:
     pop {pc}
 
 ChagingLance:
-        push {r5, lr}
-        bl GetDistance
-        ldrb r0, [r0]
-        cmp r0, #1
-        bgt endCharge       @遠距離は無効
-        mov r0, r4
-        mov r1, #0
-        bl HAS_CHARGING_LANCE
-        cmp r0, #0
-        beq endCharge
+        push {lr}
+        bl GET_ATTACKER_ADDR
+        ldr r0, [r0]
+        ldrb r0, [r0, #0xB]
+        ldrb r1, [r4, #0xB]
+        cmp r0, r1
+        bne endCharge       @攻めてない
+
+        mov r0, #74
+        ldrh r0, [r4, r0]
+        bl GET_ITEM_EFFECT
+
+        mov r1, r0
+        bl GET_CHARGING_EFFECT_ID
+        cmp r0, r1
+        bne endCharge
         
         mov r0, r4
         bl GetWalked
@@ -313,15 +319,14 @@ ChagingLance:
         ble jumpCharge
         mov r0, #8
     jumpCharge:
-        mov r5, r0
-        bl GET_CHARGING_COEF
-        mul r0, r5
+
+        bl MUL_CHARGING_COEF
         mov r1, #90
         ldrh r2, [r4, r1]
         add r2, r0
         strh r2, [r4, r1] @自分
     endCharge:
-        pop {r5, pc}
+        pop {pc}
 
 GetWalked:
         mov r1, r0
@@ -356,6 +361,13 @@ HORSE_E_ADR = (adr+36)
 MONSTER_E_ADR = (adr+40)
 HAS_ATROCITY_ADR = (adr+44)
 
+GET_ITEM_EFFECT:
+    ldr r1, =0x080174e4
+    mov pc, r1
+GET_ATTACKER_ADDR:
+    ldr r0, =0x03004df0
+    bx lr
+
 
 HasAtrocity:
     ldr r2, HAS_ATROCITY_ADR
@@ -383,13 +395,14 @@ HasLull:
     ldr r2, LULL_ADR
     mov pc, r2
 
-HAS_CHARGING_LANCE:
-    ldr r2, (adr+48)
-    mov pc, r2
-GET_CHARGING_COEF:
+MUL_CHARGING_COEF:
+    ldr r1, (adr+48)
+    mul r0, r1
+    bx lr
+.align
+GET_CHARGING_EFFECT_ID:
     ldr r0, (adr+52)
     bx lr
-
 
 .ltorg
 .align
