@@ -49,7 +49,7 @@ hasDoubleLion:
 
 HasAdept:
     HAS_NIHIL
-    WORD 0
+    WORD 0xFF
 
 ////////////////必的の後処理
 PUSH
