@@ -15,7 +15,7 @@ HAS_DARTING_FUNC = (Adr+36)
     bl GetFollowUpPoint
 
     cmp r0, #0
-    bgt active     @追撃値プラス
+    bgt active      @追撃値プラス
     blt disable     @追撃値マイナス
     b normal
 
@@ -51,18 +51,18 @@ GetFollowUpPoint:
         eor r7, r4
         eor r4, r7
         eor r7, r4
-        bl followup_skills
+        bl followup_skills_def
         eor r0, r1
         eor r1, r0
         eor r0, r1
         b endReverse
     notReverse:
-        bl followup_skills
+        bl followup_skills_atk
     endReverse:
         pop {r4, r5, r6, r7, pc}
 
 
-followup_skills:
+followup_skills_atk:
         push {lr}
     @守備隊形
         mov r0, r4
@@ -70,7 +70,6 @@ followup_skills:
         bl waryFighter_judgeActivate    @守備隊形
         cmp r0, #0
         beq jumpWaryFighter
-    @守備隊形発動中
         sub r5, #1
         sub r6, #1
     jumpWaryFighter:
@@ -84,9 +83,34 @@ followup_skills:
         add r5, #1
     jumpBrashAssault:
 
+    @戦技
+        mov r0, r4
+        bl WarSkill @戦技
+        cmp r0, #0
+        beq jumpWar
+        sub r5, #1
+    jumpWar:
+
+        mov r0, r5
+        mov r1, r6
+        pop {pc}
+
+
+followup_skills_def:
+        push {lr}
+    @守備隊形
+        mov r0, r4
+        mov r1, r7
+        bl waryFighter_judgeActivate    @守備隊形
+        cmp r0, #0
+        beq jumpWaryFighter_def
+        sub r5, #1
+        sub r6, #1
+    jumpWaryFighter_def:
+
     @切り返し
-        mov r1, r4
         mov r0, r7
+        mov r1, r4
         bl QuickRiposte @切り返し
         cmp r0, #0
         beq jumpQuickRiposte
@@ -102,18 +126,9 @@ followup_skills:
         sub r6, #1
     jumpImpact:
 
-    @戦技
-        mov r0, r4
-        bl WarSkill @戦技
-        cmp r0, #0
-        beq jumpWar
-        sub r5, #1
-    jumpWar:
-
         mov r0, r5
         mov r1, r6
         pop {pc}
-
 
 WarSkill:
         ldrb r1, [r0, #0xB]
