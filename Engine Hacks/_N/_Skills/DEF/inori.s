@@ -291,7 +291,7 @@ ouiShield:
 	cmp	r0, #0
 	beq	falseShield
 	ldrh	r0, [r4, #4]
-	bl divide4
+	bl divide5
 	strh	r0, [r4, #4]
 	
     mov r0, r8
@@ -339,7 +339,7 @@ HolyShield:
 	cmp	r0, #0
 	beq	falseHoly
 	ldrh	r0, [r4, #4]
-	bl divide4
+	bl divide5
 	strh	r0, [r4, #4]
 	
     mov r0, r8
@@ -527,6 +527,13 @@ Xeno:
 	endXeno:
 		bx lr
 
+divide5:
+        asr r0, r0, #1
+        cmp r0, #0
+        bgt not_div5
+        mov r0, #1
+    not_div5:
+        bx lr
 
 
 divide4:
@@ -535,9 +542,9 @@ divide4:
         mov r1, #5
         swi #6      @4割
         cmp r0, #0
-        bgt not_div
+        bgt not_div4
         mov r0, #1
-    not_div:
+    not_div4:
         bx lr
 
 HAS_BIG_SHIELD_FUNC = (adr+0)
