@@ -14,10 +14,10 @@ default:
     and r0, r1
     beq false
 true:
-    mov r0, #1
+    mov r0, #1      @壊れない
     b end
 false:
-    mov r0, #0
+    mov r0, #0      @壊れる
 end:
     bx lr
 

@@ -1,3 +1,5 @@
+@盾無視や盾破壊によるダメージ増を見る
+
 INVARID_ITEM = (0xFF)
 BREAK_NUM = (0xFF)
 DEAD_EYE_FLAG = (0x4C)
@@ -18,13 +20,13 @@ DEAD_EYE_FLAG = (0x4C)
 	ble	physics
 	cmp	r0, #8
 	bge	physics
-	mov	r0, #1
+	mov	r0, #1      @魔法フラグ
 	b	magic
 physics:
-	mov	r0, #0
+	mov	r0, #0      @物理フラグ
 magic:
 	mov	r1, r8
-	bl	SHIELD
+	bl	SHIELD      @盾ボーナス値と盾破壊位置取得
 	cmp	r0, #0
 	beq	RETURN
 	cmp	r1, #255
@@ -91,12 +93,19 @@ loopShield:
 	ldrh	r0, [r4, r6]
 	cmp	r0, #0
 	beq	loopShield
+		ldr	r1, =0x0801732c
+		mov	lr, r1
+		.short 0xF800
+	cmp r0, #0
+	beq loopShield	@回数ゼロ
+
+	ldrh	r0, [r4, r6]
 		ldr	r1, =0x08017314
 		mov	lr, r1
 		.short 0xF800
 	mov	r2, r1
 	mov	r1, r0
-	lsl	r0, r1, #6	@;盾パッチの下のビット
+	lsl	r0, r1, #6	@盾パッチの下のビット
 	bmi	isShield
 	b	loopShield
 loopEnd:

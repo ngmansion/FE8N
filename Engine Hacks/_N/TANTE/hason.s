@@ -1,3 +1,5 @@
+@破壊された盾は、回数255を消す
+@エリクサーは、効果を発揮させて減らす
 
 .thumb
 @ 0802aec8
@@ -70,16 +72,38 @@ notElixir:
 	lsr	r1, r0, #8
 	cmp r1, #BREAK_NUM
 	bne	HASON_loop	@回数0xFF以外はジャンプ
-	mov	r0, #0
+	bl CheckBreak
+    cmp r0, #0
+    beq jumpBreak
+	ldrh r0, [r5, r4]
+	lsl r0, r0, #24
+	lsr r0, r0, #24
+jumpBreak:
 	strh	r0, [r5, r4]	@FF回数のアイテム消滅
 	b	HASON_loop
 end:
 	pop	{r4, r5, pc}
 
+
+CheckBreak:
+    push {lr}
+    ldr r1, =0x080172c0
+    mov lr, r1
+    .short 0xF800
+    mov r0, r1
+    bl NEED_BREAK_FUNC
+    pop {pc}
+
+
 $08016894:
 ldr	r1, =0x08016894
 mov	pc, r1
 
+
+NEED_BREAK_FUNC:
+ldr r1, addr
+mov pc, r1
+
 .align
 .ltorg
-
+addr:
