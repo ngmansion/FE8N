@@ -1,3 +1,4 @@
+@盾のステータス上昇効果
 INVARID_ITEM = (0xFF)
 
 .thumb
