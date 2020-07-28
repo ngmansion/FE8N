@@ -71,8 +71,8 @@ force_battle:
     bl FollowUpBattle       @四手目
 
 battle_end:         @敵機撃破
-    ldr r0, =0x0802aec0
-    mov pc, r0
+    ldr r1, =0x0802aec0
+    mov pc, r1
 
 
 @r4 = sp,#4
@@ -144,6 +144,6 @@ HAS_SEMETATE:
     mov pc, r2
 
 
-.align 4
+.align
 .ltorg
 addr:

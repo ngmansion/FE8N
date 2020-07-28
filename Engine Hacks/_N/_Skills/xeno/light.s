@@ -3,8 +3,9 @@
     ldr r1, [r2]
     cmp r1, #0
     beq not
+    ldrb r1, [r2]
     cmp r1, #0xFF
-    bne not    @ID書き込み済み=非突撃
+    bne not    @部隊IDが無効値以外=非突撃なのでジャンプ
 @突撃
     mov r1, #0
     str r1, [r2]

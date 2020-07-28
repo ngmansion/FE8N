@@ -37,7 +37,7 @@ Retrun:
     ldr r3, [r6, #0]
     ldr r1, [r3, #0]
     lsl r1, r1, #8
-@	lsr r1, r1, #27
+    lsr r1, r1, #27
     
     ldr r0, =0x0802aec8
     mov pc, r0
