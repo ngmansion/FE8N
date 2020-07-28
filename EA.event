@@ -5,8 +5,9 @@
 //以下は必要に応じて有効化させる
 //	#define Debug_Mode	/* デバッグモード有効化 */
 //	#define DOWNLOAD	/* ダウンロードデータ有効化 */
-//	#define RANDOM_SKILL	/* ランダム習得スキル有効化 */
-	
+//	#define RANDOM_SKILL	/* 敵将のランダムスキル有効化 */
+//	#define LUNATIC_SKILL	/* ハードモードに敵専用兵種スキル追加 */
+
 	ORG Free_Space
 
 MESSAGE starts at CURRENTOFFSET
