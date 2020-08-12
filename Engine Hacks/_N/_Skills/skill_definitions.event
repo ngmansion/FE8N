@@ -171,4 +171,5 @@
 #define PierceID 174 //0xAE 貫通
 #define ScreamMasteryID         175 //0xAF 奥義叫喚
 #define StunMasteryID           176 //0xB0 奥義衝撃
+#define CancelRadianceID        178 //0xB1 キャンセル(蒼炎)
 
