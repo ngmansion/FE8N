@@ -2,7 +2,7 @@
 WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
 ATTACK_FLG_OFFSET = (69)	@書き込み先(AI2カウンタ)
 FIRST_ATTACKED_FLAG = (0b00010000)
-STORM               = (0b00100000) @狂嵐フラグ
+COMBAT_HIT               = (0b00100000) @戦技発動フラグ
 
 @ORG 0802b868
 .thumb
@@ -189,7 +189,7 @@ Combat_Arts_Func:
         add r0, #ATTACK_FLG_OFFSET
         ldrb r1, [r0]
 
-        mov r2, #STORM
+        mov r2, #COMBAT_HIT
         orr r1, r2
 
         strb r1, [r0]       @戦技発動

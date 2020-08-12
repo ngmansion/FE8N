@@ -9,7 +9,7 @@ ATTACK_FLG_OFFSET = (69)    @書き込み先(AI2カウンタ)
 
 DEFEAT   = (0b10000000) @撃破フラグ
 DEFEATED = (0b01000000) @迅雷済みフラグ
-STORM    = (0b00100000) @狂嵐フラグ
+COMBAT_HIT    = (0b00100000) @戦技発動フラグ
 FIRST    = (0b00010000) @初撃フラグ
 
 DEFEAT2 = (0xC0)
@@ -210,7 +210,7 @@ clear_defeat:
 
 @再行動済みは消さない
 
-        mov r2, #STORM
+        mov r2, #COMBAT_HIT
         bic r0, r2
 
         mov r2, #FIRST
@@ -243,7 +243,7 @@ RagingStorm:
         add r1, #ATTACK_FLG_OFFSET
         ldrb r1, [r1]
     
-        mov r0, #STORM
+        mov r0, #COMBAT_HIT
         tst r0, r1
         beq falseStorm      @ビットオフ(当たってないので)ジャンプ
 

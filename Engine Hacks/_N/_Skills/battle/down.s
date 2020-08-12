@@ -7,7 +7,7 @@ ATTACK_FLG_OFFSET = (69)    @書き込み先(AI2カウンタ)
 @HITANDRUN_FLAG     = (0b00001000) @一撃離脱フラグ
 @LUNGE_FLAG    = (0b00010000) @切り込みフラグ
 
-STORM                 = (0b00100000) @狂嵐フラグ
+COMBAT_HIT                 = (0b00100000) @戦技発動フラグ
 FIRST_ATTACKED_FLAG   = (0b00010000)
 
 .thumb
@@ -90,7 +90,7 @@ KnockBack:
         mov r2, r5
         add r2, #ATTACK_FLG_OFFSET
         ldrb r0, [r2]
-        mov r1, #STORM
+        mov r1, #COMBAT_HIT
         tst r0, r1
         beq endKnockBack      @持ってないので終了
 
@@ -157,7 +157,7 @@ HitAndRun:
         mov r2, r5
         add r2, #ATTACK_FLG_OFFSET
         ldrb r0, [r2]
-        mov r1, #STORM
+        mov r1, #COMBAT_HIT
         tst r0, r1
         beq endHitAndRun      @持ってないので終了
 
@@ -210,7 +210,7 @@ Lunge:
         mov r2, r5
         add r2, #ATTACK_FLG_OFFSET
         ldrb r0, [r2]
-        mov r1, #STORM
+        mov r1, #COMBAT_HIT
         tst r0, r1
         beq endLunge      @持ってないので終了
 

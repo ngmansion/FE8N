@@ -64,7 +64,7 @@ endAlina:
 
 DEFEAT   = (0b10000000) @撃破フラグ
 @DEFEATED = (0b01000000) @迅雷済みフラグ
-@STORM    = (0b00100000) @狂嵐フラグ
+
 
 defeat_flag:
 @撃破していたらフラグをオン
