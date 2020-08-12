@@ -44,6 +44,8 @@ POIN hasMagicBind
 POIN hasFallenStar
 POIN fodes_func
 POIN HAS_PIERCE
+POIN HAS_STUN_MASTERY
+POIN HAS_SCREAM_MASTERY
     
 hasFallenStar:
   HAS_COMBAT
@@ -73,4 +75,11 @@ hasMagicBind:
 HAS_PIERCE:
     HAS_OCCULT
     WORD PierceID
+
+HAS_STUN_MASTERY:
+    HAS_OCCULT
+    WORD StunMasteryID
+HAS_SCREAM_MASTERY:
+    HAS_OCCULT
+    WORD ScreamMasteryID
 

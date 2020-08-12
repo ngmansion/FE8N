@@ -44,6 +44,12 @@ MasterySkill:
 		bl Flower
 		cmp r0, #1
 		beq endMasterySkill
+		bl StanMastery
+		cmp r0, #1
+		beq endMasterySkill
+		bl StoneMastery
+		cmp r0, #1
+		beq endMasterySkill
 		nop
 	endMasterySkill:
 		pop {pc}
@@ -300,11 +306,45 @@ Stan:
     cmp r0, #0
     beq endWar
 	
+trueStan:
 	mov	r1, r8
 	add	r1, #111
 	mov	r0, #0x24		@@状態異常(2スリプ,3サイレス,4バサク,Bストン)
 	strb	r0, [r1, #0]
 	b	Effect
+
+StanMastery:
+	push {lr}
+
+    mov r0, r7
+	mov r1, #0
+    bl HAS_STAN_MASTERY
+    cmp r0, #0
+    beq endWar
+
+    ldrb r0, [r7, #21]       @技
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq endWar
+
+	bl GET_STAN_MASTERY
+	mov r1, r0
+    mov r0, r7
+    bl SET_SKILLANIME_ATK_FUNC
+		mov	r0, r8
+		bl FodesFunc
+		beq	endWar
+		mov r0, r8
+		ldr r1, [r0]
+		ldr	r1, [r1, #40]
+		ldr r2, [r0, #4]
+		ldr	r2, [r2, #40]
+		orr	r1, r2
+		lsl	r1, r1, #16
+		bmi	endWar		@敵将に無効
+	b	trueStan
+
 
 Stone:
 	push {lr}
@@ -314,11 +354,45 @@ Stone:
 	bl HasScream
     cmp r0, #0
     beq endWar
-	
+trueStone:
 	mov	r1, r8
 	add	r1, #111
 	mov	r0, #0x1B		@@状態異常(2スリプ,3サイレス,4バサク,Bストン)
 	strb	r0, [r1, #0]
+	b Effect
+
+StoneMastery:
+	push {lr}
+
+    mov r0, r7
+    mov r1, #0
+	bl HAS_STONE_MASTERY
+    cmp r0, #0
+    beq endWar
+
+    ldrb r0, [r7, #21]       @技
+    mov r1, #0
+    bl random
+    cmp r0, #0
+    beq endWar
+
+	bl GET_STONE_MASTERY
+	mov r1, r0
+    mov r0, r7
+    bl SET_SKILLANIME_ATK_FUNC
+		mov	r0, r8
+		bl FodesFunc
+		beq	endWar
+		mov r0, r8
+		ldr r1, [r0]
+		ldr	r1, [r1, #40]
+		ldr r2, [r0, #4]
+		ldr	r2, [r2, #40]
+		orr	r1, r2
+		lsl	r1, r1, #16
+		bmi	endWar		@敵将に無効
+	b trueStone
+	
 Effect:	@状態異常特殊エフェクト
 @@	ldr	r3, =0x0203A604
 	ldr	r3, [r6]
@@ -363,7 +437,7 @@ HAS_STUN_FUNC = (adr+12)
 HAS_SCREAM_FUNC = (adr+16)
 HAS_IGNIS_FUNC = (adr+20)
 NIHIL = (adr+24)	@見切りアドレス
-SET_SKILLANIME_ATK_FUNC = (adr+28)
+@SET_SKILLANIME_ATK_FUNC = (adr+28)
 HAS_MAGIC_BIND_FUNC = (adr+32)
 HAS_FALLENSTAR_FUNC = (adr+36)
 FODES_FUNC = (adr+40)
@@ -403,7 +477,11 @@ HasVengeance:
 
 SetAtkSkillAnimation:
     ldr r1, [r1, #12]
-    ldr r2, SET_SKILLANIME_ATK_FUNC
+    ldr r2, (adr+28)
+    mov pc, r2
+
+SET_SKILLANIME_ATK_FUNC:
+    ldr r2, (adr+28)
     mov pc, r2
 
 HasFallenStar:
@@ -417,6 +495,24 @@ mov pc, r2
 HAS_PIERCE_FUNC:
 ldr r2, HAS_PIERCE
 mov pc, r2
+
+HAS_STAN_MASTERY:
+ldr r2, (adr+48)
+mov pc, r2
+
+GET_STAN_MASTERY:
+ldr r0, (adr+48)
+ldr r0, [r0, #12]
+bx lr
+
+HAS_STONE_MASTERY:
+ldr r2, (adr+52)
+mov pc, r2
+
+GET_STONE_MASTERY:
+ldr r0, (adr+52)
+ldr r0, [r0, #12]
+bx lr
 
 .align
 .ltorg
