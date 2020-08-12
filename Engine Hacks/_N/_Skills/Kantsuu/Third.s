@@ -260,7 +260,7 @@ FallenStar:
 		mov r0, #48
 		ldrb r0, [r7, r0]
 		cmp r0, #0
-		beq endFallenStar
+		bne endFallenStar       @何らかの状態異常なら終了
 
 		mov r0, r7
 		mov r1, #0
