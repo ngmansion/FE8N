@@ -17,7 +17,8 @@ ret:
     pop {r4, r5, pc}
 
 judgeOccult:
-        push {lr}
+        push {r4, lr}
+        mov r4, r0
         mov r1, #0
             ldr r2, ADR+0 @奥義の書
             mov lr, r2
@@ -34,11 +35,11 @@ judgeOccult:
         cmp r0, #250
         bls false
         mov r0, #1
-        pop {pc}
+        .short 0xE000
     false:
         mov r0, #0
     end:
-        pop {pc}
+        pop {r4, pc}
 
 judgeSkill:
     ldr r3, HAS_SKILL_FUNC
