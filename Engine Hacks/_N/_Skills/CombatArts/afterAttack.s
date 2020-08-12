@@ -1,8 +1,10 @@
 
-WAR_ADR = (67)	@書き込み先(AI1カウンタ)
-WAR_FLAG = (0xFF)	@フラグ
+WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
+ATTACK_FLG_OFFSET = (69)	@書き込み先(AI2カウンタ)
+FIRST_ATTACKED_FLAG = (0b00010000)
+STORM               = (0b00100000) @狂嵐フラグ
 
-@ORG 0802b86C
+@ORG 0802b868
 .thumb
 
 @前処理
@@ -49,36 +51,36 @@ WarSkill:
 	cmp r0, r1
 	bne endWar	@選択者と攻撃者が違う
 
-	mov r0, #WAR_ADR
+	mov r0, #WAR_OFFSET
 	ldrb r0, [r3, r0]
 	cmp r0, #0
 	beq endWar	@戦技なし
 	cmp r0, #0xFF
 	beq endWar	@戦技なし
 
-	mov r0, r13
-	ldr r0, [r0, #20]
-	bl RagingStorm
+	mov r0, #ATTACK_FLG_OFFSET
+	ldrb r0, [r3, r0]
+	mov r1, #FIRST_ATTACKED_FLAG
+	tst r0, r1
+	bne endWar	@フラグオンなのでジャンプ
 
 	mov r0, r13
 	ldr r0, [r0, #20]
-	bl Lunge
-	mov r0, r13
-	ldr r0, [r0, #20]
-	bl HitAndRun
-	mov r0, r13
-	ldr r0, [r0, #20]
-	bl KnockBack
+	bl Combat_Arts_Func
 
 	mov r0, r13
 	ldr r0, [r0, #20]
-	bl GetDecreaseNum
+	bl GetDecreaseNum   @r5に減少数取得
+
 	mov r0, r13
 	ldr r3, [r0, #20]
+	mov r1, #ATTACK_FLG_OFFSET
+	add r3, r1
+	ldrb r0, [r3]
+	mov r1, #FIRST_ATTACKED_FLAG
+	orr r0, r1
+	strb r0, [r3]           @初撃完了フラグ
 
-	mov r1, #WAR_ADR
-	mov r0, #0xFF
-	strb r0, [r3, r1]
 @無限の武器
 	mov r0, r13
 	ldr r0, [r0, #20]	@r8が相手のアドレス
@@ -143,160 +145,65 @@ func_break:
 
 
 
-
-KNOCK_BACK_FLAG    = (0b00000100) @叩き込みフラグ
-KnockBack:
+Combat_Arts_Func:
         push {r4, lr}
-		mov r4, r0
+        mov r4, r0
 
-		ldr	r2, =0x0203a604
-		ldr	r2, [r2]
-		sub	r2, #4	@スキルとかのアレの前の状態を取る
-		ldr r0, [r2]
-		
-		mov r1, #2	@外れフラグ
-		and r1, r0
-		bne falseKnockBack	@外れフラグオンでジャンプ
+        ldr	r2, =0x0203a604
+        ldr	r2, [r2]
+        sub	r2, #4	@スキルとかのアレの前の状態を取る
+        ldr r0, [r2]
+
+        mov r1, #2	@外れフラグ
+        and r1, r0
+        bne falseCombat     @外れフラグオンでジャンプ
 
     @スキルを持っているか
         mov r0, r4
-		mov r1, #0
+        mov r1, #0
         bl HasKnockBack
-        cmp r0, #0
-        beq falseKnockBack
+        cmp r0, #1
+        beq trueCombat
 
-		mov r0, r4
-		add r0, #69
-		ldrb r1, [r0]
-
-		mov r2, #KNOCK_BACK_FLAG
-		orr r1, r2
-		strb r1, [r0] @一撃離脱
-
-        mov r0, #1
-        .short 0xE000
-    falseKnockBack:
-        mov r0, #0
-        pop {r4, pc}
-
-
-
-HITANDRUN_FLAG    = (0b00001000) @一撃離脱フラグ
-HitAndRun:
-        push {r4, lr}
-		mov r4, r0
-
-		ldr	r2, =0x0203a604
-		ldr	r2, [r2]
-		sub	r2, #4	@スキルとかのアレの前の状態を取る
-		ldr r0, [r2]
-		
-		mov r1, #2	@外れフラグ
-		and r1, r0
-		bne falseHitAndRun	@外れフラグオンでジャンプ
-
-    @スキルを持っているか
         mov r0, r4
-		mov r1, #0
+        mov r1, #0
         bl HasHitAndRun
-        cmp r0, #0
-        beq falseHitAndRun
+        cmp r0, #1
+        beq trueCombat
 
-		mov r0, r4
-		add r0, #69
-		ldrb r1, [r0]
-
-		mov r2, #HITANDRUN_FLAG
-		orr r1, r2
-		strb r1, [r0] @一撃離脱
-
-        mov r0, #1
-        .short 0xE000
-    falseHitAndRun:
-        mov r0, #0
-        pop {r4, pc}
-
-
-
-
-LUNGE_FLAG    = (0b00010000) @切り込みフラグ
-Lunge:
-        push {r4, lr}
-		mov r4, r0
-
-		ldr	r2, =0x0203a604
-		ldr	r2, [r2]
-		sub	r2, #4	@スキルとかのアレの前の状態を取る
-		ldr r0, [r2]
-		
-		mov r1, #2	@外れフラグ
-		and r1, r0
-		bne falseLunge	@外れフラグオンでジャンプ
-
-    @スキルを持っているか
         mov r0, r4
-		mov r1, #0
+        mov r1, #0
         bl HasLunge
-        cmp r0, #0
-        beq falseLunge
+        cmp r0, #1
+        beq trueCombat
 
-		mov r0, r4
-		add r0, #69
-		ldrb r1, [r0]
-
-		mov r2, #LUNGE_FLAG
-		orr r1, r2
-		strb r1, [r0] @切り込み
-
-        mov r0, #1
-        .short 0xE000
-    falseLunge:
-        mov r0, #0
-        pop {r4, pc}
-
-STORM    = (0b00100000) @狂嵐フラグ
-
-@アイムール
-RagingStorm:
-        push {r4, lr}
-		mov r4, r0
-
-		ldr	r2, =0x0203a604
-		ldr	r2, [r2]
-		sub	r2, #4	@スキルとかのアレの前の状態を取る
-		ldr r0, [r2]
-		
-		mov r1, #2	@外れフラグ
-		and r1, r0
-		bne falseStorm	@外れフラグオンでジャンプ
-
-    @スキルを持っているか
-        mov r0, r4	@r1は既にセット済み
-		mov r1, #0
+        mov r0, r4
+        mov r1, #0
         bl HasRagingStorm
-        cmp r0, #0
-        beq falseStorm
+        cmp r0, #1
+        beq trueCombat
+    falseCombat:
+        b endCombat
+    trueCombat:
+        mov r0, r4
+        add r0, #ATTACK_FLG_OFFSET
+        ldrb r1, [r0]
 
-		mov r0, r4
-		add r0, #69
-		ldrb r1, [r0]
+        mov r2, #STORM
+        orr r1, r2
 
-		mov r2, #STORM
-		orr r1, r2
+        strb r1, [r0]       @戦技発動
 
-		strb r1, [r0] @狂嵐発動
-
-        mov r0, #1
-        .short 0xE000
-    falseStorm:
-        mov r0, #0
+    endCombat:
         pop {r4, pc}
+
+
 
 COMBAT_LIST = (addr+8)
 COMBAT_LIST_SIZE = (addr+12)
 
 GetDecreaseNum:
-		add r0, #WAR_ADR
+		add r0, #WAR_OFFSET
 		ldrb r0, [r0]
 		ldr r1, COMBAT_LIST_SIZE
 		mul r0, r1

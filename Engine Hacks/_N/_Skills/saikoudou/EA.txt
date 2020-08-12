@@ -128,6 +128,7 @@ ALIGN 4
         POIN hasCantoPlus
         POIN hasGaleCause
         POIN WAIT_SKILLS
+        WORD RagingStormID
         
     AfterMove_Skill:
         #incbin "AfterMove.dmp"

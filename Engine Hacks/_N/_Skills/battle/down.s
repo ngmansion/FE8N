@@ -1,4 +1,14 @@
-STR_ADR = (67)	@書き込み先(AI1カウンタ)
+WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
+ATTACK_FLG_OFFSET = (69)    @書き込み先(AI2カウンタ)
+
+
+@初撃フラグ化
+@KNOCK_BACK_FLAG    = (0b00000100) @叩き込みフラグ
+@HITANDRUN_FLAG     = (0b00001000) @一撃離脱フラグ
+@LUNGE_FLAG    = (0b00010000) @切り込みフラグ
+
+STORM                 = (0b00100000) @狂嵐フラグ
+FIRST_ATTACKED_FLAG   = (0b00010000)
 
 .thumb
 
@@ -74,18 +84,22 @@ END:
 
 
 
-KNOCK_BACK_FLAG    = (0b00000100) @叩き込みフラグ
 KnockBack:
         push {lr}
 
         mov r2, r5
-        add r2, #69
+        add r2, #ATTACK_FLG_OFFSET
         ldrb r0, [r2]
-        mov r1, #KNOCK_BACK_FLAG
+        mov r1, #STORM
         tst r0, r1
         beq endKnockBack      @持ってないので終了
-        bic r0, r1
-        strb r0, [r2]
+
+        bl GET_KNOCK_BACK
+        mov r2, r5
+        add r2, #WAR_OFFSET
+        ldrb r1, [r2]
+        cmp r0, r1
+        bne endKnockBack
 
         ldr r1, [r6]
         ldr r2, [r6, #4]
@@ -136,19 +150,23 @@ KnockBack:
     endKnockBack:
         pop {pc}
 
-HITANDRUN_FLAG    = (0b00001000) @一撃離脱フラグ
 
 HitAndRun:
         push {lr}
 
         mov r2, r5
-        add r2, #69
+        add r2, #ATTACK_FLG_OFFSET
         ldrb r0, [r2]
-        mov r1, #HITANDRUN_FLAG
+        mov r1, #STORM
         tst r0, r1
         beq endHitAndRun      @持ってないので終了
-        bic r0, r1
-        strb r0, [r2]
+
+        bl GET_HIT_AND_RUN
+        mov r2, r5
+        add r2, #WAR_OFFSET
+        ldrb r1, [r2]
+        cmp r0, r1
+        bne endHitAndRun
 
         ldrb r0, [r6, #16]   @相手
         ldrb r2, [r7, #16]
@@ -185,19 +203,23 @@ HitAndRun:
     endHitAndRun:
         pop {pc}
 
-LUNGE_FLAG    = (0b00010000) @切り込みフラグ
 
 Lunge:
         push {lr}
 
         mov r2, r5
-        add r2, #69
+        add r2, #ATTACK_FLG_OFFSET
         ldrb r0, [r2]
-        mov r1, #LUNGE_FLAG
+        mov r1, #STORM
         tst r0, r1
         beq endLunge      @持ってないので終了
-        bic r0, r1
-        strb r0, [r2]
+
+        bl GET_LUNGE
+        mov r2, r5
+        add r2, #WAR_OFFSET
+        ldrb r1, [r2]
+        cmp r0, r1
+        bne endLunge
 
         ldr r1, [r6]
         ldr r2, [r6, #4]
@@ -270,7 +292,7 @@ WarSkill_back:
     and r2, r0
     bne war_end @自軍以外は終了
 
-    add r1, #STR_ADR
+    add r1, #WAR_OFFSET
     mov r0, #0
     strb r0, [r1]
 war_end:
@@ -580,17 +602,27 @@ CanLocateMinus:
         mov r6, r2
         b jumpLocate
 
-DOUBLE_LION_ADR = (ADR+16)
+hasDoubleLion:
+    ldr r2, (ADR+16)
+    mov pc, r2
+
 HAS_SAVAGE_FUNC = (ADR+20)
-FODES_FUNC = (ADR+24)
 
 FodesFunc:
-    ldr r1, FODES_FUNC
+    ldr r1, (ADR+24)
     mov pc, r1
 
-hasDoubleLion:
-    ldr r2, DOUBLE_LION_ADR
-    mov pc, r2
+GET_LUNGE:
+    ldr r0, (ADR+28)
+    bx lr
+
+GET_HIT_AND_RUN:
+    ldr r0, (ADR+32)
+    bx lr
+
+GET_KNOCK_BACK:
+    ldr r0, (ADR+36)
+    bx lr
 
 .align
 .ltorg

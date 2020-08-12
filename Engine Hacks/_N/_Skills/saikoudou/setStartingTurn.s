@@ -17,13 +17,13 @@ RETURN:
     ldr r0, =0x0801859a
     mov pc, r0
 
-DEFEAT   = (0b10000000) @撃破フラグ
-DEFEATED = (0b01000000) @迅雷済みフラグ
-STORM    = (0b00100000) @狂嵐フラグ
-LUNGE_FLAG    = (0b00010000) @切り込みフラグ
+DEFEAT      = (0b10000000) @撃破フラグ
+DEFEATED    = (0b01000000) @迅雷済みフラグ
+STORM       = (0b00100000) @狂嵐フラグ
+FIRST       = (0b00010000) @初撃フラグ
 
 Jinrai_back:
-@迅雷系のフラグをオフ
+@DEFEATEDだけ消せばよいが、一応他も消す
         ldrb r0, [r4, #11]
         mov r2, #0xC0
         tst r2, r0
@@ -44,7 +44,7 @@ Jinrai_back:
         mov r2, #STORM
         bic r0, r2
 
-        mov r2, #LUNGE_FLAG
+        mov r2, #FIRST
         bic r0, r2
         strb r0, [r1]
     endJinrai:

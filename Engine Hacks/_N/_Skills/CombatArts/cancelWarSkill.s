@@ -1,4 +1,4 @@
-STR_ADR = (67)	@書き込み先(AI1カウンタ)
+WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
 
 @.ORG 08022828
 .thumb
@@ -28,7 +28,7 @@ main:
 reset_warskill:
 	ldr r1, =0x03004df0
 	ldr r1, [r1]
-	add r1, #STR_ADR
+	add r1, #WAR_OFFSET
 	mov r0, #0
 	strb r0, [r1]
 	bx lr

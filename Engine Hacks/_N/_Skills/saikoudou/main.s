@@ -4,6 +4,9 @@ DEF = (0x0203a568)
 TARGET_UNIT = (0x03004df0)
 WEAPON_SP_ADDR = (0x080172f0)
 
+WAR_OFFSET = (67)           @書き込み先(AI1カウンタ)
+ATTACK_FLG_OFFSET = (69)    @書き込み先(AI2カウンタ)
+
 DEFEAT   = (0b10000000) @撃破フラグ
 DEFEATED = (0b01000000) @迅雷済みフラグ
 STORM    = (0b00100000) @狂嵐フラグ
@@ -69,7 +72,7 @@ DEFEAT2 = (0xC0)
     beq Sound
 @疾風迅雷・神風招来判定
     mov r0, r4
-    add r0, #69
+    add r0, #ATTACK_FLG_OFFSET
     ldrb r1, [r0]
 
     mov r2, #DEFEATED
@@ -236,12 +239,21 @@ RagingStorm:
         push {r4, lr}
         mov r4, r0
 
-        mov r0, #69
-        ldrb r1, [r4, r0]
+        ldr r1, =ATK            @フラグを取る為
+        add r1, #ATTACK_FLG_OFFSET
+        ldrb r1, [r1]
     
-        mov r2, #STORM
-        and r1, r2
-        beq falseStorm
+        mov r0, #STORM
+        tst r0, r1
+        beq falseStorm      @ビットオフ(当たってないので)ジャンプ
+
+        bl GET_RAIGING_STORM
+        ldr r1, =ATK            @フラグを取る為
+        add r1, #WAR_OFFSET
+        ldrb r1, [r1]
+    
+        cmp r0, r1
+        bne falseStorm      @戦技が違う
 
         mov	r0, r4
         ldr	r1, [r0, #12]	@行動済み等の状態
@@ -400,6 +412,10 @@ hasGaleCause = (addr+16)
 WAIT_SKILLS:
     ldr r2, addr+20
     mov pc, r2
+
+GET_RAIGING_STORM:
+    ldr r0, addr+24
+    bx lr
 
 .align
 .ltorg

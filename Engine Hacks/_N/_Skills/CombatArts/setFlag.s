@@ -1,8 +1,7 @@
 .thumb
 @ 0802a2bc
 	
-STR_ADR = (67)	@書き込み先(AI1カウンタ)
-FLAG = (0xFF)	@フラグ
+WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
 SOUND_ID = (97)
 	
 	
@@ -30,7 +29,7 @@ SOUND_ID = (97)
 	
 	bl GetSkill
 	mov r2, r4
-	add r2, #STR_ADR
+	add r2, #WAR_OFFSET
 	strb r0, [r2]
 @サウンド
 	mov	r0, #SOUND_ID
@@ -41,7 +40,7 @@ SOUND_ID = (97)
 reset:
 	mov r0, #0
 	mov r2, r4
-	add r2, #STR_ADR
+	add r2, #WAR_OFFSET
 	strb r0, [r2]
 end:
     bl arrow_reset_func

@@ -1,5 +1,6 @@
-WAR_ADR = (67)	@書き込み先(AI1カウンタ)
-
+WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
+ATTACK_FLG_OFFSET = (69)	@書き込み先(AI2カウンタ)
+FIRST_ATTACKED_FLAG = (0b00010000)
 RETURN_ADR = 0x0802a4a6
 
 @ 0802A490
@@ -194,12 +195,16 @@ JudgeCombat:
 		cmp r0, r2
 		bne falseWar            @攻めてないので通常確率計算
 
-		mov r0, #WAR_ADR
+		mov r0, #ATTACK_FLG_OFFSET
+		ldrb r0, [r4, r0]
+		mov r1, #FIRST_ATTACKED_FLAG
+		tst r0, r1
+		bne inactiveCombat      @初撃ではないので終了
+
+		mov r0, #WAR_OFFSET
 		ldrb r0, [r4, r0]
 		cmp r0, #0
 		beq falseWar            @戦技未選択なので通常確率計算
-		cmp r0, #0xFF
-		beq inactiveCombat      @戦技発動済みなので、絶対不発
 
 		mov r1, r10
 		cmp r0, r1
