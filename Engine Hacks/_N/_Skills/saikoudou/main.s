@@ -238,6 +238,11 @@ clear_defeat:
 RagingStorm:
         push {r4, lr}
         mov r4, r0
+        ldr r1, =ATK            @フラグを取る為
+        ldrb r0, [r0, #0xB]
+        ldrb r1, [r1, #0xB]
+        cmp r0, r1
+        bne falseStorm
 
         ldr r1, =ATK            @フラグを取る為
         add r1, #ATTACK_FLG_OFFSET

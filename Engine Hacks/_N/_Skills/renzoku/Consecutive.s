@@ -1,5 +1,9 @@
 .thumb
 
+ATK                     = (0x0203a4e8)
+ATTACK_FLG_OFFSET       = (69)             @書き込み先(AI2カウンタ)
+FIRST_ATTACKED_FLAG     = (0b00010000)
+
 main:
         push {r4, r5, r6, lr}
         mov r4, r0
@@ -29,19 +33,19 @@ JudgeAddition:
         ldrh r0, [r0]
         mov r1, #0x20
         and r0, r1
-        bne inactive	@闘技場は無効
+        bne inactive            @闘技場は無効
 
         ldr r0, [r4, #76]
         mov r1, #0x80
         and r0, r1
-        bne inactive	@反撃不可武器は無効
+        bne inactive            @反撃不可武器は無効
 
         mov r0, r4
         add r0, #74
         ldrh r0, [r0]
         bl GET_WEAPON_ABILITY
         cmp r0, #3
-        beq inactive	@イクリプスは無効
+        beq inactive            @イクリプスは無効
         mov r0, #1
         .short 0xE000
     inactive:
@@ -51,8 +55,8 @@ JudgeAddition:
 DoubleLion: @戦闘予測だと、減少分しか
         push {lr}
         bl SwitchLion
-        ldrb r1, [r0, #18]	@最大HP
-        ldrb r0, [r0, #19]	@現在HP
+        ldrb r1, [r0, #18]      @最大HP
+        ldrb r0, [r0, #19]      @現在HP
         cmp r0, r1
         blt falseDouble
 
@@ -80,8 +84,17 @@ SwitchLion:
 SwiftStrikes:
         push {lr}
         mov r0, r4
+        add r0, #ATTACK_FLG_OFFSET
+        ldrb r0, [r0]
+        mov r1, #FIRST_ATTACKED_FLAG
+        and r0, r1
+        bne falseSwift      @初撃済フラグオンならジャンプ
+        mov r0, r4
         mov r1, r5
         bl HAS_SWIFT_STRIKES
+        .short 0xE000
+    falseSwift:
+        mov r0, #0
         pop {pc}
 
 Blitzkrieg:

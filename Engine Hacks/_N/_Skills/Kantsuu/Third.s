@@ -1,9 +1,8 @@
 .thumb
 @org	0x0802B3D8
 
-STR_ADR = (67)	@書き込み先(AI1カウンタ)
-WAR_FLAG = (0xFF)	@フラグ
-WAR_FLAG2 = (0xFE)	@フラグ
+ATTACK_FLG_OFFSET   = (69)              @書き込み先(AI2カウンタ)
+FIRST_ATTACKED_FLAG = (0b00010000)
 
 
 
@@ -57,6 +56,13 @@ WarSkill:
 		bl HasNihil
 		cmp r0, #1
 		beq endWarSkill @見切り持ち
+
+        mov r0, r7
+        add r0, #ATTACK_FLG_OFFSET
+        ldrb r0, [r0]
+        mov r1, #FIRST_ATTACKED_FLAG
+        and r0, r1
+        bne endWarSkill                 @初撃済フラグオンならジャンプ
 
 		bl FallenStar
 
