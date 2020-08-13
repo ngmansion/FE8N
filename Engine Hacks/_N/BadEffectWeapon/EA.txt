@@ -8,8 +8,14 @@ ORG	0x17680
 #incbin "FlexibleTurn.gba"
 
 ORG	0x02b824
-#incbin "sleepEND.gba"
+jumpToHack(END_BATTLE_FUNC)
 
+POP
+ALIGN 4
+END_BATTLE_FUNC:
+#incbin "sleepEND.dmp"
+ALIGN 4
+PUSH
 
 ORG	0x02b58c
 WORD	$468F4900

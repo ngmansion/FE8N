@@ -17,7 +17,7 @@ Skip:
     mov r1, r8
     ldrb r0, [r1, #0]
     cmp r0, #255
-    bne end @アイテム無し？？
+    bne end     @アイテム無し？？
 cancel:
     ldr r0, =0x0802a840     @反撃不可
     mov pc, r0
@@ -34,22 +34,16 @@ JudgeCancel:
         and r0, r1
         bne falseCancel @闘技場チェック
 
-        ldrh r0, [r4, #0]
-        mov r1, #0xFF
-        and r0, r1
-        cmp r0, #181
-        beq trueCancel
 
         bl WindSweep
         cmp r0, #1
-        beq endCancel
+        beq trueCancel
 
     falseCancel:
         mov r0, #0
         .short 0xE000
     trueCancel:
         mov r0, #1
-    endCancel:
         pop {pc}
 
 
@@ -70,13 +64,13 @@ DistantCounter:
 
         ldrh r0, [r4, #0]
         bl GET_ITEM_EFFECT
-        ldr r1, DISTANT_COUNTER_ITEM_EFFECT_ID
+        bl GET_DISTANT_COUNTER_ITEM_EFFECT_ID_R1
         cmp r0, r1
         beq skipDistant
 
         ldrh r0, [r4, #0]
         bl GET_WEAPON_TYPE
-        ldr r1, DISTANT_COUNTER_INVALID_WEAPON_TYPE
+        bl GET_DISTANT_COUNTER_INVALID_WEAPON_TYPE_R1
         cmp r0, r1
         beq falseDistant        @斧は終了
     skipDistant:
@@ -88,13 +82,6 @@ DistantCounter:
     falseDistant:
         mov r0, #0
         pop {pc}
-
-GET_WEAPON_TYPE:
-ldr r1, =0x080172f0
-mov pc, r1
-GET_ITEM_EFFECT:
-ldr r1, =0x080174e4
-mov pc, r1
 
 WindSweep:
         push {lr}
@@ -118,17 +105,32 @@ WindSweep:
     endWindSweep:
         pop {pc}
 
+
+GET_WEAPON_TYPE:
+ldr r1, =0x080172f0
+mov pc, r1
+GET_ITEM_EFFECT:
+ldr r1, =0x080174e4
+mov pc, r1
+GET_WEAPON_EFFECT:
+ldr r1, =0x080174cc
+mov pc, r1
+
 hasWindSweep:
 ldr r2, addr
 mov pc, r2
 
-DISTANT_COUNTER_ITEM_EFFECT_ID = addr+8
+GET_DISTANT_COUNTER_ITEM_EFFECT_ID_R1:
+ldr r1, addr+8
+bx lr
 
 HAS_DISTANT_COUNTER:
 ldr r2, addr+12
 mov pc, r2
 
-DISTANT_COUNTER_INVALID_WEAPON_TYPE = addr+16
+GET_DISTANT_COUNTER_INVALID_WEAPON_TYPE_R1:
+ldr r1, addr+16
+bx lr
 
 .align
 .ltorg
