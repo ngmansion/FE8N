@@ -1,4 +1,7 @@
 .thumb
+
+D_REIN_DOWN_NUM = (2)
+
 @ 0802ad3c
 @イクリプス等の直前(自分の数値と相手の数値の計算後)
 @ステータス画面では呼ばれない
@@ -18,6 +21,7 @@
 
     bl Lull
     bl Shisen_B
+    bl Rein
     
 next:
     bl WarSkill
@@ -42,6 +46,103 @@ endZero:
     pop {r4, r5, r6}
     pop {r0}
     bx r0
+
+@r4 temp enemy
+@r5 loop count
+Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
+        push {r4, r5, lr}
+
+        ldr r0, =0x0203a4d0
+        ldrh r0, [r0]
+        mov r1, #0x20
+        and r0, r1
+        bne endRein
+
+        ldrb r5, [r4, #0xB]
+        mov r0, #0xC0
+        and r5, r0      @r5に部隊表ID
+        
+    loopRein:
+        add r5, #1
+        mov r0, r5
+        bl Get_Status
+        mov r4, r0
+        cmp r0, #0
+        beq endRein        @リスト末尾
+        ldr r0, [r4]
+        cmp r0, #0
+        beq loopRein        @死亡判定1
+        ldrb r0, [r4, #19]
+        cmp r0, #0
+        beq loopRein        @死亡判定2
+
+        ldr r0, [r4, #0xC]
+        bl GetExistFlagR1
+        and r0, r1
+        bne loopRein        @居ないフラグ+救出中
+        
+        mov r0, #2  @2マス以内
+        mov r1, r4
+        mov r2, r6
+        bl CheckXY
+        cmp r0, #0
+        beq loopRein
+
+        mov r0, r4
+        mov r1, #0
+        bl HAS_REIN
+        cmp r0, #0
+        beq loopRein
+
+    trueRein:
+        mov r1, r6
+        add r1, #90
+        ldrh r0, [r1]
+        sub r0, #D_REIN_DOWN_NUM
+        bge jumpAtkRein
+        mov r0, #0
+    jumpAtkRein:
+        strh r0, [r1] @威力
+        
+        mov r1, r6
+        add r1, #94
+        ldrh r0, [r1]
+        sub r0, #D_REIN_DOWN_NUM
+        bge jumpSpdRein
+        mov r0, #0
+    jumpSpdRein:
+        strh r0, [r1] @速さ
+    endRein:
+        pop {r4, r5, pc}
+
+CheckXY:
+@r1とr2がr0マス以内に居るならr0=TRUE
+@同座標ならTRUE
+@
+        push {r0}
+        ldrb r0, [r1, #16]
+        ldrb r3, [r2, #16]
+        sub r3, r0, r3
+        bge jump1CheckXY
+        neg r3, r3  @絶対値取得
+    jump1CheckXY:
+
+        ldrb r1, [r1, #17]
+        ldrb r2, [r2, #17]
+        sub r2, r1, r2
+        bge jump2CheckXY
+        neg r2, r2  @絶対値取得
+    jump2CheckXY:
+
+        add r2, r2, r3
+        pop {r0}
+        cmp r2, r0
+        bgt falseCheckXY    @r0マス以内に居ない
+        mov r0, #1
+        bx lr
+    falseCheckXY:
+        mov r0, #0
+        bx lr
 
 
 FLY_E2_ID = (0x2D)      @てつのゆみ
@@ -271,14 +372,14 @@ Shisen_B:	@相手強化
 godBless:
     push {lr}
     mov r0, r4
-        ldr r1, adr+4 @光の加護
+        ldr r1, addr+4 @光の加護
         mov lr, r1
         .short 0xF800
     cmp r0, #0
     bne endBless
     
     mov r0, r6
-        ldr r1, adr+8 @暗黒の加護
+        ldr r1, addr+8 @暗黒の加護
     	mov lr, r1
     	.short 0xF800
     cmp r0, #0
@@ -350,16 +451,24 @@ GetDistance:
     ldr r0, =0x0203a4d2
     bx lr
 
-SHISEN_ADR = (adr+0)
-NIHIL_ADR = (adr+12)
-LULL_ADR = (adr+16)
-COMBAT_TBL = (adr+20)
-COMBAT_TBL_SIZE = (adr+24)
-FLY_E_ADR = (adr+28)
-ARMOR_E_ADR = (adr+32)
-HORSE_E_ADR = (adr+36)
-MONSTER_E_ADR = (adr+40)
-HAS_ATROCITY_ADR = (adr+44)
+Get_Status:
+    ldr r1, =0x08019108
+    mov pc, r1
+
+GetExistFlagR1:
+    ldr r1, =0x1002C    @居ないフラグ+救出されている
+    bx lr
+
+SHISEN_ADR = (addr+0)
+NIHIL_ADR = (addr+12)
+LULL_ADR = (addr+16)
+COMBAT_TBL = (addr+20)
+COMBAT_TBL_SIZE = (addr+24)
+FLY_E_ADR = (addr+28)
+ARMOR_E_ADR = (addr+32)
+HORSE_E_ADR = (addr+36)
+MONSTER_E_ADR = (addr+40)
+HAS_ATROCITY_ADR = (addr+44)
 
 GET_ITEM_EFFECT:
     ldr r1, =0x080174e4
@@ -396,15 +505,19 @@ HasLull:
     mov pc, r2
 
 MUL_CHARGING_COEF:
-    ldr r1, (adr+48)
+    ldr r1, (addr+48)
     mul r0, r1
     bx lr
 .align
 GET_CHARGING_EFFECT_ID:
-    ldr r0, (adr+52)
+    ldr r0, (addr+52)
     bx lr
+
+HAS_REIN:
+    ldr r2, (addr+56)
+    mov pc, r2
 
 .ltorg
 .align
-adr:
+addr:
 
