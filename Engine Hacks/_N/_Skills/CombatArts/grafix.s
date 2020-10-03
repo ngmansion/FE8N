@@ -129,37 +129,17 @@ BookFunc:
 UnitDataFunc:
         push {lr}
 
-        ldr r0, [r4]
-        add r0, #0x26
-        ldrb r0, [r0]
-        cmp r0, #0
-        .short 0xD001
-        bl SetSkill
+        mov r0, r4
+        bl UNITDATA_GetFirst
+        bl SetSkill         @下級スキル
 
-    @上級スキルチェック
-        ldr r1, [r4, #4]
-        ldr r1, [r1, #40]
-        ldr r0, =0x100
-        and r0, r1
-        beq jumpUnit
-        ldr r0, [r4]
-        add r0, #0x27
-        ldrb r0, [r0]
-        cmp r0, #0
-        .short 0xD001
-        bl SetSkill
-    jumpUnit:
+        mov r0, r4
+        bl UNITDATA_GetSecond
+        bl SetSkill         @上級スキル
 
-        ldrb r0, [r4, #8]
-        cmp r0, #20
-        ble jumpUnit2     @レベル20以下なら終了
-        ldr r0, [r4]
-        add r0, #0x31
-        ldrb r0, [r0]
-        cmp r0, #0
-        .short 0xD001
-        bl SetSkill
-    jumpUnit2:
+        mov r0, r4
+        bl UNITDATA_GetThird
+        bl SetSkill         @自軍外スキル
         pop {pc}	
 
 GatherListWeapon:
@@ -232,6 +212,8 @@ JudgeCapture:
 
 SetSkill:
         push {r6, lr}
+        cmp r0, #0
+        beq endSet
         mov r6, r0
         bl DedupSkill
         cmp r0, #1
@@ -501,6 +483,18 @@ OracleFunc:
     ldr r3, ADDR+28
     add r3, #26
     mov pc, r3
+
+UNITDATA_GetFirst:
+    ldr r1, (ADDR+32)
+    mov pc, r1
+
+UNITDATA_GetSecond:
+    ldr r1, (ADDR+36)
+    mov pc, r1
+
+UNITDATA_GetThird:
+    ldr r1, (ADDR+40)
+    mov pc, r1
 
 .align
 .ltorg

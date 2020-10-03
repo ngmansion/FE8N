@@ -47,6 +47,9 @@ grafix_ws:
 	POIN combat_art_table
 	WORD COMBAT_ART_LIST_SIZE
 	POIN mergeOccult
+    POIN UNITDATA_GetFirst
+    POIN UNITDATA_GetSecond
+    POIN UNITDATA_GetThird
 	
 ALIGN 4
 
