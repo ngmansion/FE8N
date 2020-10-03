@@ -15,12 +15,13 @@ pause
 type ".\Engine Hacks\_N\_Skills\skill_definitions.event"
 echo ============================================================
 echo 編集したいスキルのIDを入力しエンターしてください 
-echo (※1 10進数です)(※2 0を入力すると終了します) 
+echo (※1 16進数の場合は0xを付けてください)(※2 0を入力すると終了します) 
 echo ============================================================
 
 :RETURN
 set input=
 set /p input=
+set /a input=%input% * 1
 if %input%==0 goto eof
 
   set num=00%input%
