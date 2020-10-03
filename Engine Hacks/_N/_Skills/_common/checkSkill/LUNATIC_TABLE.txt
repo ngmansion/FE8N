@@ -43,8 +43,8 @@ BYTE DartingStanceID      //ドラゴン
 BYTE DartingStanceID
 BYTE DartingStanceID
 BYTE DartingStanceID
-BYTE DartingBlowID
-BYTE DartingBlowID
+BYTE DartingBlowID       //ワイバーン
+BYTE DartingBlowID       //ワイバーン
 
 BYTE TomebreakerID      //賢者
 BYTE TomebreakerID
@@ -103,27 +103,27 @@ BYTE 0    //ネクロマンサー
 BYTE 0    //船団
 BYTE 0
 
-BYTE 0//ゾンビ
+BYTE PassID//ゾンビ
+BYTE PassID
+BYTE TriangleAdeptID//スケルトン
+BYTE PoisonStrikeID//スケルトン弓
+BYTE TriangleAdeptID//ヘルボーン
+BYTE PoisonStrikeID//ヘルボーン弓
+BYTE SteadyStanceID//バール
+BYTE SteadyStanceID//エルダバール
+BYTE WrathID//サイクロプス
+BYTE DartingBlowID//モーサドゥーグ
+BYTE DartingBlowID//ケルベロス
+BYTE ArmoredBlowID//タルヴォス
+BYTE ArmoredBlowID//マグダイル
+BYTE TomebreakerID//ビグル
+BYTE TomebreakerID//アークビグル
+BYTE HeartseekerID//ゴーゴン
 BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
-BYTE 0
+BYTE DartingStanceID//ガーゴイル
+BYTE DartingStanceID//デスガーゴイル
+BYTE AllStats2ID//ドラゾン
+BYTE ProminenceID//魔王
 BYTE 0
 BYTE 0
 BYTE 0
