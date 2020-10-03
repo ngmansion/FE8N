@@ -107,9 +107,8 @@ OtherSideSkill:
         cmp r0, r1
         bne DefSkill
         bl Kishin
-        bl Kongou
         bl Hien
-        bl Meikyou
+        bl Bracing
         bl Charge
         pop {pc}
     DefSkill:
@@ -118,9 +117,8 @@ OtherSideSkill:
         bl ShieldSession
         bl ImpregnableWall
         bl KishinR
-        bl KongouR
         bl HienR
-        bl MeikyouR
+        bl BracingR
         pop {pc}
 
 CriticalUp:
@@ -1081,15 +1079,34 @@ KishinR:
         strh r0, [r4, r1] @自分
         b endKishin
 
-
-
-Kongou:
+Bracing:
         push {lr}
         mov r0, r5
         bl IsMagic
         cmp r0, #1
-        beq endKongou
+        beq jumpBracing
+        bl Kongou
+        b endBracing
+    jumpBracing:
+        bl Meikyou
+    endBracing:
+        pop {pc}
 
+BracingR:
+        push {lr}
+        mov r0, r5
+        bl IsMagic
+        cmp r0, #1
+        beq jumpBracingR
+        bl KongouR
+        b endBracingR
+    jumpBracingR:
+        bl MeikyouR
+    endBracingR:
+        pop {pc}
+
+Kongou:
+        push {lr}
         mov r0, r4
         mov r1, #0
         bl HasKongou
@@ -1104,11 +1121,6 @@ Kongou:
         pop {pc}
 KongouR:
         push {lr}
-        mov r0, r5
-        bl IsMagic
-        cmp r0, #1
-        beq endKongou
-
         mov r0, r4
         mov r1, #0
         bl HasKongouR
@@ -1123,11 +1135,6 @@ KongouR:
 
 Meikyou:
         push {lr}
-        mov r0, r5
-        bl IsMagic
-        cmp r0, #0
-        beq endMeikyou
-
         mov r0, r4
         mov r1, #0
         bl HasMeikyou
@@ -1142,11 +1149,6 @@ Meikyou:
         pop {pc}
 MeikyouR:
         push {lr}
-        mov r0, r5
-        bl IsMagic
-        cmp r0, #0
-        beq endMeikyou
-
         mov r0, r4
         mov r1, #0
         bl HasMeikyouR
