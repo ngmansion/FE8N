@@ -48,7 +48,7 @@ weapon_bonus_func:
 	#incbin weapon_bonus.dmp
 	POIN weapon_bonus_AtkSpd
 	POIN weapon_bonus_original
-	POIN weapon_bonus_three_house
+//	POIN weapon_bonus_three_house
 	POIN 0 //末尾判定用(追加したかったら上に差し込む)
 
 MagicDefDivide:
