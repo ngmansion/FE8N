@@ -52,12 +52,12 @@ POIN getSkill
 POIN WP_LV_SKL_TABLE
 WORD ICON_LIST_SIZE
 POIN checkItemList
-#ifdef LUNATIC_SKILL
-WORD 1
-#else
-WORD 0
-#endif
-POIN LUNATIC_TABLE
+    POIN UNITDATA_GetFirst
+    POIN UNITDATA_GetSecond
+    POIN UNITDATA_GetThird
+    POIN UNITDATA_GetLuna
+
+
 SIcon_U:
     #incbin "_common\UNIT.bin"
 SIcon_C:

@@ -1,13 +1,6 @@
 NULL = 0
 
 .thumb
-SKL_TBL = (adr+16)
-GET_SKILL_FUNC = (adr+36)
-WP_LV_SKL_TABLE = (adr+40)
-ICON_LIST_SIZE = (adr+44)
-CHECK_ITEM_FUNC = (adr+48)
-LUNATIC_SKILL = (adr+52)
-LUNATIC_TABLE = (adr+56)
 ICON_NUM_LIMIT = (16) @上限数*2
 
 MAX_SKILL_NUM = (255)
@@ -73,59 +66,21 @@ SkillBook:
 
 Unit:
 		push {lr}
-		ldr	r0, [r4]
-		add	r0, #0x26
-		ldrb	r0, [r0]
-		bl	SKILL0 @下級スキル
+		mov r0, r4
+		bl UNITDATA_GetFirst
+		bl SKILL0 @下級スキル
 
+		mov r0, r4
+		bl UNITDATA_GetSecond
+		bl SKILL0 @上級スキル
 
-		ldr	r0, [r4, #4] @class
-		ldr	r0, [r0, #40]
-		lsl	r0, r0, #23
-		bpl jumpUnit1 @上級職のみ
-		ldr	r0, [r4]
-		add	r0, #0x27
-		ldrb	r0, [r0]
-		bl	SKILL0 @上級スキル
-jumpUnit1:
+		mov r0, r4
+		bl UNITDATA_GetThird
+		bl SKILL0 @自軍外スキル
 
-		ldrb r1, [r4, #0xB]
-		mov r0, #0xC0
-		and r0, r1
-		bne elseUnit
-		ldrb r0, [r4, #8]
-		cmp r0, #20
-		ble jumpUnit2     @レベル20以下なら終了
-	elseUnit:
-		ldr	r0, [r4]
-		add	r0, #0x31
-		ldrb	r0, [r0]
-		bl	SKILL0 @自軍外スキル
-jumpUnit2:
-@@@@@@@@@@@@@@@@@ルナティック
-
-    ldr r0, LUNATIC_SKILL
-    cmp r0, #0
-    beq elseLunatic
-    
-    ldrb r1, [r4, #0xB]
-    mov r0, #0x80
-    and r0, r1
-    beq elseLunatic     @敵以外
-
-    ldr r0, =0x0202bcec
-    ldrb r1, [r0, #20]
-    mov r0, #64		@難易度ハード
-    and r0, r1
-    beq elseLunatic     @ハード以外
-
-    ldr r0, [r4, #4]
-    ldrb r0, [r0, #4]
-    ldr r1, LUNATIC_TABLE
-    ldrb r0, [r1, r0]
-
-		bl	SKILL0 @自軍外スキル
-elseLunatic:
+		mov r0, r4
+		bl UNITDATA_GetLuna
+		bl SKILL0 @高難易度スキル
 
 		ldr	r0, [r4]
 		ldrb	r0, [r0, #4]
@@ -586,13 +541,35 @@ Get_WpLv:
 	mov pc, r1
 
 
+SKL_TBL = (adr+16)
 
 get_Skill:
-	ldr r2, GET_SKILL_FUNC
+	ldr r2, (adr+36)
 	mov pc, r2
+
+WP_LV_SKL_TABLE = (adr+40)
+ICON_LIST_SIZE = (adr+44)
+
 checkItemList:
-	ldr r3, CHECK_ITEM_FUNC
+	ldr r3, (adr+48)
 	mov pc, r3
+
+UNITDATA_GetFirst:
+	ldr r1, (adr+52)
+	mov pc, r1
+
+UNITDATA_GetSecond:
+	ldr r1, (adr+56)
+	mov pc, r1
+
+UNITDATA_GetThird:
+	ldr r1, (adr+60)
+	mov pc, r1
+
+UNITDATA_GetLuna:
+	ldr r1, (adr+64)
+	mov pc, r1
+
 .align
 .ltorg
 adr:

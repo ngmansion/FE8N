@@ -1,0 +1,34 @@
+
+ALIGN 4
+
+judgeSkillInUnitData:
+#incbin judgeSkillInUnitData.dmp
+    POIN UNITDATA_GetFirst
+    POIN UNITDATA_GetSecond
+    POIN UNITDATA_GetThird
+    POIN UNITDATA_GetLuna
+    POIN 0
+ALIGN 4
+
+UNITDATA_GetFirst:
+#incbin GetFirst.dmp
+ALIGN 4
+
+UNITDATA_GetSecond:
+#incbin GetSecond.dmp
+ALIGN 4
+
+UNITDATA_GetThird:
+#incbin GetThird.dmp
+ALIGN 4
+
+UNITDATA_GetLuna:
+#incbin GetLuna.dmp
+#ifdef LUNATIC_SKILL
+WORD 1
+#else
+WORD 0
+#endif
+    POIN LUNATIC_TABLE
+    ALIGN 4
+

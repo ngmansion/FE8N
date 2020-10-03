@@ -28,14 +28,7 @@ judgeUnit:
    	WORD ICON_LIST_SIZE
 	POIN checkItemList
 	
-judgeSkillInUnitData:
-	#incbin judgeSkillInUnitData.dmp
-#ifdef LUNATIC_SKILL
-WORD 1
-#else
-WORD 0
-#endif
-	POIN LUNATIC_TABLE
+#include "UnitData\EA.txt"
 	ALIGN 4
 checkItemList:
 	#incbin checkItemList.dmp
