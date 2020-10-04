@@ -124,6 +124,7 @@ afterAttack:
 	POIN HasLunge
 	POIN HasHitAndRun
 	POIN HasKnockBack
+	POIN HAS_CORROSION
 	ALIGN 4
 
 //////////////////////////

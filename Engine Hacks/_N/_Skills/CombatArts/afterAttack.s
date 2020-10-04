@@ -103,8 +103,18 @@ WarSkill:
 	lsl r1, r1, #7
 	orr r0, r1
 	str r0, [r2]
-	
-@武器は損処理
+
+    ldr r0, =0x0203a568
+    mov r1, r13
+    ldr r1, [r1, #20]
+    bl HAS_CORROSION
+    cmp r0, #0
+    beq notCorrosion
+    lsl r5, #1      @消費2倍
+    sub r5, #1      @通常減る分は除く
+notCorrosion:
+
+@武器破損処理
 	cmp r5, #1
 	ble endWar	@COSTが1以下なので追加減少はない
 	mov r3, #1	@通常減る分
@@ -214,28 +224,28 @@ GetDecreaseNum:
 		bx lr
 
 
-HAS_RASINGSTORM = (addr+4)
-HAS_LUNGE = (addr+16)
-HAS_HITANDRUN = (addr+20)
-HAS_KNOCKBACK = (addr+24)
-
 HasHitAndRun:
-ldr r2, HAS_HITANDRUN
+ldr r2, (addr+20)
 mov pc, r2
 HasKnockBack:
-ldr r2, HAS_KNOCKBACK
+ldr r2, (addr+24)
 mov pc, r2
 HasLunge:
-ldr r2, HAS_LUNGE
+ldr r2, (addr+16)
 mov pc, r2
 
 HasRagingStorm:
-ldr r2, HAS_RASINGSTORM
+ldr r2, (addr+4)
 mov pc, r2
 
 Infinity:
-	ldr r3, addr
-	mov pc, r3
+    ldr r3, addr
+    mov pc, r3
+HAS_CORROSION:
+    ldr r3, addr+28
+    mov pc, r3
+
+
 .align
 .ltorg
 addr:

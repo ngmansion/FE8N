@@ -173,4 +173,4 @@
 #define StunMasteryID           176 //0xB0 奥義衝撃
 #define CancelRadianceID        177 //0xB1 キャンセル(蒼炎)
 #define ReinID                  178 //0xB2 牽制
-
+#define CorrosionID             179 //0xB3 武器破壊

@@ -12,12 +12,20 @@ HasStaffSavant:
  HAS_NIHIL
  WORD StaffSavantID
 
+HAS_CORROSION:
+ HAS_NIHIL
+ WORD CorrosionID
+
 PUSH
   ORG 0x016918
     jumpToHack(motikae_main)
 
   ORG 0x02b73c
     jumpToHack(NoDecreaseWeapon)
+  ORG 0x2b756
+    SHORT 0 //nop
+    jumpToHack(Corrosion)
+    
   ORG 0x02cbc4
     jumpToHack(NoDecreaseStaff)
 
@@ -30,9 +38,14 @@ motikae_main:
 NoDecreaseWeapon:
    #incbin NoDecrease.dmp
    POIN InfiniteItem
+Corrosion:
+   #incbin Corrosion.dmp
+   POIN HAS_CORROSION
+   
 NoDecreaseStaff:
    #incbin NoDecreaseStaff.dmp
    POIN InfiniteItem
+   POIN HAS_CORROSION
 
 /*
 PUSH
