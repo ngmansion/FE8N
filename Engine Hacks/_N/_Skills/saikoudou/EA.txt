@@ -129,6 +129,7 @@ ALIGN 4
         POIN hasGaleCause
         POIN WAIT_SKILLS
         WORD RagingStormID
+        POIN HAS_CHANGE_FATE
         
     AfterMove_Skill:
         #incbin "AfterMove.dmp"
@@ -170,6 +171,9 @@ ALIGN 4
     HAS_CATNAP:
         HAS_SKILL
         WORD CatnapID
+    HAS_CHANGE_FATE:
+        HAS_SKILL
+        WORD ToChangeFateID
 
 PUSH
 ORG 0x01a09c

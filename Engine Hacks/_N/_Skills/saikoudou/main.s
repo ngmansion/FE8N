@@ -14,6 +14,8 @@ FIRST    = (0b00010000) @初撃フラグ
 
 DEFEAT2 = (0xC0)
 
+COMMAND_RESCUE = (9)
+
 @0801cea8
 .thumb
     push {r4, r5, lr}
@@ -100,30 +102,24 @@ pattern1:
 @再行動なし撃破
 @
     bl shippuJinrai
-    cmp r0, #0
-    beq next
-@一回目撃破(再行動済みフラグ)をオン
-    mov r0, #69
-    ldrb r1, [r4, r0]
-
-    mov r2, #DEFEATED
-    orr r1, r2
-
-    strb r1, [r4, r0] @撃破済み
-    
-    b Sound	@再行動
+    cmp r0, #1
+    beq getReMove
+    b next
 
 pattern2:
 @再行動なし未撃破
 @
-    ldr r0, =DEF
-    ldr r1, [r0, #4]
-    cmp r1, #0      @相手がいない
-    beq next        @
     
-    bl jinpuShourai	@神風招来
-    cmp r0, #0
-    beq next
+    bl jinpuShourai    @神風招来
+    cmp r0, #1
+    beq getReMove
+
+    bl ChangeFate
+    cmp r0, #1
+    beq getReMove
+    b next
+
+getReMove:
 @一回目撃破(再行動済みフラグ)をオン
     mov r0, #69
     ldrb r1, [r4, r0]
@@ -303,13 +299,11 @@ shippuJinrai:
 @
 jinpuShourai:
         push {lr}
-        mov	r0, r4
-            ldr r2, hasGaleCause
-            mov lr, r2
-            .short 0xF800
-        cmp r0, #0
-        beq falseShourai
-        
+        ldr r0, =DEF
+        ldr r1, [r0, #4]
+        cmp r1, #0          @相手がいない
+        beq falseShourai    @
+
         mov r0, r4
         ldr r1, =ATK
         ldrb r0, [r0, #0xB]
@@ -321,20 +315,54 @@ jinpuShourai:
             ldr r2, =WEAPON_SP_ADDR
             mov lr, r2
             .short 0xF800
-        cmp r0, #4		@杖
+        cmp r0, #4      @杖
         bne falseShourai
 
-        mov	r0, r4
-        ldr	r1, [r0, #12]	@行動済み等の状態
-        ldr	r2, =0xfffffbbd
-        and	r1, r2
-        str	r1, [r0, #12]
+        mov r0, r4
+        mov r1, #0
+            ldr r2, hasGaleCause
+            mov lr, r2
+            .short 0xF800
+        cmp r0, #0
+        beq falseShourai
+
+        mov r0, r4
+        ldr r1, [r0, #12]   @行動済み等の状態
+        ldr r2, =0xfffffbbd
+        and r1, r2
+        str r1, [r0, #12]
         
-        mov	r0, #1
+        mov r0, #1
         .short 0xE000
     falseShourai:
-        mov	r0, #0
-        pop	{pc}
+        mov r0, #0
+        pop {pc}
+
+ChangeFate:
+        push {lr}
+
+        ldr r0, =0x0203a954
+        ldrb r0, [r0, #17]
+        cmp r0, #COMMAND_RESCUE
+        bne falseFate         @救出以外なら終了
+
+        mov r0, r4
+        mov r1, #0
+        bl HAS_CHANGE_FATE
+        cmp r0, #0
+        beq falseFate
+
+        mov r0, r4
+        ldr r1, [r0, #12]   @行動済み等の状態
+        ldr r2, =0xfffffbbd
+        and r1, r2
+        str r1, [r0, #12]
+        
+        mov r0, #1
+        .short 0xE000
+    falseFate:
+        mov r0, #0
+        pop {pc}
 
 @生命吸収
 kaifuku:
@@ -421,6 +449,10 @@ WAIT_SKILLS:
 GET_RAIGING_STORM:
     ldr r0, addr+24
     bx lr
+
+HAS_CHANGE_FATE:
+    ldr r2, addr+28
+    mov pc, r2
 
 .align
 .ltorg
