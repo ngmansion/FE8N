@@ -34,6 +34,9 @@ ORG 0x08e7ac
    BYTE $00 $4A $97 $46
    POIN double_double
 
+
+
+///////////////////
 ORG	0x8E660
 #incbin "8E660.gba"
 pop_warp:

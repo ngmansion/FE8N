@@ -88,10 +88,10 @@ check:
     asr r0, r0, #24
     bne end
     bl DrawNumber
-    ldr r0, =0x0808e838
+    ldr r0, =0x0808e838     @合流
     mov pc, r0
 end:
-    ldr r0, =0x0808e8b4
+    ldr r0, =0x0808e8b4     @終了
     mov pc, r0
 
 

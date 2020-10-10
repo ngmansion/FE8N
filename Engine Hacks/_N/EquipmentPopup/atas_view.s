@@ -1,11 +1,20 @@
 .thumb
+RETURN_ADDR  = (0x0808e80e)
+RETURN_ADDR2 = (0x0808e814) @何もしない
 
-    sub sp, #12
+WAR_OFFSET = (67)
+
+    mov r0, #63     @0x3F
+    and r0, r6
+    cmp r0, #0
+    bne dont_need
+
+    sub sp, #80 @装備あたりまで
     mov r0, sp
     bl SetPow
-    add sp, #12
+    add sp, #80
 
-    bl GetAttack
+    bl GetFirstNum
     cmp r0, #99
     .short 0xdd00
     mov r0, #255
@@ -23,7 +32,7 @@
     .short 0x3152
     .short 0x7008
 
-    bl GetSpeed
+    bl GetSecondNum
     cmp r0, #99
     .short 0xdd00
     mov r0, #255
@@ -40,10 +49,24 @@
     .short 0x3154
     .short 0x7008
 
-    bl Draw_AtAs
-    ldr r0, =0x0808e80e
+    bl Draw_Word
+    ldr r0, =RETURN_ADDR
+    mov pc, r0
+dont_need:
+    ldr r0, =RETURN_ADDR2
     mov pc, r0
 
+JudgeDraw:
+        mov r0, #0x80   @64     @0x40
+        and r0, r6
+        bx lr
+
+Draw_Word:
+        push {lr}
+        bl JudgeDraw
+        cmp r0, #0
+        beq Draw_AtAs
+        b   Draw_DfRs
 Draw_AtAs:
         ldr r1, [r4, #64]
         mov r2, #0
@@ -57,10 +80,29 @@ Draw_AtAs:
         strh    r3, [r1, #8]
         strh    r2, [r1, #10]
         strh    r2, [r1, #12]
-        bx lr
+        pop {pc}
+Draw_DfRs:
+        ldr r1, [r4, #64]
+        mov r2, #0
+        ldr r3, =0x2166
+        strh    r3, [r1, #0]
+        add r3, #1
+        strh    r3, [r1, #2]
+        strh    r2, [r1, #4]
+        strh    r2, [r1, #6]
+        add r3, #1
+        strh    r3, [r1, #8]
+        strh    r2, [r1, #10]
+        strh    r2, [r1, #12]
+        pop {pc}
 
 
-
+GetFirstNum:
+        push {lr}
+        bl JudgeDraw
+        cmp r0, #0
+        beq GetAttack
+        b   GetDefence
 GetAttack:
         ldr r0, =0x0203a568
         mov r1, #72
@@ -73,13 +115,52 @@ GetAttack:
         .short 0xE000
     falseAT:
         mov r0, #0xFF
-        bx lr
+        pop {pc}
+GetDefence:
+        ldr r0, =0x0203a568
+        mov r1, #92
+        ldrh r0, [r1, r0]
+        pop {pc}
 
+
+GetSecondNum:
+        push {lr}
+        bl JudgeDraw
+        cmp r0, #0
+        beq GetSpeed
+        b   GetResistance
 GetSpeed:
         ldr r0, =0x0203a568
         mov r1, #94
         ldrh r0, [r1, r0]
-        bx lr
+        pop {pc}
+GetResistance:
+        ldr r3, =0x0203a568
+        mov r0, r3
+        add r0, #86
+        ldrb r0, [r0, #0]
+        lsl r0, r0, #24
+        asr r0, r0, #24
+        mov r1, #23
+        ldsb r1, [r3, r1]
+        add r2, r0, r1
+
+        mov r0, r3
+        add r0, #88
+        ldrb r0, [r0, #0]
+        lsl r0, r0, #24
+        asr r0, r0, #24
+        mov r1, #24
+        ldsb r1, [r3, r1]
+        add r1, r0, r1
+
+        ldr r0, =0x0203a568
+        add r0, #92
+        ldrh r0, [r0]
+
+        add r0, r0, r1
+        sub r0, r0, r2
+        pop {pc}
 
 COPY_SIZE = (72)
 
@@ -95,16 +176,25 @@ SetPow:
         mov r0, r5
         bl DefSideFunc
 
+@※0002a8c8
+        mov r0, r4
+        mov r1, r5
+            ldr r2, =0x0802a9b0     @防御
+            mov lr, r2
+            .short 0xF800
+
         mov r0, r4
         mov r1, r5
             ldr r2, =0x0802aa28     @攻撃
             mov lr, r2
             .short 0xF800
+
         mov r0, r4
         mov r1, r5
             ldr r2, =0x0802aae4     @攻速
             mov lr, r2
             .short 0xF800
+
         ldr r0, =0x0802a8f8
         mov pc, r0
 
@@ -128,7 +218,18 @@ AtkSideFunc:
         bl SPEED_FUNC
         strb r0, [r4, #22]
 
+        mov r0, r5
+        bl DEFENCE_FUNC
+        strb r0, [r4, #23]
+
+        mov r0, r5
+        bl RESISTANCE_FUNC
+        strb r0, [r4, #24]
+
         bl MagicFuncIfNeed
+
+        mov r0, r4
+        bl TERRAIN_FUNC
 
         mov r2, #0
         mov r1, #83
@@ -181,11 +282,22 @@ $080168d0:
 
 DefSideFunc:
         mov r1, #0
-        str r1, [r0, #0]
-        str r1, [r0, #4]
-        str r1, [r0, #8]
+        str r1, [r0, #0]    @ユニット不明
+        str r1, [r0, #4]    @兵種不明
+        str r1, [r0, #8]    @状態不明
+
         mov r1, #0xFF
-        strb r1, [r0, #0xb]
+        strb r1, [r0, #0xb] @所属不明
+
+        mov r1, #0
+        add r0, #WAR_OFFSET
+        strb r1, [r0, #0xb] @戦技不明
+        sub r0, #WAR_OFFSET
+
+        mov r1, #0
+        add r0, #0x48
+        strh r1, [r0] @装備不明
+
         bx lr
 
 STRONG_FUNC:
@@ -194,6 +306,18 @@ STRONG_FUNC:
 
 SPEED_FUNC:
     ldr r2, =0x08018f24
+    mov pc, r2
+
+DEFENCE_FUNC:
+    ldr r2, =0x08018f64
+    mov pc, r2
+
+RESISTANCE_FUNC:
+    ldr r2, =0x08018f84
+    mov pc, r2
+
+TERRAIN_FUNC:
+    ldr r2, =0x0802a648
     mov pc, r2
 
 MEMCPY_R1toR0_FUNC:
