@@ -6,8 +6,8 @@ skill_136_weapon:
    BYTE $00 $00 0 
 skill_136_item:
    BYTE $00 $00 0 
-#define SKL_HELP_136 $0000
-#define SKL_COLOR_136 $00
+#define SKL_HELP_136 $0594
+#define SKL_COLOR_136 $FF
  
 #define COMBAT_ART_136_ATK 00 
 #define COMBAT_ART_136_HIT 00 

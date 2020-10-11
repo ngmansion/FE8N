@@ -6,7 +6,7 @@ skill_162_weapon:
    BYTE $00 $00 0 
 skill_162_item:
    BYTE $00 $00 0 
-#define SKL_HELP_162 $0000
+#define SKL_HELP_162 $058D
 #define SKL_COLOR_162 $FF
  
 #define COMBAT_ART_162_ATK 14 
@@ -14,7 +14,7 @@ skill_162_item:
 #define COMBAT_ART_162_CRT 00 
 #define COMBAT_ART_162_AVO 00 
 #define COMBAT_ART_162_COST 07 
-#define COMBAT_ART_162_WEAPON $FF 
+#define COMBAT_ART_162_WEAPON $02
 #define COMBAT_ART_162_INFO 02 
 #define COMBAT_ART_162_DUMMY 00 
  

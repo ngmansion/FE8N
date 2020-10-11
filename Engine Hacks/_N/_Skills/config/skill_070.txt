@@ -1,5 +1,5 @@
 skill_070_unit:
-   BYTE $00 $00 0 
+   BYTE $01 $00 0 
 skill_070_class:
    BYTE $00 $00 0 
 skill_070_weapon:
