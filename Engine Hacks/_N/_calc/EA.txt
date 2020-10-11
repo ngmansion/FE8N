@@ -2,7 +2,7 @@ PUSH
 
 //////////////////攻速計算
 ORG	0x2aae4
-#incbin "kousoku.gba"
+#incbin "kousoku.dmp"
 
 
 //////////////////回避計算
