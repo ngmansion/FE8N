@@ -44,7 +44,7 @@ POP
 
 
 kousoku:
- #incbin "Atk_Spd2.gba"
+ #incbin "Atk_Spd2.dmp"
 ALIGN 4
 
 //////////////////////
