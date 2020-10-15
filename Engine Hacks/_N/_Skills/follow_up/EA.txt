@@ -29,6 +29,7 @@ breaker_main:
     POIN vengefulFighter_hasSkill
     POIN hasDartingBlow
     POIN HasWaryFighterOrg
+    POIN HAS_FOLLOW_UP_RING
     
 breaker_semetate:
     #incbin battle.dmp
@@ -72,3 +73,9 @@ vengefulFighter_hasSkill:
 hasDesperation:
     HAS_NIHIL
     WORD DesperationID
+
+HAS_FOLLOW_UP_RING:
+    HAS_NIHIL
+    WORD FollowUpID
+
+

@@ -175,4 +175,5 @@
 #define ReinID                  178 //0xB2 牽制
 #define CorrosionID             179 //0xB3 武器破壊
 #define ToChangeFateID          180 //0xB4 運命を変える！
+#define FollowUpID              181 //0xB5 ついげきリング
 
