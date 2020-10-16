@@ -1,6 +1,7 @@
 .thumb
 
 D_REIN_DOWN_NUM = (2)
+ARENA_ADDR = (0x0203a4d0)
 
 @ 0802ad3c
 @イクリプス等の直前(自分の数値と相手の数値の計算後)
@@ -11,6 +12,12 @@ D_REIN_DOWN_NUM = (2)
     push {r4, r5, r6, lr}
     mov r4, r0
     mov r6, r1
+
+    ldr r0, =ARENA_ADDR
+    ldrh r0, [r0]
+    mov r1, #0x20
+    and r0, r1
+    bne Return
 
     mov	r0, r6
         ldr r1, NIHIL_ADR
@@ -51,12 +58,6 @@ endZero:
 @r5 loop count
 Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
         push {r4, r5, lr}
-
-        ldr r0, =0x0203a4d0
-        ldrh r0, [r0]
-        mov r1, #0x20
-        and r0, r1
-        bne endRein
 
         ldrb r5, [r4, #0xB]
         mov r0, #0xC0
@@ -314,11 +315,6 @@ GetAttackerAddr:
 
 Lull:
         push {lr}
-        ldr r0, =0x0203a4d0
-        ldrh r0, [r0]
-        mov r1, #0x20
-        and r0, r1
-        bne endLull
         mov r0, r4
         mov r1, #0
         bl HasLull

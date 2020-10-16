@@ -6,7 +6,7 @@
     bl AvoidUp
     
 @闘技場チェック
-	bl GetAlinaAdr
+	bl GetArenaAddr
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
@@ -1403,7 +1403,7 @@ GetAttackerAddr:
 GetWeaponSp:
 	ldr r1, =0x080172f0
 	mov pc, r1
-GetAlinaAdr:
+GetArenaAddr:
 	ldr r0, =0x0203a4d0
 	bx lr
 GetDistance:

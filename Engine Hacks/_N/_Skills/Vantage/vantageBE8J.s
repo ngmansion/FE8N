@@ -1,6 +1,6 @@
 .thumb
 
-ALINA_ADDR = (0x0203a4d0)
+ARENA_ADDR = (0x0203a4d0)
 
 @	書き換え
 @	00017bdc > 70 47
@@ -28,7 +28,7 @@ jump2:
 routine1:
 	push	{r4, lr}
 
-	ldr r4, =ALINA_ADDR
+	ldr r4, =ARENA_ADDR
 	ldrh r4, [r4]
 	mov r2, #0x20
 	and r2, r4

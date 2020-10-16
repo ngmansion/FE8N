@@ -25,11 +25,11 @@ main:
     return:
         pop {r4, r5, r6, pc}
 
-ALINA_ADDR = (0x0203a4d0)
+ARENA_ADDR = (0x0203a4d0)
 
 JudgeAddition:
         push {lr}
-        ldr r0, =ALINA_ADDR
+        ldr r0, =ARENA_ADDR
         ldrh r0, [r0]
         mov r1, #0x20
         and r0, r1

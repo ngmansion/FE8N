@@ -12,7 +12,7 @@ A_EFFECT = (0x0203a604)
 
 main:
 		push {lr}
-		ldr	r5, A_ALINA
+		ldr	r5, A_ARENA
 		ldrh r0, [r5]
 		mov r1, #0x20
 		and r0, r1
@@ -164,7 +164,7 @@ B_WEAPON_ABILITY:
 .long 0x080174cc
 A_EFFECT:
 .long 0x0203a604
-A_ALINA:
+A_ARENA:
 .long 0x0203a4d0
 
 .ltorg

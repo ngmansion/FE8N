@@ -21,7 +21,7 @@ RETURN2_ADR = (0x0802b812)
 	beq RETURN	@壁
 	
 	bl defeat_flag
-	bl Alina_back
+	bl Arena_back
 	cmp r0, #1
 	beq UNDEAD
 	
@@ -42,24 +42,24 @@ UNDEAD:
 	ldr r2, =RETURN2_ADR
 	mov pc, r2
 
-Alina_back:
+Arena_back:
 @闘技場は死なない
 	ldr	r0, =0x0203a4d0
 	ldrh r0, [r0]
 	mov r1, #0x20
 	and r0, r1
-	beq falseAlina	@闘技場以外は終了
+	beq falseArena	@闘技場以外は終了
 	
 	ldrb r0, [r6, #11]	@部隊表ID
 	lsl r0, r0, #24
-	bmi falseAlina	@敵は無視
+	bmi falseArena	@敵は無視
 	
 	mov r0, #1
 	strb r0, [r6, #19]	@現在HP
-	b endAlina
-falseAlina:
+	b endArena
+falseArena:
 	mov r0, #0
-endAlina:
+endArena:
 	bx lr
 
 DEFEAT   = (0b10000000) @撃破フラグ
