@@ -1035,9 +1035,10 @@ Charge:
         
         mov r0, r4
         bl GetWalked
-        cmp r0, #8
+        lsl r0, r0, #1
+        cmp r0, #10
         ble jumpCharge
-        mov r0, #8
+        mov r0, #10
     jumpCharge:
         mov r1, #90
         ldrh r2, [r4, r1]
