@@ -138,7 +138,7 @@ ALIGN 4
     WAIT_SKILLS:
         #incbin WaitSkills.dmp
         POIN HAS_ALERT_STANCE
-        POIN HAS_DEFENSIVE_STANCE
+        POIN HAS_DEFENSIVE
         POIN HAS_CATNAP
 
     hasRagingStorm:
@@ -165,9 +165,9 @@ ALIGN 4
     HAS_ALERT_STANCE:
         HAS_SKILL
         WORD AlertStanceID
-    HAS_DEFENSIVE_STANCE:
+    HAS_DEFENSIVE:
         HAS_SKILL
-        WORD DefensiveStanceID
+        WORD DefensiveID
     HAS_CATNAP:
         HAS_SKILL
         WORD CatnapID
