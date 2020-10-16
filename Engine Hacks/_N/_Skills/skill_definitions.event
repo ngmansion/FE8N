@@ -176,4 +176,5 @@
 #define CorrosionID             179 //0xB3 武器破壊
 #define ToChangeFateID          180 //0xB4 運命を変える！
 #define FollowUpID              181 //0xB5 ついげきリング
+#define DeadeyeID               182 //0xB6 狙撃
 
