@@ -1,4 +1,7 @@
 .thumb
+
+ALINA_ADDR = (0x0203a4d0)
+
 @	書き換え
 @	00017bdc > 70 47
 @
@@ -24,6 +27,13 @@ jump2:
 	
 routine1:
 	push	{r4, lr}
+
+	ldr r4, =ALINA_ADDR
+	ldrh r4, [r4]
+	mov r2, #0x20
+	and r2, r4
+	bne false       @闘技場なら終了
+
 @@@@@@@@@@@@受け側チェック
 	mov	r4, #0
 	mov	r2, r0
