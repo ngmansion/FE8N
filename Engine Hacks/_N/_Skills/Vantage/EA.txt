@@ -18,8 +18,13 @@ ski_vantage:
  #incbin "vantageBE8J.dmp"
  POIN hasVantage
  POIN hasNihil
+ POIN HAS_LIONINE_POISE
 
 hasVantage:
  HAS_SKILL
  WORD VantageID
- 
+
+HAS_LIONINE_POISE:
+ HAS_COMBAT
+ WORD LioninePoiseID
+
