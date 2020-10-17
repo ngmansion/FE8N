@@ -59,7 +59,8 @@ main2:  @武器破壊
         bl $00016894            @杖・道具減少
         strh r0, [r5, #0]
         lsl r0, r0, #16
-        lsr r0, r0, #16         @破損しない武器対応
+        lsr r0, r0, #24         @BreakedWeapon対応 差し替え
+@        lsr r0, r0, #16         @破損しない武器対応
         bne falseMain2          @残っているなら飛ぶ
 
         mov r0, #1              @スキル発動かつ回数0
