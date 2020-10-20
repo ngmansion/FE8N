@@ -1,8 +1,6 @@
-
-WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
-ATTACK_FLG_OFFSET = (69)	@書き込み先(AI2カウンタ)
-FIRST_ATTACKED_FLAG = (0b00010000)
-COMBAT_HIT               = (0b00100000) @戦技発動フラグ
+RAGING_STORM_FLAG     = (2)
+COMBAT_HIT            = (1)
+FIRST_ATTACKED_FLAG   = (0)
 
 @ORG 0802b868
 .thumb
@@ -41,28 +39,25 @@ WarSkill:
 
 
 	ldrb r0, [r3, #11]
-	mov r2, #0xC0
-	and r2, r0
-	bne endWar @自軍以外は終了
-
 	ldr r2, =0x03004df0
 	ldr r2, [r2]
 	ldrb r1, [r2, #0xB]
 	cmp r0, r1
 	bne endWar	@選択者と攻撃者が違う
 
-	mov r0, #WAR_OFFSET
-	ldrb r0, [r3, r0]
+	mov r0, r13
+	ldr r0, [r0, #20]
+	bl GET_COMBAT_ART
+
 	cmp r0, #0
 	beq endWar	@戦技なし
 	cmp r0, #0xFF
 	beq endWar	@戦技なし
 
-	mov r0, #ATTACK_FLG_OFFSET
-	ldrb r0, [r3, r0]
-	mov r1, #FIRST_ATTACKED_FLAG
-	tst r0, r1
-	bne endWar	@フラグオンなのでジャンプ
+	mov r0, #FIRST_ATTACKED_FLAG
+	bl IS_TEMP_SKILL_FLAG
+    cmp r0, #1
+	beq endWar	@フラグオンなのでジャンプ
 
 	mov r0, r13
 	ldr r0, [r0, #20]
@@ -72,14 +67,8 @@ WarSkill:
 	ldr r0, [r0, #20]
 	bl GetDecreaseNum   @r5に減少数取得
 
-	mov r0, r13
-	ldr r3, [r0, #20]
-	mov r1, #ATTACK_FLG_OFFSET
-	add r3, r1
-	ldrb r0, [r3]
-	mov r1, #FIRST_ATTACKED_FLAG
-	orr r0, r1
-	strb r0, [r3]           @初撃完了フラグ
+	mov r0, #FIRST_ATTACKED_FLAG
+	bl TURN_ON_TEMP_SKILL_FLAG
 
 @無限の武器
 	mov r0, r13
@@ -161,82 +150,32 @@ Combat_Arts_Func:
 
         ldr	r2, =0x0203a604
         ldr	r2, [r2]
-        sub	r2, #4	@スキルとかのアレの前の状態を取る
+        sub	r2, #4      @スキルとかのアレの前の状態を取る
         ldr r0, [r2]
 
-        mov r1, #2	@外れフラグ
+        mov r1, #2      @外れフラグ
         and r1, r0
-        bne falseCombat     @外れフラグオンでジャンプ
+        bne endCombat     @外れフラグオンでジャンプ
 
-    @スキルを持っているか
-        mov r0, r4
-        mov r1, #0
-        bl HasKnockBack
-        cmp r0, #1
-        beq trueCombat
-
-        mov r0, r4
-        mov r1, #0
-        bl HasHitAndRun
-        cmp r0, #1
-        beq trueCombat
-
-        mov r0, r4
-        mov r1, #0
-        bl HasLunge
-        cmp r0, #1
-        beq trueCombat
-
-        mov r0, r4
-        mov r1, #0
-        bl HasRagingStorm
-        cmp r0, #1
-        beq trueCombat
-    falseCombat:
-        b endCombat
-    trueCombat:
-        mov r0, r4
-        add r0, #ATTACK_FLG_OFFSET
-        ldrb r1, [r0]
-
-        mov r2, #COMBAT_HIT
-        orr r1, r2
-
-        strb r1, [r0]       @戦技発動
+        mov r0, #COMBAT_HIT
+        bl TURN_ON_TEMP_SKILL_FLAG
 
     endCombat:
         pop {r4, pc}
 
+GetDecreaseNum:
+        push {lr}
+        bl GET_COMBAT_ART
+        ldr r1, COMBAT_LIST_SIZE
+        mul r0, r1
+        ldr r1, COMBAT_LIST
+        add r0, r1
 
+        ldrb r5, [r0, #4]
+        pop {pc}
 
 COMBAT_LIST = (addr+8)
 COMBAT_LIST_SIZE = (addr+12)
-
-GetDecreaseNum:
-		add r0, #WAR_OFFSET
-		ldrb r0, [r0]
-		ldr r1, COMBAT_LIST_SIZE
-		mul r0, r1
-		ldr r1, COMBAT_LIST
-		add r0, r1
-
-		ldrb r5, [r0, #4]
-		bx lr
-
-
-HasHitAndRun:
-ldr r2, (addr+20)
-mov pc, r2
-HasKnockBack:
-ldr r2, (addr+24)
-mov pc, r2
-HasLunge:
-ldr r2, (addr+16)
-mov pc, r2
-
-HasRagingStorm:
-ldr r2, (addr+4)
-mov pc, r2
 
 Infinity:
     ldr r3, addr
@@ -244,8 +183,15 @@ Infinity:
 HAS_CORROSION:
     ldr r3, addr+28
     mov pc, r3
-
-
+GET_COMBAT_ART:
+    ldr r2, addr+32
+    mov pc, r2
+IS_TEMP_SKILL_FLAG:
+    ldr r2, addr+36
+    mov pc, r2
+TURN_ON_TEMP_SKILL_FLAG:
+    ldr r2, addr+40
+    mov pc, r2
 .align
 .ltorg
 addr:

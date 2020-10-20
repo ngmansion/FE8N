@@ -1,7 +1,5 @@
 .thumb
 
-WAR_ADDR = (67)	@書き込み先(AI1カウンタ)
-
 HAS_DARTING_FUNC = (Addr+36)
 
 @.org 0802af18
@@ -148,6 +146,7 @@ followup_skills_def:    @受け側(r6)に影響あるスキルのみ抽出
         pop {pc}
 
 WarSkill:
+        push {lr}
         ldrb r1, [r0, #0xB]
         mov r2, #0xC0
         and r2, r1
@@ -159,15 +158,14 @@ WarSkill:
         cmp r1, r2
         bne falseWar
 
-        add r0, #WAR_ADDR
-        ldrb r0, [r0]
+        bl GET_COMBAT_ART
         cmp r0, #0
         beq falseWar
         mov r0, #1
-        bx lr
+        .short 0xE000
     falseWar:
         mov r0, #0
-        bx lr
+        pop {pc}
 
 
 Impact:
@@ -370,12 +368,14 @@ QuickRiposte: @切り返し
 
 .align
 HasWaryFighter:
-ldr r2, Addr+40
-mov pc, r2
-
+ ldr r2, Addr+40
+ mov pc, r2
 HAS_FOLLOW_UP_RING:
-ldr r2, Addr+44
-mov pc, r2
+ ldr r2, Addr+44
+ mov pc, r2
+GET_COMBAT_ART:
+ ldr r1, (Addr+48)
+ mov pc, r1
 
 .align
 .ltorg

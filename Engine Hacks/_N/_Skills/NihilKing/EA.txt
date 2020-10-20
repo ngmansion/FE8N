@@ -20,6 +20,8 @@ mirikiri:
  WORD AssassinateID
  WORD PaviseID
  WORD AegisID
+ POIN GET_COMBAT_ART
+ POIN IS_TEMP_SKILL_FLAG
 
 hasRightfulKing:
  HAS_SKILL

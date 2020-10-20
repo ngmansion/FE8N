@@ -271,15 +271,10 @@ $08017478:
     ldr r1, =0x08017478
     mov pc, r1
 
-STR_ADR = (67)	@書き込み先(AI1カウンタ)
+
 
 WarSkill:
         push {lr}
-
-        ldrb r0, [r4, #11]
-        mov r2, #0xC0
-        and r2, r0
-        bne endWar @自軍以外は終了
 
         bl GetAttackerAddr
         ldr r2, [r0]
@@ -288,8 +283,8 @@ WarSkill:
         cmp r0, r2
         bne endWar
 
-        mov r0, #STR_ADR
-        ldrb r0, [r4, r0]
+        mov r0, r4
+        bl GET_COMBAT_ART
         bl GetWarList
         cmp r0, #0
         beq endWar
@@ -512,6 +507,10 @@ GET_CHARGING_EFFECT_ID:
 HAS_REIN:
     ldr r2, (addr+56)
     mov pc, r2
+
+GET_COMBAT_ART:
+ ldr r2, (addr+60)
+ mov pc, r2
 
 .ltorg
 .align

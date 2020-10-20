@@ -40,6 +40,7 @@ POP
 
 defeatEnemy:
 #incbin defeatEnemy.dmp
+POIN TURN_ON_TEMP_SKILL_FLAG
 ALIGN 4
 
 PUSH
@@ -130,6 +131,9 @@ ALIGN 4
         POIN WAIT_SKILLS
         WORD RagingStormID
         POIN HAS_CHANGE_FATE
+        POIN GET_COMBAT_ART
+        POIN IS_TEMP_SKILL_FLAG
+        POIN TURN_OFF_TEMP_SKILL_FLAG
         
     AfterMove_Skill:
         #incbin "AfterMove.dmp"

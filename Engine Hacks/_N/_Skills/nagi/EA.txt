@@ -18,6 +18,7 @@ nagi_kaze:
   POIN HAS_DISTANT_COUNTER
   WORD DISTANT_COUNTER_INVALID_WEAPON_TYPE
   POIN HAS_DEAD_EYE
+  POIN SET_ENEMY_COMBAT
 
 counter_effect:
   #incbin effect.dmp

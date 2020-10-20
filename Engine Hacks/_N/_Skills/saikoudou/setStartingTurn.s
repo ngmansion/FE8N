@@ -17,36 +17,23 @@ RETURN:
     ldr r0, =0x0801859a
     mov pc, r0
 
-DEFEAT      = (0b10000000) @撃破フラグ
 DEFEATED    = (0b01000000) @迅雷済みフラグ
-COMBAT_HIT       = (0b00100000) @戦技発動フラグ
-FIRST       = (0b00010000) @初撃フラグ
 
 Jinrai_back:
-@DEFEATEDだけ消せばよいが、一応他も消す
+@DEFEATEDだけ消す
         ldrb r0, [r4, #11]
         mov r2, #0xC0
         tst r2, r0
-        bne endJinrai @自軍以外は終了
+        bne endJinrai       @自軍以外は終了
 
         mov r1, r4
         add r1, #69
         ldrb r0, [r1]
 
-        mov r2, #0xFF
-        bic r0, r2
-        strb r0, [r1]
-        b endJinrai
-
         mov r2, #DEFEATED
         bic r0, r2
 
-        mov r2, #COMBAT_HIT
-        bic r0, r2
-
-        mov r2, #FIRST
-        bic r0, r2
-        strb r0, [r1]
+        strb r0, [r1]       @セットはmainで行う
     endJinrai:
         bx lr
     

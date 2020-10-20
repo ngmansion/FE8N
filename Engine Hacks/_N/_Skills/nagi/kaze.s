@@ -1,7 +1,8 @@
 .thumb
 @0802a834
-STR_ADR = (67)	@書き込み先(AI1カウンタ)
     push {r0}
+    mov r0, r5
+    bl SET_ENEMY_COMBAT
     bl DistantCounter
     pop {r1}
     cmp r0, #1
@@ -139,6 +140,10 @@ bx lr
 HAS_DEAD_EYE:
 ldr r2, addr+20
 mov pc, r2
+
+SET_ENEMY_COMBAT:
+ldr r1, addr+24
+mov pc, r1
 
 .align
 .ltorg

@@ -53,6 +53,7 @@ battle_before:
     POIN HasDartingStance
     POIN combat_art_table
     WORD COMBAT_ART_LIST_SIZE
+    POIN GET_COMBAT_ART
     
 battle_after:
     #incbin main.dmp
@@ -71,6 +72,7 @@ battle_after:
     WORD CHARGING_LANCE_COEF
     WORD CHARGING_LANCE_ITEM_EFFECT_ID
     POIN HAS_REIN
+    POIN GET_COMBAT_ART
     
     
 battle_down:
@@ -82,9 +84,13 @@ battle_down:
   POIN hasDoubleLion
   POIN hasSavageBlow
   POIN fodes_func
-  WORD LungeID
-  WORD HitAndRunID
-  WORD KnockBackID
+  POIN HasLunge
+  POIN HasHitAndRun
+  POIN HasKnockBack
+  POIN SET_COMBAT_ART
+  POIN hasRagingStorm
+  POIN IS_TEMP_SKILL_FLAG
+  POIN TURN_ON_TEMP_SKILL_FLAG
   
 
 HasLunge:

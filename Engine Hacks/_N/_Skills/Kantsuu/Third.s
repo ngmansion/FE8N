@@ -1,8 +1,9 @@
 .thumb
 @org	0x0802B3D8
 
-ATTACK_FLG_OFFSET   = (69)              @書き込み先(AI2カウンタ)
-FIRST_ATTACKED_FLAG = (0b00010000)
+RAGING_STORM_FLAG     = (2)
+COMBAT_HIT            = (1)
+FIRST_ATTACKED_FLAG   = (0)
 
 
 
@@ -57,18 +58,11 @@ MasterySkill:
 WarSkill:
 		push {lr}
 
-		mov r0, r8
-		mov r1, #0
-		bl HasNihil
-		cmp r0, #1
-		beq endWarSkill @見切り持ち
 
-        mov r0, r7
-        add r0, #ATTACK_FLG_OFFSET
-        ldrb r0, [r0]
-        mov r1, #FIRST_ATTACKED_FLAG
-        and r0, r1
-        bne endWarSkill                 @初撃済フラグオンならジャンプ
+        mov r0, #FIRST_ATTACKED_FLAG
+        bl IS_TEMP_SKILL_FLAG
+        cmp r0, #1
+        beq endWarSkill                 @初撃済フラグオンならジャンプ
 
 		bl FallenStar
 
@@ -510,9 +504,12 @@ ldr r2, (adr+52)
 mov pc, r2
 
 GET_STONE_MASTERY:
-ldr r0, (adr+52)
-ldr r0, [r0, #12]
-bx lr
+    ldr r0, (adr+52)
+    ldr r0, [r0, #12]
+    bx lr
+IS_TEMP_SKILL_FLAG:
+    ldr r2, (adr+52)
+    mov pc, r2
 
 .align
 .ltorg

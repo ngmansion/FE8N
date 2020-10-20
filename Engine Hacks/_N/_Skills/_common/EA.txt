@@ -28,6 +28,7 @@ checkCombat:
     #incbin checkCombat.dmp
     POIN hasNihil
     POIN judgeSkill
+    POIN GET_COMBAT_ART
 
 ALIGN 4
 

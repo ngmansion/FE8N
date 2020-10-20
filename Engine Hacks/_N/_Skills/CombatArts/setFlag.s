@@ -1,8 +1,11 @@
 .thumb
 @ 0802a2bc
-	
-WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
+
 SOUND_ID = (97)
+DEFEAT_FLAG           = (3)
+RAGING_STORM_FLAG     = (2)
+COMBAT_HIT            = (1)
+FIRST_ATTACKED_FLAG   = (0)
 	
 	
 	ldr r0, =0x0802a2d8
@@ -13,7 +16,11 @@ SOUND_ID = (97)
 	.short 0x9000
 	
 	push {r2,r3}
-	
+
+	mov r0, #0
+	mov r1, r4
+	bl SET_COMBAT_ART
+
 	mov r0, r13
 	ldr r0, [r0, #36]
 	ldr r1, =0x08050803
@@ -23,27 +30,21 @@ SOUND_ID = (97)
     ldr r0, ADDR+4
 	ldrb r0, [r0]
 	cmp r0, #0
-	beq reset
+	beq end
 	cmp r0, #1
-	beq reset
+	beq end
 	
 	bl GetSkill
-	mov r2, r4
-	add r2, #WAR_OFFSET
-	strb r0, [r2]
+	mov r1, r4
+	bl SET_COMBAT_ART
 @サウンド
 	mov	r0, #SOUND_ID
 	ldr	r1, =0x080d4ef4 @サウンド
 	mov	lr, r1
 	.short 0xf800
-	b end
-reset:
-	mov r0, #0
-	mov r2, r4
-	add r2, #WAR_OFFSET
-	strb r0, [r2]
 end:
     bl arrow_reset_func
+    bl ClearTempFlag        @敵のフラグが消しきれない懸念。念のため
 
 	pop {r2,r3}
 	ldr r0, =0x0802a2c6
@@ -67,6 +68,27 @@ arrow_reset_func:
     str r1, [r0, #8]
     str r1, [r0, #12]
 	bx lr
+
+ClearTempFlag:          @saikoudou/main.sにもある
+        push {lr}
+        mov r0, #COMBAT_HIT
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        mov r0, #FIRST_ATTACKED_FLAG
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        mov r0, #RAGING_STORM_FLAG
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        mov r0, #DEFEAT_FLAG
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        
+        pop {pc}
+
+
+SET_COMBAT_ART:
+    ldr r2, ADDR+8
+    mov pc, r2
+TURN_OFF_TEMP_SKILL_FLAG:
+    ldr r2, ADDR+12
+    mov pc, r2
 
 .align
 .ltorg

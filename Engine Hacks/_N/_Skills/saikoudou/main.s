@@ -4,15 +4,14 @@ DEF = (0x0203a568)
 TARGET_UNIT = (0x03004df0)
 WEAPON_SP_ADDR = (0x080172f0)
 
-WAR_OFFSET = (67)           @書き込み先(AI1カウンタ)
 ATTACK_FLG_OFFSET = (69)    @書き込み先(AI2カウンタ)
 
-DEFEAT   = (0b10000000) @撃破フラグ
 DEFEATED = (0b01000000) @迅雷済みフラグ
-COMBAT_HIT    = (0b00100000) @戦技発動フラグ
-FIRST    = (0b00010000) @初撃フラグ
 
-DEFEAT2 = (0xC0)
+DEFEAT_FLAG           = (3)
+RAGING_STORM_FLAG     = (2)
+COMBAT_HIT            = (1)
+FIRST_ATTACKED_FLAG   = (0)
 
 COMMAND_RESCUE = (9)
 
@@ -33,7 +32,7 @@ COMMAND_RESCUE = (9)
     ldrb r1, [r0, #11]
     mov r2, #192
     and r2, r1
-    bne FALSE @自軍以外は終了
+    bne FALSE @自軍以外は終了(そもそも通らない)
     ldr r0, [r4, #12]
     ldr r1, =0x80000000
     tst r0, r1
@@ -67,7 +66,7 @@ COMMAND_RESCUE = (9)
     ldr r1, =DEF
     bl kaifuku
 
-    mov r0, r4
+    mov r0, r4          @r4 is not ATK, DEF
     ldr r1, =DEF
     bl RagingStorm
     cmp r0, #1
@@ -81,9 +80,10 @@ COMMAND_RESCUE = (9)
     and r2, r1
     bne next    @再行動済み
 
-    mov r2, #DEFEAT
-    and r2, r1
-    bne pattern1
+    mov r0, #DEFEAT_FLAG
+    bl IS_TEMP_SKILL_FLAG
+    cmp r0, #1
+    beq pattern1
     b pattern2
 
 WaitSkills:
@@ -93,10 +93,11 @@ WaitSkills:
 clearFALSE:
     bl clear_defeat
 FALSE:
+    bl ClearTempFlag
+
     ldr r4, =TARGET_UNIT
     ldr r3, =0x0801cefc
     mov pc, r3
-
 
 pattern1:
 @再行動なし撃破
@@ -121,13 +122,13 @@ pattern2:
 
 getReMove:
 @一回目撃破(再行動済みフラグ)をオン
-    mov r0, #69
+    mov r0, #ATTACK_FLG_OFFSET
     ldrb r1, [r4, r0]
 
     mov r2, #DEFEATED
     orr r1, r2
 
-    strb r1, [r4, r0] @撃破済み
+    strb r1, [r4, r0] @撃破済み setStartingTurnでクリア
     
     b Sound	@再行動
 nop
@@ -135,6 +136,7 @@ nop
 
 next:
     bl clear_defeat
+    bl ClearTempFlag
 @スキル再移動による再移動化
     bl JudgeCantoPlus
     cmp r0, #1
@@ -163,6 +165,7 @@ CantoPlus:
 
 Sound:	
     bl clear_defeat
+    bl ClearTempFlag
 @再行動
     ldr	r0, =0x0202bcec
     add	r0, #65
@@ -184,51 +187,37 @@ clear_defeat:
         ldr r0, [r4, #12]
         ldr r1, =0x80000000
         bic r0, r1
-        str r0, [r4, #12]
+        str r0, [r4, #12]       @全力移動
 @@@@
         ldr r0, [r4, #12]
         ldr r1, =0x40000000
         tst r0, r1
         beq jumpClear
         bic r0, r1
-        str r0, [r4, #12]
+        str r0, [r4, #12]       @全力移動
         ldrb r0, [r4, #29]
         sub r0, #2
-        strb r0, [r4, #29]
+        strb r0, [r4, #29]       @全力移動
     jumpClear:
 @@@@
-        mov r1, r4
-        add r1, #69
-        ldrb r0, [r1]
-
-        mov r2, #DEFEAT
-        bic r0, r2
-
 @再行動済みは消さない
 
-        mov r2, #COMBAT_HIT
-        bic r0, r2
-
-        mov r2, #FIRST
-        bic r0, r2
-
-        strb r0, [r1]
-
-@@@WarSkill_back
-        mov r1, r4
-        ldrb r0, [r1, #11]
-        mov r2, #0xC0
-        and r2, r0
-        bne war_end @自軍以外は終了
-
-        mov r1, r4
-        add r1, #67
-        mov r0, #0
-        strb r0, [r1]
-    war_end:
         bx lr
 
-    
+ClearTempFlag:      @CombatArms/setFlag.sにもあるので注意
+        push {lr}
+        mov r0, #COMBAT_HIT
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        mov r0, #FIRST_ATTACKED_FLAG
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        mov r0, #RAGING_STORM_FLAG
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        mov r0, #DEFEAT_FLAG
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        
+        pop {pc}
+
+@
 @狂嵐
 @
 RagingStorm:
@@ -240,21 +229,12 @@ RagingStorm:
         cmp r0, r1
         bne falseStorm
 
-        ldr r1, =ATK            @フラグを取る為
-        add r1, #ATTACK_FLG_OFFSET
-        ldrb r1, [r1]
-    
-        mov r0, #COMBAT_HIT
-        tst r0, r1
-        beq falseStorm      @ビットオフ(当たってないので)ジャンプ
-
-        bl GET_RAIGING_STORM
-        ldr r1, =ATK            @フラグを取る為
-        add r1, #WAR_OFFSET
-        ldrb r1, [r1]
-    
-        cmp r0, r1
-        bne falseStorm      @戦技が違う
+        mov r0, #RAGING_STORM_FLAG
+        bl IS_TEMP_SKILL_FLAG   @battle/downでセット
+        cmp r0, #0
+        beq falseStorm      @フラグなし
+        mov r0, #RAGING_STORM_FLAG
+        bl TURN_OFF_TEMP_SKILL_FLAG
 
         mov	r0, r4
         ldr	r1, [r0, #12]	@行動済み等の状態
@@ -374,11 +354,9 @@ kaifuku:
         cmp r0, #0
         beq non_hp
 
-        mov r0, r4
-        add r0, #69
-        ldrb r1, [r0]
-        mov r2, #DEFEAT
-        and r1, r2
+        mov r0, #DEFEAT_FLAG
+        bl IS_TEMP_SKILL_FLAG
+        cmp r0, #0
         beq non_hp  @撃破フラグがオフ
 
         mov	r2, r4
@@ -433,7 +411,6 @@ JudgeCantoPlus:
             .short 0xF800
         pop {pc}
 
-
 HAS_FULL_SPEED_AHEAD:
     ldr r2, addr+0
     mov pc, r2
@@ -453,7 +430,15 @@ GET_RAIGING_STORM:
 HAS_CHANGE_FATE:
     ldr r2, addr+28
     mov pc, r2
-
+GET_COMBAT_ART:
+    ldr r1, addr+32
+    mov pc, r1
+IS_TEMP_SKILL_FLAG:
+    ldr r2, addr+36
+    mov pc, r2
+TURN_OFF_TEMP_SKILL_FLAG:
+    ldr r2, addr+40
+    mov pc, r2
 .align
 .ltorg
 addr:

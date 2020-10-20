@@ -32,7 +32,7 @@ POIN HasSwiftStrikes
 POIN hasDoubleLion
 POIN hasBlitzkrieg
 POIN HasAdept
-
+POIN IS_TEMP_SKILL_FLAG
 
 
 HasSwiftStrikes:

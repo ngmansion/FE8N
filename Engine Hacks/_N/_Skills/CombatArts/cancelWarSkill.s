@@ -26,12 +26,12 @@ main:
 	pop {pc}
 	
 reset_warskill:
+	push {lr}
 	ldr r1, =0x03004df0
 	ldr r1, [r1]
-	add r1, #WAR_OFFSET
 	mov r0, #0
-	strb r0, [r1]
-	bx lr
+	bl SET_COMBAT_ART
+	pop {pc}
 
 arrow_reset_func:
     ldr r0, ADDR
@@ -41,6 +41,10 @@ arrow_reset_func:
     str r1, [r0, #8]
     str r1, [r0, #12]
 	bx lr
+
+SET_COMBAT_ART:
+ ldr r2, ADDR+4
+ mov pc, r2
 
 .align
 .ltorg

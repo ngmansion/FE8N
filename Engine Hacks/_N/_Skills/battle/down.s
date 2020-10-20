@@ -1,14 +1,6 @@
-WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
-ATTACK_FLG_OFFSET = (69)    @書き込み先(AI2カウンタ)
-
-
-@初撃フラグ化
-@KNOCK_BACK_FLAG    = (0b00000100) @叩き込みフラグ
-@HITANDRUN_FLAG     = (0b00001000) @一撃離脱フラグ
-@LUNGE_FLAG    = (0b00010000) @切り込みフラグ
-
-COMBAT_HIT                 = (0b00100000) @戦技発動フラグ
-FIRST_ATTACKED_FLAG   = (0b00010000)
+RAGING_STORM_FLAG     = (2)
+COMBAT_HIT            = (1)
+FIRST_ATTACKED_FLAG   = (0)
 
 .thumb
 
@@ -30,9 +22,6 @@ START:
     beq negative	@自分のHP0
     
     mov	r0, r7
-    bl WarSkill_back
-    
-    mov	r0, r7
     mov	r1, r6
     bl Fury
     
@@ -44,9 +33,7 @@ START:
     mov	r1, r6
     bl SavageBlow
 
-    bl Lunge
-    bl HitAndRun
-    bl KnockBack
+    bl CombatArts
 
     ldrb r0, [r6, #19]
     cmp r0, #0
@@ -59,8 +46,6 @@ START:
     mov	r0, r7
     mov	r1, r6
     bl Counter
-
-
 
 negative:
 @受け側スキル→攻め
@@ -75,31 +60,58 @@ negative:
     mov	r0, r6
     mov	r1, r7
     bl DoubleLion	@HP満タンの時だけなので最後
-    
 
 END:
+    mov r0, r7          @r7はユニット直
+    bl WarSkill_back
+
     pop	{r4, r5, r6, r7}
     pop	{r0}
     bx	r0
 
+@
+@r5はATK,DEF
+@r7はユニット直
+@
+CombatArts:
+        push {lr}
+        mov r0, #COMBAT_HIT
+        bl IS_TEMP_SKILL_FLAG
+        cmp r0, #0
+        beq endCombatArts      @当たってないので終了
 
+        bl KnockBack
+        bl HitAndRun
+        bl Lunge
+        bl RagingStorm
+
+endCombatArts:
+        pop {pc}
+
+RagingStorm:
+        push {lr}
+        mov r0, r5
+        bl HAS_RAGING_STORM
+        cmp r0, #0
+        beq endRagingStorm
+
+        ldrb r0, [r5, #11]
+        mov r2, #0xC0
+        and r2, r0
+        bne endRagingStorm          @自軍以外はジャンプ(発動できない)
+
+        mov r0, #RAGING_STORM_FLAG        
+        bl TURN_ON_TEMP_SKILL_FLAG @saikoudou/mainで回収
+
+    endRagingStorm:
+        pop {pc}
 
 KnockBack:
         push {lr}
-
-        mov r2, r5
-        add r2, #ATTACK_FLG_OFFSET
-        ldrb r0, [r2]
-        mov r1, #COMBAT_HIT
-        tst r0, r1
-        beq endKnockBack      @持ってないので終了
-
-        bl GET_KNOCK_BACK
-        mov r2, r5
-        add r2, #WAR_OFFSET
-        ldrb r1, [r2]
-        cmp r0, r1
-        bne endKnockBack
+        mov r0, r5
+        bl HAS_KNOCK_BACK
+        cmp r0, #0
+        beq endKnockBack
 
         ldr r1, [r6]
         ldr r2, [r6, #4]
@@ -153,20 +165,10 @@ KnockBack:
 
 HitAndRun:
         push {lr}
-
-        mov r2, r5
-        add r2, #ATTACK_FLG_OFFSET
-        ldrb r0, [r2]
-        mov r1, #COMBAT_HIT
-        tst r0, r1
-        beq endHitAndRun      @持ってないので終了
-
-        bl GET_HIT_AND_RUN
-        mov r2, r5
-        add r2, #WAR_OFFSET
-        ldrb r1, [r2]
-        cmp r0, r1
-        bne endHitAndRun
+        mov r0, r5
+        bl HAS_HIT_AND_RUN
+        cmp r0, #0
+        beq endHitAndRun
 
         ldrb r0, [r6, #16]   @相手
         ldrb r2, [r7, #16]
@@ -197,6 +199,18 @@ HitAndRun:
         neg r1, r1
         add r1, r3
 
+        ldrb r2, [r7, #0xB]
+        mov r3, #0xC0
+        and r2, r3
+        cmp r2, #0
+        beq allyHitAndRun               @使用者が自軍ならジャンプ
+
+        ldr r2, =0x0203AA90
+        strb r0, [r2, #2]
+        strb r1, [r2, #3]
+        b endHitAndRun
+
+    allyHitAndRun:
         ldr r2, =0x0203A954
         strb r0, [r2, #14]
         strb r1, [r2, #15]
@@ -206,20 +220,10 @@ HitAndRun:
 
 Lunge:
         push {lr}
-
-        mov r2, r5
-        add r2, #ATTACK_FLG_OFFSET
-        ldrb r0, [r2]
-        mov r1, #COMBAT_HIT
-        tst r0, r1
-        beq endLunge      @持ってないので終了
-
-        bl GET_LUNGE
-        mov r2, r5
-        add r2, #WAR_OFFSET
-        ldrb r1, [r2]
-        cmp r0, r1
-        bne endLunge
+        mov r0, r5
+        bl HAS_LUNGE
+        cmp r0, #0
+        beq endLunge
 
         ldr r1, [r6]
         ldr r2, [r6, #4]
@@ -255,6 +259,17 @@ Lunge:
         ldrb r3, [r7, #17]
         strb r2, [r6, #16]   @相手
         strb r3, [r6, #17]   @相手
+
+        ldrb r2, [r7, #0xB]
+        mov r3, #0xC0
+        and r2, r3
+        cmp r2, #0
+        beq allyLunge               @使用者が自軍ならジャンプ
+        ldr r2, =0x0203AA90
+        strb r0, [r2, #2]
+        strb r1, [r2, #3]
+        b endLunge
+    allyLunge:
         ldr r2, =0x0203A954
         strb r0, [r2, #14]
         strb r1, [r2, #15]
@@ -285,18 +300,13 @@ retDouble:
     pop	{r4, pc}
 
 WarSkill_back:
+    push {lr}
     mov r1, r0
 
-    ldrb r0, [r1, #11]
-    mov r2, #0xC0
-    and r2, r0
-    bne war_end @自軍以外は終了
-
-    add r1, #WAR_OFFSET
     mov r0, #0
-    strb r0, [r1]
+    bl SET_COMBAT_ART
 war_end:
-    bx lr
+    pop {pc}
 
 Counter:
     push	{r4, lr}
@@ -612,18 +622,28 @@ FodesFunc:
     ldr r1, (ADR+24)
     mov pc, r1
 
-GET_LUNGE:
-    ldr r0, (ADR+28)
-    bx lr
-
-GET_HIT_AND_RUN:
-    ldr r0, (ADR+32)
-    bx lr
-
-GET_KNOCK_BACK:
-    ldr r0, (ADR+36)
-    bx lr
-
+HAS_LUNGE:
+    ldr r2, (ADR+28)
+    mov pc, r2
+HAS_HIT_AND_RUN:
+    ldr r2, (ADR+32)
+    mov pc, r2
+HAS_KNOCK_BACK:
+    ldr r2, (ADR+36)
+    mov pc, r2
+SET_COMBAT_ART:
+    ldr r2, (ADR+40)
+    mov pc, r2
+HAS_RAGING_STORM:
+    ldr r2, (ADR+44)
+    mov pc, r2
+IS_TEMP_SKILL_FLAG:
+    ldr r2, (ADR+48)
+    mov pc, r2
+TURN_ON_TEMP_SKILL_FLAG:
+    ldr r2, (ADR+52)
+    mov pc, r2
 .align
 .ltorg
 ADR:
+

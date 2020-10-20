@@ -1,6 +1,6 @@
-WAR_OFFSET = (67)	@書き込み先(AI1カウンタ)
-ATTACK_FLG_OFFSET = (69)	@書き込み先(AI2カウンタ)
-FIRST_ATTACKED_FLAG = (0b00010000)
+RAGING_STORM_FLAG     = (2)
+COMBAT_HIT            = (1)
+FIRST_ATTACKED_FLAG   = (0)
 RETURN_ADR = 0x0802a4a6
 
 @ 0802A490
@@ -195,14 +195,13 @@ JudgeCombat:
 		cmp r0, r2
 		bne falseWar            @攻めてないので通常確率計算
 
-		mov r0, #ATTACK_FLG_OFFSET
-		ldrb r0, [r4, r0]
-		mov r1, #FIRST_ATTACKED_FLAG
-		tst r0, r1
-		bne inactiveCombat      @初撃ではないので終了
+		mov r0, #FIRST_ATTACKED_FLAG
+		bl IS_TEMP_SKILL_FLAG
+		cmp r0, #1
+		beq inactiveCombat      @ビットが立っていたら、初撃ではないのでジャンプ
 
-		mov r0, #WAR_OFFSET
-		ldrb r0, [r4, r0]
+		mov r0, r4
+		bl GET_COMBAT_ART
 		cmp r0, #0
 		beq falseWar            @戦技未選択なので通常確率計算
 
@@ -312,7 +311,12 @@ bx lr
 GetHolyShieldID:
 ldr r0, ADDRESS+24
 bx lr
-
+GET_COMBAT_ART:
+ldr r1, (ADDRESS+28)
+mov pc, r1
+IS_TEMP_SKILL_FLAG:
+    ldr r2, (ADDRESS+32)
+    mov pc, r2
 
 @non
 @	pop	{r3}

@@ -53,6 +53,17 @@ grafix_ws:
 	
 ALIGN 4
 
+JUDGE_COMBAT_SKILL:              @いつか分離させる？
+#incbin JudgeCombatSkill.dmp
+	POIN combat_art_table
+	WORD COMBAT_ART_LIST_SIZE
+	POIN mergeOccult
+JUDGE_COMBAT_SKILL_ALT:
+#incbin JudgeCombatSkill_alt.dmp
+	POIN combat_art_table
+	WORD COMBAT_ART_LIST_SIZE
+	POIN mergeOccult
+ALIGN 4
 
 /////////////revert
 PUSH
@@ -68,6 +79,7 @@ POP
 cancelWarSkill:
 	#incbin cancelWarSkill.dmp
 	WORD WAR_CONFIG
+	POIN SET_COMBAT_ART
 	ALIGN 4
 
 ////////////////////////
@@ -118,14 +130,39 @@ POP
 afterAttack:
 	#incbin afterAttack.dmp
 	POIN InfiniteItem
-	POIN hasRagingStorm
+	POIN 0
 	POIN combat_art_table
 	WORD COMBAT_ART_LIST_SIZE
-	POIN HasLunge
-	POIN HasHitAndRun
-	POIN HasKnockBack
+	POIN 0
+	POIN 0
+	POIN 0
 	POIN HAS_CORROSION
+	POIN GET_COMBAT_ART
+	POIN IS_TEMP_SKILL_FLAG
+	POIN TURN_ON_TEMP_SKILL_FLAG
 	ALIGN 4
+
+GET_COMBAT_ART:
+#incbin "CombatArtsFlag/GetCombatArts.dmp"
+WORD ($0203A8C7)//WORK_MEM_FOR_TRANSPORT_RESERVED
+
+SET_COMBAT_ART:
+#incbin "CombatArtsFlag/SetCombatArts.dmp"
+WORD ($0203A8C7)//WORK_MEM_FOR_TRANSPORT_RESERVED
+
+
+
+
+IS_TEMP_SKILL_FLAG:
+#incbin "TempSkillFlag/IsTempSkillFlag.dmp"
+ALIGN 4
+TURN_OFF_TEMP_SKILL_FLAG:
+#incbin "TempSkillFlag/TurnOffTempSkillFlag.dmp"
+ALIGN 4
+TURN_ON_TEMP_SKILL_FLAG:
+#incbin "TempSkillFlag/TurnOnTempSkillFlag.dmp"
+ALIGN 4
+
 
 //////////////////////////
 PUSH
@@ -141,5 +178,20 @@ nagi_setFlag:
   #incbin setFlag.dmp
 	WORD WAR_CONFIG
 	WORD ARROW_CONFIG
+	POIN SET_COMBAT_ART
+	POIN TURN_OFF_TEMP_SKILL_FLAG
 	ALIGN 4
+
+SET_ENEMY_COMBAT:
+  #incbin SetEnemyCombat.dmp
+  POIN judgeSkill
+  POIN JUDGE_COMBAT_SKILL_ALT
+  POIN SET_COMBAT_ART
+  POIN ENEMY_COMBAT_RATE
+ENEMY_COMBAT_RATE:
+  #include _config_enemy_rate.txt
+  
+  
+	ALIGN 4
+
 
