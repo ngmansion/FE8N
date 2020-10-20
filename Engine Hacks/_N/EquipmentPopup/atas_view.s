@@ -281,6 +281,7 @@ $080168d0:
 
 
 DefSideFunc:
+        push {lr}
         mov r1, #0
         str r1, [r0, #0]    @ユニット不明
         str r1, [r0, #4]    @兵種不明
@@ -290,15 +291,11 @@ DefSideFunc:
         strb r1, [r0, #0xb] @所属不明
 
         mov r1, #0
-        add r0, #WAR_OFFSET
-        strb r1, [r0, #0xb] @戦技不明
-        sub r0, #WAR_OFFSET
-
-        mov r1, #0
         add r0, #0x48
         strh r1, [r0] @装備不明
+        sub r0, #0x48
 
-        bx lr
+        pop {pc}
 
 STRONG_FUNC:
     ldr r2, =0x08018ec4
