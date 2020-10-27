@@ -85,6 +85,7 @@ SwitchLion:
 SwiftStrikes:
         push {lr}
         mov r0, #FIRST_ATTACKED_FLAG
+        mov r1, #0
         bl IS_TEMP_SKILL_FLAG
         cmp r0, #1
         beq falseSwift      @初撃済フラグオンならジャンプ

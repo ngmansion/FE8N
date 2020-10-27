@@ -81,6 +81,7 @@ COMMAND_RESCUE = (9)
     bne next    @再行動済み
 
     mov r0, #DEFEAT_FLAG
+    mov r1, #0
     bl IS_TEMP_SKILL_FLAG
     cmp r0, #1
     beq pattern1
@@ -206,13 +207,11 @@ clear_defeat:
 
 ClearTempFlag:      @CombatArms/setFlag.sにもあるので注意
         push {lr}
-        mov r0, #COMBAT_HIT
+        mov r0, #0xFF
+        ldr r1, =ATK
         bl TURN_OFF_TEMP_SKILL_FLAG
-        mov r0, #FIRST_ATTACKED_FLAG
-        bl TURN_OFF_TEMP_SKILL_FLAG
-        mov r0, #RAGING_STORM_FLAG
-        bl TURN_OFF_TEMP_SKILL_FLAG
-        mov r0, #DEFEAT_FLAG
+        mov r0, #0xFF
+        ldr r1, =DEF
         bl TURN_OFF_TEMP_SKILL_FLAG
         
         pop {pc}
@@ -230,10 +229,12 @@ RagingStorm:
         bne falseStorm
 
         mov r0, #RAGING_STORM_FLAG
+        mov r1, #0
         bl IS_TEMP_SKILL_FLAG   @battle/downでセット
         cmp r0, #0
         beq falseStorm      @フラグなし
         mov r0, #RAGING_STORM_FLAG
+        mov r1, #0
         bl TURN_OFF_TEMP_SKILL_FLAG
 
         mov	r0, r4
@@ -355,6 +356,7 @@ kaifuku:
         beq non_hp
 
         mov r0, #DEFEAT_FLAG
+        mov r1, #0
         bl IS_TEMP_SKILL_FLAG
         cmp r0, #0
         beq non_hp  @撃破フラグがオフ

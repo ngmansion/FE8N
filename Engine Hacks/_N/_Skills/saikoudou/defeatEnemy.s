@@ -78,6 +78,7 @@ defeat_flag:
 		beq endJinrai @やられている？
 		
 		mov r0, #DEFEAT_FLAG
+		mov r1, r6
 		bl TURN_ON_TEMP_SKILL_FLAG
 	
 	endJinrai:

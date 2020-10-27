@@ -76,6 +76,7 @@ END:
 CombatArts:
         push {lr}
         mov r0, #COMBAT_HIT
+        mov r1, #0
         bl IS_TEMP_SKILL_FLAG
         cmp r0, #0
         beq endCombatArts      @当たってないので終了
@@ -90,17 +91,19 @@ endCombatArts:
 
 RagingStorm:
         push {lr}
-        mov r0, r5
-        bl HAS_RAGING_STORM
-        cmp r0, #0
-        beq endRagingStorm
 
         ldrb r0, [r5, #11]
         mov r2, #0xC0
         and r2, r0
         bne endRagingStorm          @自軍以外はジャンプ(発動できない)
+        
+        mov r0, r5
+        bl HAS_RAGING_STORM
+        cmp r0, #0
+        beq endRagingStorm
 
         mov r0, #RAGING_STORM_FLAG        
+        mov r1, #0
         bl TURN_ON_TEMP_SKILL_FLAG @saikoudou/mainで回収
 
     endRagingStorm:
@@ -499,6 +502,12 @@ Jadoku:
     push	{r4, lr}
     mov r3, r0
     mov r4, r1
+
+    mov r0, #COMBAT_HIT
+    mov r1, #0
+    bl IS_TEMP_SKILL_FLAG
+    cmp r0, #0
+    beq falseJadoku         @当たってないので終了
 
     ldrb r0, [r3, #0xB]
     lsl r0, r0, #24

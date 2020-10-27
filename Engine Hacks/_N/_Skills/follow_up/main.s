@@ -1,6 +1,8 @@
 .thumb
 
-HAS_DARTING_FUNC = (Addr+36)
+RAGING_STORM_FLAG     = (2)
+COMBAT_HIT            = (1)
+FIRST_ATTACKED_FLAG   = (0)
 
 @.org 0802af18
     mov r5, r0
@@ -69,7 +71,7 @@ followup_skills_atk:    @攻め側(r5)に影響あるスキルのみ抽出
         cmp r0, #0
         beq jumpWaryFighter
         sub r5, #1
-        sub r6, #1
+@        sub r6, #1
     jumpWaryFighter:
 
     @差し違え
@@ -97,6 +99,15 @@ followup_skills_atk:    @攻め側(r5)に影響あるスキルのみ抽出
         beq jumpRing_atk
         add r5, #1
     jumpRing_atk:
+
+    @キャンセル
+        mov r0, r7
+        mov r1, r4
+        bl Cancel
+        cmp r0, #0
+        beq jumpCancel_atk
+        sub r5, #1
+    jumpCancel_atk:
         mov r0, r5
         mov r1, r6
         pop {pc}
@@ -110,7 +121,7 @@ followup_skills_def:    @受け側(r6)に影響あるスキルのみ抽出
         bl waryFighter_judgeActivate    @守備隊形
         cmp r0, #0
         beq jumpWaryFighter_def
-        sub r5, #1
+@        sub r5, #1
         sub r6, #1
     jumpWaryFighter_def:
 
@@ -141,6 +152,14 @@ followup_skills_def:    @受け側(r6)に影響あるスキルのみ抽出
         add r6, #1
     jumpRing_def:
 
+    @キャンセル
+        mov r0, r4
+        mov r1, r7
+        bl Cancel
+        cmp r0, #0
+        beq jumpCancel_def
+        sub r6, #1
+    jumpCancel_def:
         mov r0, r5
         mov r1, r6
         pop {pc}
@@ -278,6 +297,25 @@ QuickRiposte: @切り返し
         pop {r4, r5, pc}
 
 
+Cancel:
+        push {r4, r5, lr}
+        mov r4, r0
+        mov r5, r1
+
+        mov r0, #COMBAT_HIT
+        mov r1, r4
+        bl IS_TEMP_SKILL_FLAG
+        cmp r0, #0
+        beq falseCancel
+
+        mov r0, r4
+        mov r1, r5
+        bl HAS_CANCEL
+        .short 0xE000
+    falseCancel:
+        mov r0, #0
+        pop {r4, r5, pc}
+
 
     breaker_judgeActivate:
         push {r7,lr}
@@ -367,6 +405,8 @@ QuickRiposte: @切り返し
             pop {r4, r5, pc}
 
 .align
+HAS_DARTING_FUNC = (Addr+36)
+
 HasWaryFighter:
  ldr r2, Addr+40
  mov pc, r2
@@ -376,7 +416,12 @@ HAS_FOLLOW_UP_RING:
 GET_COMBAT_ART:
  ldr r1, (Addr+48)
  mov pc, r1
-
+HAS_CANCEL:
+ ldr r2, (Addr+52)
+ mov pc, r2
+IS_TEMP_SKILL_FLAG:
+ ldr r2, (Addr+56)
+ mov pc, r2
 .align
 .ltorg
 Addr:

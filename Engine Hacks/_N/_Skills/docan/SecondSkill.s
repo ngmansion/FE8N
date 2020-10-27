@@ -1,6 +1,10 @@
 .thumb
 A_EFFECT = (0x0203a604)
 
+RAGING_STORM_FLAG     = (2)
+COMBAT_HIT            = (1)
+FIRST_ATTACKED_FLAG   = (0)
+
 @0802B3A4
 	bl main
 
@@ -26,44 +30,42 @@ main:
 		cmp r0, #0
 		beq end	@壁
 		
-		bl cancel
+        bl Cancel
+        cmp r0, #1
+        beq skipWrath
 
-		bl ikari
-
+        bl ikari
+    skipWrath:
         bl CancelRadiance
 	end:
 		pop {pc}
 
     
-cancel:
-	    push {lr}
-	@除外条件
-	    mov r0, r7
-		mov r1, r8
-			ldr r2, ADDRESS @キャンセル
-			mov lr, r2
-			.short 0xF800
-	    cmp r0, #0
-	    beq falseCancel
+Cancel:
+        push {lr}
 
-		mov r0, #0
-		mov r1, r8
-		add r1, #106
-		strh r0, [r1]	@必殺ゼロ
+        mov r0, #COMBAT_HIT
+        mov r1, r7
+        bl IS_TEMP_SKILL_FLAG
+        cmp r0, #0
+        beq falseCancel  @当たってない(予測は常にOFF)
 
-		mov r0, #94
-		ldrh r0, [r7, r0]
-		mov r1, r8
-		add r1, #94
-		ldrh r1, [r1]
-		cmp r0, r1
-		bgt falseCancel	@自分の方が速い
+        mov r0, r7
+        mov r1, r8
+        bl HAS_CANCEL
+        cmp r0, #0
+        beq falseCancel
 
-		mov r1, r8
-		add r1, #94
-		strh r0, [r1]	@相手攻速減少
-	falseCancel:
-		pop {pc}
+        mov r0, #0
+        mov r1, r8
+        add r1, #106
+        strh r0, [r1]   @必殺ゼロ
+
+        mov r0, #1
+        .short 0xE000
+    falseCancel:
+        mov r0, #0
+        pop {pc}
 
 CancelRadiance:
         push {lr}
@@ -149,6 +151,9 @@ RANDOM:
     ldr r3, =0x0802a490
     mov pc, r3
 
+HAS_CANCEL:
+    ldr r2, ADDRESS
+    mov pc, r2
 HasWrath:
 	ldr r2, ADDRESS+4 @怒り
 	mov pc, r2
@@ -158,6 +163,9 @@ HasFortune:
 HAS_CANCEL_RADIANCE:
 	ldr r2, ADDRESS+12 @キャンセル(蒼炎)
 	mov pc, r2
+IS_TEMP_SKILL_FLAG:
+    ldr r2, ADDRESS+16
+    mov pc, r2
 
 .align
 B_WEAPON_ABILITY:
@@ -169,4 +177,3 @@ A_ARENA:
 
 .ltorg
 ADDRESS:
-	

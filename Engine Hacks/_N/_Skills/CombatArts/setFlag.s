@@ -2,10 +2,8 @@
 @ 0802a2bc
 
 SOUND_ID = (97)
-DEFEAT_FLAG           = (3)
-RAGING_STORM_FLAG     = (2)
-COMBAT_HIT            = (1)
-FIRST_ATTACKED_FLAG   = (0)
+ATK = (0x0203a4e8)
+DEF = (0x0203a568)
 	
 	
 	ldr r0, =0x0802a2d8
@@ -71,13 +69,11 @@ arrow_reset_func:
 
 ClearTempFlag:          @saikoudou/main.sにもある
         push {lr}
-        mov r0, #COMBAT_HIT
+        mov r0, #0xFF
+        ldr r1, =ATK
         bl TURN_OFF_TEMP_SKILL_FLAG
-        mov r0, #FIRST_ATTACKED_FLAG
-        bl TURN_OFF_TEMP_SKILL_FLAG
-        mov r0, #RAGING_STORM_FLAG
-        bl TURN_OFF_TEMP_SKILL_FLAG
-        mov r0, #DEFEAT_FLAG
+        mov r0, #0xFF
+        ldr r1, =DEF
         bl TURN_OFF_TEMP_SKILL_FLAG
         
         pop {pc}

@@ -60,6 +60,7 @@ WarSkill:
 
 
         mov r0, #FIRST_ATTACKED_FLAG
+        mov r1, #0
         bl IS_TEMP_SKILL_FLAG
         cmp r0, #1
         beq endWarSkill                 @初撃済フラグオンならジャンプ

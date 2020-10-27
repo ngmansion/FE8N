@@ -8,12 +8,13 @@ POP
 
 docan:
 #incbin SecondSkill.dmp
-POIN hasCancel
+POIN HAS_CANCEL
 POIN hasWrath
 POIN hasFortune
 POIN HAS_CANCEL_RADIANCE
+POIN IS_TEMP_SKILL_FLAG
 
-hasCancel:
+HAS_CANCEL:
     HAS_NIHIL
     WORD CancelID
     

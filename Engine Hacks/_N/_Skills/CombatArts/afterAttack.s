@@ -33,11 +33,13 @@ RETURN:
 
 WarSkill:
 	push {r5, lr}
-	
+
+	mov r0, r13
+	ldr r0, [r0, #20]
+	bl Hit_Func
+
 	mov r3, r13
 	ldr r3, [r3, #20]
-
-
 	ldrb r0, [r3, #11]
 	ldr r2, =0x03004df0
 	ldr r2, [r2]
@@ -55,19 +57,19 @@ WarSkill:
 	beq endWar	@戦技なし
 
 	mov r0, #FIRST_ATTACKED_FLAG
+	mov r1, r13
+	ldr r1, [r1, #20]
 	bl IS_TEMP_SKILL_FLAG
     cmp r0, #1
 	beq endWar	@フラグオンなのでジャンプ
 
 	mov r0, r13
 	ldr r0, [r0, #20]
-	bl Combat_Arts_Func
-
-	mov r0, r13
-	ldr r0, [r0, #20]
 	bl GetDecreaseNum   @r5に減少数取得
 
 	mov r0, #FIRST_ATTACKED_FLAG
+	mov r1, r13
+	ldr r1, [r1, #20]
 	bl TURN_ON_TEMP_SKILL_FLAG
 
 @無限の武器
@@ -144,7 +146,7 @@ func_break:
 
 
 
-Combat_Arts_Func:
+Hit_Func:
         push {r4, lr}
         mov r4, r0
 
@@ -158,6 +160,7 @@ Combat_Arts_Func:
         bne endCombat     @外れフラグオンでジャンプ
 
         mov r0, #COMBAT_HIT
+        mov r1, r4
         bl TURN_ON_TEMP_SKILL_FLAG
 
     endCombat:

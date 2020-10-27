@@ -31,6 +31,8 @@ breaker_main:
     POIN HasWaryFighterOrg
     POIN HAS_FOLLOW_UP_RING
     POIN GET_COMBAT_ART
+    POIN HAS_CANCEL
+    POIN IS_TEMP_SKILL_FLAG
     
 breaker_semetate:
     #incbin battle.dmp

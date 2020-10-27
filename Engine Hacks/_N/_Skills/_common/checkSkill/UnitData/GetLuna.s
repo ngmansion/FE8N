@@ -18,7 +18,7 @@
     ldrb r1, [r3, #0xB]
     mov r0, #0x80
     and r0, r1
-    beq elseLunatic     @敵以外
+    beq ally     @敵以外
 
     ldr r0, =0x0202bcec
     ldrb r1, [r0, #20]
@@ -30,6 +30,21 @@
     ldrb r0, [r0, #4]
     ldr r1, LUNATIC_TABLE
     ldrb r0, [r1, r0]
+    b endUnit
+ally:
+    ldrb r1, [r3, #0xB]
+    mov r0, #0xC0
+    and r0, r1
+    bne elseLunatic
+
+    mov r0, #0
+    ldrb r1, [r3, #8]
+    cmp r1, #29
+    ble endUnit       @レベル20以下なら終了
+    mov r0, #156
+    cmp r1, #39
+    ble endUnit       @レベル20以下なら終了
+    mov r0, #157
     b endUnit
 
 elseLunatic:
