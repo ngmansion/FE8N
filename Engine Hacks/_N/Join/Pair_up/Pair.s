@@ -132,7 +132,7 @@ GetNothingFuncAddr:
     bx lr
 .align
 
-nothing_func:
+nothing_func:   @($085C3030)
 .word 0x0002000B
 .word 0
 .word 0x03
@@ -144,9 +144,9 @@ nothing_func:
 .word 0x16
 .word 0x0801CCED
 .word 0x16
-.word 0x08031F59        @ここを"three"の処理に置き換えれば終わりだが見送り
+.word 0x08031F59        @ここを"three"の処理に置き換えても出来るが見送り
 
-next_func:  @(通常の救出後処理)
+next_func:  @通常の救出後処理($085C3060)
 .word 0x16
 .word 0x0803780D    @セーブ
 .word 0x16
