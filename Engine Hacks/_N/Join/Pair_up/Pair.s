@@ -131,11 +131,7 @@ GetNothingFuncAddr:
     add r0, pc
     bx lr
 .align
-GetNextFuncAddr:
-    mov r0, #next_func-GetNextFuncAddr-6
-    add r0, pc
-    bx lr
-.align
+
 nothing_func:
 .word 0x0002000B
 .word 0
@@ -148,9 +144,9 @@ nothing_func:
 .word 0x16
 .word 0x0801CCED
 .word 0x16
-.word 0x08031F59        @Bキャンセルまでの処理・行動・アクションの決定
+.word 0x08031F59        @ここを"three"の処理に置き換えれば終わりだが見送り
 
-next_func:
+next_func:  @(通常の救出後処理)
 .word 0x16
 .word 0x0803780D    @セーブ
 .word 0x16
@@ -164,7 +160,5 @@ next_func:
 .word 0x0004000B
 .word 0
 
-.word 0x01020304
-.word 0x01020304
 .align
 .ltorg
