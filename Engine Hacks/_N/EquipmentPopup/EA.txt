@@ -26,7 +26,7 @@ BL(pop_warp)
 //BL(pop_warp)
 
 ORG 0x08e79c
-jumpToHack(atas_view)
+jumpToHack(burst_view)
 ORG 0x08e7a4
    BYTE $00 $4A $97 $46
    POIN arrow_double
@@ -47,6 +47,8 @@ ORG	0x8f3a8
 POIN menu_gazou
 
 
+ORG	0xA931D0	//TSA
+#incbin A931D0.bin
 
 
 ORG	0xA92514
@@ -64,8 +66,8 @@ have_two:
 #incbin "have_two.gba"
 ALIGN 4
 
-atas_view:
-#incbin atas_view.dmp
+burst_view:
+#incbin burst_view.dmp
 ALIGN 4
 
 menu_gazou:
