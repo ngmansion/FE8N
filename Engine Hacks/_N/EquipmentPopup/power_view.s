@@ -192,8 +192,11 @@ SetNumberHP:
 
 SetNumberAAPR:
         push {lr}
+        sub sp, #80 @装備あたりまで
+        mov r0, sp
         bl SET_POW
-
+        add sp, #80
+        
         bl GetAttack
         cmp r0, #99
         .short 0xDD00
