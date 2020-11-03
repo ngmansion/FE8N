@@ -3,7 +3,7 @@ RETURN_ADDR  = (0x0808e80e)
 RETURN_ADDR2 = (0x0808e814) @何もしない
 
 WAR_OFFSET = (67)
-
+@0808e79c
     mov r0, #63     @0x3F
     and r0, r6
     cmp r0, #0
@@ -15,39 +15,46 @@ WAR_OFFSET = (67)
     add sp, #80
 
     bl GetFirstNum
-    cmp r0, #99
-    .short 0xdd00
-    mov r0, #255
-    bl $00003868
+    bl Hundred
+    mov r7, r1          @退避
+    bl NUMBER
 
     ldr r1, =0x02028e44
     .short 0x7988
     .short 0x3830
     .short 0x1c22
-    .short 0x3251
+    .short 0x3251       @
     .short 0x7010
     .short 0x79c8
     .short 0x3830
     .short 0x1c21
-    .short 0x3152
+    .short 0x3152       @
     .short 0x7008
 
+    mov r0, r7
+    bl GetHundredNum
+    strb   r0, [r3, #12]
+
+@@@@
     bl GetSecondNum
-    cmp r0, #99
-    .short 0xdd00
-    mov r0, #255
-    bl $00003868
+    bl Hundred
+    mov r7, r1          @退避
+    bl NUMBER
     ldr r1, =0x02028e44
     .short 0x7988
     .short 0x3830
     .short 0x1c22
-    .short 0x3253
+    .short 0x3253       @
     .short 0x7010
     .short 0x79c8
     .short 0x3830
     .short 0x1c21
-    .short 0x3154
+    .short 0x3154       @
     .short 0x7008
+
+    mov r0, r7
+    bl GetHundredNum
+    strb   r0, [r3, #13]
 
     bl Draw_Word
     ldr r0, =RETURN_ADDR
@@ -56,18 +63,42 @@ dont_need:
     ldr r0, =RETURN_ADDR2
     mov pc, r0
 
+GetHundredNum:
+    push {lr}
+    cmp r0, #0
+    beq falseHundred
+    bl NUMBER
+    ldr r1, =0x02028e44
+    ldrb    r0, [r1, #7]
+    sub r0, #48
+    .short 0xE000
+falseHundred:
+    mov r0, #0xF0
+    bl GET_EX_NUM_MEM_TO_R3
+    pop {pc}
+
+Hundred:
+        mov r1, #0
+        mov r2, r0
+    loopFirst:
+        cmp r2, #99
+        ble underFirst
+        sub r2, #100
+        add r1, #1
+        b loopFirst
+    underFirst:
+        bx lr
 
 Draw_Word:
         push {lr}
         ldr r1, [r4, #64]
         mov r2, #0
-        ldr r3, =0x2120
+        ldr r3, =0x2163
         strh    r3, [r1, #0]
-        add r3, #1
-        strh    r3, [r1, #2]
+        strh    r2, [r1, #2]
         strh    r2, [r1, #4]
         strh    r2, [r1, #6]
-        add r3, #29
+        ldr r3, =0x2164
         strh    r3, [r1, #8]
         strh    r2, [r1, #10]
         strh    r2, [r1, #12]
@@ -75,22 +106,23 @@ Draw_Word:
 
 GetFirstNum:
         push {lr}
-        mov r0, r5
-        bl $00018e64
-
+        ldr r0, =0x0203a568
+        add r0, #96
+        ldrh r0, [r0]
         pop {pc}
 
 
 GetSecondNum:
         push {lr}
-        mov r0, r5
-        bl $00018ea4
+        ldr r0, =0x0203a568
+        add r0, #102
+        ldrh r0, [r0]
         pop {pc}
 
 SetPow:
     bx lr
 
-$00003868:
+NUMBER:
     ldr r1, =0x08003868
     mov pc, r1
 
@@ -105,6 +137,9 @@ $00018ea4:
     ldr r1, =0x08018ea4
     mov pc, r1
 
+GET_EX_NUM_MEM_TO_R3:
+    ldr r3, ADDR
+    bx lr
 
 .align
 .ltorg

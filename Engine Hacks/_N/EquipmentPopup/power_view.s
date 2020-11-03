@@ -582,38 +582,23 @@ GetResistance:
 COPY_SIZE = (72)
 
 SET_POW:
-        push {r4, r5, lr}
-        ldr r4, =0x0203a568
-
+        push {r5, lr}
         mov r1, r5
         mov r5, r0
-        mov r0, r4
+
+        ldr r0, =0x0203a568
         bl AtkSideFunc
 
         mov r0, r5
+        mov r1, r5
         bl DefSideFunc
 
-@※0002a8c8
-        mov r0, r4
+        ldr r0, =0x0203a568
         mov r1, r5
-            ldr r2, =0x0802a9b0     @防御
-            mov lr, r2
-            .short 0xF800
-
-        mov r0, r4
-        mov r1, r5
-            ldr r2, =0x0802aa28     @攻撃
-            mov lr, r2
-            .short 0xF800
-
-        mov r0, r4
-        mov r1, r5
-            ldr r2, =0x0802aae4     @攻速
-            mov lr, r2
-            .short 0xF800
-
-        ldr r0, =0x0802a8f8
-        mov pc, r0
+        ldr r2, =0x0802a8c8
+        mov lr, r2
+        .short 0xF800
+        pop {r5, pc}
 
 
 AtkSideFunc:
@@ -632,6 +617,10 @@ AtkSideFunc:
         strb r0, [r4, #20]
 
         mov r0, r5
+        bl SKILL_FUNC
+        strb r0, [r4, #21]
+
+        mov r0, r5
         bl SPEED_FUNC
         strb r0, [r4, #22]
 
@@ -642,6 +631,10 @@ AtkSideFunc:
         mov r0, r5
         bl RESISTANCE_FUNC
         strb r0, [r4, #24]
+
+        mov r0, r5
+        bl LUCK_FUNC
+        strb r0, [r4, #25]
 
         bl MagicFuncIfNeed
 
@@ -710,7 +703,9 @@ DefSideFunc:
 STRONG_FUNC:
     ldr r2, =0x08018ec4
     mov pc, r2
-
+SKILL_FUNC:
+    ldr r2, =0x08018ee4
+    mov pc, r2
 SPEED_FUNC:
     ldr r2, =0x08018f24
     mov pc, r2
@@ -722,7 +717,9 @@ DEFENCE_FUNC:
 RESISTANCE_FUNC:
     ldr r2, =0x08018f84
     mov pc, r2
-
+LUCK_FUNC:
+    ldr r2, =0x08018fac
+    mov pc, r2
 TERRAIN_FUNC:
     ldr r2, =0x0802a648
     mov pc, r2
@@ -737,10 +734,6 @@ $080168d0:
 
 .align
 .ltorg
-
-$00003868:
-    ldr r1, =0x08003868
-    mov pc, r1
 
 $00002b08:
 @r0 = x座標

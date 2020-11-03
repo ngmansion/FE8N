@@ -33,6 +33,8 @@ ORG 0x08e7a4
 ORG 0x08e7ac
    BYTE $00 $4A $97 $46
    POIN double_double
+ORG 0x08e884
+jumpToHack(burst_hundred)
 
 
 
@@ -68,6 +70,12 @@ ALIGN 4
 
 burst_view:
 #incbin burst_view.dmp
+WORD UNIT_WINDOW_CACHE
+ALIGN 4
+
+burst_hundred:
+#incbin burst_hundred.dmp
+WORD UNIT_WINDOW_CACHE
 ALIGN 4
 
 menu_gazou:
