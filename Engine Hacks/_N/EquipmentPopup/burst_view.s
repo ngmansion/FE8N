@@ -95,6 +95,11 @@ Hundred:
 
 Draw_Word:
         push {lr}
+        bl JudgeDraw
+        cmp r0, #0
+        beq drawHit
+        b   drawAvo
+    drawHit:
         ldr r1, [r4, #64]
         mov r2, #0
         ldr r3, =0x2163
@@ -106,10 +111,29 @@ Draw_Word:
         strh    r3, [r1, #8]
         strh    r2, [r1, #10]
         strh    r2, [r1, #12]
+        b endWord
+    drawAvo:
+        ldr r1, [r4, #64]
+        mov r2, #0
+        ldr r3, =0x2166
+        strh    r3, [r1, #0]
+        strh    r2, [r1, #2]
+        strh    r2, [r1, #4]
+        strh    r2, [r1, #6]
+        ldr r3, =0x2167
+        strh    r3, [r1, #8]
+        strh    r2, [r1, #10]
+        strh    r2, [r1, #12]  
+    endWord:
         pop {pc}
 
 GetFirstNum:
         push {lr}
+        bl JudgeDraw
+        cmp r0, #0
+        beq GetHit
+        b   GetAvo
+    GetHit:
         ldr r1, =0x0203a568
         mov r0, #74
         ldrh r0, [r1, r0]
@@ -117,14 +141,25 @@ GetFirstNum:
         beq falseFirst
         mov r0, #96
         ldrh r0, [r1, r0]
-        .short 0xE000
+        b endFirst
+    GetAvo:
+        ldr r1, =0x0203a568
+        mov r0, #98
+        ldrh r0, [r1, r0]
+        b endFirst
     falseFirst:
         ldr r0, =0xFFFFFFFF
+    endFirst:
         pop {pc}
 
 
 GetSecondNum:
         push {lr}
+        bl JudgeDraw
+        cmp r0, #0
+        beq GetCrt
+        b   GetDdg
+    GetCrt:
         ldr r1, =0x0203a568
         mov r0, #74
         ldrh r0, [r1, r0]
@@ -132,9 +167,25 @@ GetSecondNum:
         beq falseSecond
         mov r0, #102
         ldrh r0, [r1, r0]
-        .short 0xE000
+        b endSecond
+    GetDdg:
+        ldr r1, =0x0203a568
+        mov r0, #104
+        ldrh r0, [r1, r0]
+        b endSecond
     falseSecond:
         ldr r0, =0xFFFFFFFF
+    endSecond:
+        pop {pc}
+
+JudgeDraw:
+        push {lr}
+        bl GET_FLASH_CONFIG
+        cmp r0, #0
+        beq eternal
+        mov r0, #0x80   @64     @0x40
+        and r0, r6
+    eternal:
         pop {pc}
 
 SetPow:
@@ -157,6 +208,9 @@ $00018ea4:
 
 GET_EX_NUM_MEM_TO_R3:
     ldr r3, ADDR
+    bx lr
+GET_FLASH_CONFIG:
+    ldr r0, ADDR+4
     bx lr
 
 .align

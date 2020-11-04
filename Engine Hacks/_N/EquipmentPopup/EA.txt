@@ -1,5 +1,5 @@
 #define UNIT_WINDOW_CACHE (0x0203AF10)
-
+#include _config.txt
 PUSH
 
 ORG	0x8eae8
@@ -71,6 +71,7 @@ ALIGN 4
 burst_view:
 #incbin burst_view.dmp
 WORD UNIT_WINDOW_CACHE
+WORD GET_FLASH_CONFIG
 ALIGN 4
 
 burst_hundred:
