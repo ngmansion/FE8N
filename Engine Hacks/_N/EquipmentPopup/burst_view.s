@@ -79,14 +79,18 @@ falseHundred:
 
 Hundred:
         mov r1, #0
+        ldr r2, =0xFFFFFFFF
+        cmp r0, r2
+        beq underHundred
+
         mov r2, r0
-    loopFirst:
+    loopHundred:
         cmp r2, #99
-        ble underFirst
+        ble underHundred
         sub r2, #100
         add r1, #1
-        b loopFirst
-    underFirst:
+        b loopHundred
+    underHundred:
         bx lr
 
 Draw_Word:
@@ -106,17 +110,31 @@ Draw_Word:
 
 GetFirstNum:
         push {lr}
-        ldr r0, =0x0203a568
-        add r0, #96
-        ldrh r0, [r0]
+        ldr r1, =0x0203a568
+        mov r0, #74
+        ldrh r0, [r1, r0]
+        cmp r0, #0
+        beq falseFirst
+        mov r0, #96
+        ldrh r0, [r1, r0]
+        .short 0xE000
+    falseFirst:
+        ldr r0, =0xFFFFFFFF
         pop {pc}
 
 
 GetSecondNum:
         push {lr}
-        ldr r0, =0x0203a568
-        add r0, #102
-        ldrh r0, [r0]
+        ldr r1, =0x0203a568
+        mov r0, #74
+        ldrh r0, [r1, r0]
+        cmp r0, #0
+        beq falseSecond
+        mov r0, #102
+        ldrh r0, [r1, r0]
+        .short 0xE000
+    falseSecond:
+        ldr r0, =0xFFFFFFFF
         pop {pc}
 
 SetPow:
