@@ -29,8 +29,8 @@ BYTE VengefulFighterID
 BYTE VengefulFighterID
 BYTE VengefulFighterID
 
-BYTE SavageBlowID     //アサシン
-BYTE SavageBlowID
+BYTE PoisonStrikeID     //アサシン
+BYTE PoisonStrikeID
 
 BYTE PoisonStrikeID     //スナイパー
 BYTE PoisonStrikeID
