@@ -423,7 +423,8 @@ DrawNumberAAPR:
         mov r1, #0
         ldsh r0, [r0, r1]
         lsl r0, r0, #3
-        add r0, #16          @2段下にずらす
+        add r0, #16         @2段下にずらす
+        add r0, #1          @ちょっと下へ
         mov r9, r0
 
 
