@@ -68,7 +68,7 @@ COMMAND_RESCUE = (9)
 
     mov r0, r4          @r4 is not ATK, DEF
     ldr r1, =DEF
-    bl RagingStorm
+    bl RagingStormWrapper
     cmp r0, #1
     beq Sound
 @疾風迅雷・神風招来判定
@@ -79,6 +79,12 @@ COMMAND_RESCUE = (9)
     mov r2, #DEFEATED
     and r2, r1
     bne next    @再行動済み
+
+    mov r0, r4          @r4 is not ATK, DEF
+    ldr r1, =DEF
+    bl RagingStorm
+    cmp r0, #1
+    beq getReMove
 
     mov r0, #DEFEAT_FLAG
     mov r1, #0
@@ -131,7 +137,7 @@ getReMove:
 
     strb r1, [r4, r0] @撃破済み setStartingTurnでクリア
     
-    b Sound	@再行動
+    b Sound     @再行動
 nop
 nop
 
@@ -216,6 +222,12 @@ ClearTempFlag:      @CombatArms/setFlag.sにもあるので注意
         
         pop {pc}
 
+RagingStormWrapper:
+        ldr r1, addr+44
+        cmp r1, #0
+        beq RagingStorm
+        mov r0, #0
+        bx lr
 @
 @狂嵐
 @
@@ -441,6 +453,9 @@ IS_TEMP_SKILL_FLAG:
 TURN_OFF_TEMP_SKILL_FLAG:
     ldr r2, addr+40
     mov pc, r2
+GET_RAGING_STORM_NERF_CONFIG:
+    ldr r0, addr+44
+    bx lr
 .align
 .ltorg
 addr:

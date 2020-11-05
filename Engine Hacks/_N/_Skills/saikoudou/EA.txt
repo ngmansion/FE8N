@@ -1,4 +1,4 @@
-
+#include _config.txt
 //奥義の鼓動の状態異常指定は3ファイル。(別フォルダの確率関連にもある)
 //
 
@@ -134,6 +134,7 @@ ALIGN 4
         POIN GET_COMBAT_ART
         POIN IS_TEMP_SKILL_FLAG
         POIN TURN_OFF_TEMP_SKILL_FLAG
+        POIN GET_RAGING_STORM_NERF_CONFIG
         
     AfterMove_Skill:
         #incbin "AfterMove.dmp"

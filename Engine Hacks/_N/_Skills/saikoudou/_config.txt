@@ -1,0 +1,1 @@
+#define GET_RAGING_STORM_NERF_CONFIG (0)     //1にすると狂嵐に回数制限がつく
