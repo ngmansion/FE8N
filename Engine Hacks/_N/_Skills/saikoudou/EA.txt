@@ -144,7 +144,7 @@ ALIGN 4
         #incbin WaitSkills.dmp
         POIN HAS_ALERT_STANCE
         POIN HAS_DEFENSIVE
-        POIN HAS_CATNAP
+        POIN HAS_HEALING_FOCUS
 
     hasRagingStorm:
         HAS_COMBAT
@@ -173,9 +173,9 @@ ALIGN 4
     HAS_DEFENSIVE:
         HAS_SKILL
         WORD DefensiveID
-    HAS_CATNAP:
+    HAS_HEALING_FOCUS:
         HAS_SKILL
-        WORD CatnapID
+        WORD HealingFocusID
     HAS_CHANGE_FATE:
         HAS_SKILL
         WORD ToChangeFateID
