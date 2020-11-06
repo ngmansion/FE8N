@@ -1,5 +1,6 @@
 #define UNIT_WINDOW_CACHE (0x0203AF10)
 #include _config.txt
+#include TSA_burst.txt
 PUSH
 
 ORG	0x8eae8
@@ -58,6 +59,9 @@ ORG	0xA92514
 
 ORG 0x08e9d0
 short 0x46c0 0x46c0//hpバー削除
+
+ORG 0xA7393C
+POIN BURST_DOWN_1 BURST_DOWN_2 BURST_DOWN_3 BURST_DOWN_NONE BURST_DOWN_NONE BURST_DOWN_NONE
 
 POP
 power_view:

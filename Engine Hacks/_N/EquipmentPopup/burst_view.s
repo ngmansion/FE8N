@@ -56,6 +56,9 @@ WAR_OFFSET = (67)
     bl GetHundredNum
     strb   r0, [r3, #13]
 
+    bl SetThirdNum
+    bl SetFourthNum
+
     bl Draw_Word
     ldr r0, =RETURN_ADDR
     mov pc, r0
@@ -94,11 +97,6 @@ Hundred:
         bx lr
 
 Draw_Word:
-        push {lr}
-        bl JudgeDraw
-        cmp r0, #0
-        beq drawHit
-        b   drawAvo
     drawHit:
         ldr r1, [r4, #64]
         mov r2, #0
@@ -111,9 +109,9 @@ Draw_Word:
         strh    r3, [r1, #8]
         strh    r2, [r1, #10]
         strh    r2, [r1, #12]
-        b endWord
     drawAvo:
         ldr r1, [r4, #64]
+        add r1, #0x40
         mov r2, #0
         ldr r3, =0x2166
         strh    r3, [r1, #0]
@@ -125,15 +123,9 @@ Draw_Word:
         strh    r2, [r1, #10]
         strh    r2, [r1, #12]  
     endWord:
-        pop {pc}
+        bx lr
 
 GetFirstNum:
-        push {lr}
-        bl JudgeDraw
-        cmp r0, #0
-        beq GetHit
-        b   GetAvo
-    GetHit:
         ldr r1, =0x0203a568
         mov r0, #74
         ldrh r0, [r1, r0]
@@ -141,25 +133,12 @@ GetFirstNum:
         beq falseFirst
         mov r0, #96
         ldrh r0, [r1, r0]
-        b endFirst
-    GetAvo:
-        ldr r1, =0x0203a568
-        mov r0, #98
-        ldrh r0, [r1, r0]
-        b endFirst
+        .short 0xE000
     falseFirst:
         ldr r0, =0xFFFFFFFF
-    endFirst:
-        pop {pc}
-
+        bx lr
 
 GetSecondNum:
-        push {lr}
-        bl JudgeDraw
-        cmp r0, #0
-        beq GetCrt
-        b   GetDdg
-    GetCrt:
         ldr r1, =0x0203a568
         mov r0, #74
         ldrh r0, [r1, r0]
@@ -167,16 +146,23 @@ GetSecondNum:
         beq falseSecond
         mov r0, #102
         ldrh r0, [r1, r0]
-        b endSecond
-    GetDdg:
+        .short 0xE000
+    falseSecond:
+        ldr r0, =0xFFFFFFFF
+        bx lr
+
+GetThirdNum:
+        ldr r1, =0x0203a568
+        mov r0, #98
+        ldrh r0, [r1, r0]
+        bx lr
+
+GetFourthNum:
         ldr r1, =0x0203a568
         mov r0, #104
         ldrh r0, [r1, r0]
-        b endSecond
-    falseSecond:
-        ldr r0, =0xFFFFFFFF
-    endSecond:
-        pop {pc}
+        bx lr
+
 
 JudgeDraw:
         push {lr}
@@ -187,6 +173,59 @@ JudgeDraw:
         and r0, r6
     eternal:
         pop {pc}
+
+SetThirdNum:
+    push {lr}
+    bl GetThirdNum
+    bl Hundred
+    mov r7, r1          @退避
+    bl NUMBER
+    ldr r1, =0x02028e44
+    ldrb  r0, [r1, #6]
+    sub   r0, #48
+    mov   r2, r4
+    add   r2, #81
+    bl GET_EX_NUM_MEM_TO_R3
+    strb  r0, [r3, #15]
+
+    ldrb  r0, [r1, #7]
+    sub   r0, #48
+    mov   r1, r4
+    add   r1, #82
+    bl GET_EX_NUM_MEM_TO_R3
+    strb  r0, [r3, #14]
+
+    mov r0, r7
+    bl GetHundredNum
+    strb   r0, [r3, #16]
+    pop {pc}
+
+SetFourthNum:
+    push {lr}
+    bl GetFourthNum
+@    bl Hundred
+    mov r7, r1          @退避
+    bl NUMBER
+    ldr r1, =0x02028e44
+    ldrb  r0, [r1, #6]
+    sub   r0, #48
+    mov   r2, r4
+    add   r2, #81
+    bl GET_EX_NUM_MEM_TO_R3
+    strb  r0, [r3, #18]
+
+    ldrb  r0, [r1, #7]
+    sub   r0, #48
+    mov   r1, r4
+    add   r1, #82
+    bl GET_EX_NUM_MEM_TO_R3
+    strb  r0, [r3, #17]
+
+    mov r0, r7
+    bl GetHundredNum
+    strb   r0, [r3, #19]
+    pop {pc}
+
 
 SetPow:
     bx lr
