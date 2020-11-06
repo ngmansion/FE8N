@@ -1,5 +1,4 @@
 #define UNIT_WINDOW_CACHE (0x0203AF10)
-#include _config.txt
 #include TSA_burst.txt
 PUSH
 
@@ -75,7 +74,6 @@ ALIGN 4
 burst_view:
 #incbin burst_view.dmp
 WORD UNIT_WINDOW_CACHE
-WORD GET_FLASH_CONFIG
 ALIGN 4
 
 burst_hundred:

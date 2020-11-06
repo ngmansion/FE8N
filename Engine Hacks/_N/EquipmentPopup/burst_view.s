@@ -2,17 +2,11 @@
 RETURN_ADDR  = (0x0808e80e)
 RETURN_ADDR2 = (0x0808e814) @何もしない
 
-WAR_OFFSET = (67)
 @0808e79c
     mov r0, #63     @0x3F
     and r0, r6
     cmp r0, #0
     bne dont_need
-
-    sub sp, #80 @装備あたりまで
-    mov r0, sp
-    bl SetPow
-    add sp, #80
 
     bl GetFirstNum
     bl Hundred
@@ -164,16 +158,6 @@ GetFourthNum:
         bx lr
 
 
-JudgeDraw:
-        push {lr}
-        bl GET_FLASH_CONFIG
-        cmp r0, #0
-        beq eternal
-        mov r0, #0x80   @64     @0x40
-        and r0, r6
-    eternal:
-        pop {pc}
-
 SetThirdNum:
     push {lr}
     bl GetThirdNum
@@ -225,10 +209,6 @@ SetFourthNum:
     bl GetHundredNum
     strb   r0, [r3, #19]
     pop {pc}
-
-
-SetPow:
-    bx lr
 
 NUMBER:
     ldr r1, =0x08003868

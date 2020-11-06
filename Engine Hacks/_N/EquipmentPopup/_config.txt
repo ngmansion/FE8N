@@ -1,1 +1,0 @@
-#define GET_FLASH_CONFIG (1)       //0にするとフキダシの交互表示機能がオフになる
