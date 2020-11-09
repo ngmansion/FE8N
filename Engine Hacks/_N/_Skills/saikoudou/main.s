@@ -13,7 +13,8 @@ RAGING_STORM_FLAG     = (2)
 COMBAT_HIT            = (1)
 FIRST_ATTACKED_FLAG   = (0)
 
-COMMAND_RESCUE = (9)
+COMMAND_RESCUE  = (0x9)
+COMMAND_DROP    = (0xA)
 
 @0801cea8
 .thumb
@@ -336,8 +337,8 @@ ChangeFate:
 
         ldr r0, =0x0203a954
         ldrb r0, [r0, #17]
-        cmp r0, #COMMAND_RESCUE
-        bne falseFate         @救出以外なら終了
+        cmp r0, #COMMAND_DROP
+        bne falseFate           @指定のコマンド以外なら終了
 
         mov r0, r4
         mov r1, #0
