@@ -509,7 +509,7 @@ GET_STONE_MASTERY:
     ldr r0, [r0, #12]
     bx lr
 IS_TEMP_SKILL_FLAG:
-    ldr r2, (adr+52)
+    ldr r2, (adr+56)
     mov pc, r2
 
 .align
