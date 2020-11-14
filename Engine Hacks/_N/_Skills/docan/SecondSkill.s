@@ -6,7 +6,7 @@ COMBAT_HIT            = (1)
 FIRST_ATTACKED_FLAG   = (0)
 
 @0802B3A4
-        bl main
+    bl main
 
 @    mov r1, #6
 @    ldsh r0, [r5, r1]
@@ -37,8 +37,8 @@ main:
         bl CriticalUp
     skipWrath:
         bl CancelRadiance
-        end:
-                pop {pc}
+    end:
+        pop {pc}
 
     
 Cancel:
@@ -200,14 +200,14 @@ HAS_CANCEL:
     ldr r2, ADDRESS
     mov pc, r2
 HasWrath:
-        ldr r2, ADDRESS+4 @怒り
-        mov pc, r2
+    ldr r2, ADDRESS+4 @怒り
+    mov pc, r2
 HasFortune:
-        ldr r2, ADDRESS+8 @強運
-        mov pc, r2
+    ldr r2, ADDRESS+8 @強運
+    mov pc, r2
 HAS_CANCEL_RADIANCE:
-        ldr r2, ADDRESS+12 @キャンセル(蒼炎)
-        mov pc, r2
+    ldr r2, ADDRESS+12 @キャンセル(蒼炎)
+    mov pc, r2
 IS_TEMP_SKILL_FLAG:
     ldr r2, ADDRESS+16
     mov pc, r2
