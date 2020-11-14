@@ -178,4 +178,5 @@
 #define FollowUpID              181 //0xB5 ついげきリング
 #define DeadeyeID               182 //0xB6 狙撃
 #define LioninePoiseID          183 //0xB7 獅子王の構え
-
+#define FierceBreathID          184 //0xB8 鬼神の呼吸
+#define DartingBreathID         185 //0xB9 飛燕の呼吸
