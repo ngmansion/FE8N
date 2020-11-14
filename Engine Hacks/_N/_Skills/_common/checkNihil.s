@@ -9,13 +9,11 @@ HAS_SKILL_FUNC = (ADR+4)
     push {r4, r5, lr}
     mov r4, r0
     mov r5, r2
-    cmp r1, #0
-    beq skipNihil
     mov r0, r1
     bl hasNihil
     cmp r0, #1
     beq false
-skipNihil:
+
     mov r0, r4
     mov r1, r5
     bl judgeSkill
