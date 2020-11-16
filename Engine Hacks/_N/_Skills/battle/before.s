@@ -545,7 +545,7 @@ WarSkill:
         mov r0, #0
     jumpWar2:
         strh r0, [r4, r1] @命中
-
+@@@@@@@@
         mov r1, #98
         ldrh r0, [r4, r1]
         mov r2, #3
@@ -556,7 +556,16 @@ WarSkill:
         mov r0, #0
     jumpWar3:
         strh r0, [r4, r1] @回避
-
+@@@@@@@@
+        mov r1, #104
+        ldrh r0, [r4, r1]
+        add r0, r2
+        cmp r0, #0
+        bge jumpWarDodge
+        mov r0, #0
+    jumpWarDodge:
+        strh r0, [r4, r1] @必殺回避
+@@@@@@@@
         mov r1, #102
         ldrh r0, [r4, r1]
         mov r2, #2
