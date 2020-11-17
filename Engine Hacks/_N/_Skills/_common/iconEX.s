@@ -1,7 +1,7 @@
 NULL = 0
 
 .thumb
-ICON_NUM_LIMIT = (16) @上限数*2
+ICON_NUM_LIMIT = (8) @上限数*2
 
 MAX_SKILL_NUM = (255)
 
@@ -323,7 +323,7 @@ icon:
     ldr r0, adr+28 @ICON_GAP
     ldr r0, [r0]
     add r6, r6, r0      @Icon position increment
-    add r7, #2          @HELP memory increment
+    add r7, #1          @HELP memory increment
     pop {pc}
 
 
@@ -455,10 +455,10 @@ SKILL0:
     loopDedup:
         cmp r2, r7
         beq notDouble
-        ldrh r1, [r2]
-        cmp r0, r1
+        ldrb r1, [r2]
+        cmp r4, r1
         beq FALSE               @ヘルプ重複
-        add r2, #2
+        add r2, #1
         b loopDedup
 
     notDouble:
@@ -467,7 +467,7 @@ SKILL0:
         cmp r1, #ICON_NUM_LIMIT
         beq FALSE               @アイコン上限
 
-        strh r0, [r7]       @ヘルプストア
+        strb r4, [r7]       @IDストア
 
         ldr r1, =0x100
         add r1, r4

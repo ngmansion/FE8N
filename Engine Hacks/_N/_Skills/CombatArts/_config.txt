@@ -1,0 +1,3 @@
+#define COMBAT_ARTS_COST_WORD_ID       (0x07A)
+#define COMBAT_ARTS_ONE_RANGE_WORD_ID  (0x07D)
+

@@ -75,11 +75,19 @@ POIN	helpnon+29 helpdel+29
 
 //A72DB4
 
+//A72C78 //ステータス画面2のヘルプ先頭
+
 ALIGN 4
 helpdel:
-#incbin "help.dmp"
+#incbin "SetSkillHelp.dmp"
+WORD 0x02003B00
+POIN skl_table
+WORD ICON_LIST_SIZE
+POIN GET_COMBAT_ARTS_TYPE
+WORD 0x02003B00+9
 ALIGN 4
 
 helpnon:
-#incbin "helpnon.dmp"
+#incbin "CanSelectHelp.dmp"
+WORD 0x02003B00
 ALIGN 4
