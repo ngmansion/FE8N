@@ -12,6 +12,12 @@ ORG	0x8EAB4
 //////////////////////
 
 //パネル
+
+ORG 0x08e922
+BYTE 0xA       //名前高さ 0xa, 0x4a(original)
+ORG 0x08e944
+BYTE 0x02       //顔高さ original = 0x42
+
 ORG	0x8e9c4
 BL(pop_warp)
 ORG	0x8e148
@@ -33,7 +39,7 @@ ORG 0x08e7a4
 ORG 0x08e7ac
    BYTE $00 $4A $97 $46
    POIN double_double
-ORG 0x08e884
+ORG 0x08e850
 jumpToHack(burst_hundred)
 
 
