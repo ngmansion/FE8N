@@ -8,6 +8,7 @@ RETURN_ADDR2 = (0x0808e814) @何もしない
     cmp r0, #0
     bne dont_need
 
+    bl SetNumber
     bl Draw_Word
     ldr r0, =RETURN_ADDR
     mov pc, r0
@@ -15,7 +16,49 @@ dont_need:
     ldr r0, =RETURN_ADDR2
     mov pc, r0
 
+SetNumber:
+        push {lr}
+        bl GetFirstNum
+        bl NUMBER
 
+        ldr r1, =0x02028e44
+        .short 0x7988
+        .short 0x3830
+        .short 0x1c22
+        .short 0x3251       @
+        .short 0x7010
+        .short 0x79c8
+        .short 0x3830
+        .short 0x1c21
+        .short 0x3152       @
+        .short 0x7008
+
+@@@@@@@@
+        bl GetSecondNum
+        bl NUMBER
+        ldr r1, =0x02028e44
+        .short 0x7988
+        .short 0x3830
+        .short 0x1c22
+        .short 0x3253       @
+        .short 0x7010
+        .short 0x79c8
+        .short 0x3830
+        .short 0x1c21
+        .short 0x3154       @
+        .short 0x7008
+        pop {pc}
+
+GetFirstNum:
+        push {lr}
+        mov r0, r5
+        bl $00018e64
+        pop {pc}
+GetSecondNum:
+        push {lr}
+        mov r0, r5
+        bl $00018ea4
+        pop {pc}
 
 Draw_Word:
         ldr r1, [r4, #64]
@@ -37,12 +80,12 @@ Draw_Word:
     endWord:
         bx lr
 
-
-
+NUMBER:
+    ldr r1, =0x08003868
+    mov pc, r1
 $080168d0:
     ldr r1, =0x080168d0
     mov pc, r1
-
 $00018e64:
     ldr r1, =0x08018e64
     mov pc, r1

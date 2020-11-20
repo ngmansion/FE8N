@@ -56,7 +56,7 @@ POIN menu_gazou
 
 
 ORG	0xA931D0	//TSA
-#incbin A931D0.bin
+#include A931D0.txt
 
 
 ORG	0xA92514
