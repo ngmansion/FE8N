@@ -9,7 +9,8 @@ RETURN_ADDR2 = (0x0808e814) @何もしない
     bne dont_need
 
     bl SetNumber
-    bl Draw_Word
+@    bl Draw_Word
+    bl DrawItem
     ldr r0, =RETURN_ADDR
     mov pc, r0
 dont_need:
@@ -76,6 +77,55 @@ Draw_Word:
 
     endWord:
         bx lr
+
+DrawItem:
+        push {r4, lr}
+        ldr r4, [r4, #64]
+        sub r4, #2
+        ldr r0, =0x210D
+        strh    r0, [r4]
+        add r4, #2
+        add r0, #1
+        strh    r0, [r4]
+        add r4, #2
+
+        add r0, #1
+        strh    r0, [r4]
+        add r4, #2
+        
+        ldrh r0, [r5, #30]
+        bl DrawItemIn
+        ldrh r0, [r5, #32]
+        bl DrawItemIn
+        ldrh r0, [r5, #34]
+        bl DrawItemIn
+        ldrh r0, [r5, #36]
+        bl DrawItemIn
+        ldrh r0, [r5, #38]
+        bl DrawItemIn
+        pop {r4, pc}
+
+DrawItemIn:
+        push {lr}
+        mov r1, #0
+        mov r2, #0
+
+        cmp r0, #0
+        beq endItem
+        bl $000172f0
+        mov r1, r0
+        ldr r2, =0x2104     @アイテム
+        cmp r1, #8
+        blt endItem
+        mov r1, #8
+    endItem:
+        add r2, r1
+        strh    r2, [r4]
+        add r4, #2
+        pop {pc}
+$000172f0:
+    ldr r1, =0x080172f0
+    mov pc, r1
 
 NUMBER:
     ldr r1, =0x08003868

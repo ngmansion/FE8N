@@ -4,6 +4,7 @@
 	ldrb	r1, [r2, #11]
 	lsl	r1, r1, #24
 	lsr	r1, r1, #31
+	b not
 	beq	not			;所属チェック
 	ldrh	r1, [r2, #32]
 	cmp	r1, #0

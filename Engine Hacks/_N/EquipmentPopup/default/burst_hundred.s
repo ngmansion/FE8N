@@ -1,6 +1,7 @@
 .thumb
 
 @    0808e850
+        b end
         ldr r0, =0x82e0
         mov r8, r0
 

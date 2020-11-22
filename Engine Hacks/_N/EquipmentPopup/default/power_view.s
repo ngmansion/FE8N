@@ -164,7 +164,8 @@ DrawWordAvoDdg:
         strh    r3, [r1, #12]
         strh    r2, [r1, #14]        @数字部分
         strh    r2, [r1, #16]        @数字部分
-        strh    r2, [r1, #18]
+        ldr r3, =0x2109
+        strh    r3, [r1, #18]
         strh    r2, [r1, #20]
         strh    r2, [r1, #22]
         strh    r2, [r1, #24]
@@ -178,6 +179,8 @@ SetNumbers:
     bl SetNumberHP
     bl SetNumberAAPR
     bl SetNumberHACD
+    ldr r0, =0x0203a568
+    bl SET_SKILL_ICON
     pop {pc}
 
 SetNumberLv:
@@ -932,6 +935,24 @@ DrawNumberAvo_Ddg:
         mov     r1, r9
         ldr     r2, =0x085b8cdc
         bl      $00002b08
+@@@@@@@@
+        bl GET_SKILL_ICON_ADDR_TO_R3
+        mov r2, #1
+        neg r2, r2
+    loopIcon:
+        add r2, #1
+        ldrb r0, [r3]
+        add r3, #1
+        cmp r0, #0
+        bne loopIcon
+        mov r3, r2
+
+        mov     r0, r5
+        add r0, #0x58
+        add     r3, r8
+        mov     r1, r9
+        ldr     r2, =0x085b8cdc
+        bl      $00002b08
 
         pop {r5, pc}
 
@@ -1170,7 +1191,12 @@ NUMBER:
 GET_EX_NUM_MEM_TO_R3:
     ldr r3, ADDR
     bx lr
-
+SET_SKILL_ICON:
+    ldr r3, ADDR+4
+    mov pc, r3
+GET_SKILL_ICON_ADDR_TO_R3:
+    ldr r3, ADDR+8
+    bx lr
 .ltorg
 .align
 ADDR:
