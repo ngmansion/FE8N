@@ -20,26 +20,26 @@ BYTE 0x02       //顔高さ original = 0x42
 
 //パネルの描写範囲を縦に広げる
 ORG 0x08e0ae    //初期位置(文字)
-BYTE 07         //06 > 07
+BYTE 06         //06 > 07
 ORG 0x08e0C0    //初期位置
-BYTE 07         //06 > 07
+BYTE 06         //06 > 07
 ORG 0x08e56a    //更新時
-BYTE 07         //06 > 07
+BYTE 06         //06 > 07
 
 //パネルが下側の時、一段上げる
 ORG 0x08e018   //パネルを下に表示させるときの基準を上に(初期表示時)
-BYTE 0x0D      //0x0E > 0x0D
+BYTE 0x0E      //0x0E > 0x0D
 ORG 0x08e554   //表示更新時
-BYTE 0x0D      //0x0E > 0x0D
+BYTE 0x0E      //0x0E > 0x0D
 ORG 0x08e192   //消す処理
-BYTE 0x0d      //0x0e > 0x0d
+BYTE 0x0e      //0x0e > 0x0d
 
 
 //ORG 0x08e59e   DEF AVOの位置
 //BYTE 0x17      //0x17(original)
 
 ORG 0x08e9bc   //下側表示の時の数字位置
-BYTE 0x10      //0x11(original)
+BYTE 0x11      //0x11(original)
 
 
 ORG	0x8e9c4

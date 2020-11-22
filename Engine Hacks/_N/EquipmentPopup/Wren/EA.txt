@@ -18,6 +18,30 @@ BYTE 0x4A       //名前高さ 0xa, 0x4a(original)
 ORG 0x08e944
 BYTE 0x02       //顔高さ original = 0x42
 
+//パネルの描写範囲を縦に広げる
+ORG 0x08e0ae    //初期位置(文字)
+BYTE 06         //06 > 07
+ORG 0x08e0C0    //初期位置
+BYTE 06         //06 > 07
+ORG 0x08e56a    //更新時
+BYTE 06         //06 > 07
+
+//パネルが下側の時、一段上げる
+ORG 0x08e018   //パネルを下に表示させるときの基準を上に(初期表示時)
+BYTE 0x0E      //0x0E > 0x0D
+ORG 0x08e554   //表示更新時
+BYTE 0x0E      //0x0E > 0x0D
+ORG 0x08e192   //消す処理
+BYTE 0x0e      //0x0e > 0x0d
+
+
+//ORG 0x08e59e   DEF AVOの位置
+//BYTE 0x17      //0x17(original)
+
+ORG 0x08e9bc   //下側表示の時の数字位置
+BYTE 0x11      //0x11(original)
+
+
 ORG	0x8e9c4
 BL(pop_warp)
 ORG	0x8e148
@@ -33,6 +57,8 @@ BL(pop_warp)
 
 ORG 0x08e79c
 jumpToHack(burst_view)
+ORG 0x08ea0c
+jumpToHack(burst_direction)
 ORG 0x08e7a4
    BYTE $00 $4A $97 $46
    POIN arrow_double
@@ -54,9 +80,9 @@ POIN power_view
 ORG	0x8f3a8
 POIN menu_gazou
 
+ORG	0x8EA08	//TSA
+POIN PANEL_TSA
 
-ORG	0xA931D0	//TSA
-#include A931D0.txt
 
 
 ORG	0xA92514
@@ -69,6 +95,9 @@ ORG 0xA7393C
 POIN BURST_DOWN_1 BURST_DOWN_2 BURST_DOWN_3 BURST_DOWN_NONE BURST_DOWN_NONE BURST_DOWN_NONE
 
 POP
+PANEL_TSA:
+#include A931D0.txt
+ALIGN 4
 power_view:
 #incbin "power_view.dmp"
 WORD UNIT_WINDOW_CACHE
@@ -89,5 +118,9 @@ ALIGN 4
 
 menu_gazou:
 #incext Png2Dmp menu.png --lz77
+ALIGN 4
+
+burst_direction:
+#incbin burst_direction.dmp
 ALIGN 4
 

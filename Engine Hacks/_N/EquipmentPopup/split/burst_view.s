@@ -63,16 +63,19 @@ GetSecondNum:
 Draw_Word:
         ldr r1, [r4, #64]
         mov r2, #0
-        ldr r3, =0x2120
+        ldr r3, =0x216B
         strh    r3, [r1, #0]
         add r3, #1
         strh    r3, [r1, #2]
-        strh    r2, [r1, #4]
-        strh    r2, [r1, #6]
-        add     r3, #29
-        strh    r3, [r1, #8]
-        strh    r2, [r1, #10]
-        strh    r2, [r1, #12]
+        add r3, #1
+        strh    r3, [r1, #4]
+        add r3, #1
+        strh    r3, [r1, #6]
+        strh    r2, [r1, #8]
+        ldr r3, =0x2163
+        strh    r3, [r1, #10]
+        add r3, #1
+        strh    r3, [r1, #12]
 
     endWord:
         bx lr

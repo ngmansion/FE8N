@@ -410,8 +410,7 @@ Hundred:
         mov r1, #0
         ldr r2, =0xFFFFFFFF
         cmp r0, r2
-        beq underHundred
-
+        beq invalidHundred
         mov r2, r0
     loopHundred:
         cmp r2, #99
@@ -419,6 +418,8 @@ Hundred:
         sub r2, #100
         add r1, #1
         b loopHundred
+    invalidHundred:
+        mov r1, r0
     underHundred:
         bx lr
 
@@ -679,9 +680,8 @@ DrawNumberAS_Prf_Rsl:
 @@@@@@@@Hit
         bl GET_EX_NUM_MEM_TO_R3
         ldrb    r3, [r3, #12]
-        mov r3, #1
         cmp r3, #0xF0
-        beq underAvo100
+        beq underHit100
         add r3, r8
         mov r0, r5
         add r0, #0x54
@@ -692,7 +692,7 @@ DrawNumberAS_Prf_Rsl:
         bl GET_EX_NUM_MEM_TO_R3
         ldrb    r3, [r3, #20]
         cmp r3, #0xF0
-        beq underAvo10
+        beq underHit10
         add r3, r8
         mov r0, r5
         add r0, #0x54

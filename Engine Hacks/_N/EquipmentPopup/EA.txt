@@ -1,7 +1,13 @@
 //#define WREN_SWITCH
+//#define SPLIT_SWITCH
 
-#ifdef WREN_SWITCH
-    #include "Wren/EA.txt"
+#ifdef SPLIT_SWITCH
+    #include "split/EA.txt"
 #else
-    #include "default/EA.txt"
+    #ifdef WREN_SWITCH
+        #include "Wren/EA.txt"
+    #else
+        #include "default/EA.txt"
+    #endif
 #endif
+

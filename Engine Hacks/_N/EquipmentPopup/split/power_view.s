@@ -64,11 +64,7 @@ DrawWords:
     bl DrawWordLv
     ldr r1, [r4, #64]
     bl $0008e660    @HP文字
-    mov r0, #0x40
-    bl DrawWordFirst
-    mov r0, #0x80
     bl DrawWordASPrfRsl
-    mov r0, #0xC0
     bl DrawWordAvoDdg
     pop {pc}
 
@@ -88,36 +84,9 @@ DrawWordLv:
         strh    r2, [r1, #12]
         bx lr
 
-DrawWordFirst:
-        ldr r1, [r4, #64]
-        add r1, r0
-        sub r1, #0x09   @左へ
-
-        mov r2, #0
-        ldr r3, =0x216B
-        strh    r3, [r1, #0]
-        add r3, #1
-        strh    r3, [r1, #2]
-        strh    r2, [r1, #4]        @数字部分
-        strh    r2, [r1, #6]        @数字部分
-
-        add r3, #1
-        strh    r3, [r1, #8]
-        add r3, #1
-        strh    r3, [r1, #10]
-        strh    r2, [r1, #12]       @数字部分
-        strh    r2, [r1, #14]       @数字部分
-
-        ldr r3, =0x2163
-        strh    r3, [r1, #16]
-        add r3, #1
-        strh    r3, [r1, #18]
-        strh    r2, [r1, #20]        @数字部分
-        strh    r2, [r1, #22]        @数字部分
-        bx lr
 DrawWordASPrfRsl:
         ldr r1, [r4, #64]
-        add r1, r0
+        add r1, #0x40   @二段下へ
         sub r1, #0x09   @左へ
 
         mov r2, #0
@@ -145,7 +114,7 @@ DrawWordASPrfRsl:
 
 DrawWordAvoDdg:
         ldr r1, [r4, #64]
-        add r1, r0
+        add r1, #0x80   @二段下へ
         sub r1, #0x09   @左へ
 
         mov r2, #0
@@ -162,12 +131,10 @@ DrawWordAvoDdg:
         strh    r3, [r1, #10]
         add     r3, #1
         strh    r3, [r1, #12]
+
         strh    r2, [r1, #14]        @数字部分
         strh    r2, [r1, #16]        @数字部分
-        strh    r2, [r1, #18]
-        strh    r2, [r1, #20]
-        strh    r2, [r1, #22]
-        strh    r2, [r1, #24]
+        strh    r2, [r1, #18]        @数字部分
         bx lr
 .align
 .ltorg
@@ -505,7 +472,6 @@ DrawNumbers:
 
     bl DrawNumberLv
     bl DrawNumberHP
-    bl DrawNumberPrimary
     bl DrawNumberAS_Prf_Rsl
     pop {pc}
 
@@ -640,145 +606,7 @@ DrawNumberHP:
         bl $00002b08
 
         pop {r5, pc}
-
-DrawNumberPrimary:
-        push {r5, lr}
-        mov r0, r4
-        add r0, #70
-        mov r1, #0
-        ldsh r0, [r0, r1]
-        lsl r5, r0, #3
-        sub r5, #0x30          @左にずらす
-        mov r0, r4
-        add r0, #72
-        mov r1, #0
-        ldsh r0, [r0, r1]
-        lsl r0, r0, #3
-        add r0, #8         @1段下にずらす
-        mov r9, r0
-
-        ldr r1, =0x82e0     @先頭の数字で色をある程度変えられる
-        mov r8, r1
-
-@@@@@@@@Atk
-        mov r0, r5
-        add r0, #0x18
-        bl GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #4]
-        cmp r3, #240
-        beq underAtk
-        add r3, r8
-        mov r1, r9
-        ldr r2, =0x085b8cdc
-        bl $00002b08
-    underAtk:
-        mov r0, r5
-        add r0, #0x18
-        add r0, #7
-        bl GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #5]
-        add r3, r8
-        mov r1, r9
-        ldr r2, =0x085b8cdc
-        bl $00002b08
-
-@@@@@@@@Hit
-        bl GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #12]
-        cmp r3, #0xF0
-        beq underHit100
-        add r3, r8
-        mov r0, r5
-        add r0, #0x34
-        mov r1, r9
-        ldr r2, =0x085b8cdc
-        bl $00002b08
-    underHit100:
-        bl GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #20]
-        cmp r3, #0xF0
-        beq underHit10
-        add r3, r8
-        mov r0, r5
-        add r0, #0x34
-        add r0, #7
-        mov r1, r9
-        ldr r2, =0x085b8cdc
-        bl $00002b08
-    underHit10:
-        bl GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #21]
-        add r3, r8
-        mov r0, r5
-        add r0, #0x34
-        add r0, #14
-        mov r1, r9
-        ldr r2, =0x085b8cdc
-        bl $00002b08
-
-@@@@@@@@必殺
-        bl GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #13]
-        cmp r3, #0xF0
-        beq tenCrit
-        cmp r3, #0x0A
-        beq tenCrit
-        b hundredCrit
-
-    tenCrit:
-        bl      GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #22]
-        cmp     r3, #240
-        beq     underCrit
-        mov     r0, r5
-        add     r0, #0x58
-        add     r3, r8
-        mov     r1, r9
-        ldr     r2, =0x085b8cdc
-        bl      $00002b08
-    underCrit:
-        mov     r0, r5
-        add     r0, #0x58
-        add     r0, #7
-        bl      GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #23]
-        add     r3, r8
-        mov     r1, r9
-        ldr     r2, =0x085b8cdc
-        bl      $00002b08
-        b endCrit
-
-    hundredCrit:
-        add     r3, r8
-
-        ldr     r2, =0x085b8cdc
-        mov     r0, r5
-        add     r0, #0x58
-        mov     r1, r9
-        bl      $00002b08
-
-        bl      GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #22]
-        add     r3, r8
-        ldr     r2, =0x085b8cdc
-        mov     r0, r5
-        add     r0, #0x58
-        add     r0, #7
-        mov     r1, r9
-        bl      $00002b08
-
-        bl      GET_EX_NUM_MEM_TO_R3
-        ldrb    r3, [r3, #23]
-        add     r3, r8
-        ldr     r2, =0x085b8cdc
-        mov     r0, r5
-        add     r0, #0x58
-        add     r0, #14
-        mov     r1, r9
-        bl      $00002b08
-    endCrit:
-
-        pop {r5, pc}
+      
 
 DrawNumberAS_Prf_Rsl:
         push {r5, lr}
@@ -796,12 +624,33 @@ DrawNumberAS_Prf_Rsl:
         ldsh r0, [r0, r1]
         lsl r0, r0, #3
         add r0, #8         @1段下にずらす
-        add r0, #8         @1段下にずらす
         mov r9, r0
 
 
         ldr r1, =0x82e0     @先頭の数字で色をある程度変えられる
         mov r8, r1
+
+@@@@@@@@Atk
+@        bl GET_EX_NUM_MEM_TO_R3
+@        ldrb    r3, [r3, #4]
+@        cmp r3, #240
+@        beq underAtk
+@        add r3, r8
+@        mov r0, r7
+@        mov r1, r9
+@        ldr r2, =0x085b8cdc
+@        bl $00002b08
+@
+@    underAtk:
+@        mov r0, r5
+@        add r0, #24
+@        bl GET_EX_NUM_MEM_TO_R3
+@        ldrb    r3, [r3, #5]
+@        add r3, r8
+@        mov r1, r9
+@        ldr r2, =0x085b8cdc
+@        bl $00002b08
+
 @@@@@@@@AS
         bl GET_EX_NUM_MEM_TO_R3
         ldrb    r3, [r3, #6]
