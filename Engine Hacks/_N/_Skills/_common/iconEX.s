@@ -78,10 +78,6 @@ Unit:
 		bl UNITDATA_GetThird
 		bl SKILL0 @自軍外スキル
 
-		mov r0, r4
-		bl UNITDATA_GetLuna
-		bl SKILL0 @高難易度スキル
-
 		ldr	r0, [r4]
 		ldrb	r0, [r0, #4]
 		ldr	r1, adr	@UNIT
@@ -123,6 +119,9 @@ Class:
 		mov r1, #2      @CLASS
 		bl SKILL4
 
+		mov r0, r4
+		bl UNITDATA_GetLuna
+		bl SKILL0 @高難易度スキル
 		pop {pc}
 
 Weapon:
@@ -491,6 +490,8 @@ SKILL0:
 
 Initialize:
 	push {lr}
+    cmp r0, #0
+    beq skipDraw
 	mov	r4, #0
 	bl getEquipmentPositionData
 	ldr r0, [r0]
@@ -513,6 +514,7 @@ loopE:
 	add	r4, #1
 	cmp	r4, #7
 	ble	loopE
+skipDraw:
 @アイコン
 	bl getIconPositionData
 	mov r6, r0
