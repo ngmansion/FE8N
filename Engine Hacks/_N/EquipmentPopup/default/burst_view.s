@@ -115,9 +115,12 @@ DrawItemIn:
         bl $000172f0
         mov r1, r0
         ldr r2, =0x2104     @アイテム
-        cmp r1, #8
+        cmp r0, #6
         blt endItem
-        mov r1, #8
+        mov r1, #5
+        cmp r0, #8
+        blt endItem
+        mov r1, #6
     endItem:
         add r2, r1
         strh    r2, [r4]

@@ -164,7 +164,7 @@ DrawWordAvoDdg:
         strh    r3, [r1, #12]
         strh    r2, [r1, #14]        @数字部分
         strh    r2, [r1, #16]        @数字部分
-        ldr r3, =0x2109
+        ldr r3, =0x210B
         strh    r3, [r1, #18]
         strh    r2, [r1, #20]
         strh    r2, [r1, #22]
@@ -180,7 +180,7 @@ SetNumbers:
     bl SetNumberAAPR
     bl SetNumberHACD
     ldr r0, =0x0203a568
-    bl SET_SKILL_ICON
+@    bl SET_SKILL_ICON
     pop {pc}
 
 SetNumberLv:
@@ -372,6 +372,8 @@ SetNumberHACD:
 
         bl SetThirdNum
         bl SetFourthNum
+        bl SetFifthNum
+
         pop {r4, pc}
 
 
@@ -426,6 +428,28 @@ SetFourthNum:
     bl GetHundredNum
     strb   r0, [r3, #19]
     pop {pc}
+
+SetFifthNum:
+    push {lr}
+    bl GetFifthNum
+    bl NUMBER
+    ldr r1, =0x02028e44
+    ldrb  r0, [r1, #6]
+    sub   r0, #48
+    mov   r2, r4
+    add   r2, #81
+    bl GET_EX_NUM_MEM_TO_R3
+    strb  r0, [r3, #24]
+
+    ldrb  r0, [r1, #7]
+    sub   r0, #48
+    mov   r1, r4
+    add   r1, #82
+    bl GET_EX_NUM_MEM_TO_R3
+    strb  r0, [r3, #25]
+
+    pop {pc}
+
 
 GetHundredNum:
     push {lr}
@@ -497,6 +521,14 @@ GetFourthNum:
         ldrh r0, [r1, r0]
         bx lr
 
+GetFifthNum:
+        ldr r1, =0x0203a568
+        ldr r0, [r1]
+        ldrb r0, [r0, #19]
+        ldr r1, [r1, #4]
+        ldrb r1, [r1, #17]
+        add r0, r0, r1
+        bx lr
 
 .align
 .ltorg
@@ -935,6 +967,31 @@ DrawNumberAvo_Ddg:
         mov     r1, r9
         ldr     r2, =0x085b8cdc
         bl      $00002b08
+@@@@@@@@体格
+        bl GET_EX_NUM_MEM_TO_R3
+@        ldrb    r3, [r3, #19]      @100超えないでしょ・・・
+        ldrb    r3, [r3, #24]
+        cmp r3, #0xF0
+        beq underCon10
+
+        mov     r0, r5
+        add     r0, #0x58
+        add     r3, r8
+        mov     r1, r9
+        ldr     r2, =0x085b8cdc
+        bl      $00002b08
+    underCon10:
+        bl GET_EX_NUM_MEM_TO_R3
+        ldrb    r3, [r3, #25]
+        mov     r0, r5
+        add     r0, #0x58
+        add     r0, #7
+        add     r3, r8
+        mov     r1, r9
+        ldr     r2, =0x085b8cdc
+        bl      $00002b08
+
+        pop {r5, pc}
 @@@@@@@@
         bl GET_SKILL_ICON_ADDR_TO_R3
         mov r2, #1
