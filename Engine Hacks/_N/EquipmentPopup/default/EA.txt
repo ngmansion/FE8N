@@ -116,6 +116,7 @@ ALIGN 4
 burst_hundred:
 #incbin burst_hundred.dmp
 WORD UNIT_WINDOW_CACHE
+WORD 0x02003B00
 ALIGN 4
 
 menu_gazou:

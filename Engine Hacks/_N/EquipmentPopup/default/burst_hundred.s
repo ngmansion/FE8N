@@ -1,11 +1,27 @@
 .thumb
 
 @    0808e850
-        b end
         ldr r0, =0x82e0
         mov r8, r0
 
-@        add r6, #8
+        bl GET_SKILL_ICON_ADDR_TO_R3
+        mov r2, #1
+        neg r2, r2
+    loopIcon:
+        add r2, #1
+        ldrb r0, [r3]
+        add r3, #1
+        cmp r0, #0
+        bne loopIcon
+        mov r3, r2
+
+        mov     r0, r5
+        add     r0, #0x07
+        mov     r1, r6
+        ldr     r2, =0x085b8cdc
+        add     r3, r8
+        bl      $00002b08
+        b end
 
         mov r3, #81
         ldrb    r3, [r4, r3]
@@ -139,7 +155,9 @@ $00002b08:
 GET_EX_NUM_MEM_TO_R3:
     ldr r3, ADDR
     bx lr
-
+GET_SKILL_ICON_ADDR_TO_R3:
+    ldr r3, ADDR+4
+    bx lr
 .align
 .ltorg
 ADDR:

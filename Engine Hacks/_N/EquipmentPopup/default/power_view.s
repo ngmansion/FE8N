@@ -180,7 +180,7 @@ SetNumbers:
     bl SetNumberAAPR
     bl SetNumberHACD
     ldr r0, =0x0203a568
-@    bl SET_SKILL_ICON
+    bl SET_SKILL_ICON
     pop {pc}
 
 SetNumberLv:
@@ -992,26 +992,6 @@ DrawNumberAvo_Ddg:
         bl      $00002b08
 
         pop {r5, pc}
-@@@@@@@@
-        bl GET_SKILL_ICON_ADDR_TO_R3
-        mov r2, #1
-        neg r2, r2
-    loopIcon:
-        add r2, #1
-        ldrb r0, [r3]
-        add r3, #1
-        cmp r0, #0
-        bne loopIcon
-        mov r3, r2
-
-        mov     r0, r5
-        add r0, #0x58
-        add     r3, r8
-        mov     r1, r9
-        ldr     r2, =0x085b8cdc
-        bl      $00002b08
-
-        pop {r5, pc}
 
 GetAttack:
         ldr r0, =0x0203a568
@@ -1251,9 +1231,7 @@ GET_EX_NUM_MEM_TO_R3:
 SET_SKILL_ICON:
     ldr r3, ADDR+4
     mov pc, r3
-GET_SKILL_ICON_ADDR_TO_R3:
-    ldr r3, ADDR+8
-    bx lr
+
 .ltorg
 .align
 ADDR:

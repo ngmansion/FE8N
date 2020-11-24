@@ -9,7 +9,7 @@ RETURN_ADDR2 = (0x0808e814) @何もしない
     bne dont_need
 
     bl SetNumber
-@    bl Draw_Word
+    bl Draw_Word
     bl DrawItem
     ldr r0, =RETURN_ADDR
     mov pc, r0
@@ -63,17 +63,10 @@ GetSecondNum:
 
 Draw_Word:
         ldr r1, [r4, #64]
-        mov r2, #0
-        ldr r3, =0x2120
-        strh    r3, [r1, #0]
-        add r3, #1
-        strh    r3, [r1, #2]
-        strh    r2, [r1, #4]
-        strh    r2, [r1, #6]
-        add     r3, #29
-        strh    r3, [r1, #8]
-        strh    r2, [r1, #10]
-        strh    r2, [r1, #12]
+        ldr r0, =0x210C
+        strh    r0, [r1]
+        mov     r0, #0
+        strh    r0, [r1, #2]
 
     endWord:
         bx lr
@@ -81,17 +74,7 @@ Draw_Word:
 DrawItem:
         push {r4, lr}
         ldr r4, [r4, #64]
-        sub r4, #2
-        ldr r0, =0x210D
-        strh    r0, [r4]
-        add r4, #2
-        add r0, #1
-        strh    r0, [r4]
-        add r4, #2
-
-        add r0, #1
-        strh    r0, [r4]
-        add r4, #2
+        add r4, #4
         
         ldrh r0, [r5, #30]
         bl DrawItemIn
@@ -146,9 +129,7 @@ $00018ea4:
 GET_EX_NUM_MEM_TO_R3:
     ldr r3, ADDR
     bx lr
-GET_FLASH_CONFIG:
-    ldr r0, ADDR+4
-    bx lr
+
 
 .align
 .ltorg
