@@ -32,6 +32,9 @@ SHORT 0x3008    //SHORT 0x3088
 ORG 0x089840    //必殺回避
 SHORT 0x300E
 
+
+ORG 0x0896f4
+   jumpToHack(STATUS_2_FRAME)
 ORG 0x089848
 //WORD 0xF77BF928
 //SHORT 0xE029
@@ -50,6 +53,8 @@ POP
 PUSH
 ORG	0x89758
 POIN	status2word
+ORG 0x8A8E4
+POIN Status2Frame
 
 POP
 
@@ -81,10 +86,19 @@ bougyo:
 //D453守備D853魔防
 //5832必殺4c32必避
 
-
+STATUS_2_FRAME:
+#incbin status2frame.dmp
+POIN Status2TSA
 STATUS_2_WINDOW:
 #incbin status2.dmp
 POIN Skills_Icon
 
 #include help.txt
+
+Status2TSA:
+#include TSA.txt
+ALIGN 4
+Status2Frame:
+#incext Png2Dmp A73FDC.png --lz77
+ALIGN 4
 
