@@ -1,0 +1,126 @@
+#define UNIT_WINDOW_CACHE (0x0203AF10)
+#include TSA_burst.txt
+PUSH
+
+ORG	0x8eae8
+WORD	$469F4B00
+POIN	have_two
+
+ORG	0x8EAB4
+#incbin "SOUBI_FUKIDASHI.gba"
+
+//////////////////////
+
+//パネル
+
+ORG 0x08e922
+BYTE 0x4A       //名前高さ 0xa, 0x4a(original)
+ORG 0x08e944
+BYTE 0x02       //顔高さ original = 0x42
+
+//パネルの描写範囲を縦に広げる
+ORG 0x08e0ae    //初期位置(文字)
+BYTE 06         //06 > 07
+ORG 0x08e0C0    //初期位置
+BYTE 06         //06 > 07
+ORG 0x08e56a    //更新時
+BYTE 06         //06 > 07
+
+//パネルが下側の時、一段上げる
+ORG 0x08e018   //パネルを下に表示させるときの基準を上に(初期表示時)
+BYTE 0x0E      //0x0E > 0x0D
+ORG 0x08e554   //表示更新時
+BYTE 0x0E      //0x0E > 0x0D
+ORG 0x08e192   //消す処理
+BYTE 0x0e      //0x0e > 0x0d
+
+
+//ORG 0x08e59e   DEF AVOの位置
+//BYTE 0x17      //0x17(original)
+
+ORG 0x08e9bc   //下側表示の時の数字位置
+BYTE 0x11      //0x11(original)
+
+
+ORG	0x8e9c4
+BL(pop_warp)
+ORG	0x8e148
+BL(pop_warp)
+ORG	0x8f0a0
+BL(pop_warp)
+
+////フキダシ
+//ORG	0x8f2b4
+//BL(pop_warp)
+//ORG	0x8eb48
+//BL(pop_warp)
+
+ORG 0x08e79c
+jumpToHack(burst_view)
+ORG 0x08ea0c
+jumpToHack(burst_direction)
+ORG 0x08e7a4
+   BYTE $00 $4A $97 $46
+   POIN arrow_double
+ORG 0x08e7ac
+   BYTE $00 $4A $97 $46
+   POIN double_double
+ORG 0x08e850
+jumpToHack(burst_hundred)
+
+
+
+///////////////////
+ORG	0x8E660
+#incbin "8E660.gba"
+pop_warp:
+WORD	$469F4B00	//r3
+POIN power_view
+
+ORG	0x8f3a8
+POIN menu_gazou
+
+ORG	0x8EA08	//TSA
+POIN PANEL_TSA
+
+
+
+ORG	0xA92514
+//no use
+
+ORG 0x08e9d0
+short 0x46c0 0x46c0//hpバー削除
+
+ORG 0xA7393C
+POIN BURST_DOWN_1 BURST_DOWN_2 BURST_DOWN_3 BURST_DOWN_NONE BURST_DOWN_NONE BURST_DOWN_NONE
+
+POP
+PANEL_TSA:
+#include A931D0.txt
+ALIGN 4
+power_view:
+#incbin "power_view.dmp"
+WORD UNIT_WINDOW_CACHE
+ALIGN 4
+have_two:
+#incbin "have_two.gba"
+ALIGN 4
+
+burst_view:
+#incbin burst_view.dmp
+WORD UNIT_WINDOW_CACHE
+ALIGN 4
+
+burst_hundred:
+#incbin burst_hundred.dmp
+WORD UNIT_WINDOW_CACHE
+ALIGN 4
+
+menu_gazou:
+#incext Png2Dmp menu.png --lz77
+ALIGN 4
+
+burst_direction:
+#incbin burst_direction.dmp
+ALIGN 4
+

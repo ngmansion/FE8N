@@ -7,7 +7,7 @@ skill_153_weapon:
 skill_153_item:
    BYTE $00 $00 0 
 #define SKL_HELP_153 $0000
-#define SKL_COLOR_153 $00
+#define SKL_COLOR_153 $FF
  
 #define COMBAT_ART_153_ATK 00 
 #define COMBAT_ART_153_HIT 00 

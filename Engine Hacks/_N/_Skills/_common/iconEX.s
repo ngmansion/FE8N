@@ -1,7 +1,7 @@
 NULL = 0
 
 .thumb
-ICON_NUM_LIMIT = (16) @上限数*2
+ICON_NUM_LIMIT = (8) @上限数*2
 
 MAX_SKILL_NUM = (255)
 
@@ -78,10 +78,6 @@ Unit:
 		bl UNITDATA_GetThird
 		bl SKILL0 @自軍外スキル
 
-		mov r0, r4
-		bl UNITDATA_GetLuna
-		bl SKILL0 @高難易度スキル
-
 		ldr	r0, [r4]
 		ldrb	r0, [r0, #4]
 		ldr	r1, adr	@UNIT
@@ -123,6 +119,9 @@ Class:
 		mov r1, #2      @CLASS
 		bl SKILL4
 
+		mov r0, r4
+		bl UNITDATA_GetLuna
+		bl SKILL0 @高難易度スキル
 		pop {pc}
 
 Weapon:
@@ -323,7 +322,7 @@ icon:
     ldr r0, adr+28 @ICON_GAP
     ldr r0, [r0]
     add r6, r6, r0      @Icon position increment
-    add r7, #2          @HELP memory increment
+    add r7, #1          @HELP memory increment
     pop {pc}
 
 
@@ -455,10 +454,10 @@ SKILL0:
     loopDedup:
         cmp r2, r7
         beq notDouble
-        ldrh r1, [r2]
-        cmp r0, r1
+        ldrb r1, [r2]
+        cmp r4, r1
         beq FALSE               @ヘルプ重複
-        add r2, #2
+        add r2, #1
         b loopDedup
 
     notDouble:
@@ -467,7 +466,7 @@ SKILL0:
         cmp r1, #ICON_NUM_LIMIT
         beq FALSE               @アイコン上限
 
-        strh r0, [r7]       @ヘルプストア
+        strb r4, [r7]       @IDストア
 
         ldr r1, =0x100
         add r1, r4
@@ -491,6 +490,8 @@ SKILL0:
 
 Initialize:
 	push {lr}
+    cmp r0, #0
+    beq skipDraw
 	mov	r4, #0
 	bl getEquipmentPositionData
 	ldr r0, [r0]
@@ -513,6 +514,7 @@ loopE:
 	add	r4, #1
 	cmp	r4, #7
 	ble	loopE
+skipDraw:
 @アイコン
 	bl getIconPositionData
 	mov r6, r0

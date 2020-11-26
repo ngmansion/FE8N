@@ -54,7 +54,9 @@ battle_before:
     POIN combat_art_table
     WORD COMBAT_ART_LIST_SIZE
     POIN GET_COMBAT_ART
-    
+    POIN HAS_FIERCE_BREATH
+    POIN HAS_DARTING_BREATH
+
 battle_after:
     #incbin main.dmp
     POIN hasLifeAndDeath

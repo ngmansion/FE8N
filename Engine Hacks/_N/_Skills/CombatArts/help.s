@@ -11,12 +11,16 @@ main:
         cmp r0, #1
         beq normal
 
-        mov r0, #0x6C   @リフ
+        bl GetSelectiongID
+        cmp r0, #3
+        bne notOracle
+        mov r5, #0x6C   @リフ
+    notOracle:
         mov r1, r4
         add r1, #78
-        strh r0, [r1]
+        strh r5, [r1]
 
-        mov r0, #0x30
+        mov r0, #0x20
         ldr r1, GET_SETTING_HELP_POSITION
         strb r0, [r1]
 
@@ -43,12 +47,24 @@ GetSkillHelp:
         ldrh r0, [r0, r1]
         bx lr
 
+GetSelectiongID:
+        push {r4, lr}
+        mov r4, r0
+        sub r4, #2
+        ldr r0, GET_COMBAT_ADDR
+        ldrb r0, [r4, r0]
+        bl GET_COMBAT_ARTS_TYPE
+        pop {r4, pc}
+
 GET_COMBAT_ADDR = addr+0
 GET_COMBAT_INDEX = addr+4
 GET_ICON_LIST = addr+8
 GET_ICON_LIST_SIZE = addr+12
 GET_ICON_LIST_HELP_OFFSET = addr+16
 GET_SETTING_HELP_POSITION = addr+20
+GET_COMBAT_ARTS_TYPE:
+    ldr r1, addr+24
+    mov pc, r1
 
 .align
 .ltorg

@@ -17,7 +17,7 @@ jumpUnit: @自軍以外チェック
     ldrb r1, [r3, #0xB]
     mov r0, #0xC0
     and r0, r1
-    bne FALSE
+    bne elseUnit
 
     ldrb r0, [r3, #8]
     cmp r0, #20

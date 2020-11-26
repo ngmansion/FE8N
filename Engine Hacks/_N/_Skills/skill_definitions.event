@@ -166,7 +166,7 @@
 #define HurryID 169 //0xA9 全力移動(自軍のみ)
 #define AlertStanceID 170 //0xAA 警戒姿勢
 #define DefensiveID 171 //0xAB 防御態勢
-#define CatnapID 172 //0xAC 自己回復
+#define HealingFocusID 172 //0xAC 瞑想
 #define MasterOfArmsID 173 //0xAD 武芸者
 #define PierceID 174 //0xAE 貫通
 #define ScreamMasteryID         175 //0xAF 奥義叫喚
@@ -178,4 +178,5 @@
 #define FollowUpID              181 //0xB5 ついげきリング
 #define DeadeyeID               182 //0xB6 狙撃
 #define LioninePoiseID          183 //0xB7 獅子王の構え
-
+#define FierceBreathID          184 //0xB8 鬼神の呼吸
+#define DartingBreathID         185 //0xB9 飛燕の呼吸

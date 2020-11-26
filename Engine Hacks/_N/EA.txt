@@ -37,6 +37,7 @@
 	#include "FE8J-Battle Stats with Anims Off\FE8-Battle Stats Master EA File.txt"
 	#include "growth\EA.txt"
 	#include "prediction\EA.txt"
+	#include "FillAIRangeMap Fix\FillAIDangerMap.event"
 
 
 

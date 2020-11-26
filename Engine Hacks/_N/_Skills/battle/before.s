@@ -6,7 +6,7 @@
     bl AvoidUp
     
 @闘技場チェック
-	bl GetArenaAddr
+    bl GetArenaAddr
     ldrh r0, [r0]
     mov r1, #0x20
     and r0, r1
@@ -16,20 +16,20 @@
     ldr r0, [r5, #4]
     cmp r0, #0
     beq gotSkill	@相手いない
-	mov	r0, r5
+    mov r0, r5
 
-	bl HasMikiri
-	
-	cmp r0, #0
-	bne endNoEnemy	@見切り持ちなら終了
+    bl HasMikiri
+
+    cmp r0, #0
+    bne endNoEnemy	@見切り持ちなら終了
 gotSkill:
-	bl Shishi
-	bl Konshin
-	bl Savior	@護り手
-	bl Ace
-	bl shisen_A
-	bl Solo
-	bl Fort
+    bl Shishi
+    bl Konshin
+    bl Savior	@護り手
+    bl Ace
+    bl shisen_A
+    bl Solo
+    bl Fort
     bl Bond
     bl BladeSession
 
@@ -40,10 +40,10 @@ endNoEnemy:
     cmp r0, #0
     beq endNeedEnemy	@相手いない
 
-	bl WarSkill
-	
+    bl WarSkill
+
     mov	r0, r5
-	bl HasMikiri
+    bl HasMikiri
     cmp r0, #0
     bne endNeedEnemy
     
@@ -119,6 +119,8 @@ OtherSideSkill:
         bl KishinR
         bl HienR
         bl BracingR
+        bl KishinBreath
+        bl HienBreath
         pop {pc}
 
 CriticalUp:
@@ -543,7 +545,7 @@ WarSkill:
         mov r0, #0
     jumpWar2:
         strh r0, [r4, r1] @命中
-
+@@@@@@@@
         mov r1, #98
         ldrh r0, [r4, r1]
         mov r2, #3
@@ -554,7 +556,16 @@ WarSkill:
         mov r0, #0
     jumpWar3:
         strh r0, [r4, r1] @回避
-
+@@@@@@@@
+        mov r1, #104
+        ldrh r0, [r4, r1]
+        add r0, r2
+        cmp r0, #0
+        bge jumpWarDodge
+        mov r0, #0
+    jumpWarDodge:
+        strh r0, [r4, r1] @必殺回避
+@@@@@@@@
         mov r1, #102
         ldrh r0, [r4, r1]
         mov r2, #2
@@ -792,10 +803,11 @@ GetWalked:
         bx lr
 
 Get_Status:
-	ldr r1, =0x08019108
-	mov pc, r1
+    ldr r1, =0x08019108
+    mov pc, r1
 
-
+.align
+.ltorg
 
 Ace:
         push {lr}
@@ -1074,7 +1086,19 @@ KishinR:
         add r0, #6 @威力
         strh r0, [r4, r1] @自分
         b endKishin
-
+KishinBreath:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_FIERCE_BREATH
+        cmp r0, #0
+        beq endKishin
+        
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #4 @威力
+        strh r0, [r4, r1] @自分
+        b endKishin
 Bracing:
         push {lr}
         mov r0, r5
@@ -1206,6 +1230,19 @@ HienR:
         add r0, #6
         strh r0, [r4, r1]
         b endHien
+HienBreath:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_DARTING_BREATH
+        cmp r0, #0
+        beq endHien
+        
+        mov r1, #94
+        ldrh r0, [r4, r1]
+        add r0, #4
+        strh r0, [r4, r1]
+        b endHien
 
 breaker_impl:
         push {lr}
@@ -1296,6 +1333,12 @@ COMBAT_TBL_SIZE = (addr+144)
 GET_COMBAT_ART:
     ldr r2, (addr+148)
     mov pc, r2
+HAS_FIERCE_BREATH:
+    ldr r2, (addr+152)
+    mov pc, r2
+HAS_DARTING_BREATH:
+    ldr r2, (addr+156)
+    mov pc, r2
 
 GetWarList:
     ldr r1, COMBAT_TBL_SIZE
@@ -1361,56 +1404,56 @@ HasAvoidUp:
     mov pc, r2
 HasBladeSession:
     ldr r2, BLADE_SESSION_ADDR
-	mov pc, r2
+    mov pc, r2
 HasShieldSession:
     ldr r2, SHIELD_SESSION_ADDR
-	mov pc, r2
+    mov pc, r2
 HAS_IMPREGNABLE_WALL:
     ldr r2, (addr+64)
-	mov pc, r2
+    mov pc, r2
 HasDaunt:
     ldr r2, DAUNT_ADDR
-	mov pc, r2
+    mov pc, r2
 HasHeartseeker:
     ldr r2, HEARTSEEKER_ADDR
-	mov pc, r2
+    mov pc, r2
 HasSavior:
-	ldr r2, SAVIOR_ADDR
-	mov pc, r2
+    ldr r2, SAVIOR_ADDR
+    mov pc, r2
 HasMikiri:
-	ldr r1, addr	@見切り
-	mov pc, r1
+    ldr r1, addr    @見切り
+    mov pc, r1
 HasAce:
-	ldr r3, ACE_ADDR
-	mov pc, r3
+    ldr r3, ACE_ADDR
+    mov pc, r3
 HasSolo:
-	ldr r3, SOLO_ADDR
-	mov pc, r3
+    ldr r3, SOLO_ADDR
+    mov pc, r3
 HasShisen:
-	ldr r3, SHISEN_ADDR
-	mov pc, r3
+    ldr r3, SHISEN_ADDR
+    mov pc, r3
 HasFort:
-	ldr r3, FORT_ADDR
-	mov pc, r3
+    ldr r3, FORT_ADDR
+    mov pc, r3
 HasBond:
-	ldr r3, HAS_BOND_ADDR
-	mov pc, r3
+    ldr r3, HAS_BOND_ADDR
+    mov pc, r3
 
 GetAttackerAddr:
     ldr r0, =0x03004df0
     bx lr
 GetWeaponSp:
-	ldr r1, =0x080172f0
-	mov pc, r1
+    ldr r1, =0x080172f0
+    mov pc, r1
 GetArenaAddr:
-	ldr r0, =0x0203a4d0
-	bx lr
+    ldr r0, =0x0203a4d0
+    bx lr
 GetDistance:
     ldr r0, =0x0203a4d2
     bx lr
 GetExistFlagR1:
-	ldr r1, =0x1002C	@居ないフラグ+救出されている
-	bx lr
+    ldr r1, =0x1002C    @居ないフラグ+救出されている
+    bx lr
 .align
 .ltorg
 addr:
