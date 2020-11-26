@@ -10,6 +10,7 @@ mov pc, r0
 
 main:
         push {lr}
+        bl VanishCharacter
         ldr r1, ADDR
         ldrb r0, [r1]
         cmp r0, #0
@@ -119,6 +120,11 @@ Sound:
 mov r0, #102
 ldr r1, =0x080d4ef4
 mov pc, r1
+
+VanishCharacter:
+ldr r0, ADDR+8
+mov pc, r0
+
 .align
 .ltorg
 ADDR:

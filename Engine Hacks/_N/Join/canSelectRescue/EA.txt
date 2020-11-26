@@ -1,0 +1,29 @@
+
+
+//////交換済みフラグを救出済みフラグにする
+
+PUSH
+//ORG 0x01cd58
+//POIN SetRescuedFlag    //救出で交換済みフラグオン
+
+//ORG 0x01cda0
+//WORD 0x0801ce20    //交換で何もしない
+
+ORG   0x02286c
+WORD  0x46874800
+POIN  CanSelectRescue
+POP
+
+CanSelectRescue:
+#incbin CanSelectRescue.dmp
+ALIGN 4
+
+//必要なかった
+//SetRescuedFlag:
+//#incbin SetRescuedFlag.dmp
+//ALIGN 4
+
+VanishCharacter:
+#incbin clear_func.dmp
+ALIGN 4
+

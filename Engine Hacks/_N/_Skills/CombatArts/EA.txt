@@ -93,6 +93,7 @@ WarSkillSelector:
 	#incbin Selector.dmp
 	WORD ARROW_CONFIG
 	WORD WAR_CONFIG
+	POIN VanishCharacter
 	ALIGN 4
 
 ////////////////////攻撃後処理
