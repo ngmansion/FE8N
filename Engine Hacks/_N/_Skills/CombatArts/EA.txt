@@ -154,17 +154,7 @@ SET_COMBAT_ART:
 WORD ($0203A8C7)//WORK_MEM_FOR_TRANSPORT_RESERVED
 
 
-
-
-IS_TEMP_SKILL_FLAG:
-#incbin "TempSkillFlag/IsTempSkillFlag.dmp"
-ALIGN 4
-TURN_OFF_TEMP_SKILL_FLAG:
-#incbin "TempSkillFlag/TurnOffTempSkillFlag.dmp"
-ALIGN 4
-TURN_ON_TEMP_SKILL_FLAG:
-#incbin "TempSkillFlag/TurnOnTempSkillFlag.dmp"
-ALIGN 4
+#include "TempSkillFlag\EA.txt"
 
 
 //////////////////////////

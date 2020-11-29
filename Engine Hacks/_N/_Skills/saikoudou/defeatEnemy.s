@@ -70,19 +70,24 @@ defeat_flag:
 @撃破していたらフラグをオン
 @
         push {lr}
-		ldr r3, =0x03004df0
-		ldr r3, [r3]
-		ldrb r0, [r3, #11]
-		ldrb r1, [r6, #11]
-		cmp r0, r1
-		beq endJinrai @やられている？
-		
-		mov r0, #DEFEAT_FLAG
-		mov r1, r6
-		bl TURN_ON_TEMP_SKILL_FLAG
-	
-	endJinrai:
-		pop {pc}
+        ldr r3, =0x03004df0
+        ldr r3, [r3]
+        ldrb r0, [r3, #11]
+        ldrb r1, [r6, #11]
+        cmp r0, r1
+        beq endJinrai @やられている？
+
+        ldr r1, =0x0203a4e8
+        ldrb r1, [r1, #11]
+        cmp r0, r1
+        bne endJinrai           @攻め側ではないからジャンプ
+
+        mov r0, #DEFEAT_FLAG
+        ldr r1, =0x0203a4e8
+        bl TURN_ON_TEMP_SKILL_FLAG
+
+    endJinrai:
+        pop {pc}
 
 TURN_ON_TEMP_SKILL_FLAG:
     ldr r2, addr
