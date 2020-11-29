@@ -162,11 +162,7 @@ CantoHurry:
     orr r0, r1
     str r0, [r4, #12]
 
-    ldrb r0, [r4, #29]
-    add r0, #2
-    strb r0, [r4, #29]
 CantoPlus:
-
     ldr r4, =TARGET_UNIT
     ldr r3, =0x0801cece
     mov pc, r3
@@ -193,19 +189,16 @@ end:
 
 clear_defeat:
         ldr r0, [r4, #12]
-        ldr r1, =0x80000000
+        ldr r1, =0x80000000     @再移動済み
         bic r0, r1
-        str r0, [r4, #12]       @全力移動
+        str r0, [r4, #12]
 @@@@
         ldr r0, [r4, #12]
-        ldr r1, =0x40000000
+        ldr r1, =0x40000000     @全力移動
         tst r0, r1
         beq jumpClear
         bic r0, r1
         str r0, [r4, #12]       @全力移動
-        ldrb r0, [r4, #29]
-        sub r0, #2
-        strb r0, [r4, #29]       @全力移動
     jumpClear:
 @@@@
 @再行動済みは消さない
