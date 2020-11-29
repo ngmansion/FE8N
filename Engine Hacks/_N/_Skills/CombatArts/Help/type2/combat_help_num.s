@@ -24,7 +24,7 @@ notCombat:
         cmp r0, #0x01
         beq jumpRange
         ldr     r0, =0x04C5
-        .short 0xE000
+        .short 0xE001
 @@@@@@@@直接攻撃
     jumpRange:
         bl      GET_RANGE_WORD_ID

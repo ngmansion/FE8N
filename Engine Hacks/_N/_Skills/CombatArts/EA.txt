@@ -18,22 +18,7 @@ CombatSelector:
 	WORD ARROW_CONFIG
 ALIGN 4
 
-////////(help_beta)
-PUSH
- ORG 0x08b5ac
- jumpToHack(combat_help)
-POP
-ALIGN 4
-combat_help:
-#incbin help.dmp
-  WORD WAR_CONFIG
-  WORD ARROW_CONFIG
-  POIN skl_table
-  WORD ICON_LIST_SIZE
-  WORD 0
-  WORD 0x0203E775//0203E764(アイテムヘルプのベース)
-  POIN GET_COMBAT_ARTS_TYPE
-
+#include "Help\EA.txt"
 /////////////////////////////////////
 PUSH
 	ORG 0x01e684
@@ -184,44 +169,6 @@ SET_ENEMY_COMBAT:
 ENEMY_COMBAT_RATE:
   #include _config_enemy_rate.txt
   
-PUSH
-ORG 0x08bf4c
- jumpToHack(JUDGE_COMBAT_HELP_WORD)
-ORG 0x08bfe0
- jumpToHack(JUDGE_COMBAT_HELP_NUM)
-ORG 0x08b55c
- jumpToHack(JUDGE_COMBAT_HELP_SIZE)
-POP
-  
-JUDGE_COMBAT_HELP_WORD:
-  #incbin combat_help.dmp
-  WORD WAR_CONFIG
-  WORD ARROW_CONFIG
-  POIN GET_COMBAT_SPECIES
-  WORD COMBAT_ARTS_COST_WORD_ID
-  WORD 0x02003B00
-  WORD 0x02003B00+9
-  POIN commonSkill
-  
-JUDGE_COMBAT_HELP_NUM:
-  #incbin combat_help_num.dmp
-  POIN GET_COMBAT_ARTS_TYPE
-  POIN GET_COMBAT_AVO
-  POIN GET_COMBAT_COST
-  POIN GET_COMBAT_ATK
-  POIN GET_COMBAT_HIT
-  POIN GET_COMBAT_CRT
-  WORD WAR_CONFIG
-  WORD ARROW_CONFIG
-  WORD 0x02003B00
-  WORD 0x02003B00+9
-  POIN commonSkill
-  WORD COMBAT_ARTS_ONE_RANGE_WORD_ID
-
-JUDGE_COMBAT_HELP_SIZE:
-  #incbin help_size_changer.dmp
-  POIN commonSkill
-
 ALIGN 4
 COMBAT_ARTS_DATA:
 #incbin GetCombatArts.dmp

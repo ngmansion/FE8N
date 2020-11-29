@@ -1,0 +1,32 @@
+//#define TYPE2_COMBAT_HELP_SWITCH
+
+#ifdef TYPE2_COMBAT_HELP_SWITCH
+    #include "type2/EA.txt"
+#else
+        #include "default/EA.txt"
+#endif
+
+PUSH
+ORG 0x08b5ac
+ jumpToHack(combat_help)
+ORG 0x08bf4c
+ jumpToHack(JUDGE_COMBAT_HELP_WORD)
+ORG 0x08bfe0
+ jumpToHack(JUDGE_COMBAT_HELP_NUM)
+ORG 0x08b55c
+ jumpToHack(JUDGE_COMBAT_HELP_SIZE)
+POP
+
+combat_help:
+#incbin help.dmp
+  WORD WAR_CONFIG
+  WORD ARROW_CONFIG
+  POIN skl_table
+  WORD ICON_LIST_SIZE
+  WORD 0
+  WORD 0x0203E775//0203E764(アイテムヘルプのベース)
+  POIN GET_COMBAT_ARTS_TYPE
+
+JUDGE_COMBAT_HELP_SIZE:
+  #incbin help_size_changer.dmp
+  POIN commonSkill
