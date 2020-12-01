@@ -1,0 +1,67 @@
+
+//数字の位置
+PUSH
+ORG 0x0897F2    //攻撃
+SHORT 0x3886
+
+ORG 0x089800    //命中
+SHORT 0x307C
+
+//必殺は特殊
+
+ORG 0x089824    //攻撃速度
+SHORT 0x387C
+
+ORG 0x089832    //回避
+SHORT 0x3088
+
+ORG 0x089840    //必殺回避
+SHORT 0x300E
+
+ORG 0x089848
+WORD 0xF928F77B
+SHORT 0xE029
+
+ORG 0x0898a4    //Prf
+SHORT 0x3806
+
+ORG 0x0898D6    //Rsl
+SHORT 0x3004
+
+POP
+
+
+
+
+status2word:
+BYTE	$C4 $3C $00 $02 $EE $3F $00 $02 $03 $06 $00 $00 $50 $32 $A7 $08 
+BYTE	$B4 $3C $00 $02 $F8 $3F $00 $02 $03 $06 $00 $00 $80 $32 $92 $08 
+BYTE	$DC $3C $00 $02 $02 $40 $00 $02 $03 $06 $00 $00 $58 $32 $A7 $08 
+
+BYTE	$24 $3C $00 $02 $6E $40 $00 $02 $03 $06 $00 $00 
+	POIN bougyo //防御化
+BYTE	$E4 $3C $00 $02 $78 $40 $00 $02 $03 $06 $00 $00 $30 $53 $CF $08 //耐魔化
+BYTE	$CC $3C $00 $02 $82 $40 $00 $02 $03 $06 $00 $00 $4C $32 $A7 $08 //必殺回避
+
+BYTE	$D4 $3C $00 $02 $EE $40 $00 $02 $03 $06 $00 $00 $54 $32 $A7 $08 
+BYTE	$BC $3C $00 $02 $FA $40 $00 $02 $03 $06 $00 $00 $5C $32 $A7 $08 //回避
+
+WORD	0 0 0 0
+
+bougyo:
+	WORD $071B
+
+//5432命中5032攻撃
+//8032攻速5c32回避
+//D453守備D853魔防
+//5832必殺4c32必避
+
+//STATUS_2_WINDOW:
+//#incbin status2.dmp
+//POIN Skills_Icon
+
+#include help.txt
+
+Status2TSA:
+#include TSA.txt
+ALIGN 4

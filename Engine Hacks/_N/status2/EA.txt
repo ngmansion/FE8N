@@ -1,3 +1,11 @@
+//#define EIGHT_PARAMETER_SWITCH
+
+#ifdef EIGHT_PARAMETER_SWITCH
+    #include "type2/EA.txt"
+#else
+    #include "default/EA.txt"
+#endif
+
 //////文字
 
 /*
@@ -13,42 +21,6 @@
 000898a2～　ステータス画面2の追加数字処理
 
 */
-//数字の位置
-PUSH
-ORG 0x0897F2    //攻撃
-SHORT 0x3886
-
-ORG 0x089800    //命中
-SHORT 0x3804    //SHORT 0x307C
-
-//必殺は特殊
-
-ORG 0x089824    //攻撃速度
-SHORT 0x387C
-
-ORG 0x089832    //回避
-SHORT 0x3008    //SHORT 0x3088
-
-ORG 0x089840    //必殺回避
-SHORT 0x300E
-
-
-ORG 0x0896f4
-   jumpToHack(STATUS_2_FRAME)
-ORG 0x089848
-//WORD 0xF77BF928
-//SHORT 0xE029
-   jumpToHack(STATUS_2_WINDOW)
-
-ORG 0x0898a4    //Prf
-SHORT 0x3806
-
-ORG 0x0898D6    //Rsl
-SHORT 0x3004
-
-POP
-
-
 
 PUSH
 ORG	0x89758
@@ -56,48 +28,15 @@ POIN	status2word
 ORG 0x8A8E4
 POIN Status2Frame
 
+ORG 0x0896f4
+   jumpToHack(STATUS_2_FRAME)
+
 POP
-
-status2word:
-BYTE	$C4 $3C $00 $02 $EE $3F $00 $02 $03 $06 $00 $00 $50 $32 $A7 $08 
-BYTE	$B4 $3C $00 $02 $F8 $3F $00 $02 $03 $06 $00 $00 $80 $32 $92 $08 
-BYTE	$DC $3C $00 $02 $02 $40 $00 $02 $03 $06 $00 $00 $58 $32 $A7 $08 
-
-BYTE	$24 $3C $00 $02 $6E $40 $00 $02 $03 $06 $00 $00 $54 $32 $A7 $08 
-BYTE	$E4 $3C $00 $02 $7A $40 $00 $02 $03 $06 $00 $00 $5C $32 $A7 $08 //回避
-
-WORD	0 0 0 0
-BYTE	$24 $3C $00 $02 $6E $40 $00 $02 $03 $06 $00 $00 
-	POIN bougyo //防御化
-BYTE	$E4 $3C $00 $02 $78 $40 $00 $02 $03 $06 $00 $00 $30 $53 $CF $08 //耐魔化
-BYTE	$CC $3C $00 $02 $82 $40 $00 $02 $03 $06 $00 $00 $4C $32 $A7 $08 //必殺回避
-WORD	0 0 0 0
-BYTE	$D4 $3C $00 $02 $EE $40 $00 $02 $03 $06 $00 $00 $54 $32 $A7 $08 
-BYTE	$BC $3C $00 $02 $FA $40 $00 $02 $03 $06 $00 $00 $5C $32 $A7 $08 //回避
-WORD	0 0 0 0
-
-bougyo:
-	WORD $071B
-
-
-
-//5432命中5032攻撃
-//8032攻速5c32回避
-//D453守備D853魔防
-//5832必殺4c32必避
 
 STATUS_2_FRAME:
 #incbin status2frame.dmp
 POIN Status2TSA
-STATUS_2_WINDOW:
-#incbin status2.dmp
-POIN Skills_Icon
 
-#include help.txt
-
-Status2TSA:
-#include TSA.txt
-ALIGN 4
 Status2Frame:
 #incext Png2Dmp A73FDC.png --lz77
 ALIGN 4
