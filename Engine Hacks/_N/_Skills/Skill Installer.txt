@@ -35,7 +35,8 @@ ORG 0x89310
  jumpToHack(sol_divide_anim_on)
 ORG 0x89318
 jumpToHack(prediction_follow_up_2)
-
+ORG 0x89320
+jumpToHack(corrosionMT)
 
 
 //～0x089348

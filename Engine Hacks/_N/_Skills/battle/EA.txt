@@ -66,11 +66,11 @@ battle_after:
     POIN hasLull
     POIN combat_art_table
     WORD COMBAT_ART_LIST_SIZE
-    POIN hasGrounder
-    POIN hasHelmSplitter
-    POIN hasKnightkneeler
-    POIN hasMonsterBlast
-    POIN hasAtrocity
+    POIN 0
+    POIN 0
+    POIN 0
+    POIN 0
+    POIN 0
     WORD CHARGING_LANCE_COEF
     WORD CHARGING_LANCE_ITEM_EFFECT_ID
     POIN HAS_REIN

@@ -3,6 +3,8 @@
 /////////////////////
 PUSH
 
+ORG 0x02aa38
+    BL(0x89320)
 ORG 0x02aa5e
     SHORT $2500
     SHORT $2801
@@ -14,13 +16,22 @@ ORG 0x02aa5e
     SHORT $46C0
 
 ORG 0x02aa7c
-    #incbin weapon.dmp
+    jumpToHack(weapon_three)
 
   ORG 0x16A30
     jumpToHack(effective_main)
 POP
 
 ALIGN 4
+
+weapon_three:
+    #incbin weapon.dmp
+    POIN hasGrounder
+    POIN hasHelmSplitter
+    POIN hasKnightkneeler
+    POIN hasMonsterBlast
+    POIN hasAtrocity
+    POIN HAS_RENTATSU
 
 effective_main:
     #incbin main.gba
@@ -47,4 +58,11 @@ effective_hasSkill3:
 effective_hasSkill4:
     HAS_SKILL
     WORD Effective4ID
-    
+corrosionMT:
+    #incbin corrosionMT.dmp
+    POIN HAS_CORROSION
+
+HAS_RENTATSU:
+    HAS_NIHIL
+    WORD NullifyID
+
