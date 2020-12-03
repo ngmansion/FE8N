@@ -64,7 +64,14 @@ jumpWeapon:
     mov     r1, #0
     mov     r2, #8
     bl      $000043b8
-
+    ldr     r0, =0x04C4
+    bl      $00009fa8
+    mov     r3, r0
+    mov     r0, r4
+    mov     r1, #24
+    mov     r2, #7
+    bl      $000043b8
+@@@@
     ldr     r0, =HIT_WORD_ID
     bl      $00009fa8
     mov     r3, r0
@@ -72,7 +79,7 @@ jumpWeapon:
     mov     r1, #47
     mov     r2, #8
     bl      $000043b8
-
+@@@@
     ldr     r0, =AVO_WORD_ID
     bl      $00009fa8
     mov     r3, r0
