@@ -27,15 +27,17 @@ combat:
     cmp r0, #0xFF
     beq nothingWeaponType
     bl $00016bc8
+    mov     r2, #8
     b jumpWeapon
 nothingWeaponType:
-    ldr     r0, =0x04C4
+    ldr     r0, =0x04BF
     bl      $00009fa8
+    mov     r2, #7
 jumpWeapon:
     mov     r3, r0
     mov     r0, r4
     mov     r1, #0
-    mov     r2, #8
+
     bl      $000043b8
 @@@@
     bl GET_COST_WORD_ID
