@@ -163,6 +163,15 @@ Hit_Func:
         mov r1, r4
         bl TURN_ON_TEMP_SKILL_FLAG
 
+        mov r0, r4
+        mov r1, r8
+        bl HAS_CANCEL_ATK
+        cmp r0, #0
+        beq endCombat
+        mov r0, #4
+        mov r1, r4
+        bl TURN_ON_TEMP_SKILL_FLAG
+
     endCombat:
         pop {r4, pc}
 
@@ -182,6 +191,9 @@ COMBAT_LIST_SIZE = (addr+12)
 
 Infinity:
     ldr r3, addr
+    mov pc, r3
+HAS_CANCEL_ATK:
+    ldr r3, addr+4
     mov pc, r3
 HAS_CORROSION:
     ldr r3, addr+28

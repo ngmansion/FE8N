@@ -34,7 +34,7 @@ normalBattle:
 
     ldr r0, [sp, #4]
     ldr r1, [sp, #0]
-    bl $0002af88        @二手目
+    bl BattleWrapper        @二手目
     cmp r0, #0
     bne battle_end      @試合終了
 
@@ -72,7 +72,7 @@ normalDesperation:        @攻め立て発動。
 
     ldr r0, [sp, #4]
     ldr r1, [sp, #0]
-    bl $0002af88        @二手目
+    bl BattleWrapper        @二手目
     cmp r0, #0
     bne battle_end      @試合終了
 
@@ -97,7 +97,7 @@ reverseDesperation:
 
     ldr r0, [sp, #4]
     ldr r1, [sp, #0]
-    bl $0002af88        @二手目
+    bl BattleWrapper        @二手目
     cmp r0, #0
     bne battle_end      @試合終了
 
@@ -149,7 +149,7 @@ FollowUpBattle:
 
         mov r0, r4
         mov r1, r5
-        bl $0002af88
+        bl BattleWrapper
         .short 0xE000
     nextInitial:
         mov r0, #0
@@ -184,13 +184,42 @@ JudgeSemetate:
         mov r0, #2
         b retSemetate
 
+BattleWrapper:
+        push {lr}
+        push {r0, r1}
+        mov r0, #4
+        bl IS_TEMP_SKILL_FLAG
+        mov r2, r0
+        pop {r0, r1}
+        cmp r2, #1
+        beq falseWrap
+        bl $0002af88
+        b endWrap
+    falseWrap:
+        mov r0, #4
+        bl TURN_OFF_TEMP_SKILL_FLAG
+        mov r0, #0
+    endWrap:
+        pop {pc}
+
+
+
+
+
+
+
 $0002af88:
     ldr r2, =0x0802af88
     mov pc, r2
 HAS_SEMETATE:
     ldr r2, addr
     mov pc, r2
-
+IS_TEMP_SKILL_FLAG:
+    ldr r2, addr+4
+    mov pc, r2
+TURN_OFF_TEMP_SKILL_FLAG:
+    ldr r2, addr+8
+    mov pc, r2
 
 .align
 .ltorg

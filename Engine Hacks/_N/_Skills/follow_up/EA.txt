@@ -37,6 +37,8 @@ breaker_main:
 breaker_semetate:
     #incbin battle.dmp
     POIN hasDesperation
+    POIN IS_TEMP_SKILL_FLAG
+    POIN TURN_OFF_TEMP_SKILL_FLAG
     
 breaker_hasSkill1:
     HAS_SKILL

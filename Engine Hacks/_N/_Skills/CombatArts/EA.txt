@@ -118,7 +118,7 @@ POP
 afterAttack:
 	#incbin afterAttack.dmp
 	POIN InfiniteItem
-	POIN 0
+	POIN HAS_CANCEL_ATK
 	POIN combat_art_table
 	WORD COMBAT_ART_LIST_SIZE
 	POIN 0
@@ -141,6 +141,9 @@ WORD ($0203A8C7)//WORK_MEM_FOR_TRANSPORT_RESERVED
 
 #include "TempSkillFlag\EA.txt"
 
+HAS_CANCEL_ATK:
+    HAS_NIHIL
+    WORD CancelATK_ID
 
 //////////////////////////
 PUSH

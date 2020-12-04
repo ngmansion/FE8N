@@ -5,6 +5,7 @@ FIRST_ATTACKED_FLAG     = (0b10000000)
 COMBAT_HIT              = (0b01000000)  @命中
 RAGING_STORM_FLAG       = (0b00100000)
 DEFEAT_FLAG             = (0b00010000)
+CANCEL_FLAG             = (0b00001000)
 
 b IsTempSkillFlag
 nop
@@ -28,6 +29,8 @@ startIS:
     beq twoIS
     cmp r0, #3
     beq threeIS
+    cmp r0, #4
+    beq fourIS
     mov r0, #0
     b endIS
 zeroIS:
@@ -62,6 +65,14 @@ threeIS:
     beq endIS
     mov r0, #1
     b endIS
+fourIS:
+    add r2, #71
+    ldrb r0, [r2]
+    mov r1, #CANCEL_FLAG
+    and r0, r1
+    beq endIS
+    mov r0, #1
+    b endIS
     nop
 endIS:
     bx lr
@@ -81,6 +92,8 @@ startON:
     beq twoON
     cmp r0, #3
     beq threeON
+    cmp r0, #4
+    beq fourON
     b endON
 zeroON:
     add r2, #71
@@ -110,6 +123,13 @@ threeON:
     orr r0, r1
     strb r0, [r2]
     b endON
+fourON:
+    add r2, #71
+    ldrb r0, [r2]
+    mov r1, #CANCEL_FLAG
+    orr r0, r1
+    strb r0, [r2]
+    b endON
     nop
 endON:
     bx lr
@@ -129,6 +149,8 @@ startOFF:
     beq twoOFF
     cmp r0, #3
     beq threeOFF
+    cmp r0, #4
+    beq fourOFF
     cmp r0, #0xFF
     beq clearOFF
     b endOFF
@@ -157,6 +179,13 @@ threeOFF:
     add r2, #71
     ldrb r0, [r2]
     mov r1, #DEFEAT_FLAG
+    bic r0, r1
+    strb r0, [r2]
+    b endOFF
+fourOFF:
+    add r2, #71
+    ldrb r0, [r2]
+    mov r1, #CANCEL_FLAG
     bic r0, r1
     strb r0, [r2]
     b endOFF
