@@ -1,5 +1,6 @@
 #include config.txt
 #include "nyaa\EA.txt"
+#include "control_reuse_transport_area\EA.txt"
 
 PUSH
 //HP上限

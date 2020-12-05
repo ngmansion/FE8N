@@ -1,6 +1,8 @@
 .thumb
 
 DATA_MASK = (0b0111)
+DATA_MASK_BOOK = (0b0111111)
+BOOK_NUM = (5)          @0始まりなので5
 
 main:
     push {r4, r5, lr}
@@ -10,11 +12,8 @@ loop:
     cmp r4, #51
     bgt end
 
-    mov r0, r4
-    bl CreateData
-
-    mov r1, r4
-    bl SeveData
+    bl SectionBook6
+    bl Section3bit
 
     b loop
 end:
@@ -28,6 +27,40 @@ Chapter:
         ldr r1, WORK_MEM_FOR_TRANSPORT_FATIGUE
         strb r0, [r1]
         bx lr
+
+SectionBook6:
+    push {r5, lr}
+    mov r0, r4
+    bl CreateDataBook
+    mov r5, r0
+    mov r0, r4
+    bl Get_Status
+    mov r1, #BOOK_NUM
+    mov r2, r5
+    bl SET_BOOK
+    pop {r5, pc}
+
+Section3bit:
+    push {lr}
+    mov r0, r4
+    bl CreateData
+    mov r1, r4
+    bl SeveData
+    pop {pc}
+
+CreateDataBook:
+        push {lr}
+        bl Get_Status
+        mov r2, r0
+        ldr r0, [r2, #4]        @兵種
+        ldrb r0, [r0, #4]       @兵種ID
+        mov r1, #0b10000000
+        and r0, r1
+        lsr r0, r0, #2
+
+        mov r1, #DATA_MASK_BOOK
+        and r0, r1
+        pop {pc}
 
 CreateData:
 @
@@ -51,6 +84,7 @@ CreateData:
 
         orr r0, r1
         pop {pc}
+
 
 
 SeveData:
@@ -158,6 +192,10 @@ Get_Status:
 
 EXTRACT_SAVE_BASE = addr+0
 WORK_MEM_FOR_TRANSPORT_FATIGUE = addr+4
+
+SET_BOOK:
+    ldr r3, addr+8
+    mov pc, r3
 
 .align
 .ltorg

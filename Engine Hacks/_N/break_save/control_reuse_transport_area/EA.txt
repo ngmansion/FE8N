@@ -1,0 +1,18 @@
+#define WORK_MEM_FOR_TRANSPORT_LV ($0203a818+154)//(3*51)スキル+1//0203A8B2
+#define WORK_MEM_FOR_TRANSPORT_FATIGUE ($0203A8C6)
+#define WORK_MEM_FOR_TRANSPORT_RESERVED ($0203A8C7)
+
+yuso_lv_save:
+    #incbin saveLvMax.dmp
+    WORD WORK_MEM_FOR_TRANSPORT_LV
+    WORD WORK_MEM_FOR_TRANSPORT_FATIGUE
+    POIN setBookData
+    ALIGN 4
+    
+yuso_lv_load:
+    #incbin loadLvMax.dmp
+    WORD WORK_MEM_FOR_TRANSPORT_LV
+    POIN getBookData
+    ALIGN 4
+
+

@@ -12,8 +12,9 @@ remove_skill:
 	mov r5, r1
 	
 	mov r1, r5
-	cmp r1, #5
-	bgt FALSE
+	ldr r2, Addr+16
+	cmp r1, r2
+	bge FALSE
 @▼本処理▼
 @▼getを使って消すスキルIDを取得
 	mov r0, r4

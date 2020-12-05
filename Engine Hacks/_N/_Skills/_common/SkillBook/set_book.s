@@ -12,7 +12,7 @@ DATA_MASK = 0b00111111
 	mov r2, r0
 	mov r4, r1
 
-	ldr r3, MAX_MANUAL_SKILL_INDEX
+	ldr r3, MAX_BOOK_DATA_NUM
 	cmp r1, r3
 	bge false
 	mov r3, #DATA_MASK
@@ -144,7 +144,7 @@ getExSkillBaseAdr:
 	ldr r3, addr+0
 	mov pc, r3
 
-MAX_MANUAL_SKILL_INDEX = addr+4
+MAX_BOOK_DATA_NUM = addr+4
 
 .align
 .ltorg

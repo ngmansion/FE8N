@@ -1,6 +1,7 @@
 .thumb
 
 DATA_MASK = (0b0111)
+BOOK_NUM = (5)          @0始まりなので5
 
 main:
     push {r4, r5, lr}
@@ -9,13 +10,31 @@ loop:
     add r4, #1
     cmp r4, #51
     bgt end
+
+    bl SectionBook6
+    bl Section3bit
+
+    b loop
+end:
+    pop {r4, r5, pc}
+
+SectionBook6:
+    push {lr}
+    mov r0, r4
+    bl Get_Status
+    mov r1, #BOOK_NUM
+    bl GET_BOOK
+    mov r1, r4
+    bl GenerateDataBook
+    pop {pc}
+
+Section3bit:
+    push {lr}
     mov r0, r4
     bl LoadData
     mov r1, r4
     bl GenerateData
-    b loop
-end:
-    pop {r4, r5, pc}
+    pop {pc}
 
 GenerateData:
 @[in]
@@ -42,6 +61,33 @@ GenerateData:
 
         pop {r4, pc}
 
+GenerateDataBook:
+        push {r4, r5, lr}
+        mov r4, r0
+        mov r0, r1
+        bl Get_Status
+        mov r5, r0
+@@@@@@@@
+        mov r0, r4
+        mov r1, #0b00111111
+        and r0, r1
+        lsl r0, #2
+        cmp r0, #0
+        beq classIsCorrect
+
+        ldr r1, [r5, #4]
+        cmp r1, #0
+        beq zeroClass
+        ldrb r1, [r1, #4]
+        mov r2, #0b01111111
+        and r1, r2
+    zeroClass:
+        orr r0, r1
+        bl Get_ClassAddr
+        str r0, [r5, #4]
+    classIsCorrect:
+@@@@@@@@
+        pop {r4, r5, pc}
 
 LoadData:
 @[in]
@@ -117,10 +163,17 @@ mod_eight:
         bx lr
 
 Get_Status:
-        ldr r1, =0x08019108
-        mov pc, r1
+    ldr r1, =0x08019108
+    mov pc, r1
+
+Get_ClassAddr:
+    ldr r1, =0x0801911c
+    mov pc, r1
 
 EXTRACT_SAVE_BASE = addr+0
+GET_BOOK:
+    ldr r3, addr+4
+    mov pc, r3
 
 .align
 .ltorg
