@@ -1,7 +1,7 @@
-BASE_ADR = (0x080aab5e)
+RETURN_ADR = (0x080aad00)
 
 .thumb
-.org 0x080aab5e-BASE_ADR
+@.org 0x080aab5e
 
 	mov	r7, sp
 	mov	r5, sp
@@ -107,7 +107,8 @@ BASE_ADR = (0x080aab5e)
 	and	r0, r2
 	strb	r0, [r6, #28]
 	ldrh	r5, [r7, #8]
-	ldr	r1, pointer
+	ldr	r1, =0x080aad84
+	ldr r1, [r1]
 	mov	r0, r1
 	and	r0, r5
 	strh	r0, [r6, #30]
@@ -198,8 +199,16 @@ end:
 	orr r0, r1
 	sub	r6, #40
 	strh	r0, [r6, #0x3A]	@
-	
-	
+@@@@レベル
+        mov r0, #0x3B
+        ldrb r0, [r6, r0]
+        mov r1, #0b1000
+        and r1, r0
+        lsl r1, r1, #2
+        ldrb r0, [r6, #8]
+        orr r0, r1
+        strb r0, [r6, #8]
+@@@@
 	mov	r1, #66
 	add	r1, r1, r6
 	mov	r10, r1
@@ -214,13 +223,8 @@ end:
 	add	r3, #26
 	mov	r4, r6
 	add	r4, #50
-	b goto
+END:
+    ldr r0, =RETURN_ADR
+    mov pc, r0
 .align
 .ltorg
-
-.org 0x080aad00-BASE_ADR
-goto:
-
-.org 0x080aad84-BASE_ADR
-.align
-pointer:

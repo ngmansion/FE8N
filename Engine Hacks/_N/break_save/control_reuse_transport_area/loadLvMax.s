@@ -11,22 +11,11 @@ loop:
     cmp r4, #51
     bgt end
 
-    bl SectionBook6
     bl Section3bit
 
     b loop
 end:
     pop {r4, r5, pc}
-
-SectionBook6:
-    push {lr}
-    mov r0, r4
-    bl Get_Status
-    mov r1, #BOOK_NUM
-    bl GET_BOOK
-    mov r1, r4
-    bl GenerateDataBook
-    pop {pc}
 
 Section3bit:
     push {lr}
@@ -40,38 +29,15 @@ GenerateData:
 @[in]
 @r0 = データ
 @r1 = 部隊表ID
-        push {r4, lr}
-        mov r4, r0
-        mov r0, r1
-        bl Get_Status
-        mov r3, r0
-
-        mov r1, #0b0100
-        and r1, r4
-        lsl r1, r1, #3
-
-        ldrb r0, [r3, #8]
-        orr r0, r1
-        strb r0, [r3, #8]
-
-        mov r0, #0b0011
-        and r0, r4
-        add r3, #71
-        strb r0, [r3]
-
-        pop {r4, pc}
-
-GenerateDataBook:
         push {r4, r5, lr}
         mov r4, r0
         mov r0, r1
         bl Get_Status
         mov r5, r0
 @@@@@@@@
-        mov r0, r4
-        mov r1, #0b00111111
-        and r0, r1
-        lsl r0, #2
+        mov r0, #0b00000100
+        and r0, r4
+        lsl r0, #5
         cmp r0, #0
         beq classIsCorrect
 
@@ -87,6 +53,12 @@ GenerateDataBook:
         str r0, [r5, #4]
     classIsCorrect:
 @@@@@@@@
+
+        mov r0, #0b0011
+        and r0, r4
+        add r5, #71
+        strb r0, [r5]
+
         pop {r4, r5, pc}
 
 LoadData:

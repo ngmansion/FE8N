@@ -12,7 +12,6 @@ loop:
     cmp r4, #51
     bgt end
 
-    bl SectionBook6
     bl Section3bit
 
     b loop
@@ -28,18 +27,6 @@ Chapter:
         strb r0, [r1]
         bx lr
 
-SectionBook6:
-    push {r5, lr}
-    mov r0, r4
-    bl CreateDataBook
-    mov r5, r0
-    mov r0, r4
-    bl Get_Status
-    mov r1, #BOOK_NUM
-    mov r2, r5
-    bl SET_BOOK
-    pop {r5, pc}
-
 Section3bit:
     push {lr}
     mov r0, r4
@@ -47,20 +34,6 @@ Section3bit:
     mov r1, r4
     bl SeveData
     pop {pc}
-
-CreateDataBook:
-        push {lr}
-        bl Get_Status
-        mov r2, r0
-        ldr r0, [r2, #4]        @兵種
-        ldrb r0, [r0, #4]       @兵種ID
-        mov r1, #0b10000000
-        and r0, r1
-        lsr r0, r0, #2
-
-        mov r1, #DATA_MASK_BOOK
-        and r0, r1
-        pop {pc}
 
 CreateData:
 @
@@ -72,10 +45,11 @@ CreateData:
         push {lr}
         bl Get_Status
         mov r2, r0
-        ldrb r0, [r2, #8]
-        mov r1, #0b100000
+        ldr r0, [r2, #4]        @兵種
+        ldrb r0, [r0, #4]       @兵種ID
+        mov r1, #0b10000000
         and r0, r1
-        lsr r0, r0, #3
+        lsr r0, r0, #5
 
         add r2, #71
         ldrb r1, [r2]

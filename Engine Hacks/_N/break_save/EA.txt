@@ -49,7 +49,8 @@ POP
 PUSH
 
 ORG 0xa9dfa
-#incbin "break_save_n.gba"
+   SHORT $46C0
+   jumpToHack(break_save_n)
 
 ORG 0xaa142
 SHORT $46C0
@@ -68,9 +69,12 @@ SHORT $46C0
 
 POP
 
+break_save_n:
+#incbin "break_save_n.dmp"
+ALIGN 4
 
 break_load_n:
-#incbin "break_load_n.gba"
+#incbin "break_load_n.dmp"
 ALIGN 4
 
 
@@ -89,10 +93,13 @@ ORG 0xaaa96
 SHORT $46C0
 
 ORG 0xaab5e
-#incbin "break_load_c.dmp"
+   SHORT $46C0
+   jumpToHack(break_load_c)
 
 POP
 break_save_c:
    #incbin "break_save_c.dmp"
 ALIGN 4
-
+break_load_c:
+   #incbin "break_load_c.dmp"
+ALIGN 4

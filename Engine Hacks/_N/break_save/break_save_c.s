@@ -1,5 +1,21 @@
 .thumb
 @000aa8a6
+@@@@
+    ldrb r1, [r7, #8]
+    mov r0, #0b00100000
+    and r0, r1
+    lsr r0, #2
+
+    mov r1, #0x3B
+    ldrb r1, [r7, r1]
+    mov r2, #0b00000111
+    and r1, r2
+
+    orr r0, r1
+    mov r1, #0x3B
+    strb r0, [r7, r1]
+
+@@@@
 	mov	r3, r12
 	ldr	r1, [r3, #36]
 	lsl	r1, r1, #15
@@ -79,20 +95,25 @@ end:
 	lsr r0, r0, #28
 	orr r6, r0
 	strh	r6, [r3, #18]	@
+@@@@
 
-@new(現在HPの最上位1bitをレベルとする)
-	mov	r2, ip
-	ldrb r0, [r2, #15]
-@	lsl r0, r0, #25
-@	lsr r0, r0, #25	@上位1bitを落とす
-	ldrb r1, [r7, #8]
-	lsr r1, r1, #5
-	lsl r1, r1, #7
-	orr r0, r1
-@	strb r0, [r2, #15]
-@revert
+
+
+@@@@
+
 	mov	r6, #7
 	ldrb	r2, [r7, #26]
 	ldr r0, =0x080aa932
 	mov pc, r0
 
+@new(現在HPの最上位1bitをレベルとする)
+	mov	r2, ip
+	ldrb r0, [r2, #15]
+	lsl r0, r0, #25
+	lsr r0, r0, #25	@上位1bitを落とす
+	ldrb r1, [r7, #8]
+	lsr r1, r1, #5
+	lsl r1, r1, #7
+	orr r0, r1
+	strb r0, [r2, #15]
+    bx lr
