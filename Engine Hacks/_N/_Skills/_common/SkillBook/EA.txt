@@ -4,16 +4,17 @@
 
 pushSkill:						//inがBookData
 #incbin "push_skill.dmp"
-POIN getBookData
+POIN getSkill
 POIN setBookData
 WORD MAX_MANUAL_SKILL_NUM
 ALIGN 4
 
 popSkill:						//outがBookData
 #incbin "pop_skill.dmp"
-POIN getBookData
+POIN getSkill
 POIN setBookData
 WORD MAX_MANUAL_SKILL_NUM
+POIN getBookData
 ALIGN 4
 
 getSkill:						//outがスキルID
@@ -23,13 +24,20 @@ POIN getBookData
 WORD MAX_MANUAL_SKILL_NUM
 ALIGN 4
 
-getBookData:						//outがデータ
+getBookData:						//outがBookID
 #incbin "get_book.dmp"
 POIN commonSkill
 WORD MAX_BOOK_DATA_NUM
 ALIGN 4
 
-setBookData:
+setSkill:						//inがスキルID
+#incbin "set_bookskill.dmp"
+POIN commonSkill
+POIN setBookData
+WORD MAX_MANUAL_SKILL_NUM
+ALIGN 4
+
+setBookData:						//inがBookID
 #incbin "set_book.dmp"
 POIN commonSkill
 WORD MAX_BOOK_DATA_NUM

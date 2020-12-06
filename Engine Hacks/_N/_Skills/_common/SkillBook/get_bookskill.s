@@ -5,13 +5,19 @@
     push {lr}
     bl GET_MAX_BOOKSKILL_NUM_R2
     cmp r1, r2
-    bge END
-
+    bge FALSE
+    cmp r1, #0
+    beq rawData
     bl GET_BOOK
     bl DECODE_BOOK
-    pop {pc}
-END:
+    b END
+rawData:
+    mov r1, #0x3A       @get_bookにもあり。
+    ldrb r0, [r1, r0]
+    b END
+FALSE:
     mov r0, #0
+END:
     pop {pc}
 
 DECODE_BOOK:

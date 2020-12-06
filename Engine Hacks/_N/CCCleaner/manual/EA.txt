@@ -31,6 +31,7 @@ scroll_check:
  POIN dedupSkill
  POIN judgeUnit
  POIN commonSkill
+ POIN getBookData
 ALIGN 4
 s_scroll:
  #incbin "store.dmp"
@@ -42,6 +43,7 @@ s_scroll:
  POIN pushSkill
  POIN popSkill
  POIN removeSkill
+ POIN getBookData
  
 ALIGN 4
 

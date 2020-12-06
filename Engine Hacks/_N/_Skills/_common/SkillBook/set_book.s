@@ -5,7 +5,7 @@ DATA_MASK = 0b00111111
 .thumb
 @I	r0 = ベースアドレス
 @	r1 = 0 is Skill1, 1 is Skill2, ...
-@	r2 = セットするデータ
+@	r2 = セットするBookデータ
 @	
 	push {r4, r5, lr}
 	mov r5, r2
@@ -15,27 +15,30 @@ DATA_MASK = 0b00111111
 	ldr r3, MAX_BOOK_DATA_NUM
 	cmp r1, r3
 	bge false
-	mov r3, #DATA_MASK
-	and r5, r3
 @▼本処理
-	cmp r1, #1
-	bgt expand
-@▼1-2スキル
+	cmp r1, #0
+	bne expand
+@▼1スキル
+	mov r0, r5      @r0にbookdata
+	mov r5, r2      @r5にベースアドレス
+	bl DecodeSkill
 	bl set_unitSkill
 	b end
 expand:
-@▼3-6スキル
+@▼2-5スキル
+	mov r3, #DATA_MASK
+	and r5, r3
 	bl set_unitSkillEx
 	b end
-end:
-@    bl DecodeSkill
-    .short 0xE000
 false:
 	mov r0, #0
+end:
 	pop {r4, r5, pc}
 	
 	
-set_unitSkill:	@いつか作る？
+set_unitSkill:
+	mov r1, #0x3A      @set_booksKillにもあり。
+	strb r0, [r5, r1]
 	bx lr
 	
 set_unitSkillEx:
@@ -54,16 +57,16 @@ setExSkillToBaseAdr:
 @	r1 = SkillIndex
 @O	r0 = SkillID
 	mov r2, r0
+	cmp r1, #1
+	beq one
 	cmp r1, #2
-	beq three
+	beq two
 	cmp r1, #3
-	beq four
+	beq three
 	cmp r1, #4
-	beq five
-	cmp r1, #5
-	beq six
+	beq four
 	b end2
-three:
+one:
 	ldrb r0, [r2, #0]
 	mov r3, #0b00111111
 	bic r0, r3
@@ -71,7 +74,7 @@ three:
 	orr r0, r5
 	strb r0, [r2, #0]
 	b end2
-four:
+two:
 @@@@@@
 	ldrb r0, [r2, #0]
 	mov r3, #0b11000000
@@ -100,7 +103,7 @@ four:
 	strb r0, [r2, #1]
 
 	b end2
-five:
+three:
 @@@@@@@@@
 	ldrb r0, [r2, #1]
 	mov r3, #0b11110000
@@ -127,7 +130,7 @@ five:
 	strb r0, [r2, #2]
 
 	b end2
-six:
+four:
 	ldrb r0, [r2, #2]
 	mov r3, #0b11111100
 	bic r0, r3
@@ -143,7 +146,10 @@ end2:
 getExSkillBaseAdr:
 	ldr r3, addr+0
 	mov pc, r3
-
+DecodeSkill:
+    ldr r3, addr+0
+    add r3, #4
+    mov pc, r3
 MAX_BOOK_DATA_NUM = addr+4
 
 .align

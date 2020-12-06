@@ -89,7 +89,7 @@ Eraser:
 	bl ex_dedupSkill
 	ldr r1, MAX_NUM
 	cmp r0, r1
-	bne dedup	@重複が存在する場合は最優先で抽出
+@	bne dedup	@重複が存在する場合は最優先で抽出
 @ボタンチェック
     ldr r0, =PRESS_INPUT_ADR
 	ldr	r0, [r0]
@@ -102,9 +102,23 @@ Eraser:
     bl ex_popSkill
     b merge
 reverse:
-@第一スキルを抽出
+@手前のスキルを抽出
+        mov r0, r4
+        mov r1, #0
+        bl GET_BOOK_DATA
+        mov r1, #0
+        cmp r0, #0
+        bne trueRemove     @何かあるから消せる
+@@@@@@@@
+        mov r0, r4
+        mov r1, #1
+        bl GET_BOOK_DATA
+        mov r1, #1
+        cmp r0, #0
+        bne trueRemove
+        b merge
+trueRemove:
     mov r0, r4
-    mov r1, #0
     bl ex_removeSkill
     b merge
 dedup:
@@ -130,6 +144,8 @@ notVanish:
 
 GetMatchingSkillBook:
         push {lr}
+        cmp r0, #0
+        beq falseMatching
         mov r6, r0
         mov r5, #0 @カウンタ
     nextMatching:
@@ -185,6 +201,9 @@ ex_popSkill:
 	mov pc, r3
 ex_removeSkill:
 	ldr r3, REMOVESKILL
+	mov pc, r3
+GET_BOOK_DATA:
+	ldr r3, ADR+32
 	mov pc, r3
 
 .align

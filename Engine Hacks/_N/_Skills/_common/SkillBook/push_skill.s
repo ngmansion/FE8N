@@ -24,7 +24,7 @@ loop:
 
     mov r0, r4
     mov r1, r5
-    bl GET_BOOK
+    bl GET_BOOKSKILL
     cmp r0, #0
     beq loop_end
     add r5, #1
@@ -39,7 +39,7 @@ loop_end:
 END_impl:
     pop {pc}
 
-GET_BOOK:
+GET_BOOKSKILL:
     ldr r3, addr+0
     mov pc, r3
 

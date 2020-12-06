@@ -31,14 +31,19 @@ METIS_EFFECT = (0x2E)  @メティスの書の効果ID
     
         cmp r0, #255
         bne not_eraser
-    @消滅処理
+@@@@@@@@消滅処理
         mov r0, r4
-        mov r1, #0
-        bl GETSKILL
+        mov r1, #1
+        bl GET_BOOK_DATA
         cmp r0, #0
         bne true     @何かあるから消せる
-        b false
-        
+        mov r0, r4
+        mov r1, #0
+        bl GET_BOOK_DATA
+        cmp r0, #0
+        bne true
+        b false     @未習得 or 書のないスキル
+@@@@@@@@
     not_eraser:
         bl DECODE_BOOK
         mov r5, r0
@@ -57,7 +62,7 @@ METIS_EFFECT = (0x2E)  @メティスの書の効果ID
         mov r0, r4
         ldr r1, MAX_NUM
         sub r1, #1
-        bl GETSKILL
+        bl GET_BOOK_DATA
         cmp r0, #0
         beq true        @まだ余裕があるから使える
     
@@ -87,7 +92,7 @@ GET_WEAPON_MT:
 
 MAX_NUM = ADDR+0
 
-GETSKILL:
+GET_BOOK_SKILL:
     ldr r3, ADDR+4
     mov pc, r3
 CONTAINSKILL:
@@ -103,6 +108,9 @@ DECODE_BOOK:
     ldr r1, ADDR+20
     add r1, #4
     mov pc, r1
+GET_BOOK_DATA:
+    ldr r3, ADDR+24
+    mov pc, r3
 
 .align
 .ltorg
