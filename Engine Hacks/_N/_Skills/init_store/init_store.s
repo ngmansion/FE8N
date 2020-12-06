@@ -1,4 +1,4 @@
-BOOK_MAX = (63)
+BOOK_MAX = (56)
 
 .thumb
 @	00017bd4
@@ -21,7 +21,11 @@ ret:
 	beq ret
 	lsl r5, r5, #6
 	orr r0, r0, r5
-	strh r0, [r4, #0x3A]
+	
+	mov r2, r0
+	mov r0, r4
+	mov r1, #0
+	bl SET_BOOK
 	b RETURN
 	
 notAlly:
@@ -49,7 +53,10 @@ ret_em:
 @	beq ret_em
 @	lsl r5, r5, #6
 @	orr r0, r0, r5
-	strh r0, [r4, #0x3A]
+	mov r2, r0
+	mov r0, r4
+	mov r1, #0
+	bl SET_BOOK
 	
 RETURN:
 	pop {r4, r5}
@@ -156,8 +163,9 @@ emOk:
 	beq emRetry
 	cmp r0, r7	@同じ
 	beq emRetry
-	cmp r0, #0x9	@戦技
-	beq emRetry
+@@@@
+@	cmp r0, #0x9	@戦技
+@	beq emRetry
 	cmp r0, #0xA	@エリート
 	beq emRetry
 	cmp r0, #0xB	@再動
@@ -166,28 +174,28 @@ emOk:
 	beq emRetry
 	cmp r0, #0x12	@杖スキル
 	beq emRetry
-	cmp r0, #0x1B	@戦技
-	beq emRetry
-	cmp r0, #0x1C	@戦技
-	beq emRetry
-	cmp r0, #0x1D	@戦技
-	beq emRetry
-	cmp r0, #0x1E	@戦技
-	beq emRetry
+@	cmp r0, #0x1B	@戦技
+@	beq emRetry
+@	cmp r0, #0x1C	@戦技
+@	beq emRetry
+@	cmp r0, #0x1D	@戦技
+@	beq emRetry
+@	cmp r0, #0x1E	@戦技
+@	beq emRetry
 	cmp r0, #0x23	@生命吸収
 	beq emRetry
 	cmp r0, #0x29	@杖スキル
 	beq emRetry
-	cmp r0, #0x2C	@戦技
-	beq emRetry
+@	cmp r0, #0x2C	@戦技
+@	beq emRetry
 	cmp r0, #0x30	@護り手
 	beq emRetry
-	cmp r0, #0x3F	@戦技
-	beq emRetry
-	cmp r0, #0x3E	@戦技
-	beq emRetry
-	cmp r0, #0x3D	@戦技
-	beq emRetry
+@	cmp r0, #0x3F	@戦技
+@	beq emRetry
+@	cmp r0, #0x3E	@戦技
+@	beq emRetry
+@	cmp r0, #0x3D	@戦技
+@	beq emRetry
 
 	ldr r2, [r4]
 	mov r1, #0x26
@@ -200,4 +208,11 @@ emOk:
 	beq emRetry
 	pop {r5, r6, r7, pc}
 
+SET_BOOK:
+    ldr r3, addr+0
+    mov pc, r3
+
+.align
+.ltorg
+addr:
 

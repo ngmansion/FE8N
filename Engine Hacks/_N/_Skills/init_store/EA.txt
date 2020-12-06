@@ -11,5 +11,6 @@ POP
 
 init_store:
 	#incbin init_store.dmp
+	POIN setSkill
 
 ALIGN 4
