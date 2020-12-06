@@ -30,3 +30,4 @@ combat_help:
 JUDGE_COMBAT_HELP_SIZE:
   #incbin help_size_changer.dmp
   POIN commonSkill
+  POIN GET_COMBAT_ARTS_TYPE

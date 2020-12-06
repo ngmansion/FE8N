@@ -112,7 +112,7 @@ GetSelectingCombatID:
 
 METIS_ID = (0x89)
 SelcectingBook:
-        push {lr}
+        push {r5, lr}
         mov r0, #0xFF
         and r0, r4
         cmp r0, #METIS_ID
@@ -130,11 +130,17 @@ SelcectingBook:
         mov lr, r1
         .short 0xF800
         bl DECODE_SKILL_BOOK
-
+        mov r5, r0
+        bl GET_COMBAT_ARTS_TYPE
+        cmp r0, #0
+        beq falseOne
+        cmp r0, #3
+        beq falseOne
+        mov r0, r5
         .short 0xE000
     falseOne:
         mov r0, #0
-        pop {pc}
+        pop {r5, pc}
 
 SelcectingStatus:
         push {lr}
@@ -187,6 +193,9 @@ GET_SELECTING_CONFIG:
 DECODE_SKILL_BOOK:
     ldr r1, ADDR+24
     add r1, #4
+    mov pc, r1
+GET_COMBAT_ARTS_TYPE:
+    ldr r1, ADDR+28
     mov pc, r1
 
 $00009fa8:
