@@ -1,16 +1,20 @@
 PUSH
 
 ORG 0x017bd4
-#ifdef RANDOM_SKILL
+#ifdef _RANDOM_SKILL_
 	jumpToHack(init_store)
 #else
 	SHORT $bc30 $bc01 $4700 $0000
 #endif
 
+ORG 0x017ae0
+	jumpToHack(skill_store)
 POP
 
 init_store:
 	#incbin init_store.dmp
 	POIN setSkill
-
+skill_store:
+	#incbin skill_store.dmp
+	POIN setSkill
 ALIGN 4
