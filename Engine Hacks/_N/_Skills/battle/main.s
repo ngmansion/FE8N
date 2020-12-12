@@ -186,6 +186,7 @@ Lull:
         bl HasLull
         cmp r0, #0
         beq endLull
+@@@@@@@凪効果
         mov r0, r6
         mov r1, r4
         bl recalcAtk
@@ -210,6 +211,21 @@ Lull:
         mov r0, #0
     jumpSpd:
         strh r0, [r1] @速さ
+@@@@@@@@城塞再計算
+        mov r0, r6
+        mov r1, #0
+        bl HAS_FORT
+        cmp r0, #0
+        beq endLull
+
+        mov r1, r6
+        add r1, #90
+        ldrh r0, [r1]
+        sub r0, #2
+        bge jumpAtk2
+        mov r0, #0
+    jumpAtk2:
+        strh r0, [r1] @威力
 
     endLull:
         pop {pc}
@@ -376,6 +392,10 @@ HAS_REIN:
 GET_COMBAT_ART:
  ldr r2, (addr+60)
  mov pc, r2
+HAS_FORT:
+    ldr r2, (addr+64)
+    mov pc, r2
+
 
 .ltorg
 .align

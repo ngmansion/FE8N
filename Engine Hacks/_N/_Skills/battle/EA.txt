@@ -75,6 +75,7 @@ battle_after:
     WORD CHARGING_LANCE_ITEM_EFFECT_ID
     POIN HAS_REIN
     POIN GET_COMBAT_ART
+    POIN hasFort
     
     
 battle_down:
