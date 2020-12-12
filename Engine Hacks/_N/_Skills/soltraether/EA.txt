@@ -2,6 +2,7 @@
 
 #define SOL_WORK_ADDRESS $0203ACAC 
 #define SOL_BIT (6)     //12h-無理 11-10 ?? 9-7reserved 6-5?? 4reserved
+#define RADIANT_AETHER_BIT (5)
 
 //code
 ALIGN 4
@@ -23,6 +24,8 @@ POIN set_skillanime_attack
 POIN hasNihil
 POIN fodes_func
 POIN HasRupturedSky
+POIN HAS_RADIANT_AETHER
+WORD RADIANT_AETHER_BIT
 
 ALIGN 4
 
@@ -109,15 +112,18 @@ taiyo4:
     WORD SOL_BIT
     POIN set_skillanime_attack
     POIN hasNihil
+    WORD RADIANT_AETHER_BIT
 
 sol_divide_anim_on:
 #incbin sol_divide_anim_on.dmp
 WORD SOL_BIT
+WORD RADIANT_AETHER_BIT
 ALIGN 4
 
 sol_divide_anim_off:
 #incbin sol_divide_anim_off.dmp
 WORD SOL_BIT
+WORD RADIANT_AETHER_BIT
 ALIGN 4
 
 hasSOL:
@@ -144,5 +150,8 @@ hasJihad:
 HasRupturedSky:
     HAS_OCCULT
     WORD RupturedSkyID
+HAS_RADIANT_AETHER:
+    HAS_OCCULT
+    WORD RadiantAetherID
 
 

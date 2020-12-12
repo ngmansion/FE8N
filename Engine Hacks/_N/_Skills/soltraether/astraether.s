@@ -380,53 +380,36 @@ tenku_impl:
         ldr r1, YOUKO_ADR	@陽光
         mov lr, r1
         .short 0xF800
+    cmp r0, #1
+    beq YOUKOU
+
+    bl CanAether
     cmp r0, #0
-    bne YOUKOU
-@必殺と重複しない
-    ldr r0, [r6, #0]
-    ldr r0, [r0, #0]
-    lsl r0, r0, #31
-    bmi falseTenku
+    beq falseTenku
+
+
+    mov r0, r7
+    mov r1, #0      @見切り済み
+    bl HAS_RADIANT_AETHER
+    cmp r0, #1
+    beq Radiant
+
 @ユニットチェック
     mov r0, r7
         ldr r1, TENKU_ADR	@天空
         mov lr, r1
         .short 0xF800
     cmp r0, #0
-    bne TENKU
-    b falseTenku
-TENKU:
-    ldr r0, =0x0203a4d2
-    ldrb r0, [r0]    @距離
-    cmp r0, #1
-    bne falseTenku
-    mov r0, r7
-    add r0, #72
-    ldrh r0, [r0, #0]
-		ldr	r3, =0x08017448	@武器の射程
-		mov	lr,r3
-		.short	0xF800
-    ldrb r1, [r1, #7]
-    cmp r1, #2 @@斧
-    bne jump
-    cmp r0, #0x11
-    bne falseTenku @@手斧チェック
-jump:
+    beq falseTenku
 
-    ldrb r0, [r7, #21]	@技
-@    ldrb r0, [r7, #8]	@レベル
+    ldrb r0, [r7, #21]  @技
+@    ldrb r0, [r7, #8]  @レベル
     mov r1, #0
     bl random
     cmp r0, #0
     beq falseTenku
     
-    mov r0, r8
-    ldrb r0, [r0, #0x17] @守備
-
-    lsl r1, r0, #31
-    lsr r1, r1, #31
-    asr r0, r0, #1 @半減
-    add r0, r1
+    bl GetDef
 
     mov r1, #4
     ldsh r1, [r5, r1] @ダメージ
@@ -443,6 +426,71 @@ jump:
     
     b sol_crt
 
+@蒼の天空
+Radiant:
+        ldrb r0, [r7, #21]  @技
+        mov r1, #0
+        bl random
+        cmp r0, #0
+        beq falseTenku
+
+        bl GetDef
+        mov r1, #4
+        ldsh r1, [r5, r1]   @ダメージ
+        lsl r1, #1
+        add r0, r1
+        strh r0, [r5, #4]
+
+        bl GET_RADIANT_AETHER
+        mov r1, r0
+        mov r0, r7
+        bl SET_SKILLANIME_ATK
+@@@@@@@@特殊flag
+        ldr r3, [r6]
+        ldr r2, [r3]
+        lsl r1, r2, #13
+        lsr r1, r1, #13
+        ldr	r0, =0xFFF80000
+        and r0, r2
+        orr r0, r1
+
+        mov r1, #0x80
+        ldr r2, RADIANT_AETHER_BIT
+        lsl r1, r2
+
+        orr r0, r1
+        str r0, [r3, #0]
+
+        b sol_crt
+
+CanAether:
+        push {lr}
+        ldr r0, [r6, #0]
+        ldr r0, [r0, #0]
+        lsl r0, r0, #31
+        bmi falseCanAether      @必殺と重複しない
+
+        ldr r0, =0x0203a4d2
+        ldrb r0, [r0]    @距離
+        cmp r0, #1
+        bne falseCanAether
+        mov r0, r7
+        add r0, #72
+        ldrh r0, [r0, #0]
+            ldr r3, =0x08017448 @武器の射程
+            mov lr,r3
+            .short 0xF800
+        ldrb r1, [r1, #7]
+        cmp r1, #2          @@斧
+        bne jumpCanAether
+        cmp r0, #0x11
+        bne falseCanAether  @@手斧チェック
+    jumpCanAether:
+        mov r0, #1
+        .short 0xE000
+    falseCanAether:
+        mov r0, #0
+        pop {pc}
 
 YOUKOU:
     ldrb r0, [r7, #21]	@技
@@ -451,12 +499,7 @@ YOUKOU:
     cmp r0, #0
     beq falseTenku
 
-    mov r0, r8
-    ldrb r0, [r0, #0x18] @魔防
-    lsl r1, r0, #31
-    lsr r1, r1, #31
-    asr r0, r0, #1 @半減
-    add r0, r1
+    bl GetDef
 
     mov r1, #4
     ldsh r1, [r5, r1]
@@ -475,6 +518,18 @@ YOUKOU:
 falseTenku:
     mov r0, #0
     pop {pc}
+
+GetDef:
+    ldr r1, =0x0203a4d0
+    mov r0, #8
+    ldsh r0, [r1, r0]
+    lsl r1, r0, #31
+    lsr r1, r1, #31
+
+    asr r0, #1
+    add r0, r1
+    bx lr
+
 
 
 random:
@@ -567,7 +622,18 @@ CheckFodes:
 ldr r2, CHECK_FODES_FUNC
 mov pc, r2
 
+SET_SKILLANIME_ATK:
+    ldr r3, SET_SKILLANIME_ATK_FUNC
+    mov pc, r3
+HAS_RADIANT_AETHER:
+    ldr r3, (adr+40)
+    mov pc, r3
+GET_RADIANT_AETHER:
+    ldr r0, (adr+40)
+    ldr r0, [r0, #12]
+    bx lr
+RADIANT_AETHER_BIT = (adr+44)
+
 .align
 .ltorg
 adr:
-
