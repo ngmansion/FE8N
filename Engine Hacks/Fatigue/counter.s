@@ -1,6 +1,5 @@
 .thumb
 UNIT_MAX_NUM = (51)
-FATIGUE_MAX = (3)
 
 REST_CONDITION =    0x02210004
 
@@ -56,22 +55,14 @@ Count:
         cmp r0, #1
         beq clearCount
 
-        add r4, #71
-        ldrb r2, [r4]
-        mov r0, #0b00000011
-        and r2, r0
-        cmp r2, #FATIGUE_MAX
-        bge endCount
-
-        add r2, #1
-        strb r2, [r4]
+        mov r0, r4
+        bl ADD_FATIGUE_NUM
         b endCount
     clearCount:
-        add r4, #71
-        ldrb r2, [r4]
-        mov r0, #0b00000011
-        bic r2, r0
-        strb r2, [r4]
+        mov r0, r4
+        mov r1, #0
+        bl SET_FATIGUE_NUM
+
     endCount:
         pop {r4, pc}
 
@@ -123,6 +114,12 @@ UnitSetting_Fatigue = addr+0
 ChapterSetting_Fatigue = addr+4
 ChapterIgnoreSetting_Fatigue = addr+8
 FATIGUE_STATUS = addr+12
+SET_FATIGUE_NUM:
+    ldr r3, addr+16
+    mov pc, r3
+ADD_FATIGUE_NUM:
+    ldr r3, addr+20
+    mov pc, r3
 
 .align
 .ltorg

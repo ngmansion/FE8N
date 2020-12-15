@@ -3,7 +3,8 @@
     cmp r1, #0
     bne normal
     b main
-
+back:
+    ldr r2, [r5, #12]
 normal:
     mov r0, r2
     ldr r1, =0x080190ec
@@ -14,12 +15,10 @@ normal:
     mov pc, r0
 
 main:
-        mov r0, #71
-        ldrb r0, [r2, r0]
-        mov r1, #0b0011
-        and r0, r1
+        mov r0, r2
+        bl GET_FATIGUE_NUM
         cmp r0, #0
-        beq normal
+        beq back
 
         ldr r0, FATIGUE_WORD
         bl $00009fa8
@@ -31,11 +30,9 @@ main:
         mov r2, #2
         .short 0xF800
 
-        ldr r2, [r5, #12]
-        add r2, #71
-        ldrb r2, [r2]
-        mov r1, #0b0011
-        and r2, r1
+        ldr r0, [r5, #12]
+        bl GET_FATIGUE_NUM
+        mov r2, r0
         lsl r2, r2, #4
         
         ldr r1, =0x0808965c
@@ -47,6 +44,9 @@ $00009fa8:
     mov pc, r1
 
 FATIGUE_WORD = addr+0
+GET_FATIGUE_NUM:
+    ldr r2, addr+4
+    mov pc, r2
 
 .align
 .ltorg

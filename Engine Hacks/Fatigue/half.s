@@ -1,20 +1,19 @@
 .thumb
 
-VALID_BIT =         0b0011
+
 
 
     push {r4, lr}
     mov r4, r0
 
-    mov r0, #71
-    ldrb r0, [r4, r0]
-    mov r1, #VALID_BIT
-    and r0, r1
+    bl GET_FATIGUE_NUM
 
-    cmp r0, #1
-    ble false
-    cmp r0, #2
-    ble half
+    ldr r1, FATIGUE_LEVEL1
+    cmp r0, r1
+    blt false
+    ldr r1, FATIGUE_LEVEL2
+    cmp r0, r1
+    blt half
 
 quarter:
     ldrb r0, [r4, #18]
@@ -33,6 +32,11 @@ false:
 end:
     pop {r4, pc}
 
+FATIGUE_LEVEL1=addr+0
+FATIGUE_LEVEL2=addr+4
+GET_FATIGUE_NUM:
+    ldr r1, addr+8
+    mov pc, r1
 
 .align
 .ltorg

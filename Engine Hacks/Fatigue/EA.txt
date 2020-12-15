@@ -1,5 +1,7 @@
 #include _config.txt
 
+#define FATIGUE_MAX (31)
+
 ALIGN 4
 PUSH
 ORG 0x018ea4
@@ -39,9 +41,13 @@ ALIGN 4
 FatigueLayout:
 #incbin layout.dmp
 WORD FATIGUE_WORD
+POIN GET_FATIGUE_NUM
 
 Fatigue:
 #incbin half.dmp
+WORD FATIGUE_LEVEL_1
+WORD FATIGUE_LEVEL_2
+POIN GET_FATIGUE_NUM
 ALIGN 4
 
 FatigueCounter:
@@ -50,6 +56,27 @@ FatigueCounter:
 	POIN ChapterSetting_Fatigue
 	POIN ChapterIgnoreSetting_Fatigue
 	WORD WORK_MEM_FOR_TRANSPORT_FATIGUE
-	
+	POIN SET_FATIGUE_NUM
+	POIN ADD_FATIGUE_NUM
+ALIGN 4
+
+COMMON_FATIGUE:
+#incbin common_fatigue.dmp
+WORD FATIGUE_MAX
+
+ALIGN 4
+
+PUSH
+ORG COMMON_FATIGUE+0
+GET_FATIGUE_NUM:
+ORG COMMON_FATIGUE+4
+SET_FATIGUE_NUM:
+ORG COMMON_FATIGUE+8
+ADD_FATIGUE_NUM:
+
+POP 
+
+
+
 ALIGN 4
 
