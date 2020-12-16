@@ -56,8 +56,14 @@ MasterySkill:
 		pop {pc}
 
 WarSkill:
-		push {lr}
+        push {lr}
 
+        ldr r0, =0x0203a4d0
+        ldrh r1, [r0, #0]
+        mov r0, #2
+        and r0, r1
+        cmp r0, #0
+        bne endWarSkill     @戦闘予測時はスキップ
 
         mov r0, #FIRST_ATTACKED_FLAG
         mov r1, #0
@@ -65,33 +71,33 @@ WarSkill:
         cmp r0, #1
         beq endWarSkill                 @初撃済フラグオンならジャンプ
 
-		bl FallenStar
+        bl FallenStar
 
-		mov	r0, r8
-		bl FodesFunc
-		beq	endWarSkill
-		mov r0, r8
-		ldr r1, [r0]
-		ldr	r1, [r1, #40]
-		ldr r2, [r0, #4]
-		ldr	r2, [r2, #40]
-		orr	r1, r2
-		lsl	r1, r1, #16
-		bmi	endWarSkill		@敵将に無効
+        mov r0, r8
+        bl FodesFunc
+        beq endWarSkill
+        mov r0, r8
+        ldr r1, [r0]
+        ldr r1, [r1, #40]
+        ldr r2, [r0, #4]
+        ldr r2, [r2, #40]
+        orr r1, r2
+        lsl r1, r1, #16
+        bmi endWarSkill     @敵将に無効
 
-		bl Stan
-		cmp r0, #1
-		beq endWarSkill
-		bl Stone
-		cmp r0, #1
-		beq endWarSkill
-		bl MagicBind
-		cmp r0, #1
-		beq endWarSkill
-		nop
-	endWarSkill:
-		pop {pc}
-	
+        bl Stan
+        cmp r0, #1
+        beq endWarSkill
+        bl Stone
+        cmp r0, #1
+        beq endWarSkill
+        bl MagicBind
+        cmp r0, #1
+        beq endWarSkill
+        nop
+    endWarSkill:
+        pop {pc}
+
 Revenge:
 	push {lr}
     mov r0, r7
@@ -277,42 +283,50 @@ FallenStar:
 		pop {pc}
 
 MagicBind:
-	push {lr}
+    push {lr}
 
     mov r0, r7
-	mov r1, #0
+    mov r1, #0
     bl HasMagicBind
     cmp r0, #0
     beq endWar
-	
-	mov	r1, r8
-	add	r1, #111
-	mov	r0, #0x23		@@状態異常(2スリプ,3サイレス,4バサク,Bストン)
-	strb	r0, [r1, #0]
-	b	Effect
+
+    mov r1, r8
+    add r1, #111
+    mov r0, #0x23       @@状態異常(2スリプ,3サイレス,4バサク,Bストン)
+    strb r0, [r1, #0]
+
+    mov r1, r0
+    mov r0, r8
+    bl InflictEffect
+    b Effect
 
 
 Stan:
-	push {lr}
+    push {lr}
 
     mov r0, r7
-	mov r1, #0
+    mov r1, #0
     bl HasStan
     cmp r0, #0
     beq endWar
-	
+
 trueStan:
-	mov	r1, r8
-	add	r1, #111
-	mov	r0, #0x24		@@状態異常(2スリプ,3サイレス,4バサク,Bストン)
-	strb	r0, [r1, #0]
-	b	Effect
+    mov r1, r8
+    add r1, #111
+    mov r0, #0x24  @@状態異常(2スリプ,3サイレス,4バサク,Bストン)
+    strb r0, [r1, #0]
+
+    mov r1, r0
+    mov r0, r8
+    bl InflictEffect
+    b Effect
 
 StanMastery:
-	push {lr}
+    push {lr}
 
     mov r0, r7
-	mov r1, #0
+    mov r1, #0
     bl HAS_STAN_MASTERY
     cmp r0, #0
     beq endWar
@@ -323,8 +337,8 @@ StanMastery:
     cmp r0, #0
     beq endWar
 
-	bl GET_STAN_MASTERY
-	mov r1, r0
+    bl GET_STAN_MASTERY
+    mov r1, r0
     mov r0, r7
     bl SET_SKILLANIME_ATK_FUNC
 		mov	r0, r8
@@ -342,19 +356,23 @@ StanMastery:
 
 
 Stone:
-	push {lr}
+    push {lr}
 
     mov r0, r7
     mov r1, #0
-	bl HasScream
+    bl HasScream
     cmp r0, #0
     beq endWar
 trueStone:
-	mov	r1, r8
-	add	r1, #111
-	mov	r0, #0x1B		@@状態異常(2スリプ,3サイレス,4バサク,Bストン)
-	strb	r0, [r1, #0]
-	b Effect
+    mov r1, r8
+    add r1, #111
+    mov r0, #0x1B       @@状態異常(2スリプ,3サイレス,4バサク,Bストン)
+    strb r0, [r1, #0]
+
+    mov r1, r0
+    mov r0, r8
+    bl InflictEffect
+    b Effect
 
 StoneMastery:
 	push {lr}
@@ -424,6 +442,108 @@ random:
 retrun:
 	ldr	r1, =0x0802b3ea
 	mov	pc, r1
+@
+@r0 = 中心の相手
+@r1 = セットする異常
+@
+InflictEffect:
+        push {r4, r5, r6, r7, lr}
+        mov r4, r0
+        mov r5, #0
+        mov r6, #0
+        mov r7, r1
+
+        ldrb r6, [r4, #0xB]
+        mov r0, #0xC0
+        and r6, r0          @r6に部隊表ID
+
+    loopEffect:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq endEffect      @リスト末尾なので終了
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopEffect      @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopEffect      @死亡判定2
+        ldrb r0, [r4, #0xB]
+        ldrb r1, [r5, #0xB]
+        cmp r0, r1
+        beq loopEffect      @同じユニット
+        ldr r0, [r5, #0xC]
+        ldr r1, =0x1002C    @居ないフラグ+救出されている
+        and r0, r1
+        bne loopEffect
+        
+        mov r0, #2          @2マス以内
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopEffect
+
+        mov r0, r5
+        ldr r1, [r0]
+        ldr r1, [r1, #40]
+        ldr r2, [r0, #4]
+        ldr r2, [r2, #40]
+        orr r1, r2
+        lsl r1, r1, #16
+        bmi loopEffect     @敵将に無効
+
+        mov r0, r5
+        bl FodesFunc
+        beq loopEffect
+
+        mov r0, r5
+        mov r1, #0
+        bl HasNihil
+        cmp r0, #1
+        beq loopEffect
+
+        mov r0, #48
+        strb r7, [r5, r0]
+
+        b loopEffect
+    endEffect:
+        pop {r4, r5, r6, r7, pc}
+
+CheckXY:
+@r1とr2がr0マス以内に居るならr0=TRUE
+@同座標ならTRUE
+@
+        push {r0}
+        ldrb r0, [r1, #16]
+        ldrb r3, [r2, #16]
+        sub r3, r0, r3
+        bge jump1CheckXY
+        neg r3, r3  @絶対値取得
+    jump1CheckXY:
+
+        ldrb r1, [r1, #17]
+        ldrb r2, [r2, #17]
+        sub r2, r1, r2
+        bge jump2CheckXY
+        neg r2, r2  @絶対値取得
+    jump2CheckXY:
+
+        add r2, r2, r3
+        pop {r0}
+        cmp r2, r0
+        bgt falseCheckXY    @r0マス以内に居ない
+        mov r0, #1
+        bx lr
+    falseCheckXY:
+        mov r0, #0
+        bx lr
+
+Get_Status:
+    ldr r1, =0x08019108
+    mov pc, r1
 
 HAS_DRAGON_FUNC = (adr+0)
 HAS_COLOSSUS_FUNC = (adr+4)
