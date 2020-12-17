@@ -57,6 +57,9 @@ POIN checkItemList
     POIN UNITDATA_GetSecond
     POIN UNITDATA_GetThird
     POIN UNITDATA_GetLuna
+    POIN combat_art_table
+    WORD COMBAT_ART_LIST_SIZE
+    POIN hasOccult
 
 
 SIcon_U:

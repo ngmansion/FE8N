@@ -8,8 +8,11 @@ MAX_SKILL_NUM = (255)
 @.org	0x08089268
 	
 	push {r4, r5, r6, r7, lr}
+    mov r3, r9
+    push {r3}
 @画像
 	bl Initialize
+    mov r9, r4
 
 	bl SkillBook
 
@@ -25,6 +28,8 @@ MAX_SKILL_NUM = (255)
 
 	bl Item
 	
+    pop {r3}
+    mov r9, r3
 	pop	{r4, r5, r6, r7, pc}
 
 
@@ -436,6 +441,12 @@ SKILL0:
         bge FALSE
         mov r4, r0
 
+        mov r0, r9
+        mov r1, r4
+        bl judgeIfOccult
+        cmp r0, #0
+        beq FALSE
+
         ldr r3, SKL_TBL     @skl_icon_table
         ldr r1, ICON_LIST_SIZE
         mul r1, r4
@@ -456,7 +467,7 @@ SKILL0:
         beq notDouble
         ldrb r1, [r2]
         cmp r4, r1
-        beq FALSE               @ヘルプ重複
+        beq FALSE               @重複
         add r2, #1
         b loopDedup
 
@@ -485,7 +496,50 @@ SKILL0:
     FALSE:
         pop {r4, pc}
 
+judgeIfOccult:
+        push {r4, r5, lr}
+        mov r4, r0
+        mov r5, r1
+        ldr r2, combat_art_table
+        ldr r0, COMBAT_ART_LIST_SIZE
+        mul r5, r0
+        add r5, r2
+        ldrb r0, [r5, #6]
+        mov r2, #0b1100
+        and r0, r2
+        cmp r0, #0
+        beq trueOccult
+@@@@@@@@
+        mov r0, r4
+        mov r1, #0
+        bl HAS_OCCULT
+        cmp r0, #1
+        beq trueOccult
 
+@@@@@@@@
+        mov r0, #72
+        ldrh r0, [r4, r0]
+
+        ldr r1, =0x080172f0    @武器種類
+        mov lr, r1
+        .short 0xF800
+
+        add r0, #40
+        add r0, r4
+        ldrb r0, [r0]
+
+        ldr r1, =0x08016b04
+        mov lr, r1
+        .short 0xF800
+
+        cmp r0, #6
+        beq trueOccult
+@@@@@@@@
+        mov r0, #0
+        .short 0xE000
+    trueOccult:
+        mov r0, #1
+        pop {r4, r5, pc}
 
 
 Initialize:
@@ -571,6 +625,12 @@ UNITDATA_GetThird:
 UNITDATA_GetLuna:
 	ldr r1, (adr+64)
 	mov pc, r1
+
+combat_art_table = (adr+68)
+COMBAT_ART_LIST_SIZE = (adr+72)
+HAS_OCCULT:
+    ldr r2, (adr+76)
+    mov pc, r2
 
 .align
 .ltorg
