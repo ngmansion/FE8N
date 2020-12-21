@@ -1,6 +1,9 @@
 #include WP_LV_SKL_TABLE.txt
 #include LUNATIC_TABLE.txt
 
+#define NEED_ITEM_CHECK 1
+#define DONT_NEED_ITEM_CHECK 0
+
 hasNihil:
 	HAS_SKILL
 	WORD NihilID
@@ -18,15 +21,17 @@ judgeSkill:
 	POIN WP_LV_SKL_TABLE
    	WORD ICON_LIST_SIZE
 	POIN checkItemList
+	WORD NEED_ITEM_CHECK
     
 judgeUnit:
-	#incbin judgeUnit.dmp
+	#incbin judgeSkill.dmp
 	POIN skl_table
 	POIN containsSkill
 	POIN judgeSkillInUnitData
 	POIN WP_LV_SKL_TABLE
    	WORD ICON_LIST_SIZE
 	POIN checkItemList
+	WORD DONT_NEED_ITEM_CHECK
 	
 #include "UnitData\EA.txt"
 	ALIGN 4

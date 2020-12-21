@@ -1,18 +1,8 @@
-SKL_TBL = ADR+0
-CONTAINS_SKILL = ADR+4
-JUDGE_UNIT_FUNC = ADR+8
-WP_LV_SKL_TABLE = ADR+12
-SKL_TBL_SIZE = ADR+16
-CHECK_ITEM_FUNC = ADR+20
-
-@
-@	judgeUnitと横並びの作り
-@
 .thumb
 @ユニットデータとスキルIDから、発動可能かを判定する
-@I	r0 = ベースアドレス
-@	r1 = スキルID
-@O	-
+@I  r0 = ベースアドレス
+@   r1 = スキルID
+@O  -
     cmp r0, #0
     bne main
     bx lr
@@ -45,13 +35,13 @@ impl:
 @書チェック
     mov r0, r4
     mov r1, r5
-    bl containsSkill
+    bl CONTAINS_SKILL
     cmp r0, #1
     beq true
 @ユニットデータチェック
     mov r0, r4
     mov r1, r5
-    bl judgeSkillInUnitData
+    bl JUDGE_UNIT_FUNC
     cmp r0, #1
     beq true
 @リストチェック
@@ -110,6 +100,10 @@ judgeList: @リストチェック
         bl Listfunc
         cmp r0, #1
         beq returnList
+
+        ldr r0, ITEM_CHECK_FLAG
+        cmp r0, #0
+        beq returnList      @dontNeedItemCheck
     @武器
         add r6, #4
         
@@ -125,7 +119,7 @@ judgeList: @リストチェック
         add r6, #4
         mov r0, r4
         ldr r1, [r6]
-        bl checkItemList	@5か所判定するので1層潜る
+        bl CHECK_ITEM_FUNC	@5か所判定するので1層潜る
     returnList:
         pop {r6, pc}
 
@@ -236,16 +230,21 @@ falseCheckWp:
 endCheckWp:
     pop {pc}
 
-containsSkill:
-    ldr r3, CONTAINS_SKILL
+SKL_TBL = ADDR+0
+CONTAINS_SKILL:
+    ldr r3, ADDR+4
     mov pc, r3
-judgeSkillInUnitData:
-    ldr r3, JUDGE_UNIT_FUNC
+JUDGE_UNIT_FUNC:
+    ldr r3, ADDR+8
     mov pc, r3
-checkItemList:
-    ldr r3, CHECK_ITEM_FUNC
+WP_LV_SKL_TABLE = ADDR+12
+SKL_TBL_SIZE = ADDR+16
+CHECK_ITEM_FUNC:
+    ldr r3, ADDR+20
     mov pc, r3
+ITEM_CHECK_FLAG = ADDR+24
+
 .align
 .ltorg
-ADR:
+ADDR:
 
