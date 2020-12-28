@@ -14,16 +14,27 @@ PUSH
 
     ORG 0xA741A8
     #incext Png2Dmp "_common\Equipment7.png" --lz77
-ORG 0x089348
-    WORD $020040ee //アイコン開始位置
-    WORD 4 //アイコンの間隔(4 -> 8, 6 -> 6)
-    WORD $02003DAC //Ability文字位置1
-    
+
 #endif
 
 ORG	0x89268
 BYTE	$00 $4B $9F $46
 POIN Skills_Icon
+
+//～HELPで使用～
+
+ORG	0x892A8
+EQUIPMENT_POSITION_ADDR:
+    WORD $02003DAC //Ability文字位置1
+SKILL_TABLE_ADDR:
+    POIN skl_table
+    WORD ICON_LIST_SIZE
+COMBAT_TABLE_ADDR:
+    POIN combat_art_table
+    WORD COMBAT_ART_LIST_SIZE
+SKILL_ANIME_TABLE_ADDR:
+    POIN skl_anime_table
+    
 
 //スキルインデックス
 ORG 0x892FC
@@ -44,32 +55,15 @@ POP
 
 Skills_Icon:
 #incbin "_common\iconEX.dmp"
-POIN	SIcon_U SIcon_C SIcon_W SIcon_A skl_table
-WORD $08089350 //Ability文字位置2
-WORD $08089348 //ICONPOSITION
-WORD $0808934C //ICON_GAP
-POIN skl_anime_table
-POIN getSkill
-POIN WP_LV_SKL_TABLE
+POIN GATHER_SKILL
+WORD $020040ee //アイコン開始位置
+POIN skl_table
 WORD ICON_LIST_SIZE
-POIN checkItemList
-    POIN UNITDATA_GetFirst
-    POIN UNITDATA_GetSecond
-    POIN UNITDATA_GetThird
-    POIN UNITDATA_GetLuna
-    POIN combat_art_table
-    WORD COMBAT_ART_LIST_SIZE
-    POIN hasOccult
+WORD 4
+POIN EQUIPMENT_POSITION_ADDR
 
 
-SIcon_U:
-    #incbin "_common\UNIT.bin"
-SIcon_C:
-    #incbin "_common\CLASS.bin"
-SIcon_W:
-    #incbin "_common\WEAPON.bin"
-SIcon_A:
-    #incbin "_common\ABILITY.bin"
+
     
 ALIGN 4
     

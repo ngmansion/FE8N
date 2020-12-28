@@ -1,23 +1,14 @@
 
-#define HAS_SKILL "BYTE $02 $49 $01 $4B $9F $46 $C0 $46; POIN judgeSkill"
+#define HAS_SKILL "SHORT 0x4902 0x4B01 0x469F 0x46C0; POIN judgeSkill"
 
-#define HAS_OCCULT "BYTE $02 $49 $01 $4B $9F $46 $C0 $46; POIN mergeOccult"
+#define HAS_OCCULT "SHORT 0x4902 0x4B01 0x468A 0x469F; POIN judgeSkill"
 
-#define HAS_NIHIL "BYTE $02 $4A $01 $4B $9F $46 $C0 $46; POIN checkNihil"
+#define HAS_NIHIL "SHORT 0x4A02 0x4B01 0x469F 0x46C0; POIN checkNihil"
 
-#define HAS_COMBAT "BYTE $02 $4A $01 $4B $9F $46 $C0 $46; POIN checkCombat"
+#define HAS_COMBAT "SHORT 0x4A02 0x4B01 0x469F 0x46C0 ; POIN checkCombat"
 
 #include "checkSkill/EA.txt"
 #include "SkillBook/EA.txt"
-
-mergeOccult:
-    #incbin hasOccult.dmp
-    POIN hasOccult
-    POIN judgeSkill
-    
-hasOccult:
-	HAS_SKILL
-	WORD OccultID
 
 checkNihil:
     #incbin checkNihil.dmp

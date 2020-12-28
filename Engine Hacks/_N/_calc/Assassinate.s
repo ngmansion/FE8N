@@ -112,7 +112,6 @@ HasAssassinate:
     mov pc, r2
 OracleFunc:
     ldr r3, ADDR+4
-    add r3, #26
     mov pc, r3
 
 .align

@@ -101,7 +101,7 @@ ALIGN 4
 power_view:
 #incbin "power_view.dmp"
 WORD UNIT_WINDOW_CACHE
-POIN EX_SKILL_ICON
+POIN GATHER_SKILL_EXCEPT_CLASS
 WORD 0x02003B00
 ALIGN 4
 have_two:
@@ -127,19 +127,4 @@ burst_direction:
 #incbin burst_direction.dmp
 ALIGN 4
 
-EX_SKILL_ICON:
-#incbin "iconEX.dmp"
-POIN	SIcon_U SIcon_C SIcon_W SIcon_A skl_table
-WORD $08089350 //Ability文字位置2
-WORD $08089348 //ICONPOSITION
-WORD $0808934C //ICON_GAP
-POIN skl_anime_table
-POIN getSkill
-POIN WP_LV_SKL_TABLE
-WORD ICON_LIST_SIZE
-POIN checkItemList
-    POIN UNITDATA_GetFirst
-    POIN UNITDATA_GetSecond
-    POIN UNITDATA_GetThird
-    POIN UNITDATA_GetLuna
 

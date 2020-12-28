@@ -1,19 +1,12 @@
 .thumb
+icon_num_limit = (8) @上限数
 
 @    0808e850
         ldr r0, =0x82e0
         mov r8, r0
 
         bl GET_SKILL_ICON_ADDR_TO_R3
-        mov r2, #1
-        neg r2, r2
-    loopIcon:
-        add r2, #1
-        ldrb r0, [r3]
-        add r3, #1
-        cmp r0, #0
-        bne loopIcon
-        mov r3, r2
+        ldrb r3, [r3, #icon_num_limit]
 
         mov     r0, r5
         add     r0, #0x07

@@ -1,5 +1,6 @@
 .thumb
-@org   0808e75c
+@org   0808E680
+icon_num_limit = (8) @上限数
 
     push    {r4, r5, r6, r7, lr}
     mov r7, r8
@@ -180,7 +181,11 @@ SetNumbers:
     bl SetNumberAAPR
     bl SetNumberHACD
     ldr r0, =0x0203a568
-    bl SET_SKILL_ICON
+    ldr r1, =0x02003B00
+    mov r2, #icon_num_limit
+    bl GATHER_SKILL
+    ldr r1, =0x02003B00
+    strb r0, [r1, #icon_num_limit]
     pop {pc}
 
 SetNumberLv:
@@ -1228,7 +1233,7 @@ NUMBER:
 GET_EX_NUM_MEM_TO_R3:
     ldr r3, ADDR
     bx lr
-SET_SKILL_ICON:
+GATHER_SKILL:
     ldr r3, ADDR+4
     mov pc, r3
 

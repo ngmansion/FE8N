@@ -22,30 +22,30 @@ main:
         mov r0, #0
         bl SET_COMBAT_ART
         mov r0, r5
-        bl GetCombatArt
+        bl GetCombatArtAtRandom
         bl SET_COMBAT_ART
     enemyEND:
         pop {r5, pc}
 
+max_skill_num = 8
 
-GetCombatArt:      @GetSomethingCombatArt
-        push {r5, r6, lr}
+GetCombatArtAtRandom:      @GetSomethingCombatArt
+        push {r5, r6, r7, lr}
         mov r5, r0
-        mov r6, #1
+
+        mov r0, r5
+        ldr r1, WAR_CONFIG
+        mov r2, #max_skill_num
+        bl GATHER_COMBAT_ENEMY
+        mov r7, r0
+
+        mov r6, #0
     loopCombat:
-        cmp r6, #255
-        bgt falseCombat
-        mov r0, r5
-        mov r1, r6
-        bl JUDGE_COMBAT_SKILL
-        cmp r0, #0
-        beq continue        @戦技じゃないからジャンプ
-        mov r0, r5
-        mov r1, r6
-        bl JUDGE_SKILL
-        cmp r0, #0
-        beq continue        @使えないからジャンプ
-        mov r0, r6
+        cmp r6, r7
+        bge falseCombat
+
+        ldr r0, WAR_CONFIG
+        ldrb r0, [r0, r6]
         bl GetCombatArtsHitRate
         bl RONDOM_NUMBER
         cmp r0, #1
@@ -58,7 +58,7 @@ GetCombatArt:      @GetSomethingCombatArt
         .short 0xE000
     trueCombat:
         mov r0, r6
-        pop {r5, r6, pc}
+        pop {r5, r6, r7, pc}
 
 GetCombatArtsHitRate:
         push {lr}
@@ -80,10 +80,8 @@ RONDOM_NUMBER:
     ldr r1, =0x08000c78
     mov pc, r1
 
-JUDGE_SKILL:
-    ldr r2, ADDR+0
-    mov pc, r2
-JUDGE_COMBAT_SKILL:
+WAR_CONFIG = ADDR+0
+GATHER_COMBAT_ENEMY:
     ldr r2, ADDR+4
     mov pc, r2
 SET_COMBAT_ART:

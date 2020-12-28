@@ -30,26 +30,10 @@ grafix_ws:
 	WORD ARROW_CONFIG
 	POIN skl_table
 	WORD ICON_LIST_SIZE
-	POIN getSkill
-	POIN combat_art_table
-	WORD COMBAT_ART_LIST_SIZE
-	POIN mergeOccult
-    POIN UNITDATA_GetFirst
-    POIN UNITDATA_GetSecond
-    POIN UNITDATA_GetThird
+	POIN GATHER_COMBAT
 	
 ALIGN 4
 
-JUDGE_COMBAT_SKILL:              @いつか分離させる？
-#incbin JudgeCombatSkill.dmp
-	POIN combat_art_table
-	WORD COMBAT_ART_LIST_SIZE
-	POIN mergeOccult
-JUDGE_COMBAT_SKILL_ALT:
-#incbin JudgeCombatSkill_alt.dmp
-	POIN combat_art_table
-	WORD COMBAT_ART_LIST_SIZE
-	POIN mergeOccult
 ALIGN 4
 
 /////////////revert
@@ -165,8 +149,8 @@ nagi_setFlag:
 
 SET_ENEMY_COMBAT:
   #incbin SetEnemyCombat.dmp
-  POIN judgeSkill
-  POIN JUDGE_COMBAT_SKILL_ALT
+  WORD WAR_CONFIG
+  POIN GATHER_COMBAT_ENEMY
   POIN SET_COMBAT_ART
   POIN ENEMY_COMBAT_RATE
 ENEMY_COMBAT_RATE:
