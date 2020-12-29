@@ -182,4 +182,6 @@
 #define DartingBreathID         185 //0xB9 飛燕の呼吸
 #define CancelATK_ID            186 //0xBA キャンセル
 #define RadiantAetherID         187 //0xBB 蒼の天空
+#define HeavyBladeID            188 //0xBC 剛剣
+#define SpecialSpiralID         189 //0xBD 奥義の螺旋
 

@@ -38,9 +38,9 @@ hasQuickenedPulse:
  
 ////////////////////KingFix
 PUSH
- ORG	0x2b2fc
- #incbin "King_Shunsatsu_fix.gba"
- POIN fodes_func
+ ORG    0x2b2fc
+ BYTE   $00 $4A $97 $46
+ POIN   canLethality
 POP
 
 ////////////////////瞬殺ダメージ
@@ -52,8 +52,16 @@ ORG 0x2B448
 	SHORT 0xE016
 POP
 
+canLethality:
+#incbin canLethality.dmp
+  WORD LethalityID
+  POIN fodes_func
+  POIN HAS_SPECIAL_SPIRAL
+
 HasAssassinate:
 	HAS_COMBAT
 	WORD AssassinateID
-
+HAS_SPECIAL_SPIRAL:
+	HAS_NIHIL
+	WORD SpecialSpiralID
 

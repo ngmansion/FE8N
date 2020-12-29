@@ -127,6 +127,7 @@ CriticalUp:
 
         bl ikari
         bl Breath
+        bl HeavyBlade
     falseCRT:
         pop {pc}
 
@@ -191,6 +192,29 @@ Breath:
         mov r0, #0
         pop {pc}
 
+HeavyBlade:
+        push {lr}
+        mov r0, #COMBAT_HIT
+        mov r1, r7
+        bl IS_TEMP_SKILL_FLAG
+        cmp r0, #0
+        beq falseHeavy     @当たってない(予測は常にOFF)
+
+        mov r0, r7
+        mov r1, r8
+        bl HAS_HEAVY_BLADE
+        cmp r0, #0
+        beq falseHeavy
+        ldrh r0, [r5, #12]
+        add r0, #50
+        strh r0, [r5, #12]
+
+        mov r0, #1
+        .short 0xE000
+    falseHeavy:
+        mov r0, #0
+        pop {pc}
+
 .align
 RANDOM:
     ldr r3, =0x0802a490
@@ -217,7 +241,9 @@ HAS_FIERCE_BREATH:
 HAS_DARTING_BREATH:
     ldr r2, ADDRESS+24
     mov pc, r2
-
+HAS_HEAVY_BLADE:
+    ldr r2, ADDRESS+28
+    mov pc, r2
 .align
 B_WEAPON_ABILITY:
 .long 0x080174cc
