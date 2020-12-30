@@ -55,9 +55,11 @@ GetCombatArtAtRandom:      @GetSomethingCombatArt
         b loopCombat
     falseCombat:
         mov r0, #0
-        .short 0xE000
+        b endCombat
     trueCombat:
-        mov r0, r6
+        ldr r0, WAR_CONFIG
+        ldrb r0, [r0, r6]
+    endCombat:
         pop {r5, r6, r7, pc}
 
 GetCombatArtsHitRate:
@@ -82,8 +84,8 @@ RONDOM_NUMBER:
 
 WAR_CONFIG = ADDR+0
 GATHER_COMBAT_ENEMY:
-    ldr r2, ADDR+4
-    mov pc, r2
+    ldr r3, ADDR+4
+    mov pc, r3
 SET_COMBAT_ART:
     ldr r1, ADDR+8
     mov pc, r1
