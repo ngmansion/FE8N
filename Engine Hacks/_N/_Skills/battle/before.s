@@ -32,6 +32,7 @@ gotSkill:
     bl Fort
     bl Bond
     bl BladeSession
+    bl JointDrive
 
 endNoEnemy:
 
@@ -222,6 +223,13 @@ ShieldSession_impl:
     resultShieldSession:
         pop {pc}
 
+@@@@@@@@
+@@@@@@@@
+
+blade_session_grants = 4
+blade_session_spaces = 2
+blade_session_limits = 7
+
 BladeSession:
         push {r5, r6, r7, lr}
         bl BladeSessionOne  @自己強化
@@ -264,21 +272,21 @@ BladeSessionAll:
         cmp r0, #0
         beq loopBladeSessionAll
   
-        mov r0, #2  @2マス指定
+        mov r0, #blade_session_spaces
         mov r1, r4
         mov r2, r5
         bl CheckXY
-        cmp r0, #0
-        bne trueBladeSessionAll
+        cmp r0, #1
+        beq trueBladeSessionAll
         b loopBladeSessionAll
     trueBladeSessionAll:
         mov r1, #90
         ldrh r0, [r4, r1]
-        add r0, #3
+        add r0, #blade_session_grants
         strh r0, [r4, r1]
         mov r1, #94
         ldrh r0, [r4, r1]
-        add r0, #3
+        add r0, #blade_session_grants
         strh r0, [r4, r1]
     falseBladeSessionAll:
         pop {pc}
@@ -321,7 +329,7 @@ BladeSessionOne:
         tst r0, r1
         beq loopBladeSession  @未行動
   
-        mov r0, #2  @2マス指定
+        mov r0, #blade_session_spaces
         mov r1, r4
         mov r2, r5
         bl CheckXY
@@ -330,11 +338,11 @@ BladeSessionOne:
         add r7, #1
         b loopBladeSession
     resultBladeSession:
-        mov r2, #3
+        mov r2, #blade_session_grants
         mul r2, r7
-        cmp r2, #7
+        cmp r2, #blade_session_limits
         ble limitBladeSession
-        mov r2, #7
+        mov r2, #blade_session_limits
     limitBladeSession:
         mov r1, #90
         ldrh r0, [r4, r1]
@@ -346,6 +354,124 @@ BladeSessionOne:
         strh r0, [r4, r1] @自分
     falseBladeSession:
         pop {pc}
+
+@@@@@@@@
+@@@@@@@@
+
+joint_drive_grants = 4
+joint_drive_spaces = 2
+joint_drive_limits = 9
+
+joint_count_atk     .req r8
+joint_count_spd     .req r9
+
+JointDrive:
+        push {r5, r6, r7, lr}
+        mov r0, r8
+        mov r1, r9
+        push {r0, r1}
+        mov r7, #0
+        mov joint_count_atk, r7
+        mov joint_count_spd, r7
+
+        ldrb r6, [r4, #0xB]
+        mov r0, #0xC0
+        and r6, r0  @r6に部隊表ID
+
+    loopJointDrive:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq resultJointDrive  @リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopJointDrive @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopJointDrive @死亡判定2
+        ldrb r0, [r4, #0xB]
+        ldrb r1, [r5, #0xB]
+        cmp r0, r1
+        beq loopJointDrive @自分
+        ldr r0, [r5, #0xC]
+        bl GetExistFlagR1
+        tst r0, r1
+        bne loopJointDrive
+  
+        mov r0, #joint_drive_spaces
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopJointDrive
+        mov r7, #1
+
+        mov r0, r5
+        bl JointCount
+        b loopJointDrive
+    resultJointDrive:
+        cmp r7, #0
+        beq endJointDrive     @誰も居なかった
+@@@@@@@@
+        mov r0, r4
+        bl JointCount
+@@@@@@@@
+        mov r0, joint_count_atk
+        mov r2, #joint_drive_grants
+        mul r2, r0
+        cmp r2, #joint_drive_limits
+        ble limitJointDriveAtk
+        mov r2, #joint_drive_limits
+    limitJointDriveAtk:
+        mov r1, #90         @攻撃
+        ldrh r0, [r4, r1]
+        add r0, r2
+        strh r0, [r4, r1]
+@@@@@@@@
+        mov r0, joint_count_spd
+        mov r2, #joint_drive_grants
+        mul r2, r0
+        cmp r2, #joint_drive_limits
+        ble limitJointDriveSpd
+        mov r2, #joint_drive_limits
+    limitJointDriveSpd:
+        mov r1, #94         @攻速
+        ldrh r0, [r4, r1]
+        add r0, r2
+        strh r0, [r4, r1]
+    endJointDrive:
+        pop {r0, r1}
+        mov r8, r0
+        mov r9, r1
+        pop {r5, r6, r7, pc}
+
+
+JointCount:
+        push {r4, lr}
+        mov r4, r0
+        mov r0, r4
+        mov r1, #0
+        bl HAS_JOINT_DRIVE_ATK
+        cmp r0, #0
+        beq skipJointAtk
+        mov r0, #1
+        add joint_count_atk, r0
+    skipJointAtk:
+
+        mov r0, r4
+        mov r1, #0
+        bl HAS_JOINT_DRIVE_SPD
+        cmp r0, #0
+        beq skipJointSpd
+        mov r0, #1
+        add joint_count_spd, r0
+    skipJointSpd:
+        pop {r4, pc}
+
+@@@@@@@@
+@@@@@@@@
 
 ImpregnableWall:
         push {lr}
@@ -1338,6 +1464,12 @@ HAS_FIERCE_BREATH:
     mov pc, r2
 HAS_DARTING_BREATH:
     ldr r2, (addr+156)
+    mov pc, r2
+HAS_JOINT_DRIVE_ATK:
+    ldr r2, (addr+160)
+    mov pc, r2
+HAS_JOINT_DRIVE_SPD:
+    ldr r2, (addr+164)
     mov pc, r2
 
 GetWarList:

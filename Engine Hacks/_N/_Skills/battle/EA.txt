@@ -56,6 +56,8 @@ battle_before:
     POIN GET_COMBAT_ART
     POIN HAS_FIERCE_BREATH
     POIN HAS_DARTING_BREATH
+    POIN HAS_JOINT_DRIVE_ATK
+    POIN HAS_JOINT_DRIVE_SPD
 
 battle_after:
     #incbin main.dmp
@@ -246,4 +248,10 @@ HAS_CHARGE:
 HAS_REIN:
     HAS_SKILL
     WORD ReinID
+HAS_JOINT_DRIVE_ATK:
+    HAS_SKILL
+    WORD JointDriveAtkID
+HAS_JOINT_DRIVE_SPD:
+    HAS_SKILL
+    WORD JointDriveSpdID
 
