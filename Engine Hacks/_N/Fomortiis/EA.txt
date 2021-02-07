@@ -20,8 +20,9 @@ ORG 0x02cc70
 ORG 0x02b6ac
  jumpToHack(Fodes_Stone)
 
+///////
 ORG 0x02b304
- jumpToHack(judgeFodes)
+ jumpToHack(fodes_func)
 
 POP
 
