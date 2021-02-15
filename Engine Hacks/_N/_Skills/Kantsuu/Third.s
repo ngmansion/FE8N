@@ -415,7 +415,7 @@ Effect:	@状態異常特殊エフェクト
 	mov	r0, #64
 	orr	r0, r1
 	str	r0, [r3, #0]
-noEffect:
+@@@@noEffect:
 	mov	r3, r8
 	mov	r0, #48
 	ldrb	r0, [r3, r0]
@@ -424,15 +424,19 @@ noEffect:
 	cmp	r1, #11
 	beq	ouiStone
 	cmp	r1, #13
-	bne	endWar
+	bne	jumpCombat
 ouiStone:
 	ldr	r0, [r3, #12]
 	mov	r1, #3
 	neg	r1, r1
 	and	r0, r1
 	str	r0, [r3, #12]
+jumpCombat:
+    mov r0, #1
+    .short 0xE000
 endWar:
-	pop {pc}
+    mov r0, #0
+    pop {pc}
 
 
 random:
@@ -447,99 +451,7 @@ retrun:
 @r1 = セットする異常
 @
 InflictEffect:
-        push {r4, r5, r6, r7, lr}
-        mov r4, r0
-        mov r5, #0
-        mov r6, #0
-        mov r7, r1
-
-        ldrb r6, [r4, #0xB]
-        mov r0, #0xC0
-        and r6, r0          @r6に部隊表ID
-
-    loopEffect:
-        add r6, #1
-        mov r0, r6
-        bl Get_Status
-        mov r5, r0
-        cmp r0, #0
-        beq endEffect      @リスト末尾なので終了
-        ldr r0, [r5]
-        cmp r0, #0
-        beq loopEffect      @死亡判定1
-        ldrb r0, [r5, #19]
-        cmp r0, #0
-        beq loopEffect      @死亡判定2
-        ldrb r0, [r4, #0xB]
-        ldrb r1, [r5, #0xB]
-        cmp r0, r1
-        beq loopEffect      @同じユニット
-        ldr r0, [r5, #0xC]
-        ldr r1, =0x1002C    @居ないフラグ+救出されている
-        and r0, r1
-        bne loopEffect
-        
-        mov r0, #2          @2マス以内
-        mov r1, r4
-        mov r2, r5
-        bl CheckXY
-        cmp r0, #0
-        beq loopEffect
-
-        mov r0, r5
-        ldr r1, [r0]
-        ldr r1, [r1, #40]
-        ldr r2, [r0, #4]
-        ldr r2, [r2, #40]
-        orr r1, r2
-        lsl r1, r1, #16
-        bmi loopEffect     @敵将に無効
-
-        mov r0, r5
-        bl FodesFunc
-        beq loopEffect
-
-        mov r0, r5
-        mov r1, #0
-        bl HasNihil
-        cmp r0, #1
-        beq loopEffect
-
-        mov r0, #48
-        strb r7, [r5, r0]
-
-        b loopEffect
-    endEffect:
-        pop {r4, r5, r6, r7, pc}
-
-CheckXY:
-@r1とr2がr0マス以内に居るならr0=TRUE
-@同座標ならTRUE
-@
-        push {r0}
-        ldrb r0, [r1, #16]
-        ldrb r3, [r2, #16]
-        sub r3, r0, r3
-        bge jump1CheckXY
-        neg r3, r3  @絶対値取得
-    jump1CheckXY:
-
-        ldrb r1, [r1, #17]
-        ldrb r2, [r2, #17]
-        sub r2, r1, r2
-        bge jump2CheckXY
-        neg r2, r2  @絶対値取得
-    jump2CheckXY:
-
-        add r2, r2, r3
-        pop {r0}
-        cmp r2, r0
-        bgt falseCheckXY    @r0マス以内に居ない
-        mov r0, #1
-        bx lr
-    falseCheckXY:
-        mov r0, #0
-        bx lr
+        bx lr   @戦闘終了時に移動
 
 Get_Status:
     ldr r1, =0x08019108

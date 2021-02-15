@@ -96,7 +96,9 @@ battle_down:
   POIN hasRagingStorm
   POIN IS_TEMP_SKILL_FLAG
   POIN TURN_ON_TEMP_SKILL_FLAG
-  
+  POIN hasScream
+  POIN hasStun
+  POIN hasMagicBind
 
 HasLunge:
     HAS_COMBAT

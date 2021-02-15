@@ -5,6 +5,12 @@ FIRST_ATTACKED_FLAG   = (0)
 .thumb
 
 @ 0802bfd8
+@
+@ r4 = 反撃者アドレス
+@ r5 = 攻撃者アドレス
+@ r6 = 相手
+@ r7 = 自分
+@
 
     cmp	r6, #0
     bne	START
@@ -62,13 +68,15 @@ negative:
     bl DoubleLion	@HP満タンの時だけなので最後
 
 END:
-    mov r0, r7          @r7はユニット直
-    bl WarSkill_back
+    mov r0, r5          @r7はユニット直
+    bl ClearCombatArtsFlag
 
     pop	{r4, r5, r6, r7}
     pop	{r0}
     bx	r0
 
+.align
+.ltorg
 @
 @r5はATK,DEF
 @r7はユニット直
@@ -81,6 +89,7 @@ CombatArts:
         cmp r0, #0
         beq endCombatArts      @当たってないので終了
 
+        bl StatusEffect
         bl KnockBack
         bl HitAndRun
         bl Lunge
@@ -279,6 +288,112 @@ Lunge:
     endLunge:
         pop {pc}
 
+StatusEffect:
+        push {lr}
+
+        bl GetStatusEffect
+        cmp r0, #0
+        beq endStatusEffect @状態異常戦技なし
+
+        mov r1, r0
+        mov r0, r4
+        bl InflictEffect
+
+    endStatusEffect:
+        pop {pc}
+
+GetStatusEffect:
+        push {lr}
+        mov r0, r5
+        bl HAS_SCREAM
+        cmp r0, #1
+        beq screamStatusEffect
+
+        mov r0, r5
+        bl HAS_STUN
+        cmp r0, #1
+        beq stunStatusEffect
+
+        mov r0, r5
+        bl HAS_MAGIC_BIND
+        cmp r0, #1
+        beq bindStatusEffect
+
+        mov r0, #0
+        b endGetStatusEffect
+
+    screamStatusEffect:
+        mov r0, #0x1B       @@状態異常(2スリプ,3サイレス,4バサク,Bストン)
+        b endGetStatusEffect
+    stunStatusEffect:
+        mov r0, #0x24       @@状態異常(2スリプ,3サイレス,4バサク,Bストン)
+        b endGetStatusEffect
+    bindStatusEffect:
+        mov r0, #0x23       @@状態異常(2スリプ,3サイレス,4バサク,Bストン)
+        b endGetStatusEffect
+        nop
+    endGetStatusEffect:
+        pop {pc}
+
+InflictEffect:
+        push {r4, r5, r6, r7, lr}
+        mov r4, r0
+        mov r5, #0
+        mov r6, #0
+        mov r7, r1
+
+        ldrb r6, [r4, #0xB]
+        mov r0, #0xC0
+        and r6, r0          @r6に部隊表ID
+
+    loopEffect:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq endEffect      @リスト末尾なので終了
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopEffect      @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopEffect      @死亡判定2
+        ldrb r0, [r4, #0xB]
+        ldrb r1, [r5, #0xB]
+        cmp r0, r1
+        beq loopEffect      @同じユニット
+        ldr r0, [r5, #0xC]
+        ldr r1, =0x1002C    @居ないフラグ+救出されている
+        and r0, r1
+        bne loopEffect
+        
+        mov r0, #2          @2マス以内
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopEffect
+
+        mov r0, r5
+        ldr r1, [r0]
+        ldr r1, [r1, #40]
+        ldr r2, [r0, #4]
+        ldr r2, [r2, #40]
+        orr r1, r2
+        lsl r1, r1, #16
+        bmi loopEffect     @敵将に無効
+
+        mov r0, r5
+        bl FodesFunc
+        beq loopEffect
+
+        mov r0, #48
+        strb r7, [r5, r0]
+
+        b loopEffect
+    endEffect:
+        pop {r4, r5, r6, r7, pc}
 
 
 DoubleLion:
@@ -302,13 +417,12 @@ falseDouble:
 retDouble:
     pop	{r4, pc}
 
-WarSkill_back:
+ClearCombatArtsFlag:
     push {lr}
     mov r1, r0
 
     mov r0, #0
     bl SET_COMBAT_ART
-war_end:
     pop {pc}
 
 Counter:
@@ -347,7 +461,7 @@ isRedCounter:
 startCounter:
     mov r0, r3
     mov r1, r4
-        ldr r2, ADR+12
+        ldr r2, ADDR+12
         mov lr, r2
         .short 0xF800
     cmp r0, #0
@@ -527,7 +641,7 @@ isRed:
 startJadoku:
     mov r0, r3
     mov r1, r4
-        ldr r2, ADR+8
+        ldr r2, ADDR+8
         mov lr, r2
         .short 0xF800
     cmp r0, #0
@@ -555,7 +669,7 @@ falseJadoku:
 Fury:
     push	{r4, lr}
     mov	r4, r0
-        ldr	r2, ADR+4
+        ldr	r2, ADDR+4
         mov	lr, r2
         .short 0xF800
     cmp	r0, #0
@@ -622,37 +736,46 @@ CanLocateMinus:
         b jumpLocate
 
 hasDoubleLion:
-    ldr r2, (ADR+16)
+    ldr r2, (ADDR+16)
     mov pc, r2
 
-HAS_SAVAGE_FUNC = (ADR+20)
+HAS_SAVAGE_FUNC = (ADDR+20)
 
 FodesFunc:
-    ldr r1, (ADR+24)
+    ldr r1, (ADDR+24)
     mov pc, r1
 
 HAS_LUNGE:
-    ldr r2, (ADR+28)
+    ldr r2, (ADDR+28)
     mov pc, r2
 HAS_HIT_AND_RUN:
-    ldr r2, (ADR+32)
+    ldr r2, (ADDR+32)
     mov pc, r2
 HAS_KNOCK_BACK:
-    ldr r2, (ADR+36)
+    ldr r2, (ADDR+36)
     mov pc, r2
 SET_COMBAT_ART:
-    ldr r2, (ADR+40)
+    ldr r2, (ADDR+40)
     mov pc, r2
 HAS_RAGING_STORM:
-    ldr r2, (ADR+44)
+    ldr r2, (ADDR+44)
     mov pc, r2
 IS_TEMP_SKILL_FLAG:
-    ldr r2, (ADR+48)
+    ldr r2, (ADDR+48)
     mov pc, r2
 TURN_ON_TEMP_SKILL_FLAG:
-    ldr r2, (ADR+52)
+    ldr r2, (ADDR+52)
+    mov pc, r2
+HAS_SCREAM:
+    ldr r2, (ADDR+56)
+    mov pc, r2
+HAS_STUN:
+    ldr r2, (ADDR+60)
+    mov pc, r2
+HAS_MAGIC_BIND:
+    ldr r2, (ADDR+64)
     mov pc, r2
 .align
 .ltorg
-ADR:
+ADDR:
 
