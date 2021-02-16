@@ -186,4 +186,5 @@
 #define SpecialSpiralID         189 //0xBD 奥義の螺旋
 #define JointDriveAtkID         190 //0xBE 攻撃の相互大紋章
 #define JointDriveSpdID         191 //0xBF 速さの相互大紋章
+#define UnboundID               192 //0xC0 孤絶
 

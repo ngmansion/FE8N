@@ -179,56 +179,195 @@ GetAttackerAddr:
     ldr r0, =0x03004df0
     bx lr
 
+judgeLull:
+        push {r5, lr}
+        mov r5, #0
+
+        mov r0, r4
+        bl HasLull
+        cmp r0, #0
+        beq skipLull
+        add r5, #0b0001
+    skipLull:
+
+        mov r0, r4
+        bl Solo
+        cmp r0, #0
+        beq skipSolo
+        add r5, #0b0010
+    skipSolo:
+
+        mov r0, r5
+        pop {r5, pc}
+
 Lull:
         push {lr}
         mov r0, r4
-        mov r1, #0
-        bl HasLull
-        cmp r0, #0
-        beq endLull
-@@@@@@@凪効果
+        bl judgeLull
+        cmp r0, #1
+        beq trueLull
+        cmp r0, #2
+        beq trueUnbound
+        cmp r0, #3
+        beq trueDouble
+        b endLull
+@@@@@@@@凪
+    trueLull:
         mov r0, r6
         mov r1, r4
         bl recalcAtk
+        mov r0, #2
+        bl DownAtk
+@@@@@@@@凪-攻速
         mov r0, r6
         mov r1, r4
         bl recalcSpd
-        
-        mov r1, r6
-        add r1, #90
-        ldrh r0, [r1]
-        sub r0, #2
-        bge jumpAtk
-        mov r0, #0
-    jumpAtk:
-        strh r0, [r1] @威力
-        
         mov r1, r6
         add r1, #94
         ldrh r0, [r1]
         sub r0, #2
-        bge jumpSpd
+        bge jumpSpd1
         mov r0, #0
-    jumpSpd:
-        strh r0, [r1] @速さ
+    jumpSpd1:
+        strh r0, [r1] @書き戻し
+        b endLull
+@@@@@@@@孤絶
+    trueUnbound:
+        mov r0, r6
+        mov r1, r4
+        bl recalcAtk
+        mov r0, #2
+        bl DownAtk
+@@@@@@@@孤絶-防御
+        mov r0, r6
+        mov r1, r4
+        bl recalcDef
+        mov r1, r6
+        add r1, #92
+        ldrh r0, [r1]
+        sub r0, #2
+        bge jumpDef1
+        mov r0, #0
+    jumpDef1:
+        strh r0, [r1] @書き戻し
+        b endLull
+@@@@@@@@両方
+    trueDouble:
+        mov r0, r6
+        mov r1, r4
+        bl recalcAtk
+        mov r0, #4
+        bl DownAtk
+@@@@@@@@両方-防御
+        mov r0, r6
+        mov r1, r4
+        bl recalcDef
+        mov r1, r6
+        add r1, #92
+        ldrh r0, [r1]
+        sub r0, #2
+        bge jumpDef2
+        mov r0, #0
+    jumpDef2:
+        strh r0, [r1] @書き戻し
+@@@@@@@@両方-攻速
+        mov r0, r6
+        mov r1, r4
+        bl recalcSpd
+        mov r1, r6
+        add r1, #94
+        ldrh r0, [r1]
+        sub r0, #2
+        bge jumpSpd2
+        mov r0, #0
+    jumpSpd2:
+        strh r0, [r1] @書き戻し
+        b endLull
+        nop
+    endLull:
+        pop {pc}
+
+down_fort_num = (2)
+
+DownAtk:
+        push {lr}
+        mov r2, r0
+
+        mov r1, r6
+        add r1, #90
+        ldrh r0, [r1]
+        sub r0, r2
+        bge jumpAtk
+        mov r0, #0
+    jumpAtk:
+        strh r0, [r1] @威力
 @@@@@@@@城塞再計算
         mov r0, r6
         mov r1, #0
         bl HAS_FORT
         cmp r0, #0
-        beq endLull
+        beq endAtk
 
         mov r1, r6
         add r1, #90
         ldrh r0, [r1]
-        sub r0, #2
+        sub r0, #down_fort_num
         bge jumpAtk2
         mov r0, #0
     jumpAtk2:
         strh r0, [r1] @威力
 
-    endLull:
+    endAtk:
         pop {pc}
+
+Solo:
+        push {r4, r5, r6, lr}
+        mov r4, r0
+        ldrb r6, [r4, #0xB]
+        mov r0, #0xC0
+        and r6, r0	@r6に部隊表ID
+        
+        mov r0, r4
+        mov r1, #0
+        bl HAS_UNBOUND
+        cmp r0, #0
+        beq falseSolo
+        
+    loopSolo:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq trueSolo	@リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopSolo	@死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopSolo	@死亡判定2
+        ldrb r0, [r4, #0xB]
+        ldrb r1, [r5, #0xB]
+        cmp r0, r1
+        beq loopSolo	@自分
+        ldr r0, [r5, #0xC]
+        bl GetExistFlagR1
+        and r0, r1
+        bne loopSolo	@居ないフラグ+救出中
+        
+        mov r0, #2  @2マス以内
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #1
+        beq falseSolo
+        b loopSolo
+    trueSolo:
+        mov r0, #1
+        .short 0xE000
+    falseSolo:
+        mov r0, #0
+        pop {r4, r5, r6, pc}
 
 
 Shisen_B:	@相手強化
@@ -371,6 +510,9 @@ recalcAtk:
 recalcSpd:
     ldr r2, =0x0802aae4
     mov pc, r2
+recalcDef:
+    ldr r2, =0x0802a9b0
+    mov pc, r2
 
 HasLull:
     ldr r2, LULL_ADR
@@ -395,7 +537,9 @@ GET_COMBAT_ART:
 HAS_FORT:
     ldr r2, (addr+64)
     mov pc, r2
-
+HAS_UNBOUND:
+    ldr r2, (addr+68)
+    mov pc, r2
 
 .ltorg
 .align

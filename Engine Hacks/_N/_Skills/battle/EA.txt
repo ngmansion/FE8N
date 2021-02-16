@@ -78,6 +78,7 @@ battle_after:
     POIN HAS_REIN
     POIN GET_COMBAT_ART
     POIN hasFort
+    POIN HAS_UNBOUND
     
     
 battle_down:
@@ -256,4 +257,7 @@ HAS_JOINT_DRIVE_ATK:
 HAS_JOINT_DRIVE_SPD:
     HAS_SKILL
     WORD JointDriveSpdID
+HAS_UNBOUND:
+    HAS_SKILL
+    WORD UnboundID
 
