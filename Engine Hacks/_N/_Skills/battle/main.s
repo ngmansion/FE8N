@@ -12,6 +12,7 @@ ARENA_ADDR = (0x0203a4d0)
     push {r4, r5, r6, lr}
     mov r4, r0
     mov r6, r1
+    mov r5, #0
 
     ldr r0, =ARENA_ADDR
     ldrh r0, [r0]
@@ -19,13 +20,16 @@ ARENA_ADDR = (0x0203a4d0)
     and r0, r1
     bne Return
 
+    bl BindingNecklace
+    mov r5, r0
+
     mov	r0, r6
-        ldr r1, NIHIL_ADR
-        mov lr, r1
-        .short 0xF800
+    mov r1, #0
+    bl HAS_NIHIL
     cmp r0, #1
     beq next
 
+    mov r0, r5  @recalc済
     bl Lull
     bl Shisen_B
     bl Rein
@@ -52,6 +56,313 @@ endZero:
     pop {r4, r5, r6}
     pop {r0}
     bx r0
+.align
+.ltorg
+
+BindingNecklace:
+        push {lr}
+
+        mov r0, r4
+        mov r1, r6
+        bl  CanBindingNecklace
+        mov r5, r0
+
+        mov r0, r6
+        mov r1, r4
+        bl  CanBindingNecklace2
+        add r5, r0
+        cmp r5, #0
+        beq falseBindingNecklace
+        cmp r5, #2
+        beq doubleBinding
+        cmp r0, #1
+        beq falseBindingNecklace
+
+        bl  BindingNecklace_impl
+        b   endBindingNecklace
+    doubleBinding:
+        bl  DoubleBinding_impl
+        b   endBindingNecklace
+    falseBindingNecklace:
+        mov  r0, #0
+        .short 0xE000
+    endBindingNecklace:
+        mov r0, #1
+        pop {pc}
+
+UNIT_SIZE = (128)
+MEMCPY_R1toR0_FUNC = (0x080d6908)
+@biding_necklace_gain = (2) beforeで行う
+biding_necklace_loss = (2)
+
+BindingNecklace_impl:
+@r6をrecalcしてr4を強化
+@
+        push {r4, lr}
+        sub sp, #UNIT_SIZE
+
+        mov r1, r6
+        mov r0, sp
+        mov r2, #UNIT_SIZE
+        ldr r3, =MEMCPY_R1toR0_FUNC
+        mov lr, r3
+        .short 0xF800
+
+@@@@@@@@攻撃奪取
+        mov r0, r6
+        mov r1, r4
+        bl recalcAtk
+
+        mov r2, #90
+        mov r0, sp
+        ldrh r0, [r0, r2]
+        ldrh r1, [r6, r2]
+        sub r0, r1
+        .short 0xda00     @bge
+        mov r0, #0
+
+        ldrh r1, [r4, r2]
+        add r1, r0
+@        add r1, #biding_necklace_gain
+        strh r1, [r4, r2]
+@@@@@@@@攻撃減少
+        mov r1, r6
+        add r1, #90
+        ldrh r0, [r1]
+        sub r0, #biding_necklace_loss
+        .short 0xda00     @bge
+        mov r0, #0
+        strh r0, [r1] @書き戻し
+@@@@@@@@攻速奪取
+        mov r0, r6
+        mov r1, r4
+        bl recalcSpd
+
+        mov r2, #94
+        mov r0, sp
+        ldrh r0, [r0, r2]
+        ldrh r1, [r6, r2]
+        sub r0, r1
+        .short 0xda00     @bge
+        mov r0, #0
+
+        ldrh r1, [r4, r2]
+        add r1, r0
+@        add r1, #biding_necklace_gain
+        strh r1, [r4, r2]
+@@@@@@@@攻速減少
+        mov r1, r6
+        add r1, #94
+        ldrh r0, [r1]
+        sub r0, #biding_necklace_loss
+        .short 0xda00     @bge
+        mov r0, #0
+        strh r0, [r1] @書き戻し
+@@@@@@@@防御奪取
+        mov r0, r6
+        mov r1, r4
+        bl recalcDef
+        mov r2, #92
+        mov r0, sp
+        ldrh r0, [r0, r2]
+        ldrh r1, [r6, r2]
+        sub r0, r1
+        .short 0xda00     @bge
+        mov r0, #0
+
+        ldrh r1, [r4, r2]
+        add r1, r0
+@        add r1, #biding_necklace_gain
+        strh r1, [r4, r2]
+@@@@@@@@防御減少
+        mov r1, r6
+        add r1, #92
+        ldrh r0, [r1]
+        sub r0, #biding_necklace_loss
+        .short 0xda00     @bge
+        mov r0, #0
+        strh r0, [r1] @書き戻し
+@@@@@@@@金剛/明鏡補正
+        mov r0, r4
+        bl IS_MAGIC
+        cmp r0, #1
+        beq magicBindingImpl
+@@@@@@@@発動者が物理
+        mov r0, r6
+        bl IS_MAGIC
+        cmp r0, #0
+        beq endBindingImpl  @相手も物理なら終了
+
+        mov r0, r6
+        mov r1, r4
+        bl GainSteady
+        mov r2, #92
+        ldrh r1, [r4, r2]
+        sub r1, r0          @魔法相手に金剛は無意味
+        .short 0xda00   @bge
+        mov r1, #0
+        strh r1, [r4, r2]
+
+        mov r0, r6
+        mov r1, r4
+        bl GainWarding
+        mov r2, #92
+        ldrh r1, [r4, r2]
+        add r1, r0          @魔法相手に明鏡は有効
+        strh r1, [r4, r2]
+
+        b endBindingImpl
+    magicBindingImpl:
+@@@@@@@@発動者が魔法
+        mov r0, r6
+        bl IS_MAGIC
+        cmp r0, #1
+        beq endBindingImpl  @相手も魔法なら終了
+
+        mov r0, r6
+        mov r1, r4
+        bl GainSteady
+        mov r2, #92
+        ldrh r1, [r4, r2]
+        add r1, r0          @魔法相手に金剛は有効
+        strh r1, [r4, r2]
+
+        mov r0, r6
+        mov r1, r4
+        bl GainWarding
+        mov r2, #92
+        ldrh r1, [r4, r2]
+        sub r1, r0          @魔法相手に明鏡は無意味
+        .short 0xda00   @bge
+        mov r1, #0
+        strh r1, [r4, r2]
+    endBindingImpl:
+        add sp, #UNIT_SIZE
+        pop {r4, pc}
+
+
+DoubleBinding_impl:
+        push {lr}
+
+        bl DoubleBinding_other
+        eor r4, r6
+        eor r6, r4
+        eor r4, r6
+
+        bl DoubleBinding_other
+        eor r4, r6
+        eor r6, r4
+        eor r4, r6
+
+    endBinding_impl:
+        pop {pc}
+
+DoubleBinding_other:
+@両方下がるなら別に下げなくてもいい気もするが
+        push {lr}
+        mov r0, r4
+        mov r1, r6
+        bl recalcAtk
+
+        mov r0, r4
+        mov r1, r6
+        bl recalcSpd
+
+        mov r0, r4
+        mov r1, r6
+        bl recalcDef
+
+        mov r1, r4
+        add r1, #90
+        ldrh r0, [r1]
+        sub r0, #biding_necklace_loss
+        .short 0xda00     @bge
+        mov r0, #0
+        strh r0, [r1] @書き戻し
+
+        mov r1, r4
+        add r1, #92
+        ldrh r0, [r1]
+        sub r0, #biding_necklace_loss
+        .short 0xda00     @bge
+        mov r0, #0
+        strh r0, [r1] @書き戻し
+
+        mov r1, r4
+        add r1, #94
+        ldrh r0, [r1]
+        sub r0, #biding_necklace_loss
+        .short 0xda00     @bge
+        mov r0, #0
+        strh r0, [r1] @書き戻し
+
+        pop {pc}
+
+.align
+.ltorg
+GainSteady:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_NIHIL
+        cmp r0, #1
+        beq falseGainSteady
+
+        ldr r0, =0x0203a4e8
+        cmp r0, r5
+        bne reverseSteady
+
+        mov r0, r5
+        mov r1, #0
+        bl HAS_ARMORED_BLOW
+        cmp r0, #0
+        beq falseGainSteady
+        mov r0, #10
+        b endGainSteady
+    reverseSteady:
+        mov r0, r5
+        mov r1, #0
+        bl HAS_STEADY_STANCE
+        cmp r0, #0
+        beq falseGainSteady
+        mov r0, #6
+        b endGainSteady
+    falseGainSteady:
+        mov r0, #0
+    endGainSteady:
+        pop {pc}
+
+GainWarding:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_NIHIL
+        cmp r0, #1
+        beq falseGainWarding
+
+        ldr r0, =0x0203a4e8
+        cmp r0, r5
+        bne reverseWarding
+
+        mov r0, r5
+        mov r1, #0
+        bl HAS_WARDING_BLOW
+        cmp r0, #0
+        beq falseGainWarding
+        mov r0, #10
+        b endGainWarding
+    reverseWarding:
+        mov r0, r5
+        mov r1, #0
+        bl HAS_WARDING_STANCE
+        cmp r0, #0
+        beq falseGainWarding
+        mov r0, #6
+        b endGainWarding
+    falseGainWarding:
+        mov r0, #0
+    endGainWarding:
+        pop {pc}
 
 @r4 temp enemy
 @r5 loop count
@@ -191,7 +502,8 @@ judgeLull:
     skipLull:
 
         mov r0, r4
-        bl Solo
+        mov r1, r6
+        bl CanUnbound
         cmp r0, #0
         beq skipSolo
         add r5, #0b0010
@@ -215,72 +527,68 @@ Lull:
     trueLull:
         mov r0, r6
         mov r1, r4
-        bl recalcAtk
+        bl recalcAtk_wrapper
         mov r0, #2
         bl DownAtk
 @@@@@@@@凪-攻速
         mov r0, r6
         mov r1, r4
-        bl recalcSpd
+        bl recalcSpd_wrapper
         mov r1, r6
         add r1, #94
         ldrh r0, [r1]
         sub r0, #2
-        bge jumpSpd1
+        .short 0xda00     @bge
         mov r0, #0
-    jumpSpd1:
         strh r0, [r1] @書き戻し
         b endLull
 @@@@@@@@孤絶
     trueUnbound:
         mov r0, r6
         mov r1, r4
-        bl recalcAtk
+        bl recalcAtk_wrapper
         mov r0, #2
         bl DownAtk
 @@@@@@@@孤絶-防御
         mov r0, r6
         mov r1, r4
-        bl recalcDef
+        bl recalcDef_wrapper
         mov r1, r6
         add r1, #92
         ldrh r0, [r1]
         sub r0, #2
-        bge jumpDef1
+        .short 0xda00     @bge
         mov r0, #0
-    jumpDef1:
         strh r0, [r1] @書き戻し
         b endLull
 @@@@@@@@両方
     trueDouble:
         mov r0, r6
         mov r1, r4
-        bl recalcAtk
+        bl recalcAtk_wrapper
         mov r0, #4
         bl DownAtk
 @@@@@@@@両方-防御
         mov r0, r6
         mov r1, r4
-        bl recalcDef
+        bl recalcDef_wrapper
         mov r1, r6
         add r1, #92
         ldrh r0, [r1]
         sub r0, #2
-        bge jumpDef2
+        .short 0xda00     @bge
         mov r0, #0
-    jumpDef2:
         strh r0, [r1] @書き戻し
 @@@@@@@@両方-攻速
         mov r0, r6
         mov r1, r4
-        bl recalcSpd
+        bl recalcSpd_wrapper
         mov r1, r6
         add r1, #94
         ldrh r0, [r1]
         sub r0, #2
-        bge jumpSpd2
+        .short 0xda00     @bge
         mov r0, #0
-    jumpSpd2:
         strh r0, [r1] @書き戻し
         b endLull
         nop
@@ -297,42 +605,48 @@ DownAtk:
         add r1, #90
         ldrh r0, [r1]
         sub r0, r2
-        bge jumpAtk
+        .short 0xda00     @bge
         mov r0, #0
-    jumpAtk:
-        strh r0, [r1] @威力
-@@@@@@@@城塞再計算
-        mov r0, r6
-        mov r1, #0
-        bl HAS_FORT
-        cmp r0, #0
-        beq endAtk
-
-        mov r1, r6
-        add r1, #90
-        ldrh r0, [r1]
-        sub r0, #down_fort_num
-        bge jumpAtk2
-        mov r0, #0
-    jumpAtk2:
         strh r0, [r1] @威力
 
-    endAtk:
         pop {pc}
 
-Solo:
+CanBindingNecklace2:
+        ldr r2, =0x0203a4e8
+        cmp r0, r2
+        beq CanBindingNecklace  @r6が攻撃側なら、既に実施済みなので見る価値無し
+        mov r0, #0
+        bx lr
+
+CanBindingNecklace:
+        push {r4, lr}
+        mov r4, r0
+        bl HAS_BINDING_NECKLACE
+        cmp r0, #0
+        beq falseCanBindingNecklace
+        mov r0, r4
+        bl  CheckSolo
+        .short 0xE000
+    falseCanBindingNecklace:
+        mov r0, #0
+        pop {r4, pc}
+CanUnbound:
+        push {r4, lr}
+        mov r4, r0
+        mov r1, #0
+        bl  HAS_UNBOUND
+        cmp r0, #0
+        beq endCanUnbound
+        mov r0, r4
+        bl  CheckSolo
+    endCanUnbound:
+        pop {r4, pc}
+CheckSolo:
         push {r4, r5, r6, lr}
         mov r4, r0
         ldrb r6, [r4, #0xB]
         mov r0, #0xC0
         and r6, r0	@r6に部隊表ID
-        
-        mov r0, r4
-        mov r1, #0
-        bl HAS_UNBOUND
-        cmp r0, #0
-        beq falseSolo
-        
     loopSolo:
         add r6, #1
         mov r0, r6
@@ -370,7 +684,7 @@ Solo:
         pop {r4, r5, r6, pc}
 
 
-Shisen_B:	@相手強化
+Shisen_B:   @相手強化
         push {lr}
         mov r0, r4
         mov r1, #0
@@ -477,7 +791,9 @@ GetExistFlagR1:
     bx lr
 
 SHISEN_ADR = (addr+0)
-NIHIL_ADR = (addr+12)
+HAS_NIHIL:
+    ldr r2, (addr+12)
+    mov pc, r2
 LULL_ADR = (addr+16)
 COMBAT_TBL = (addr+20)
 COMBAT_TBL_SIZE = (addr+24)
@@ -504,12 +820,45 @@ HasShisen:
     ldr r2, SHISEN_ADR
     mov pc, r2
 
+recalcAtk_wrapper:
+    cmp r5, #0
+    beq recalcAtk
+    bx lr
 recalcAtk:
-    ldr r2, =0x0802aa28
-    mov pc, r2
+        push {r6, lr}
+        mov r6, r0
+        ldr r2, =0x0802aa28
+        mov lr, r2
+        .short 0xF800
+
+        mov r0, r6
+        mov r1, #0
+        bl HAS_FORT
+        cmp r0, #0
+        beq endAtk
+
+        mov r1, r6
+        add r1, #90
+        ldrh r0, [r1]
+        sub r0, #down_fort_num
+        .short 0xda00     @bge
+        mov r0, #0
+        strh r0, [r1] @威力
+    endAtk:
+        pop {r6, pc}
+
+recalcSpd_wrapper:
+    cmp r5, #0
+    beq recalcSpd
+    bx lr
 recalcSpd:
     ldr r2, =0x0802aae4
     mov pc, r2
+
+recalcDef_wrapper:
+    cmp r5, #0
+    beq recalcDef
+    bx lr
 recalcDef:
     ldr r2, =0x0802a9b0
     mov pc, r2
@@ -539,6 +888,24 @@ HAS_FORT:
     mov pc, r2
 HAS_UNBOUND:
     ldr r2, (addr+68)
+    mov pc, r2
+HAS_BINDING_NECKLACE:
+    ldr r2, (addr+72)
+    mov pc, r2
+IS_MAGIC:
+    ldr r2, (addr+76)
+    mov pc, r2
+HAS_ARMORED_BLOW:
+    ldr r2, (addr+80)
+    mov pc, r2
+HAS_STEADY_STANCE:
+    ldr r2, (addr+84)
+    mov pc, r2
+HAS_WARDING_BLOW:
+    ldr r2, (addr+88)
+    mov pc, r2
+HAS_WARDING_STANCE:
+    ldr r2, (addr+92)
     mov pc, r2
 
 .ltorg

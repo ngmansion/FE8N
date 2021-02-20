@@ -826,19 +826,58 @@ shisen_A:	@自分死線
     endShisen:
         pop {pc}
 
-
+biding_necklace_gain = (2)
+solo_gain = (3)
 Solo:
-        push {r4, r5, r6, lr}
-        ldrb r6, [r4, #0xB]
-        mov r0, #0xC0
-        and r6, r0	@r6に部隊表ID
-        
+        push {r4, r5, lr}
+        mov r0, r4
+        bl CheckSolo
+        cmp r0, #0
+        beq endSolo
+
         mov r0, r4
         mov r1, #0
         bl HasSolo
         cmp r0, #0
-        beq falseSolo
-        
+        beq skipSolo
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #solo_gain
+        strh r0, [r4, r1] @自分
+        mov r1, #94
+        ldrh r0, [r4, r1]
+        add r0, #solo_gain
+        strh r0, [r4, r1] @自分
+    skipSolo:
+
+        mov r0, r4
+        mov r1, #0
+        bl HAS_BINDING_NECKLACE
+        cmp r0, #0
+        beq skipBinding
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #biding_necklace_gain
+        strh r0, [r4, r1] @自分
+        mov r1, #92
+        ldrh r0, [r4, r1]
+        add r0, #biding_necklace_gain
+        strh r0, [r4, r1] @自分
+        mov r1, #94
+        ldrh r0, [r4, r1]
+        add r0, #biding_necklace_gain
+        strh r0, [r4, r1] @自分
+    skipBinding:
+
+    endSolo:
+        pop {r4, r5, pc}
+
+CheckSolo:
+        push {r4, r5, r6, lr}
+        mov r4, r0
+        ldrb r6, [r4, #0xB]
+        mov r0, #0xC0
+        and r6, r0	@r6に部隊表ID
     loopSolo:
         add r6, #1
         mov r0, r6
@@ -869,17 +908,11 @@ Solo:
         beq falseSolo
         b loopSolo
     trueSolo:
-        mov r1, #90
-        ldrh r0, [r4, r1]
-        add r0, #3
-        strh r0, [r4, r1] @自分
-        mov r1, #94
-        ldrh r0, [r4, r1]
-        add r0, #3
-        strh r0, [r4, r1] @自分
+        mov r0, #1
+        .short 0xE000
     falseSolo:
+        mov r0, #0
         pop {r4, r5, r6, pc}
-
 CheckXY:
 @r1とr2がr0マス以内に居るならr0=TRUE
 @同座標ならTRUE
@@ -1228,7 +1261,7 @@ KishinBreath:
 Bracing:
         push {lr}
         mov r0, r5
-        bl IsMagic
+        bl IS_MAGIC
         cmp r0, #1
         beq jumpBracing
         bl Kongou
@@ -1241,7 +1274,7 @@ Bracing:
 BracingR:
         push {lr}
         mov r0, r5
-        bl IsMagic
+        bl IS_MAGIC
         cmp r0, #1
         beq jumpBracingR
         bl KongouR
@@ -1306,23 +1339,6 @@ MeikyouR:
         add r0, #6
         strh r0, [r4, r1]
         b endMeikyou
-
-IsMagic:
-        add r0, #80
-        ldrb r0, [r0]
-        cmp r0, #4
-        beq trueMagic
-        cmp r0, #5
-        beq trueMagic
-        cmp r0, #6
-        beq trueMagic
-        cmp r0, #7
-        beq trueMagic
-        mov r0, #0
-        bx lr
-    trueMagic:
-        mov r0, #1
-        bx lr
 
 Hien:
         push {lr}
@@ -1470,6 +1486,12 @@ HAS_JOINT_DRIVE_ATK:
     mov pc, r2
 HAS_JOINT_DRIVE_SPD:
     ldr r2, (addr+164)
+    mov pc, r2
+IS_MAGIC:
+    ldr r2, (addr+168)
+    mov pc, r2
+HAS_BINDING_NECKLACE:
+    ldr r2, (addr+172)
     mov pc, r2
 
 GetWarList:

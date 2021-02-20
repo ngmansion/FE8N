@@ -58,6 +58,8 @@ battle_before:
     POIN HAS_DARTING_BREATH
     POIN HAS_JOINT_DRIVE_ATK
     POIN HAS_JOINT_DRIVE_SPD
+    POIN IS_MAGIC
+    POIN HAS_BINDING_NECKLACE
 
 battle_after:
     #incbin main.dmp
@@ -79,6 +81,12 @@ battle_after:
     POIN GET_COMBAT_ART
     POIN hasFort
     POIN HAS_UNBOUND
+    POIN HAS_BINDING_NECKLACE
+    POIN IS_MAGIC
+    POIN hasArmoredBlow
+    POIN HasSteadyStance
+    POIN hasDartingBlow
+    POIN HasWardingStance
     
     
 battle_down:
@@ -100,6 +108,11 @@ battle_down:
   POIN hasScream
   POIN hasStun
   POIN hasMagicBind
+
+IS_MAGIC:
+  #incbin IS_MAGIC.dmp
+  POIN HasSoulblade
+
 
 HasLunge:
     HAS_COMBAT
@@ -260,4 +273,6 @@ HAS_JOINT_DRIVE_SPD:
 HAS_UNBOUND:
     HAS_SKILL
     WORD UnboundID
-
+HAS_BINDING_NECKLACE:
+    HAS_NIHIL
+    WORD BindingNecklaceID
