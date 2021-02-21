@@ -12,6 +12,8 @@ IS_MAGIC:
     jumpMagic:
         mov r1, #0
         bl HAS_SOUL_BLADE
+        cmp r0, #1
+        beq trueMagic
 
         mov r0, r4
         add r0, #80
