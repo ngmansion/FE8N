@@ -21,20 +21,25 @@ ARENA_ADDR = (0x0203a4d0)
     bne Return
 
     bl BindingNecklace
-    mov r5, r0
+    mov r5, r0  @recalc済
+
+    mov	r0, r4
+    mov r1, #0
+    bl HAS_NIHIL
+    cmp r0, #1
+    beq jumpDown
+    bl Lull
+    bl Rein
+jumpDown:
 
     mov	r0, r6
     mov r1, #0
     bl HAS_NIHIL
     cmp r0, #1
-    beq next
-
-    mov r0, r5  @recalc済
-    bl Lull
+    beq jumpUp
     bl Shisen_B
-    bl Rein
-    
-next:
+jumpUp:
+
     bl WarSkill
     bl godBless
     bl ChagingLance
@@ -69,25 +74,47 @@ BindingNecklace:
 
         mov r0, r6
         mov r1, r4
-        bl  CanBindingNecklace2
+        bl  CanBindingNecklace
         add r5, r0
         cmp r5, #0
-        beq falseBindingNecklace
+        beq falseBindingNecklace    @誰も発動していないので自分弱化なし
         cmp r5, #2
-        beq doubleBinding
+        beq bothBindingNecklace
         cmp r0, #1
-        beq falseBindingNecklace
+        beq reverseBindingNecklace  @相手が発動
 
-        bl  BindingNecklace_impl
-        b   endBindingNecklace
-    doubleBinding:
-        bl  DoubleBinding_impl
-        b   endBindingNecklace
+        mov r0, r4
+        mov r1, r6
+        bl  BindingNecklaceEffect
+        b   falseBindingNecklace    @自分のみ発動なので自分弱化なし
+    bothBindingNecklace:
+        bl  DoubleBindingEffect
+        b   trueBindingNecklace     @両方発動なので、自分は弱化
+    reverseBindingNecklace:
+        mov r0, r6
+        mov r1, r4
+        bl  BindingNecklaceEffect
+        b   trueBindingNecklace     @相手が発動しているので自分は弱化
+        nop
+
     falseBindingNecklace:
-        mov  r0, #0
+        mov  r0, #0             @自分弱化なし
         .short 0xE000
-    endBindingNecklace:
-        mov r0, #1
+    trueBindingNecklace:
+        mov r0, #1              @自分弱化済み
+        pop {pc}
+
+BindingNecklaceEffect:
+@A側もB側も両方この1処理で行う
+@
+        push {lr}
+        ldr r2, =0x0203a4e8
+        cmp r2, r4
+        bne endBindingEffect    @r4が攻撃側なら、既に実施済みなので見る価値無し
+
+        bl BindingNecklace_impl
+
+    endBindingEffect:
         pop {pc}
 
 UNIT_SIZE = (128)
@@ -96,12 +123,14 @@ MEMCPY_R1toR0_FUNC = (0x080d6908)
 biding_necklace_loss = (2)
 
 BindingNecklace_impl:
-@r6をrecalcしてr4を強化
+@r1(r5)をrecalcしてr0(r4)を強化
 @
-        push {r4, lr}
+        push {r4, r5, lr}
         sub sp, #UNIT_SIZE
+        mov r4, r0
+        mov r5, r1
 
-        mov r1, r6
+        mov r1, r5
         mov r0, sp
         mov r2, #UNIT_SIZE
         ldr r3, =MEMCPY_R1toR0_FUNC
@@ -109,14 +138,14 @@ BindingNecklace_impl:
         .short 0xF800
 
 @@@@@@@@攻撃奪取
-        mov r0, r6
+        mov r0, r5
         mov r1, r4
         bl recalcAtk
 
         mov r2, #90
         mov r0, sp
         ldrh r0, [r0, r2]
-        ldrh r1, [r6, r2]
+        ldrh r1, [r5, r2]
         sub r0, r1
         .short 0xda00     @bge
         mov r0, #0
@@ -126,7 +155,7 @@ BindingNecklace_impl:
 @        add r1, #biding_necklace_gain
         strh r1, [r4, r2]
 @@@@@@@@攻撃減少
-        mov r1, r6
+        mov r1, r5
         add r1, #90
         ldrh r0, [r1]
         sub r0, #biding_necklace_loss
@@ -134,14 +163,14 @@ BindingNecklace_impl:
         mov r0, #0
         strh r0, [r1] @書き戻し
 @@@@@@@@攻速奪取
-        mov r0, r6
+        mov r0, r5
         mov r1, r4
         bl recalcSpd
 
         mov r2, #94
         mov r0, sp
         ldrh r0, [r0, r2]
-        ldrh r1, [r6, r2]
+        ldrh r1, [r5, r2]
         sub r0, r1
         .short 0xda00     @bge
         mov r0, #0
@@ -151,7 +180,7 @@ BindingNecklace_impl:
 @        add r1, #biding_necklace_gain
         strh r1, [r4, r2]
 @@@@@@@@攻速減少
-        mov r1, r6
+        mov r1, r5
         add r1, #94
         ldrh r0, [r1]
         sub r0, #biding_necklace_loss
@@ -159,13 +188,13 @@ BindingNecklace_impl:
         mov r0, #0
         strh r0, [r1] @書き戻し
 @@@@@@@@防御奪取
-        mov r0, r6
+        mov r0, r5
         mov r1, r4
         bl recalcDef
         mov r2, #92
         mov r0, sp
         ldrh r0, [r0, r2]
-        ldrh r1, [r6, r2]
+        ldrh r1, [r5, r2]
         sub r0, r1
         .short 0xda00     @bge
         mov r0, #0
@@ -175,7 +204,7 @@ BindingNecklace_impl:
 @        add r1, #biding_necklace_gain
         strh r1, [r4, r2]
 @@@@@@@@防御減少
-        mov r1, r6
+        mov r1, r5
         add r1, #92
         ldrh r0, [r1]
         sub r0, #biding_necklace_loss
@@ -188,13 +217,11 @@ BindingNecklace_impl:
         cmp r0, #1
         beq magicBindingImpl
 @@@@@@@@発動者が物理
-        mov r0, r6
+        mov r0, r5
         bl IS_MAGIC
         cmp r0, #0
         beq endBindingImpl  @相手も物理なら終了
 
-        mov r0, r6
-        mov r1, r4
         bl GainSteady
         mov r2, #92
         ldrh r1, [r4, r2]
@@ -203,8 +230,6 @@ BindingNecklace_impl:
         mov r1, #0
         strh r1, [r4, r2]
 
-        mov r0, r6
-        mov r1, r4
         bl GainWarding
         mov r2, #92
         ldrh r1, [r4, r2]
@@ -214,21 +239,17 @@ BindingNecklace_impl:
         b endBindingImpl
     magicBindingImpl:
 @@@@@@@@発動者が魔法
-        mov r0, r6
+        mov r0, r5
         bl IS_MAGIC
         cmp r0, #1
         beq endBindingImpl  @相手も魔法なら終了
 
-        mov r0, r6
-        mov r1, r4
         bl GainSteady
         mov r2, #92
         ldrh r1, [r4, r2]
         add r1, r0          @魔法相手に金剛は有効
         strh r1, [r4, r2]
 
-        mov r0, r6
-        mov r1, r4
         bl GainWarding
         mov r2, #92
         ldrh r1, [r4, r2]
@@ -238,18 +259,22 @@ BindingNecklace_impl:
         strh r1, [r4, r2]
     endBindingImpl:
         add sp, #UNIT_SIZE
-        pop {r4, pc}
+        pop {r4, r5, pc}
 
 
-DoubleBinding_impl:
+DoubleBindingEffect:
+@A側もB側も両方この1処理で行う
+@
         push {lr}
+        ldr r0, =0x0203a4e8
+        cmp r0, r4
+        bne endBinding_impl  @r4が攻撃側なら、既に実施済みなので見る価値無し
+        bl DoubleBinding_impl
 
-        bl DoubleBinding_other
         eor r4, r6
         eor r6, r4
         eor r4, r6
-
-        bl DoubleBinding_other
+        bl DoubleBinding_impl
         eor r4, r6
         eor r6, r4
         eor r4, r6
@@ -257,7 +282,7 @@ DoubleBinding_impl:
     endBinding_impl:
         pop {pc}
 
-DoubleBinding_other:
+DoubleBinding_impl:
 @両方下がるなら別に下げなくてもいい気もするが
         push {lr}
         mov r0, r4
@@ -367,9 +392,9 @@ GainWarding:
 @r4 temp enemy
 @r5 loop count
 Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
-        push {r4, r5, lr}
+        push {r5, r6, lr}
 
-        ldrb r5, [r4, #0xB]
+        ldrb r5, [r6, #0xB]
         mov r0, #0xC0
         and r5, r0      @r5に部隊表ID
         
@@ -377,36 +402,36 @@ Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
         add r5, #1
         mov r0, r5
         bl Get_Status
-        mov r4, r0
+        mov r6, r0
         cmp r0, #0
         beq endRein        @リスト末尾
-        ldr r0, [r4]
+        ldr r0, [r6]
         cmp r0, #0
         beq loopRein        @死亡判定1
-        ldrb r0, [r4, #19]
+        ldrb r0, [r6, #19]
         cmp r0, #0
         beq loopRein        @死亡判定2
 
-        ldr r0, [r4, #0xC]
+        ldr r0, [r6, #0xC]
         bl GetExistFlagR1
         and r0, r1
         bne loopRein        @居ないフラグ+救出中
         
         mov r0, #2  @2マス以内
-        mov r1, r4
-        mov r2, r6
+        mov r1, r6
+        mov r2, r4
         bl CheckXY
         cmp r0, #0
         beq loopRein
 
-        mov r0, r4
+        mov r0, r6
         mov r1, #0
         bl HAS_REIN
         cmp r0, #0
         beq loopRein
 
     trueRein:
-        mov r1, r6
+        mov r1, r4
         add r1, #90
         ldrh r0, [r1]
         sub r0, #D_REIN_DOWN_NUM
@@ -415,7 +440,7 @@ Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
     jumpAtkRein:
         strh r0, [r1] @威力
         
-        mov r1, r6
+        mov r1, r4
         add r1, #94
         ldrh r0, [r1]
         sub r0, #D_REIN_DOWN_NUM
@@ -424,7 +449,7 @@ Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
     jumpSpdRein:
         strh r0, [r1] @速さ
     endRein:
-        pop {r4, r5, pc}
+        pop {r5, r6, pc}
 
 CheckXY:
 @r1とr2がr0マス以内に居るならr0=TRUE
@@ -491,30 +516,32 @@ GetAttackerAddr:
     bx lr
 
 judgeLull:
+@r4を下げるためにr6のスキル発動を見る
+@
         push {r5, lr}
         mov r5, #0
 
-        mov r0, r4
+        mov r0, r6
+        mov r1, #0
         bl HasLull
         cmp r0, #0
-        beq skipLull
+        .short 0xd000       @beq
         add r5, #0b0001
-    skipLull:
 
-        mov r0, r4
-        mov r1, r6
+        mov r0, r6
+        mov r1, #0
         bl CanUnbound
         cmp r0, #0
-        beq skipSolo
+        .short 0xd000       @beq
         add r5, #0b0010
-    skipSolo:
 
         mov r0, r5
         pop {r5, pc}
 
 Lull:
+@r4を下げる
+@
         push {lr}
-        mov r0, r4
         bl judgeLull
         cmp r0, #1
         beq trueLull
@@ -525,16 +552,16 @@ Lull:
         b endLull
 @@@@@@@@凪
     trueLull:
-        mov r0, r6
-        mov r1, r4
+        mov r0, r4
+        mov r1, r6
         bl recalcAtk_wrapper
         mov r0, #2
         bl DownAtk
 @@@@@@@@凪-攻速
-        mov r0, r6
-        mov r1, r4
-        bl recalcSpd_wrapper
+        mov r0, r4
         mov r1, r6
+        bl recalcSpd_wrapper
+        mov r1, r4
         add r1, #94
         ldrh r0, [r1]
         sub r0, #2
@@ -544,16 +571,16 @@ Lull:
         b endLull
 @@@@@@@@孤絶
     trueUnbound:
-        mov r0, r6
-        mov r1, r4
+        mov r0, r4
+        mov r1, r6
         bl recalcAtk_wrapper
         mov r0, #2
         bl DownAtk
 @@@@@@@@孤絶-防御
-        mov r0, r6
-        mov r1, r4
-        bl recalcDef_wrapper
+        mov r0, r4
         mov r1, r6
+        bl recalcDef_wrapper
+        mov r1, r4
         add r1, #92
         ldrh r0, [r1]
         sub r0, #2
@@ -563,16 +590,16 @@ Lull:
         b endLull
 @@@@@@@@両方
     trueDouble:
-        mov r0, r6
-        mov r1, r4
+        mov r0, r4
+        mov r1, r6
         bl recalcAtk_wrapper
         mov r0, #4
         bl DownAtk
 @@@@@@@@両方-防御
-        mov r0, r6
-        mov r1, r4
-        bl recalcDef_wrapper
+        mov r0, r4
         mov r1, r6
+        bl recalcDef_wrapper
+        mov r1, r4
         add r1, #92
         ldrh r0, [r1]
         sub r0, #2
@@ -580,10 +607,10 @@ Lull:
         mov r0, #0
         strh r0, [r1] @書き戻し
 @@@@@@@@両方-攻速
-        mov r0, r6
-        mov r1, r4
-        bl recalcSpd_wrapper
+        mov r0, r4
         mov r1, r6
+        bl recalcSpd_wrapper
+        mov r1, r4
         add r1, #94
         ldrh r0, [r1]
         sub r0, #2
@@ -601,7 +628,7 @@ DownAtk:
         push {lr}
         mov r2, r0
 
-        mov r1, r6
+        mov r1, r4
         add r1, #90
         ldrh r0, [r1]
         sub r0, r2
@@ -610,13 +637,6 @@ DownAtk:
         strh r0, [r1] @威力
 
         pop {pc}
-
-CanBindingNecklace2:
-        ldr r2, =0x0203a4e8
-        cmp r0, r2
-        beq CanBindingNecklace  @r6が攻撃側なら、既に実施済みなので見る価値無し
-        mov r0, #0
-        bx lr
 
 CanBindingNecklace:
         push {r4, lr}
@@ -825,19 +845,19 @@ recalcAtk_wrapper:
     beq recalcAtk
     bx lr
 recalcAtk:
-        push {r6, lr}
-        mov r6, r0
+        push {r4, lr}
+        mov r4, r0
         ldr r2, =0x0802aa28
         mov lr, r2
         .short 0xF800
 
-        mov r0, r6
+        mov r0, r4
         mov r1, #0
         bl HAS_FORT
         cmp r0, #0
         beq endAtk
 
-        mov r1, r6
+        mov r1, r4
         add r1, #90
         ldrh r0, [r1]
         sub r0, #down_fort_num
@@ -845,7 +865,7 @@ recalcAtk:
         mov r0, #0
         strh r0, [r1] @威力
     endAtk:
-        pop {r6, pc}
+        pop {r4, pc}
 
 recalcSpd_wrapper:
     cmp r5, #0
