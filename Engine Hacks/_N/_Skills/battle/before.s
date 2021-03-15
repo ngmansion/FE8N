@@ -51,6 +51,7 @@ endNoEnemy:
     bl OtherSideSkill
     bl koroshi
     bl Trample
+    bl Catch
 
 endNeedEnemy:
 
@@ -62,6 +63,33 @@ RETURN:
     pop {r4, r5}
     pop {r0}
     bx r0
+
+catch_gain = (3)
+
+Catch:
+        push {lr}
+
+        ldrb r0, [r5, #19]
+        ldrb r1, [r5, #18]
+        cmp r0, r1
+        blt endCatch  @HPが最大未満ならジャンプ
+
+        mov r0, r4
+        mov r1, #0
+        bl HAS_CATCH
+        cmp r0, #0
+        beq endCatch
+
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #catch_gain
+        strh r0, [r4, r1]
+        mov r1, #94
+        ldrh r0, [r4, r1]
+        add r0, #catch_gain
+        strh r0, [r4, r1]
+    endCatch:
+        pop {pc}
 
 Trample:
         push {lr}
@@ -1492,6 +1520,9 @@ IS_MAGIC:
     mov pc, r2
 HAS_BINDING_NECKLACE:
     ldr r2, (addr+172)
+    mov pc, r2
+HAS_CATCH:
+    ldr r2, (addr+176)
     mov pc, r2
 
 GetWarList:

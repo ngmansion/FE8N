@@ -60,6 +60,7 @@ battle_before:
     POIN HAS_JOINT_DRIVE_SPD
     POIN IS_MAGIC
     POIN HAS_BINDING_NECKLACE
+    POIN HAS_CATCH
 
 battle_after:
     #incbin main.dmp
@@ -276,3 +277,7 @@ HAS_UNBOUND:
 HAS_BINDING_NECKLACE:
     HAS_NIHIL
     WORD BindingNecklaceID
+HAS_CATCH:
+    HAS_NIHIL
+    WORD CatchID
+
