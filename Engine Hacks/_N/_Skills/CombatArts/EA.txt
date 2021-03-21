@@ -57,13 +57,25 @@ cancelWarSkill:
 PUSH
 ORG 0x050008
 	jumpToHack(WarSkillSelector)
+ORG 0x02519c
+    jumpToHack(set_combat_and_range)
 POP
 WarSkillSelector:
 	#incbin Selector.dmp
 	WORD ARROW_CONFIG
 	WORD WAR_CONFIG
 	POIN VanishCharacter
+	POIN GET_COMBAT_ARTS_TYPE
 	ALIGN 4
+
+set_combat_and_range:
+    #incbin force_short_range.dmp
+    WORD WAR_CONFIG
+    WORD ARROW_CONFIG
+    POIN SET_COMBAT_ART
+    POIN TURN_OFF_TEMP_SKILL_FLAG
+    POIN GET_COMBAT_ART
+    POIN GET_COMBAT_ARTS_TYPE
 
 ////////////////////攻撃後処理
 PUSH

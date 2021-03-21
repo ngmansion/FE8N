@@ -368,6 +368,10 @@ JudgeRange:
         tst r0, r1
         beq trueRange
 
+        ldr r0, BOOL_ENEMY
+        cmp r0, #0
+        beq allyRange
+
         mov r0, r4
         add r0, #74
         ldrh r0, [r0]
@@ -377,9 +381,20 @@ JudgeRange:
         cmp r0, #1
         beq trueRange
         mov r0, #0
-        .short 0xE000
+        b endRange
+    allyRange:
+        mov r0, r4
+        ldr r1, =0x0101     @てつのけん
+        ldr r2, =0x08025164 @攻撃可能か確認
+        mov lr, r2
+        .short 0xF800
+        ldr r2, =0x08050a9c @攻撃可能か確認
+        mov lr, r2
+        .short 0xF800
+        b endRange
     trueRange:
         mov r0, #1
+    endRange:
         pop {pc}
 
 MatchWeaponType:
