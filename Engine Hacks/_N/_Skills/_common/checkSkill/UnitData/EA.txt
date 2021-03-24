@@ -21,6 +21,7 @@ ALIGN 4
 UNITDATA_GetThird:
 #incbin GetThird.dmp
 ALIGN 4
+WORD UNIT_SKILL3_TYPE
 
 UNITDATA_GetLuna:
 #incbin GetLuna.dmp

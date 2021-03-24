@@ -1,3 +1,4 @@
+#include _config.txt
 
 #define HAS_SKILL "SHORT 0x4902 0x4B01 0x469F 0x46C0; POIN judgeSkill"
 
