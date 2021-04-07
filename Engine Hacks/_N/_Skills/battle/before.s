@@ -180,6 +180,8 @@ AvoidUp:
     falseAvoid:
         pop {pc}
 
+shield_session_spaces = 3   @3マス
+
 ShieldSession:
         push {r5, r6, r7, lr}
 
@@ -240,7 +242,7 @@ ShieldSession_impl:
         tst r0, r1
         beq loopShieldSession  @未行動
 
-        mov r0, #2  @2マス指定
+        mov r0, #shield_session_spaces
         mov r1, r4
         mov r2, r5
         bl CheckXY
