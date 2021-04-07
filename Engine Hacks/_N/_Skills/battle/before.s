@@ -31,7 +31,6 @@ gotSkill:
     bl Solo
     bl Fort
     bl Bond
-    bl BladeSession
     bl JointDrive
 
 endNoEnemy:
@@ -139,6 +138,7 @@ OtherSideSkill:
         bl Hien
         bl Bracing
         bl Charge
+        bl BladeSession
         pop {pc}
     DefSkill:
         bl DistantDef
@@ -256,14 +256,14 @@ ShieldSession_impl:
 @@@@@@@@
 @@@@@@@@
 
-blade_session_grants = 4
-blade_session_spaces = 2
+blade_session_grants = 3
+blade_session_spaces = 3
 blade_session_limits = 7
 
 BladeSession:
         push {r5, r6, r7, lr}
         bl BladeSessionOne  @自己強化
-        bl BladeSessionAll  @周囲強化
+@        bl BladeSessionAll  @周囲強化
         pop {r5, r6, r7, pc}
 
 BladeSessionAll:
@@ -323,6 +323,8 @@ BladeSessionAll:
 
 BladeSessionOne:
         push {lr}
+        mov r3, r8
+        push {r3}
         mov r0, r4
         mov r1, #0
         bl HasBladeSession
@@ -332,6 +334,8 @@ BladeSessionOne:
         ldrb r6, [r4, #0xB]
         mov r0, #0xC0
         and r6, r0  @r6に部隊表ID
+
+        mov r8, r5  @r8に相手
 
         mov r7, #0
     loopBladeSession:
@@ -360,7 +364,7 @@ BladeSessionOne:
         beq loopBladeSession  @未行動
   
         mov r0, #blade_session_spaces
-        mov r1, r4
+        mov r1, r8
         mov r2, r5
         bl CheckXY
         cmp r0, #0
@@ -383,6 +387,8 @@ BladeSessionOne:
         add r0, r2
         strh r0, [r4, r1] @自分
     falseBladeSession:
+        pop {r3}
+        mov r8, r3
         pop {pc}
 
 @@@@@@@@
