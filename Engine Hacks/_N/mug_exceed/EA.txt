@@ -1,28 +1,43 @@
+#ifdef 1
 
 PUSH
 ORG	$54da
 
 SHORT	 $46C0 $b001 $4b03
-SHORT $f000 $f806
+BL(0x0d65c6)                //bx r3
 SHORT $bc10 $bc02 $4708
 SHORT	$46c0
 POIN	mug_exceed1+1
-SHORT	$4718
+
 
 
 ORG $5a7c
 SHORT	$B510 $4B03
-SHORT	$f000 $f806 //BL
+BL(0x0d65c6)                //bx r3
 SHORT	$BC10 $BC02 $4708 $46C0
 POIN	mug_exceed2+1
-SHORT	$4718
 
 
 ORG $5c26
 SHORT	$46C0 $46C0
 
+POP
+
+#else
+
+PUSH
+ORG	$54da
+SHORT $f000 $f8e7 $1c02 $2080 $00c0 $4002 $4252 $17d2 $4002 $8ee1 $20ff $4008
+
+ORG $5a7c
+SHORT $b5f0 $1c06 $1c0f $7d15 $3d01 $7d54 $4910 $043a $0c12 $f0d6 $fb25
+
+ORG $5c26
+SHORT	$8002 $8242
 
 POP
+
+#endif
 
 mug_exceed1:
 #incbin "mug_exceed1.dmp"//カスタムバージョン
