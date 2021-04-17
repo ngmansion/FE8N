@@ -181,12 +181,25 @@ ALIGN 4
         WORD ToChangeFateID
 
 PUSH
-ORG 0x01a09c
-jumpToHack(double_slow)
+ORG 0x01a09c                      //revert
+SHORT 0xb530 0x1c04 0x060d 0x162d //revert
+
+ORG 0x01a1c0
+SHORT 0x4800 0x4687
+POIN slow_0x01a1c0
+
 POP
-double_slow:
+slow_functions:
 #incbin slow.dmp
 ALIGN 4
+
+PUSH
+ORG slow_functions+0            //revert
+slow_0x01a09c:                  //revert
+ORG slow_functions+2
+slow_0x01a1c0:
+
+POP 
 
 PUSH
 ORG 0x01cf1c
