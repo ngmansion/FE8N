@@ -21,6 +21,14 @@ main_0x01a1c0:
         push {r4, r5, lr}
         cmp r2, #0x7c
         beq end_0x01a1c0
+        cmp r2, #0
+        beq end_0x01a1c0
+        ldr r4, =0x03004df0
+        ldr r4, [r4]
+        lsr r0, r4, #24
+        cmp r0, #0x02
+        bne end_0x01a1c0
+
         push {r1, r2, r3}
 
         ldr r4, =0x03004df0
