@@ -22,6 +22,8 @@ ARENA_ADDR = (0x0203a4d0)
 
     bl BindingNecklace
     mov r5, r0  @recalc済
+    bl LightBless
+    mov r5, r0  @recalc済
 
     mov	r0, r4
     mov r1, #0
@@ -149,6 +151,35 @@ LunaPlus:
         strh r0, [r1]
     endLuna:
         pop {pc}
+
+LightBless:
+        push {lr}
+        cmp r5, #1
+        beq falseLight
+
+        mov r0, r6
+        mov r1, #0
+        bl HAS_LIGHT_BLESS
+        cmp r0, #0
+        beq falseLight
+
+        mov r0, r4
+        mov r1, r6
+        bl recalcAtk
+
+        mov r0, r4
+        mov r1, r6
+        bl recalcSpd
+
+        mov r0, r4
+        mov r1, r6
+        bl recalcDef
+        mov r0, #1
+        .short 0xE000
+    falseLight:
+        mov r0, #0
+        pop {pc}
+
 
 BindingNecklace:
         push {lr}
@@ -1024,6 +1055,9 @@ HAS_SURE_STRIKE_PLUS:
     mov pc, r2
 HAS_ASTRA_PLUS:
     ldr r2, (addr+108)
+    mov pc, r2
+HAS_LIGHT_BLESS:
+    ldr r2, (addr+112)
     mov pc, r2
 .ltorg
 .align
