@@ -23,6 +23,9 @@ main:
         cmp r0, #1
         beq return
         bl Adept
+        cmp r0, #1
+        beq return
+        bl AdeptPlus
     return:
         pop {r4, r5, r6, pc}
 
@@ -124,6 +127,13 @@ Adept:
     endAdept:
         pop {pc}
 
+AdeptPlus:
+        push {lr}
+        mov r0, r4
+        mov r1, r5
+        bl HAS_ADEPT_PLUS
+        pop {pc}
+
 RANDOM:
     ldr r3, =0x0802a490
     mov pc, r3
@@ -148,7 +158,9 @@ HAS_ADEPT:
 IS_TEMP_SKILL_FLAG:
     ldr r2, addr+16
     mov pc, r2
-
+HAS_ADEPT_PLUS:
+    ldr r2, addr+20
+    mov pc, r2
 .align
 .ltorg
 addr:

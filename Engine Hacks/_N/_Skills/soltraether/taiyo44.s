@@ -6,6 +6,7 @@ SOL_BIT = (adr+8)
 SET_SKILLANIME_ATK_FUNC = (adr+12)
 HAS_NIHIL_FUNC = (adr+16)
 RADIANT_AETHER_BIT = (adr+20)
+HAS_SOL_PLUS = (adr+24)
 
 @(2B666 > )
     mov r3, r10
@@ -74,6 +75,15 @@ judge:
         .short 0xF800
     cmp r0, #1
     beq taiyo
+
+    mov r0, r5
+    mov r1, r4
+        ldr r2, HAS_SOL_PLUS @太陽
+        mov lr, r2
+        .short 0xF800
+    cmp r0, #1
+    beq rizaia
+
 false:
     pop {r3}
     mov r10, r3

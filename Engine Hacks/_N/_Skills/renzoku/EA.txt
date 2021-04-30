@@ -33,6 +33,7 @@ POIN hasDoubleLion
 POIN hasBlitzkrieg
 POIN HasAdept
 POIN IS_TEMP_SKILL_FLAG
+POIN HAS_ADEPT_PLUS
 
 
 HasSwiftStrikes:
@@ -50,6 +51,10 @@ hasDoubleLion:
 HasAdept:
     HAS_NIHIL
     WORD 0xFF
+
+HAS_ADEPT_PLUS:
+    HAS_NIHIL
+    WORD AdeptPlusID
 
 ////////////////必的の後処理
 PUSH

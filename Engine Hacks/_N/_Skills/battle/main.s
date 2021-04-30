@@ -30,6 +30,7 @@ ARENA_ADDR = (0x0203a4d0)
     beq jumpDown
     bl Lull
     bl Rein
+    bl LunaPlus
 jumpDown:
 
     mov	r0, r6
@@ -38,6 +39,9 @@ jumpDown:
     cmp r0, #1
     beq jumpUp
     bl Shisen_B
+    bl DragonFungPlus
+    bl SureStrikePlus
+    bl AstraPlus
 jumpUp:
 
     bl WarSkill
@@ -63,6 +67,88 @@ endZero:
     bx r0
 .align
 .ltorg
+
+AstraPlus:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_ASTRA_PLUS
+        cmp r0, #0
+        beq endAstra
+        mov r1, r4
+        add r1, #94
+        ldrh r1, [r1]
+        asr r1, #1
+    
+        mov r2, r4
+        add r2, #90
+        ldrh r0, [r2]
+        add r0, r1
+        strh r0, [r2]
+    endAstra:
+        pop {pc}
+
+SureStrikePlus:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_SURE_STRIKE_PLUS
+        cmp r0, #0
+        beq endSure
+        mov r0, #100
+        mov r1, r4
+        add r1, #100
+        strh r0, [r1]
+    endSure:
+        pop {pc}
+
+DragonFungPlus:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_DRAGON_FUNG_PLUS
+        cmp r0, #0
+        beq endDragon
+        mov r1, r4
+        add r1, #90
+        ldrh r1, [r1]
+    
+        lsl r0, r1, #3
+        add r0, r1
+        add r0, r1
+        add r0, r1
+        add r0, r1
+        add r0, r1
+        mov r1, #10
+        swi #6      @*13/10
+        mov r1, r4
+        add r1, #90
+        strh r0, [r1]
+    endDragon:
+        pop {pc}
+
+LunaPlus:
+        push {lr}
+        mov r0, r6
+        mov r1, #0
+        bl HAS_LUNA_PLUS
+        cmp r0, #0
+        beq endLuna
+        mov r1, r4
+        add r1, #92
+        ldrh r1, [r1]
+
+        lsl r0, r1, #2
+        add r0, r1
+        add r0, r1
+        add r0, r1
+        mov r1, #10
+        swi #6      @*7/10
+        mov r1, r4
+        add r1, #92
+        strh r0, [r1]
+    endLuna:
+        pop {pc}
 
 BindingNecklace:
         push {lr}
@@ -927,7 +1013,18 @@ HAS_WARDING_BLOW:
 HAS_WARDING_STANCE:
     ldr r2, (addr+92)
     mov pc, r2
-
+HAS_LUNA_PLUS:
+    ldr r2, (addr+96)
+    mov pc, r2
+HAS_DRAGON_FUNG_PLUS:
+    ldr r2, (addr+100)
+    mov pc, r2
+HAS_SURE_STRIKE_PLUS:
+    ldr r2, (addr+104)
+    mov pc, r2
+HAS_ASTRA_PLUS:
+    ldr r2, (addr+108)
+    mov pc, r2
 .ltorg
 .align
 addr:

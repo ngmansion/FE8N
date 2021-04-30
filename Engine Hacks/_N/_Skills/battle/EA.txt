@@ -88,6 +88,10 @@ battle_after:
     POIN HasSteadyStance
     POIN hasDartingBlow
     POIN HasWardingStance
+    POIN HAS_LUNA_PLUS
+    POIN HAS_DRAGON_FUNG_PLUS
+    POIN HAS_SURE_STRIKE_PLUS
+    POIN HAS_ASTRA_PLUS
     
     
 battle_down:
@@ -280,4 +284,16 @@ HAS_BINDING_NECKLACE:
 HAS_CATCH:
     HAS_NIHIL
     WORD CatchID
+HAS_LUNA_PLUS:
+    HAS_NIHIL
+    WORD LunaPlusID
+HAS_DRAGON_FUNG_PLUS:
+    HAS_NIHIL
+    WORD DragonFangPlusID
+HAS_SURE_STRIKE_PLUS:
+    HAS_NIHIL
+    WORD SureStrilePlusID
+HAS_ASTRA_PLUS:
+    HAS_NIHIL
+    WORD AstraPlusID
 

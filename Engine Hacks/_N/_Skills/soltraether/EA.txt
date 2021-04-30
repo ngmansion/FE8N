@@ -113,6 +113,7 @@ taiyo4:
     POIN set_skillanime_attack
     POIN hasNihil
     WORD RADIANT_AETHER_BIT
+    POIN HAS_SOL_PLUS
 
 sol_divide_anim_on:
 #incbin sol_divide_anim_on.dmp
@@ -153,5 +154,8 @@ HasRupturedSky:
 HAS_RADIANT_AETHER:
     HAS_OCCULT
     WORD RadiantAetherID
+HAS_SOL_PLUS:
+    HAS_NIHIL
+    WORD SolPlusID
 
 
