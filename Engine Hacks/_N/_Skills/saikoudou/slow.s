@@ -23,16 +23,16 @@ main_0x01a1c0:
         beq end_0x01a1c0
         cmp r2, #0
         beq end_0x01a1c0
+        ldr r5, =0x03004df0
+        ldr r5, [r5]
+        lsr r5, r5, #24
+        cmp r5, #0x02
+        bne start_0x01a1c0  @自動で始める
+
         ldr r4, =0x03004df0
         ldr r4, [r4]
-        lsr r0, r4, #24
-        cmp r0, #0x02
-        bne end_0x01a1c0
-
+    start_0x01a1c0:
         push {r1, r2, r3}
-
-        ldr r4, =0x03004df0
-        ldr r4, [r4]
         mov r5, r2
         bl main
         pop {r1, r2, r3}
@@ -68,7 +68,7 @@ main:
 Galeforce:
         ldrb r0, [r4, #0xB]
         lsr r0, r0, #6
-        bne endGale
+        bne endGale         @自軍以外なら終了
         mov r0, #69
         ldrb r0, [r4, r0]
 
@@ -80,6 +80,9 @@ Galeforce:
         bx lr
 
 Hurry:
+        ldrb r0, [r4, #0xB]
+        lsr r0, r0, #6
+        bne endHurry        @自軍以外なら終了
         ldr r0, [r4, #12]
         ldr r1, =0x40000000
         tst r0, r1
