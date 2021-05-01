@@ -27,7 +27,7 @@ wrap_0x01a1c0:
         ldr r5, [r5]
         lsr r5, r5, #24
         cmp r5, #0x02
-        bne start_0x01a1c0  @自動で始める
+        bne start_0x01a1c0      @危険範囲表示時はここでジャンプ
 
         ldr r4, =0x03004df0
         ldr r4, [r4]
