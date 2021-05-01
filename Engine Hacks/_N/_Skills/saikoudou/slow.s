@@ -1,6 +1,6 @@
 .thumb
 b slow_0x01a09c     @revert
-b slow_0x01a1c0
+b slow_0x01a1c0     @from 0801a1c0 
 
 .align
 slow_0x01a1c0:
@@ -11,13 +11,13 @@ slow_0x01a1c0:
     ldr r0, =0x0801a1dc
     ldr r0, [r0]
     str r0, [r1, #4]
-    bl main_0x01a1c0
+    bl wrap_0x01a1c0
     ldr r0, =0x0801a1c8
     mov pc, r0
 
 
 
-main_0x01a1c0:
+wrap_0x01a1c0:
         push {r4, r5, lr}
         cmp r2, #0x7c
         beq end_0x01a1c0
@@ -58,12 +58,34 @@ main:
 @r5 = 移動
         push {lr}
         bl Hurry
+        bl HurryEnemy
         bl Galeforce
         cmp r5, #15
         ble notOverFlow
         mov r5, #15
     notOverFlow:
         pop {pc}
+
+HurryEnemy:
+        push {lr}
+        ldrb r0, [r4, #0xB]
+        lsr r0, r0, #6
+        beq endHurryEnemy        @自軍なら終了
+
+        ldr r0, =0x0202bcec
+        ldrb r0, [r0, #0xF]
+        cmp r0, #0
+        beq endHurryEnemy        @自軍フェイズなら終了(敵の攻撃範囲表示に対するガード)
+
+        mov r0, r4
+        mov r1, #0
+        bl HAS_HURRY
+        cmp r0, #0
+        beq endHurryEnemy
+        add r5, #2
+    endHurryEnemy:
+        pop {pc}
+
 
 Galeforce:
         ldrb r0, [r4, #0xB]
@@ -91,6 +113,9 @@ Hurry:
     endHurry:
         bx lr
 
+HAS_HURRY:
+    ldr r2, (addr+0)
+    mov pc, r2
 
 .align
 .ltorg

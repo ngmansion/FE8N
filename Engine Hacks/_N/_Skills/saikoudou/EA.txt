@@ -191,6 +191,7 @@ POIN slow_0x01a1c0
 POP
 slow_functions:
 #incbin slow.dmp
+POIN HAS_HURRY
 ALIGN 4
 
 PUSH
