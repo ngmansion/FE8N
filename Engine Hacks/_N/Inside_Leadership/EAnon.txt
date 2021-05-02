@@ -33,10 +33,6 @@ ORG	0xA72DA6	//属性を同行
 SHORT	$04E5
 
 
-//HELP解除
-ORG	0xA72DB4	//状態ヘルプ下先
-	POIN SK_FIVE
-
 //外指揮解除
 ORG	0x896dc
 SHORT	$b014 $bcf0 $bc01 $4700
