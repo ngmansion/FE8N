@@ -137,6 +137,9 @@ OtherSideSkill:
         bl Kishin
         bl Hien
         bl Bracing
+        bl WarMasterBlow
+        bl DuelistBlow
+        bl UncannyBlow
         bl Charge
         bl BladeSession
         pop {pc}
@@ -1262,10 +1265,6 @@ Kishin:
         add r0, #5 @威力
         strh r0, [r4, r1] @自分
     
-        mov r1, #102
-        ldrh r0, [r4, r1]
-        add r0, #20 @必殺
-        strh r0, [r4, r1] @自分
     endKishin:
         pop {pc}
 KishinR:
@@ -1389,10 +1388,6 @@ Hien:
         add r0, #5
         strh r0, [r4, r1]
         
-        mov r1, #98
-        ldrh r0, [r4, r1]
-        add r0, #20
-        strh r0, [r4, r1]
     endHien:
         pop {pc}
 HienR:
@@ -1421,6 +1416,49 @@ HienBreath:
         add r0, #4
         strh r0, [r4, r1]
         b endHien
+
+WarMasterBlow:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_WAR_MASTER_BLOW
+        cmp r0, #0
+        beq endWarMasterBlow
+        
+        mov r1, #102
+        ldrh r0, [r4, r1]
+        add r0, #20 @必殺
+        strh r0, [r4, r1] @自分
+    endWarMasterBlow:
+        pop {pc}
+DuelistBlow:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_DUELIST_BLOW
+        cmp r0, #0
+        beq endDuelistBlow
+        
+        mov r1, #98
+        ldrh r0, [r4, r1]
+        add r0, #20
+        strh r0, [r4, r1]
+    endDuelistBlow:
+        pop {pc}
+UncannyBlow:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_UNCANNY_BLOW
+        cmp r0, #0
+        beq endUncannyBlow
+        
+        mov r1, #96    @命中
+        ldrh r0, [r4, r1]
+        add r0, #30
+        strh r0, [r4, r1] @自分
+    endUncannyBlow:
+        pop {pc}
 
 breaker_impl:
         push {lr}
@@ -1532,6 +1570,16 @@ HAS_BINDING_NECKLACE:
 HAS_CATCH:
     ldr r2, (addr+176)
     mov pc, r2
+HAS_WAR_MASTER_BLOW:
+    ldr r2, (addr+180)
+    mov pc, r2
+HAS_DUELIST_BLOW:
+    ldr r2, (addr+184)
+    mov pc, r2
+HAS_UNCANNY_BLOW:
+    ldr r2, (addr+188)
+    mov pc, r2
+
 
 GetWarList:
     ldr r1, COMBAT_TBL_SIZE

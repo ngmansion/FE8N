@@ -61,6 +61,9 @@ battle_before:
     POIN IS_MAGIC
     POIN HAS_BINDING_NECKLACE
     POIN HAS_CATCH
+    POIN HAS_WAR_MASTER_BLOW
+    POIN HAS_DUELIST_BLOW
+    POIN HAS_UNCANNY_BLOW
 
 battle_after:
     #incbin main.dmp
@@ -300,3 +303,13 @@ HAS_ASTRA_PLUS:
 HAS_LIGHT_BLESS:
     HAS_NIHIL
     WORD LightBlessID
+HAS_WAR_MASTER_BLOW:
+    HAS_NIHIL
+    WORD WarMasterBlowID
+HAS_DUELIST_BLOW:
+    HAS_NIHIL
+    WORD DuelistBlowID
+HAS_UNCANNY_BLOW:
+    HAS_NIHIL
+    WORD UncannyBlowID
+

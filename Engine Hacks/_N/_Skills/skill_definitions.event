@@ -195,4 +195,8 @@
 #define AdeptPlusID             198 //0xC6 連続＋
 #define SureStrilePlusID        199 //0xC7 必的＋
 #define AstraPlusID             200 //0xC8 流星＋
+#define WarMasterBlowID         201 //0xC9 戦鬼の一撃
+#define DuelistBlowID           202 //0xCA 清流の一撃
+#define UncannyBlowID           203 //0xCB 慧眼の一撃
+#define ImpactID                204 //0xCC 瞬撃
 
