@@ -22,7 +22,10 @@ ORG 0x02b764	//0回の武器でも破損扱い
 ORG 0x02cbec	//0回の杖でも破損扱い
 	BYTE $00 $0A
 	
-	
+ORG 0x0B9E1A	//お店で回数0を売れる
+	SHORT $46C0
+ORG 0x0A2746	//輸送隊で回数0を売れる
+	SHORT $46C0
 	
 	
 ORG 0x0aefdc
