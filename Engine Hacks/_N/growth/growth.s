@@ -129,19 +129,24 @@ JudgeUpperLimit:
 
         ldr r1, [r7, #4]
         ldrb r3, [r6, #CLASS_MAX]        @クラスのステータス最大値オフセット
+        cmp r3, #0
+        beq dummyOffset                  @オフセットが0(ダミー)なので固定上限を使う(幸運用)
         ldrb r1, [r3, r1]
+        .short 0xE000
+    dummyOffset:
+        ldr r1, DUMMY_STATUS_LIMIT
         cmp r0, r1
-        blt notMaximum
+        blt falseMaximum
     trueMaximum:
         mov r0, #1
         .short 0xE000
-    notMaximum:
+    falseMaximum:
         mov r0, #0
         pop {pc}
 
 GET_UNIT_DATA:
-ldr r1, =0x08019108
-mov pc, r1
+    ldr r1, =0x08019108
+    mov pc, r1
 
 GetGrowthRate:
         push {lr}
@@ -204,25 +209,26 @@ AddItemGrowth:
         pop {r4, r5, pc}
 
 GET_ITEM_EFFECT:
-ldr r1, =0x080174e4
-mov pc, r1
+    ldr r1, =0x080174e4
+    mov pc, r1
 GET_ITEM_STATUS_ADDR:
-ldr r1, =0x08017490
-mov pc, r1
+    ldr r1, =0x08017490
+    mov pc, r1
 
 RANDOM_GROWTH:
-        ldr r1, =0x0802b8e8
-        mov pc, r1
+    ldr r1, =0x0802b8e8
+    mov pc, r1
 
 
 $0802b8e8:
-ldr r1, =0x0802b8e8
-mov pc, r1
+    ldr r1, =0x0802b8e8
+    mov pc, r1
 
 GrowthTable = addr+0
 AVERAGE_GROWTH_MODE = addr+4
 MIN_STATUS_UP_NUM = addr+8
 GROWTH_ITEM_EFFECT_ID = addr+12
+DUMMY_STATUS_LIMIT = addr+16
 
 .align
 .ltorg
