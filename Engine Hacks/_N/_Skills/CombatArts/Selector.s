@@ -11,7 +11,7 @@ mov pc, r0
 main:
         push {lr}
         bl VanishCharacter
-        ldr r1, ADDR
+        ldr r1, ARROW_CONFIG
         ldrb r0, [r1]
         cmp r0, #0
         beq false
@@ -66,11 +66,11 @@ Right:
         pop {pc}
 
 Increase:
-    ldr r1, ADDR
+    ldr r1, ARROW_CONFIG
     ldrb r0, [r1]
     cmp r0, #7
     bge falseCount
-    ldr r3, ADDR+4
+    ldr r3, WAR_CONFIG
     sub r3, #1
     ldrb r2, [r3, r0]
     cmp r2, #0
@@ -80,11 +80,11 @@ Increase:
     b trueCount
 
 Decrease:
-    ldr r1, ADDR
+    ldr r1, ARROW_CONFIG
     ldrb r0, [r1]
     cmp r0, #1
     ble falseCount
-    ldr r1, ADDR
+    ldr r1, ARROW_CONFIG
     ldrb r0, [r1]
     sub r0, #1
     strb r0, [r1]
@@ -100,24 +100,25 @@ trueCount:
 DrawRangeMap:
         push {lr}
 @カウント0なら武器通り
-        ldr r1, ADDR
+        ldr r1, ARROW_CONFIG
         ldrb r0, [r1]
         cmp r0, #1
-        beq trueDrawRangeMap
-@1-2スキルなら武器通り
-        ldr r1, ADDR
+        beq normalDrawRangeMap
+@2スキルなら短距離
+        ldr r1, ARROW_CONFIG
         ldrb r0, [r1]
         sub r0, #2
-        ldr r1, ADDR+12
+        ldr r1, WAR_CONFIG
         ldrb r0, [r0, r1]
         bl GET_COMBAT_ARTS_TYPE
         cmp r0, #2
-        beq trueDrawRangeMap
-
-@それ以外は短距離
+        beq singleDrawRangeMap
+@それ以外は武器通り
+        b normalDrawRangeMap
+    singleDrawRangeMap:
         bl DrawSingleRangeMap
         b endDrawRangeMap
-    trueDrawRangeMap:
+    normalDrawRangeMap:
         bl DrawWeaponRangeMap
     endDrawRangeMap:
         pop {pc}
@@ -196,6 +197,8 @@ mov r0, #102
 ldr r1, =0x080d4ef4
 mov pc, r1
 
+ARROW_CONFIG = (ADDR+0)
+WAR_CONFIG = (ADDR+4)
 VanishCharacter:
 ldr r0, ADDR+8
 mov pc, r0
