@@ -590,8 +590,10 @@ Daunt_impl:
         cmp r0, #0
         beq loopDaunt    @相手が恐怖未所持
     
-        add r7, #1
-        b loopDaunt
+@変更: 重複を無効化
+@        add r7, #1
+@        b loopDaunt
+        mov r7, #1
     
     resultDaunt:
         bl GET_DAUNT_NUM
