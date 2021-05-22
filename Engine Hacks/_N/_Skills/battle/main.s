@@ -31,6 +31,7 @@ ARENA_ADDR = (0x0203a4d0)
     cmp r0, #1
     beq jumpDown
     bl Lull
+    bl LightAndDark
     bl Rein
     bl LunaPlus
 jumpDown:
@@ -530,7 +531,7 @@ Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
         beq loopRein        @死亡判定2
 
         ldr r0, [r6, #0xC]
-        bl GetExistFlagR1
+        ldr r1, =EXIST_FLAG
         and r0, r1
         bne loopRein        @居ないフラグ+救出中
         
@@ -631,6 +632,181 @@ WarSkill:
 GetAttackerAddr:
     ldr r0, =0x03004df0
     bx lr
+
+.ltorg
+
+LightAndDark:
+@命中、回避、必殺、必殺回避の強化無効
+@
+        push {lr}
+        mov r0, r6
+        mov r1, #0
+        bl HAS_LIGHT_BLESS
+        cmp r0, #0
+        beq endLD
+        mov r0, r4
+        mov r1, r6
+        bl recalcHIT_wrapper
+        mov r0, r4
+        mov r1, r6
+        bl recalcAVO_wrapper
+        mov r0, r4
+        mov r1, r6
+        bl recalcCRIT_wrapper
+        mov r0, r4
+        mov r1, r6
+        bl recalcDDG_wrapper
+
+        mov r0, r4
+        bl reDaunt
+    endLD:
+        mov r0, r4
+        mov r1, r6
+        ldr r2, =0x0802abd0
+        mov lr, r2
+        .short 0xF800
+        mov r0, r4
+        mov r1, r6
+        ldr r2, =0x0802ac00
+        mov lr, r2
+        .short 0xF800
+        pop {pc}
+
+recalcHIT_wrapper:
+        push {lr}
+        ldr r2, =0x0802ab1c
+        mov lr, r2
+        .short 0xF800
+        pop {pc}
+
+recalcAVO_wrapper:
+        push {lr}
+        ldr r2, =0x0802ab54
+        mov lr, r2
+        .short 0xF800
+        pop {pc}
+
+recalcCRIT_wrapper:
+        push {r4, r5, lr}
+        mov r4, r0
+        ldr r2, =0x0802ab88
+        mov lr, r2
+        .short 0xF800
+    @@兵種
+    @@
+        ldr r1, [r4]
+        ldr r2, [r4, #4]
+        ldr r1, [r1, #40]
+        ldr r2, [r2, #40]
+        orr r1, r2
+
+        mov r2, #64
+        and r1, r2
+        beq notCritBonus
+        mov r3, #102
+        ldsh r0, [r4, r3]
+        sub r0, #15
+        strh r0, [r4, r3]
+    notCritBonus:
+
+    endRecalcCRIT:
+        mov r3, #102
+        ldsh r0, [r4, r3]
+        cmp r0, #0
+        bge retRecalcCRIT
+        mov r0, #0
+        strh r0, [r4, r3]
+    retRecalcCRIT:
+        pop {r4, r5, pc}
+
+recalcDDG_wrapper:
+        push {lr}
+        ldr r2, =0x0802abc4
+        mov lr, r2
+        .short 0xF800
+        pop {pc}
+
+
+reDaunt:
+@青は赤に対して効く
+@赤は青と緑に対して効く
+@緑は赤に対して効く
+        push {r4, r5, r6, r7, lr}
+    
+        ldrb r0, [r4, #0xB]
+        lsl r0, r0, #24
+        bmi isRedDaunt
+        mov r6, #0x80
+        bl Daunt_impl
+        b endDaunt
+    isRedDaunt:
+        mov r6, #0x00
+        bl Daunt_impl
+        mov r6, #0x40
+        bl Daunt_impl
+    endDaunt:
+        pop {r4, r5, r6, r7, pc}
+
+
+Daunt_impl:
+        push {lr}
+        mov r7, #0
+    loopDaunt:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq resultDaunt @リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopDaunt @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopDaunt @死亡判定2
+    
+        ldr r0, [r5, #0xC]
+        ldr r1, =EXIST_FLAG
+        and r0, r1
+        bne loopDaunt
+    
+        mov r0, #3  @範囲指定
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopDaunt @近くにいない
+    
+        mov r0, r5
+        mov r1, #0
+        bl HAS_DAUNT
+        cmp r0, #0
+        beq loopDaunt    @相手が恐怖未所持
+    
+        add r7, #1
+        b loopDaunt
+    
+    resultDaunt:
+        bl GET_DAUNT_NUM
+        mov r2, r0
+        mul r2, r7
+    
+        mov r1, #98 @回避
+        ldrh r0, [r4, r1]
+        sub r0, r2
+        bgt limitDaunt1
+        mov r0, #0
+    limitDaunt1:
+        strh r0, [r4, r1]
+
+        mov r1, #102 @必殺
+        ldrh r0, [r4, r1]
+        sub r0, r2
+        bgt limitDaunt2
+        mov r0, #0
+    limitDaunt2:
+        strh r0, [r4, r1]
+        pop {pc}
 
 judgeLull:
 @r4を下げるためにr6のスキル発動を見る
@@ -802,7 +978,7 @@ CheckSolo:
         cmp r0, r1
         beq loopSolo	@自分
         ldr r0, [r5, #0xC]
-        bl GetExistFlagR1
+        ldr r1, =EXIST_FLAG
         and r0, r1
         bne loopSolo	@居ないフラグ+救出中
         
@@ -922,10 +1098,7 @@ GetDistance:
 Get_Status:
     ldr r1, =0x08019108
     mov pc, r1
-
-GetExistFlagR1:
-    ldr r1, =0x1002C    @居ないフラグ+救出されている
-    bx lr
+EXIST_FLAG = 0x1002C    @居ないフラグ+救出されている
 
 SHISEN_ADR = (addr+0)
 HAS_NIHIL:
@@ -1059,6 +1232,13 @@ HAS_ASTRA_PLUS:
 HAS_LIGHT_BLESS:
     ldr r2, (addr+112)
     mov pc, r2
+HAS_DAUNT:
+    ldr r2, (addr+116)
+    mov pc, r2
+GET_DAUNT_NUM:
+    ldr r0, (addr+120)
+    bx lr
+
 .ltorg
 .align
 addr:

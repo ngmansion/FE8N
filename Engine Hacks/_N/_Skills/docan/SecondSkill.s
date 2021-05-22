@@ -125,6 +125,12 @@ CriticalUp:
         cmp r0, #1
         beq falseCRT      @強運所持
 
+        mov r0, r8
+        mov r1, r7
+        bl HAS_LIGHT_AND_DARK
+        cmp r0, #1
+        beq falseCRT
+
         bl ikari
         bl Breath
         bl HeavyBlade
@@ -243,6 +249,9 @@ HAS_DARTING_BREATH:
     mov pc, r2
 HAS_HEAVY_BLADE:
     ldr r2, ADDRESS+28
+    mov pc, r2
+HAS_LIGHT_AND_DARK:
+    ldr r2, ADDRESS+32
     mov pc, r2
 .align
 B_WEAPON_ABILITY:

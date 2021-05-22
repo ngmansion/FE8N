@@ -55,8 +55,13 @@ endNoEnemy:
 endNeedEnemy:
 
 @マイナス処理
+    mov r0, r4
+    bl HasMikiri
+    cmp r0, #1
+    beq endDown
     bl Heartseeker
     bl Daunt
+endDown:
 
 RETURN:
     pop {r4, r5}
@@ -559,16 +564,16 @@ Daunt_impl:
         bl Get_Status
         mov r5, r0
         cmp r0, #0
-        beq resultDaunt	@リスト末尾
+        beq resultDaunt @リスト末尾
         ldr r0, [r5]
         cmp r0, #0
-        beq loopDaunt	@死亡判定1
+        beq loopDaunt @死亡判定1
         ldrb r0, [r5, #19]
         cmp r0, #0
-        beq loopDaunt	@死亡判定2
+        beq loopDaunt @死亡判定2
     
         ldr r0, [r5, #0xC]
-        bl GetExistFlagR1	@居ないフラグ+救出されている
+        bl GetExistFlagR1 @居ないフラグ+救出されている
         and r0, r1
         bne loopDaunt
     
@@ -580,8 +585,8 @@ Daunt_impl:
         beq loopDaunt @近くにいない
     
         mov r0, r5
-        mov r1, r4
-        bl HasDaunt
+        mov r1, #0
+        bl HAS_DAUNT
         cmp r0, #0
         beq loopDaunt    @相手が恐怖未所持
     
@@ -589,7 +594,8 @@ Daunt_impl:
         b loopDaunt
     
     resultDaunt:
-        mov r2, #15 @マイナス15
+        bl GET_DAUNT_NUM
+        mov r2, r0
         mul r2, r7
     
         mov r1, #98 @回避
@@ -659,7 +665,7 @@ Heartseeker_impl:
         beq loopHeartseeker @近くにいない
     
         mov r0, r5
-        mov r1, r4
+        mov r1, #0
         bl HasHeartseeker
         cmp r0, #0
         beq loopHeartseeker    @相手が呪縛未所持
@@ -1579,6 +1585,9 @@ HAS_DUELIST_BLOW:
 HAS_UNCANNY_BLOW:
     ldr r2, (addr+188)
     mov pc, r2
+GET_DAUNT_NUM:
+    ldr r0, (addr+192)
+    bx lr
 
 
 GetWarList:
@@ -1652,7 +1661,7 @@ HasShieldSession:
 HAS_IMPREGNABLE_WALL:
     ldr r2, (addr+64)
     mov pc, r2
-HasDaunt:
+HAS_DAUNT:
     ldr r2, DAUNT_ADDR
     mov pc, r2
 HasHeartseeker:

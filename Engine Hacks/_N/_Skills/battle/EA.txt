@@ -64,6 +64,7 @@ battle_before:
     POIN HAS_WAR_MASTER_BLOW
     POIN HAS_DUELIST_BLOW
     POIN HAS_UNCANNY_BLOW
+    WORD GET_DAUNT_NUM
 
 battle_after:
     #incbin main.dmp
@@ -96,6 +97,8 @@ battle_after:
     POIN HAS_SURE_STRIKE_PLUS
     POIN HAS_ASTRA_PLUS
     POIN HAS_LIGHT_BLESS
+    POIN HasDaunt
+    WORD GET_DAUNT_NUM
     
     
 battle_down:
