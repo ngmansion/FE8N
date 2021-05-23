@@ -16,7 +16,11 @@
         ldr r1, LETHALITY_ID
         mov r10, r1
         mov r1, #0
-        bl random
+
+        ldr r3, =0x0802a490 @乱数
+        mov lr, r3
+        .short 0xF800
+
         cmp r0, #1
         beq true
     false:
