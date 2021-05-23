@@ -111,10 +111,10 @@ DrawRangeMap:
         ldr r1, WAR_CONFIG
         ldrb r0, [r0, r1]
         bl GET_COMBAT_ARTS_TYPE
-        cmp r0, #2
-        beq singleDrawRangeMap
-@それ以外は武器通り
-        b normalDrawRangeMap
+        mov r1, #2
+        tst r0, r1
+        beq normalDrawRangeMap
+        
     singleDrawRangeMap:
         bl DrawSingleRangeMap
         b endDrawRangeMap
