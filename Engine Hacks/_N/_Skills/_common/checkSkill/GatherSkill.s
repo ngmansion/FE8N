@@ -366,7 +366,7 @@ JudgeRange:
         ldrb r0, [r5, #6]
         mov r1, #2
         tst r0, r1
-        beq trueRange
+        beq trueRange       @2じゃなければフリーレンジ
 
         ldr r0, BOOL_ENEMY
         cmp r0, #0
@@ -380,9 +380,17 @@ JudgeRange:
         and r0, r1
         cmp r0, #1
         beq trueRange
-        mov r0, #0
-        b endRange
+        b falseRange
     allyRange:
+        mov r0, r4
+        add r0, #74
+        ldrh r0, [r0]
+        bl GetWeaponRange
+        mov r1, #0b11110000
+        and r0, r1
+        cmp r0, #0x10
+        bne falseRange      @短射程武器じゃなければNG
+
         mov r0, r4
         ldr r1, =0x0101     @てつのけん
         ldr r2, =0x08025164 @攻撃可能か確認
@@ -394,6 +402,9 @@ JudgeRange:
         b endRange
     trueRange:
         mov r0, #1
+        b endRange
+    falseRange:
+        mov r0, #0
     endRange:
         pop {pc}
 
