@@ -38,7 +38,7 @@ main:
     bl LightBless
     mov r5, r0  @recalc済
 
-    mov	r0, r4
+    mov r0, r4
     mov r1, #0
     bl HAS_NIHIL
     cmp r0, #1
@@ -49,7 +49,7 @@ main:
     bl LunaPlus
 jumpDown:
 
-    mov	r0, r6
+    mov r0, r6
     mov r1, #0
     bl HAS_NIHIL
     cmp r0, #1
@@ -992,28 +992,28 @@ CheckSolo:
         mov r4, r0
         ldrb r6, [r4, #0xB]
         mov r0, #0xC0
-        and r6, r0	@r6に部隊表ID
+        and r6, r0 @r6に部隊表ID
     loopSolo:
         add r6, #1
         mov r0, r6
         bl Get_Status
         mov r5, r0
         cmp r0, #0
-        beq trueSolo	@リスト末尾
+        beq trueSolo @リスト末尾
         ldr r0, [r5]
         cmp r0, #0
-        beq loopSolo	@死亡判定1
+        beq loopSolo @死亡判定1
         ldrb r0, [r5, #19]
         cmp r0, #0
-        beq loopSolo	@死亡判定2
+        beq loopSolo @死亡判定2
         ldrb r0, [r4, #0xB]
         ldrb r1, [r5, #0xB]
         cmp r0, r1
-        beq loopSolo	@自分
+        beq loopSolo @自分
         ldr r0, [r5, #0xC]
         ldr r1, =EXIST_FLAG
         and r0, r1
-        bne loopSolo	@居ないフラグ+救出中
+        bne loopSolo @居ないフラグ+救出中
         
         mov r0, #2  @2マス以内
         mov r1, r4
@@ -1057,8 +1057,8 @@ godBless:
     
     mov r0, r6
         ldr r1, addr+8 @暗黒の加護
-    	mov lr, r1
-    	.short 0xF800
+     mov lr, r1
+     .short 0xF800
     cmp r0, #0
     beq endBless
 
