@@ -6,8 +6,12 @@ PUSH
 ORG 0x02a90c
   jumpToHack(battle_before)
 
-ORG 0x02ad3c
+ORG 0x02a914
   jumpToHack(battle_after)
+
+ORG 0x02ad3c	//revert
+SHORT 0xb570 0x1c04 0x1c0e 0x6ce5
+//  jumpToHack(battle_after)
     
 ORG 0x02bfd8
   jumpToHack(battle_down)

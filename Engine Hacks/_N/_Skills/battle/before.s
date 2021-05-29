@@ -15,17 +15,17 @@
 
     ldr r0, [r5, #4]
     cmp r0, #0
-    beq gotSkill	@相手いない
+    beq gotSkill    @相手いない
     mov r0, r5
 
     bl HasMikiri
 
     cmp r0, #0
-    bne endNoEnemy	@見切り持ちなら終了
+    bne endNoEnemy  @見切り持ちなら終了
 gotSkill:
     bl Shishi
     bl Konshin
-    bl Savior	@護り手
+    bl Savior   @護り手
     bl Ace
     bl shisen_A
     bl Solo
@@ -38,11 +38,9 @@ endNoEnemy:
 @相手の存在をチェック
     ldr r0, [r5, #4]
     cmp r0, #0
-    beq endNeedEnemy	@相手いない
+    beq endNeedEnemy  @相手いない
 
-    bl WarSkill
-
-    mov	r0, r5
+    mov  r0, r5
     bl HasMikiri
     cmp r0, #0
     bne endNeedEnemy
@@ -646,16 +644,16 @@ Heartseeker_impl:
         bl Get_Status
         mov r5, r0
         cmp r0, #0
-        beq resultHeartseeker	@リスト末尾
+        beq resultHeartseeker  @リスト末尾
         ldr r0, [r5]
         cmp r0, #0
-        beq loopHeartseeker	@死亡判定1
+        beq loopHeartseeker  @死亡判定1
         ldrb r0, [r5, #19]
         cmp r0, #0
-        beq loopHeartseeker	@死亡判定2
+        beq loopHeartseeker  @死亡判定2
     
         ldr r0, [r5, #0xC]
-        bl GetExistFlagR1	@居ないフラグ+救出されている
+        bl GetExistFlagR1  @居ないフラグ+救出されている
         and r0, r1
         bne loopHeartseeker
     
@@ -688,76 +686,11 @@ Heartseeker_impl:
         strh r0, [r4, r1] @自分
         pop {pc}
 
-
-WarSkill:
-        push {lr}
-
-
-        bl GetAttackerAddr
-        ldr r2, [r0]
-        ldrb r2, [r2, #11]
-        ldrb r0, [r4, #11]
-        cmp r0, r2
-        bne endWar
-
-        mov r0, r4
-        bl GET_COMBAT_ART
-        bl GetWarList
-        cmp r0, #0
-        beq endWar
-        mov r3, r0
-
-@攻撃はここではなく凪の後
-        mov r1, #96
-        ldrh r0, [r4, r1]
-        mov r2, #1
-        ldsb r2, [r3, r2]
-        add r0, r2
-        cmp r0, #0
-        bge jumpWar2
-        mov r0, #0
-    jumpWar2:
-        strh r0, [r4, r1] @命中
-@@@@@@@@
-        mov r1, #98
-        ldrh r0, [r4, r1]
-        mov r2, #3
-        ldsb r2, [r3, r2]
-        add r0, r2
-        cmp r0, #0
-        bge jumpWar3
-        mov r0, #0
-    jumpWar3:
-        strh r0, [r4, r1] @回避
-@@@@@@@@
-        mov r1, #104
-        ldrh r0, [r4, r1]
-        add r0, r2
-        cmp r0, #0
-        bge jumpWarDodge
-        mov r0, #0
-    jumpWarDodge:
-        strh r0, [r4, r1] @必殺回避
-@@@@@@@@
-        mov r1, #102
-        ldrh r0, [r4, r1]
-        mov r2, #2
-        ldsb r2, [r3, r2]
-        add r0, r2
-        cmp r0, #0
-        bge jumpWar4
-        mov r0, #0
-    jumpWar4:
-        strh r0, [r4, r1] @必殺
-    
-    endWar:
-        pop {pc}
-
 Bond:
         push {r4, r5, r6, r7, lr}
         ldrb r6, [r4, #0xB]
         mov r0, #0xC0
-        and r6, r0	@r6に部隊表ID
+        and r6, r0  @r6に部隊表ID
         
         mov r0, r4
         mov r1, #0
@@ -771,17 +704,17 @@ Bond:
         bl Get_Status
         mov r5, r0
         cmp r0, #0
-        beq resultBond	@リスト末尾
+        beq resultBond  @リスト末尾
         ldr r0, [r5]
         cmp r0, #0
-        beq loopBond	@死亡判定1
+        beq loopBond  @死亡判定1
         ldrb r0, [r5, #19]
         cmp r0, #0
-        beq loopBond	@死亡判定2
+        beq loopBond  @死亡判定2
         ldrb r0, [r4, #0xB]
         ldrb r1, [r5, #0xB]
         cmp r0, r1
-        beq loopBond	@自分
+        beq loopBond  @自分
         ldr r0, [r5, #0xC]
         bl GetExistFlagR1
         and r0, r1
@@ -845,7 +778,7 @@ Fort:
     endFort:
         pop {pc}
 
-shisen_A:	@自分死線
+shisen_A:  @自分死線
         push {lr}
         mov r0, r4
         mov r1, #0
@@ -924,28 +857,28 @@ CheckSolo:
         mov r4, r0
         ldrb r6, [r4, #0xB]
         mov r0, #0xC0
-        and r6, r0	@r6に部隊表ID
+        and r6, r0  @r6に部隊表ID
     loopSolo:
         add r6, #1
         mov r0, r6
         bl Get_Status
         mov r5, r0
         cmp r0, #0
-        beq trueSolo	@リスト末尾
+        beq trueSolo  @リスト末尾
         ldr r0, [r5]
         cmp r0, #0
-        beq loopSolo	@死亡判定1
+        beq loopSolo  @死亡判定1
         ldrb r0, [r5, #19]
         cmp r0, #0
-        beq loopSolo	@死亡判定2
+        beq loopSolo  @死亡判定2
         ldrb r0, [r4, #0xB]
         ldrb r1, [r5, #0xB]
         cmp r0, r1
-        beq loopSolo	@自分
+        beq loopSolo  @自分
         ldr r0, [r5, #0xC]
         bl GetExistFlagR1
         and r0, r1
-        bne loopSolo	@居ないフラグ+救出中
+        bne loopSolo  @居ないフラグ+救出中
         
         mov r0, #2  @2マス以内
         mov r1, r4
@@ -1018,17 +951,17 @@ Get_Status:
 Ace:
         push {lr}
     
-        ldrb	r0, [r4, #0x13]	@NOW
-        ldrb	r1, [r4, #0x12]	@MAX
-        lsl	r0, r0, #1
-        cmp	r0, r1
-        bgt	endAce
+        ldrb r0, [r4, #0x13] @NOW
+        ldrb r1, [r4, #0x12] @MAX
+        lsl r0, r0, #1
+        cmp r0, r1
+        bgt endAce
     
         mov r0, r4
         mov r1, #0
         bl HasAce
-        cmp	r0, #0
-        beq	endAce
+        cmp r0, #0
+        beq endAce
     
         mov r1, #90
         ldrh r0, [r4, r1]

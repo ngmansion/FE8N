@@ -3,12 +3,25 @@
 D_REIN_DOWN_NUM = (2)
 ARENA_ADDR = (0x0203a4d0)
 
-@ 0802ad3c
+@ 0802ad3c > 0002a914
 @イクリプス等の直前(自分の数値と相手の数値の計算後)
 @ステータス画面では呼ばれない
 @相手の数値に影響を与える処理群
 
+push {r4, r5, lr}
+mov r4, r0
+mov r5, r1
+bl main
+mov r0, r4
+mov r1, r5
+ldr r2, = 0x0802abd0
+mov lr, r2
+.short 0xF800
+ldr r0, = 0x0802a91e
+mov pc, r0
+.ltorg
 
+main:
     push {r4, r5, r6, lr}
     mov r4, r0
     mov r6, r1
@@ -47,27 +60,13 @@ jumpDown:
     bl AstraPlus
 jumpUp:
 
-    bl WarSkill
+    bl CombatArts
     bl godBless
     bl ChagingLance
 
 Return:
-    ldr r5, [r4, #76]
-    ldr r0, =0x0802ad44
-    mov r15, r0
-endZero:
-    mov r0, #0
-    mov r1, r4
-    add r1, #90
-    strh r0, [r1] @威力
-    
-    mov r0, #0x7F
-    mov r1, r6
-    add r1, #92
-    strh r0, [r1] @防御
-    pop {r4, r5, r6}
-    pop {r0}
-    bx r0
+    pop {r4, r5, r6, pc}
+
 .align
 .ltorg
 
@@ -598,7 +597,7 @@ CheckXY:
         mov r0, #0
         bx lr
 
-WarSkill:
+CombatArts:
         push {lr}
 
         bl GetAttackerAddr
@@ -625,6 +624,48 @@ WarSkill:
         mov r0, #0
     jumpWar1:
         strh r0, [r4, r1] @力
+    
+        mov r1, #96
+        ldrh r0, [r4, r1]
+        mov r2, #1
+        ldsb r2, [r3, r2]
+        add r0, r2
+        cmp r0, #0
+        bge jumpWar2
+        mov r0, #0
+    jumpWar2:
+        strh r0, [r4, r1] @命中
+@@@@@@@@
+        mov r1, #98
+        ldrh r0, [r4, r1]
+        mov r2, #3
+        ldsb r2, [r3, r2]
+        add r0, r2
+        cmp r0, #0
+        bge jumpWar3
+        mov r0, #0
+    jumpWar3:
+        strh r0, [r4, r1] @回避
+@@@@@@@@
+        mov r1, #104
+        ldrh r0, [r4, r1]
+        add r0, r2
+        cmp r0, #0
+        bge jumpWarDodge
+        mov r0, #0
+    jumpWarDodge:
+        strh r0, [r4, r1] @必殺回避
+@@@@@@@@
+        mov r1, #102
+        ldrh r0, [r4, r1]
+        mov r2, #2
+        ldsb r2, [r3, r2]
+        add r0, r2
+        cmp r0, #0
+        bge jumpWar4
+        mov r0, #0
+    jumpWar4:
+        strh r0, [r4, r1] @必殺
     
     endWar:
         pop {pc}
@@ -660,16 +701,6 @@ LightAndDark:
         mov r0, r4
         bl reDaunt
     endLD:
-        mov r0, r4
-        mov r1, r6
-        ldr r2, =0x0802abd0
-        mov lr, r2
-        .short 0xF800
-        mov r0, r4
-        mov r1, r6
-        ldr r2, =0x0802ac00
-        mov lr, r2
-        .short 0xF800
         pop {pc}
 
 recalcHIT_wrapper:
