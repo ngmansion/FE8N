@@ -666,7 +666,7 @@ Heartseeker_impl:
     
         mov r0, r5
         mov r1, #0
-        bl HasHeartseeker
+        bl HAS_HEART_SEEKER
         cmp r0, #0
         beq loopHeartseeker    @相手が呪縛未所持
     
@@ -674,7 +674,8 @@ Heartseeker_impl:
         b loopHeartseeker
     
     resultHeartseeker:
-        mov r2, #20 @マイナス20
+        bl GET_HEART_SEEKER_NUM
+        mov r2, r0
         mul r2, r7
     
         mov r1, #98 @回避
@@ -1476,7 +1477,9 @@ SOLO_ADDR = (addr+96)
 SHISEN_ADDR = (addr+100)
 FORT_ADDR = (addr+104)
 TRAMPLE_ADDR = (addr+108)
-HEARTSEEKER_ADDR = (addr+112)
+HAS_HEART_SEEKER:
+    ldr r2, (addr+112)
+    mov pc, r2
 DAUNT_ADDR = (addr+116)
 HAS_BOND_ADDR = (addr+120)
 HasMeikyouR:
@@ -1522,6 +1525,9 @@ HAS_UNCANNY_BLOW:
     mov pc, r2
 GET_DAUNT_NUM:
     ldr r0, (addr+192)
+    bx lr
+GET_HEART_SEEKER_NUM:
+    ldr r0, (addr+196)
     bx lr
 
 
@@ -1598,9 +1604,6 @@ HAS_IMPREGNABLE_WALL:
     mov pc, r2
 HAS_DAUNT:
     ldr r2, DAUNT_ADDR
-    mov pc, r2
-HasHeartseeker:
-    ldr r2, HEARTSEEKER_ADDR
     mov pc, r2
 HasSavior:
     ldr r2, SAVIOR_ADDR

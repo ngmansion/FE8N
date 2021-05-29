@@ -48,7 +48,7 @@ battle_before:
     POIN hasLifeAndDeath
     POIN hasFort
     POIN HasTrample
-    POIN HasHeartseeker
+    POIN HAS_HEART_SEEKER
     POIN HasDaunt
     POIN hasBond
     POIN HasWardingStance
@@ -69,6 +69,7 @@ battle_before:
     POIN HAS_DUELIST_BLOW
     POIN HAS_UNCANNY_BLOW
     WORD GET_DAUNT_NUM
+    WORD GET_HEART_SEEKER_NUM
 
 battle_after:
     #incbin main.dmp
@@ -103,6 +104,8 @@ battle_after:
     POIN HAS_LIGHT_BLESS
     POIN HasDaunt
     WORD GET_DAUNT_NUM
+    POIN HAS_HEART_SEEKER
+    WORD GET_HEART_SEEKER_NUM
     
     
 battle_down:
@@ -182,7 +185,7 @@ HasDaunt:
     HAS_NIHIL
     WORD DauntID
 
-HasHeartseeker:
+HAS_HEART_SEEKER:
     HAS_NIHIL
     WORD HeartseekerID
 

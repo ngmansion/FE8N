@@ -698,7 +698,7 @@ LightAndDark:
         mov r1, r6
         bl recalcDDG_wrapper
 
-        mov r0, r4
+        bl reHeartseeker
         bl reDaunt
     endLD:
         pop {pc}
@@ -840,6 +840,79 @@ Daunt_impl:
     limitDaunt2:
         strh r0, [r4, r1]
         pop {pc}
+
+reHeartseeker:
+@青は赤に対して効く
+@赤は青と緑に対して効く
+@緑は赤に対して効く
+        push {r4, r5, r6, r7, lr}
+    
+        ldrb r0, [r4, #0xB]
+        lsl r0, r0, #24
+        bmi isRedHeartseeker
+        mov r6, #0x80
+        bl Heartseeker_impl
+        b endHeartseeker
+    isRedHeartseeker:
+        mov r6, #0x00
+        bl Heartseeker_impl
+        mov r6, #0x40
+        bl Heartseeker_impl
+    endHeartseeker:
+        pop {r4, r5, r6, r7, pc}
+
+Heartseeker_impl:
+        push {lr}
+        mov r7, #0
+    loopHeartseeker:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq resultHeartseeker  @リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopHeartseeker  @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopHeartseeker  @死亡判定2
+    
+        ldr r0, [r5, #0xC]
+        ldr r1, =EXIST_FLAG
+        and r0, r1
+        bne loopHeartseeker
+    
+        mov r0, #1  @1マス指定
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopHeartseeker @近くにいない
+    
+        mov r0, r5
+        mov r1, #0
+        bl HAS_HEART_SEEKER
+        cmp r0, #0
+        beq loopHeartseeker    @相手が呪縛未所持
+    
+        add r7, #1
+        b loopHeartseeker
+    
+    resultHeartseeker:
+        bl GET_HEART_SEEKER_NUM
+        mov r2, r0
+        mul r2, r7
+    
+        mov r1, #98 @回避
+        ldrh r0, [r4, r1]
+        sub r0, r2
+        bgt limitHeartseeker
+        mov r0, #0
+    limitHeartseeker:
+        strh r0, [r4, r1] @自分
+        pop {pc}
+
 
 judgeLull:
 @r4を下げるためにr6のスキル発動を見る
@@ -1270,6 +1343,12 @@ HAS_DAUNT:
     mov pc, r2
 GET_DAUNT_NUM:
     ldr r0, (addr+120)
+    bx lr
+HAS_HEART_SEEKER:
+    ldr r2, (addr+124)
+    mov pc, r2
+GET_HEART_SEEKER_NUM:
+    ldr r0, (addr+128)
     bx lr
 
 .ltorg
