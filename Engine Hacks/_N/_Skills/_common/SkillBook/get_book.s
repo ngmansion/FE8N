@@ -15,7 +15,7 @@
     bne expand
 @▼1スキル
     bl get_unitSkill
-    bl EncodeSkill      @スキル1はスキルIDが入っているので、ブックIDに変換する
+    bl EncodeSkill      @スキル1はスキルIDそのものが入っているので、ブックIDに変換する
     b end
 expand:
 @▼2-5スキル

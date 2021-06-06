@@ -14,7 +14,7 @@
     b END
 rawData:
     mov r1, #0x3A       @get_bookにもあり。
-    ldrb r0, [r1, r0]   @スキル1はスキルIDが入っているので、変換は不要
+    ldrb r0, [r1, r0]   @スキル1はスキルIDが入っている(ブックIDではない)ので、変換は不要
     b END
 FALSE:
     mov r0, #0
