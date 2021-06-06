@@ -50,6 +50,6 @@ ALIGN 4
 dedupSkill:
  #incbin "dedupSkill.gba"
 POIN getSkill
-POIN judgeUnit
+POIN judgeSkillInUnitData
 
 

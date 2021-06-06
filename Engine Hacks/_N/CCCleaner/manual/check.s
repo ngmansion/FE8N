@@ -30,7 +30,7 @@ METIS_EFFECT = (0x2E)  @メティスの書の効果ID
         bl GET_WEAPON_MT
     
         cmp r0, #255
-        bne not_eraser
+        bne SkillBook
 @@@@@@@@消滅処理
         mov r0, r4
         mov r1, #1
@@ -44,7 +44,7 @@ METIS_EFFECT = (0x2E)  @メティスの書の効果ID
         bne true
         b false     @未習得 or 書のないスキル
 @@@@@@@@
-    not_eraser:
+    SkillBook:
         bl DECODE_BOOK
         mov r5, r0
         
