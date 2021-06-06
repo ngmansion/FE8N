@@ -17,6 +17,10 @@ pushSkill_impl:
 @▼本処理
     push {lr}
     mov r5, #0
+    b loop
+continueLoop:
+    add r5, #1
+    b loop
 loop:
     ldr r3, MAX_MANUAL_SKILL_NUM
     cmp r5, r3
@@ -27,8 +31,7 @@ loop:
     bl GET_BOOKSKILL
     cmp r0, #0
     beq loop_end
-    add r5, #1
-    b loop
+    b continueLoop
 loop_end:
     mov r2, #0b00111111
     and r2, r6

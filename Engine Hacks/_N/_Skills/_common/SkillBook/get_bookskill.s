@@ -1,4 +1,5 @@
 .thumb
+@スキル書で習得したユニットのスキルIDを取得する
 @I  r0 = ベースアドレス
 @   r1 = 0 is Skill1, 1 is Skill2, ...
 @O  r0 = skillID

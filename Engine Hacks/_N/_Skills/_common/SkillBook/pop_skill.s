@@ -10,10 +10,13 @@ popSkill_impl:
     mov r4, r0
     mov r5, #0
     mov r6, #0
+    b loop
+continue_loop:
+    add r5, #1
 loop:
     ldr r3, MAX_MANUAL_SKILL_NUM
     cmp r5, r3
-    bge FALSE_impl
+    bge loop_end
     mov r0, r4
     mov r1, r5
     bl GET_BOOK_DATA
@@ -28,10 +31,6 @@ check_loop:
     cmp r0, #0
     beq loop_end
     b continue_loop
-    nop
-continue_loop:
-    add r5, #1
-    b loop
 
 loop_end:
     mov r0, r4
