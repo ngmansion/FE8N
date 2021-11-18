@@ -27,6 +27,8 @@ ORG 0x0B9E1A	//お店で回数0を売れる
 ORG 0x0A2746	//輸送隊で回数0を売れる
 	SHORT $46C0
 	
+ORG 0x01684c
+	jumpToHack(changeMaxColor_func)
 	
 ORG 0x0aefdc
 //	SHORT $b500 $1c02 $4805 $7901
@@ -62,5 +64,11 @@ needsBreak_func:
 	#incbin needsBreak.dmp
 needsRepair_func:
 	#incbin needsRepair.dmp
+ALIGN 4
+
+changeMaxColor_func:
+	#incbin repair_max.dmp
+	POIN needsRepair_func
+
 ALIGN 4
 
