@@ -66,7 +66,8 @@ POP
 ALIGN 4
 
 nakashiki:
-    #incbin "nakashiki.gba"
+    #incbin "nakashiki.dmp"
+    WORD 0x080896d8
 ALIGN 4
 
 hoshiki:

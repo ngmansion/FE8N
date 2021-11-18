@@ -1,0 +1,198 @@
+
+PUSH
+
+ORG	0xA741A8
+ #incext Png2Dmp Equipment8.png --lz77
+ORG 0x0892A8
+	WORD $02003AAC //画像文字位置
+
+/* ヘルプ
+
+力先頭
+ORG	$A72C7C
+
+魔力先頭
+ORG	$A72C98
+
+技先頭
+ORG	$A72CB4
+*/
+//力
+ORG	$A72C88
+WORD	$08A72D24
+ORG	$A72C8D
+BYTE	$18
+
+//魔力
+ORG	$A72CA4//右ヘルプ
+WORD	$08A72D40
+ORG	$A72CA9
+BYTE	$28
+
+//技
+ORG	$A72CC0//右ヘルプ
+WORD	$08A72D5C
+ORG	$A72CC5
+BYTE	$38
+
+//幸運
+ORG	$A72D48
+WORD	$08A72C98
+
+//守備
+ORG	$A72D64
+WORD	$08A72CB4
+
+POP
+
+
+
+
+PUSH
+
+ORG 0x8949c //力のバーの位置
+BYTE $1        //戻す
+ORG 0x89670 //力の文字の位置
+WORD $02003D6E //戻す
+
+/////////////ステータス1常に力
+ORG	0x89434
+SHORT	$E016
+
+ORG	0x894e8 //技のバー高さ位置
+BYTE	$5
+
+ORG	0x89530 //速さのバー横位置
+BYTE	$5
+ORG	0x89532 //速さのバー高さ位置
+BYTE	$7
+
+ORG	0x8954C//幸運
+BYTE	$D
+ORG	0x8954e
+BYTE	$1
+
+ORG	0x8956E//守備
+BYTE	$D
+ORG	0x89570
+BYTE	$3
+
+ORG	0x89590//魔防
+BYTE	$D
+ORG	0x89592
+BYTE	$5
+
+//技下降矢印位置
+ORG	0x8a64c
+BYTE	$78	//戻す
+ORG	0x8a64e
+BYTE	$48
+//速さ下降位置
+ORG 0x08a658
+BYTE $38	//戻す
+
+//救出マーク下半
+ORG	0x8a684
+BYTE	$66
+
+//文字変化
+//ORG	0xE4A810
+ORG	0x1F531C
+//メモリ,位置,サイズ,文字
+WORD	$02003C34 $02003E6E $403 $08A73224//技
+WORD	$02003C3C $02003D7E $3 $08A73234//幸運
+WORD	$02003C44 $02003DFE $3 $08A7322C//守備
+WORD	$02003C4C $02003E7E $3 $08A73230//魔防
+WORD	$02003C54 $02003DEE $3 $081F591C//魔力
+WORD	$02003C6C $02003EEE $3 $08A73228//速さ
+
+WORD	$02003C5C $02003FAE $3 $08A73240//移動
+WORD	$02003C64 $0200402E $3 $08A73238//体格
+WORD	$02003C74 $02003FBE $3 $08A73244//同行(9)
+WORD	$02003C84 $0200403E $3 $08A73260//状態
+WORD	$02003CEC $02003EFE $3 $087A9054//指揮
+//WORD $02003CF4 $020040EE $2; POIN word_id_skill //SKILL(8スキル対応に伴い除去)
+WORD	0 0
+
+//ORG 0xA72898 //スキル文字使用メモリ容量(8スキル対応に伴い除去)
+//  BYTE 5	(8スキル対応に伴い除去)
+  
+//WORD	$02003C7C $02003EFE $3 $08A73248//属性
+////座標
+//$3DEE	$3D7E
+//$3DEE	$3DFE
+//$3E6E	$3E7E
+//$3EEE	$3EFE
+//$3F6E	$3F7E
+//$3FEE	$3FFE
+//$406E	$407E
+
+ORG	0x89598
+#incbin "taikaku_number.gba"
+
+ORG	0x895AE
+BYTE $3       // 魔力バー高さ
+
+ORG	0x89678 //救出数字の位置
+WORD	$02003FB6
+
+ORG	0x896b0//(0x896ac+4)
+POIN NoDrawAbilityImage
+POP
+NoDrawAbilityImage:
+#incbin "..\..\_N\Inside_Leadership\nakashiki.dmp"
+POIN 0x0896d6 // 戻りアドレス操作
+PUSH
+ORG 0x0896d6
+SHORT 0x2000 //mov r0, #0 //画像を表示させない為
+//ヘルプ
+//座標ズレ
+ORG $A72CFD	//X1Y5
+BYTE	$60
+ORG $A72D19	//X1Y6
+BYTE	$70
+ORG $A72DA5	//X2Y5
+BYTE	$60
+ORG $A72DC1	//X2Y6
+BYTE	$70
+
+//ヘルプ内容
+ORG	$A72C94	//魔力分岐潰し
+WORD	0
+ORG	$A72CAA	//魔力へ
+  SHORT	$4DC
+ORG	$A72CC6	//技へ
+  SHORT	$4DD
+ORG	$A72CE2//速さ
+  SHORT	$4DE
+ORG	$A72CFE	//移動へ
+  SHORT	$4E2
+ORG	$A72D1A	//体格へ
+  SHORT	$4E3
+ORG	$A72D36	//幸運
+  SHORT	$4DF
+ORG	$A72D52	//守備
+  SHORT	$4E0
+ORG	$A72D6E	//魔防
+  SHORT	$4E1
+ORG	$A72D8A	//指揮
+  SHORT	$6E
+ORG	$A72D8A	//指揮
+  SHORT	$6E
+
+//ヘルプ先
+ORG $A72CB8	//x1y3の下先
+WORD	$08A72CD0
+ORG	$A72CEC	//x1y5の上先
+WORD	$08A72CD0
+ORG $A72D80	//x2y4の左先
+WORD	$08A72CD0
+
+
+ORG	$A72BFC	//ユニット名の右
+WORD	$08A72CD0	//速さ	WORD	$08A72CEC	//移動
+
+
+POP
+
+
