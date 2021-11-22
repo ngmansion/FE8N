@@ -146,7 +146,7 @@ GetWeapon:
         bx lr
     canWeapon:
         mov r1, #74
-        ldrh r0, [r4, r1]
+        ldrb r0, [r4, r1]
         bx lr
 
 Listfunc:
