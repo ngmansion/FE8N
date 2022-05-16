@@ -1,5 +1,8 @@
 .thumb
 @ 08050008
+
+INVALID_COMBAT_ID = (0x00)
+
 push {r4, r5, r6, lr}
 mov r5, r0
 bl main
@@ -72,10 +75,12 @@ Increase:
     bge falseCount
     ldr r3, WAR_CONFIG
     sub r3, #1
+
+    add r0, #1
     ldrb r2, [r3, r0]
     cmp r2, #0
-    beq falseCount
-    add r0, #1
+    beq falseCount  @右が0なら増やさない
+
     strb r0, [r1]
     b trueCount
 
@@ -96,29 +101,51 @@ trueCount:
     mov r0, #1
     bx lr
 
+SHORT_RANGE = 0x02
+LONG_BOW = 0x10
+JAVELIN = 0x20
+
+IRON_SWORD_ID = 0x0101
+LONG_BOW_ID = 0x0134
+JAVELIN_ID = 0x012D
 
 DrawRangeMap:
         push {lr}
-@カウント0なら武器通り
+
         ldr r1, ARROW_CONFIG
         ldrb r0, [r1]
-        cmp r0, #1
-        beq normalDrawRangeMap
-@2スキルなら短距離
-        ldr r1, ARROW_CONFIG
-        ldrb r0, [r1]
-        sub r0, #2
+        sub r0, #1
         ldr r1, WAR_CONFIG
         ldrb r0, [r0, r1]
+        cmp r0, #INVALID_COMBAT_ID
+        beq normal_draw_range_map
+
         bl GET_COMBAT_ARTS_TYPE
-        mov r1, #2
+        mov r1, #SHORT_RANGE
         tst r0, r1
-        beq normalDrawRangeMap
-        
-    singleDrawRangeMap:
-        bl DrawSingleRangeMap
+        bne short_range_map
+        mov r1, #LONG_BOW
+        tst r0, r1
+        bne long_bow_range
+        mov r1, #JAVELIN
+        tst r0, r1
+        bne javelin_range
+        b normal_draw_range_map    @どこにもヒットしないのでデフォルト
+
+    short_range_map:
+        mov r0, #1
+        b set_DrawRangeMap
+    long_bow_range:
+        mov r0, #6
+        b set_DrawRangeMap
+    javelin_range:
+        mov r0, #2
+        b set_DrawRangeMap
+
+    set_DrawRangeMap:
+        bl draw_special_range
         b endDrawRangeMap
-    normalDrawRangeMap:
+    normal_draw_range_map:
         bl DrawWeaponRangeMap
     endDrawRangeMap:
         pop {pc}
@@ -144,9 +171,18 @@ DrawWeaponRangeMap:
         ldr r0, =0x08022d5a
         mov pc, r0
 
-DrawSingleRangeMap:
-@選択中武器に関わらず直接攻撃射程      @08022d4cの処理
-        push    {r4, r5, lr}
+draw_special_range:
+@1 てつけん
+@2 ゆみ
+@3 てやり
+@4 3-3
+@5 1,3
+@6 ながゆみ
+@7 ストーン
+
+@08022d4cの処理
+        push    {r4, r5, r6, lr}
+        mov r6, r0
 @        mov r5, r1
 @        add r5, #60
 @        mov r0, #0
@@ -169,7 +205,7 @@ DrawSingleRangeMap:
         .short 0xF800
         ldr r4, =0x03004df0
         ldr r0, [r4, #0]
-        mov r1, #1          @常に1
+        mov r1, r6
         ldr r0, [r4, #0]
         ldr r2, =0x0801b13c
         mov lr, r2
@@ -179,7 +215,7 @@ DrawSingleRangeMap:
         mov lr, r2
         .short 0xF800
         mov r0, #0
-        pop {r4, r5}
+        pop {r4, r5, r6}
         pop {r1}
         bx  r1
 

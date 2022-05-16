@@ -149,10 +149,8 @@ SelcectingCombat:
         ldrb r0, [r0]
         cmp r0, #0
         beq falseThree
-        cmp r0, #1
-        beq falseThree
 
-        sub r0, #2
+        sub r0, #1
         mov r4, r0
         bl GET_WAR_CONFIG
         ldrb r0, [r0, r4]

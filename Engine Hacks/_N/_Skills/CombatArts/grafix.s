@@ -1,11 +1,14 @@
 ICON_POS = (0x0202F86)
+INVALID_COMBAT_ID = 0x00
 @ 0801e684
 .thumb
-
     ldr r0, [sp, #0x1C]
     ldr r1, =0x08022D5B
     cmp r0, r1
     bne END             @アイテム選択なら終わり？
+
+    mov r0, #0
+    bl SET_COMBAT_ART   @0で初期化
 
     mov r0, r8
     add r0, #72
@@ -21,8 +24,19 @@ ICON_POS = (0x0202F86)
         bl JudgeCapture
         cmp r0, #0
         beq notSkill
+
+        bl can_use_normal_range
+        cmp r0, #0
+        beq cant_normal_range
+
+        ldr r1, WAR_CONFIG
+        mov r0, #INVALID_COMBAT_ID
+        strb r0, [r1]
+        add r1, #1
+        .short 0xE000
+    cant_normal_range:
+        ldr r1, WAR_CONFIG
         mov r0, r8
-        ldr r1, ADDR
         mov r2, #8
         bl GATHER_SKILL
     notSkill:
@@ -35,48 +49,45 @@ ICON_POS = (0x0202F86)
 @        bl WrapIcon
 @        b clear
 @    start:
-        ldr r1, ADDR+4
+        mov r7, #0      @ アイコン位置
+        ldr r1, ARROW_CONFIG
         mov r0, #1
-        strb r0, [r1]
-        
-        mov r0, #0x0
+        strb r0, [r1]           @ 初期値設定
+@    clear:
+        ldr r1, WAR_CONFIG
+        ldrb r1, [r1, #0]
+        cmp r1, #0
+        beq no_combat
+        bl GetColor     @need ID in r1
+        b first_icon
+    no_combat:
         mov r1, #2
         neg r1, r1
         mov r2, #0x60
-        bl WrapIcon
-@    clear:
-        mov r0, #4
-        ldr r1, ADDR
-        ldrb r1, [r1, #0]
-        bl GetColor     @need ID in r1
+    first_icon:
         bl WrapIcon
 
-        mov r0, #8
-        ldr r1, ADDR
+        ldr r1, WAR_CONFIG
         ldrb r1, [r1, #1]
         bl GetColor     @need ID in r1
         bl WrapIcon
 
-        mov r0, #12
-        ldr r1, ADDR
+        ldr r1, WAR_CONFIG
         ldrb r1, [r1, #2]
         bl GetColor     @need ID in r1
         bl WrapIcon
 
-        mov r0, #16
-        ldr r1, ADDR
+        ldr r1, WAR_CONFIG
         ldrb r1, [r1, #3]
         bl GetColor     @need ID in r1
         bl WrapIcon
 
-        mov r0, #20
-        ldr r1, ADDR
+        ldr r1, WAR_CONFIG
         ldrb r1, [r1, #4]
         bl GetColor     @need ID in r1
         bl WrapIcon
         
-        mov r0, #24
-        ldr r1, ADDR
+        ldr r1, WAR_CONFIG
         ldrb r1, [r1, #5]
         bl GetColor     @need ID in r1
         bl WrapIcon
@@ -140,6 +151,7 @@ arrow_reset_func:
 
 WrapIcon:
     push {lr}
+    mov r0, r7
 
     add	r0, r4
     add r0, #0x20
@@ -151,6 +163,8 @@ WrapIcon:
 
     lsl r2, r2, #7
     bl Icon
+
+    add r7, #4
     pop {pc}
 
 
@@ -172,8 +186,19 @@ DrawWindow:
         add sp, #4
         pop {pc}
 
-
-
+can_use_normal_range:
+        push {lr}
+        mov r0, r8
+        mov r1, r8
+        add r1, #72
+        ldrh r1, [r1]
+        ldr r2, =0x08025164 @攻撃可能か確認
+        mov lr, r2
+        .short 0xF800
+        ldr r2, =0x08050a9c @攻撃可能か確認
+        mov lr, r2
+        .short 0xF800
+        pop {pc}
 
 GetWeaponType:
     ldr r3, =0x080172f0
@@ -182,12 +207,16 @@ Icon:
     ldr r3, =0x08003608
     mov pc, r3
 
+WAR_CONFIG      = (ADDR+0)
+ARROW_CONFIG = (ADDR+4)
 SKL_TBL      = (ADDR+8)
 SKL_TBL_SIZE = (ADDR+12)
 GATHER_SKILL:
     ldr r3, (ADDR+16)
     mov pc, r3
-
+SET_COMBAT_ART:
+    ldr r3, (ADDR+20)
+    mov pc, r3
 .align
 .ltorg
 ADDR:

@@ -1,4 +1,7 @@
 .thumb
+@
+@ 遠反用。適当なサンダーエフェクトに置き換える
+@
     ldr r1, =0xFFFFFFFF
     cmp r0, r1
     beq jump

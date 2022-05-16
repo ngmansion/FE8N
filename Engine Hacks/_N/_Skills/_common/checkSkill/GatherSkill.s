@@ -360,17 +360,32 @@ JudgeCombatOccult:
         mov r0, #1
         pop {pc}
 
+SHORT_RANGE = 0x02
+LONG_BOW = 0x10
+JAVELIN = 0x20
+
+IRON_SWORD_ID = 0x0101
+LONG_BOW_ID = 0x0134
+JAVELIN_ID = 0x012D
+
 JudgeRange:
         push {lr}
-
-        ldrb r0, [r5, #6]
-        mov r1, #2
-        tst r0, r1
-        beq trueRange       @2じゃなければフリーレンジ
 
         ldr r0, BOOL_ENEMY
         cmp r0, #0
         beq allyRange
+    @ enemy range
+
+        ldrb r0, [r5, #6]
+        mov r1, #0
+        mov r2, #SHORT_RANGE
+        orr r1, r2
+        mov r2, #LONG_BOW
+        orr r1, r2
+        mov r2, #JAVELIN
+        orr r1, r2
+        tst r0, r1
+        beq trueRange       @2フリーレンジ
 
         mov r0, r4
         add r0, #74
@@ -381,18 +396,34 @@ JudgeRange:
         cmp r0, #1
         beq trueRange
         b falseRange
-    allyRange:
-        mov r0, r4
-        add r0, #74
-        ldrh r0, [r0]
-        bl GetWeaponRange
-        mov r1, #0b11110000
-        and r0, r1
-        cmp r0, #0x10
-        bne falseRange      @短射程武器じゃなければNG
 
+    allyRange:
+        ldrb r0, [r5, #6]
+        mov r1, #SHORT_RANGE
+        tst r0, r1
+        bne     range_iron
+        mov r1, #LONG_BOW
+        tst r0, r1
+        bne     range_long
+        mov r1, #JAVELIN
+        tst r0, r1
+        bne     range_jave
+        mov r1, r4        @ どこにも入らないから今の武器
+        add r1, #72
+        ldrh r1, [r1]
+        b check_range
+
+    range_iron:
+        ldr r1, =IRON_SWORD_ID
+        b check_range
+    range_long:
+        ldr r1, =LONG_BOW_ID
+        b check_range
+    range_jave:
+        ldr r1, =JAVELIN_ID
+        b check_range
+    check_range:
         mov r0, r4
-        ldr r1, =0x0101     @てつのけん
         ldr r2, =0x08025164 @攻撃可能か確認
         mov lr, r2
         .short 0xF800
@@ -400,6 +431,7 @@ JudgeRange:
         mov lr, r2
         .short 0xF800
         b endRange
+
     trueRange:
         mov r0, #1
         b endRange

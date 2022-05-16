@@ -20,14 +20,9 @@ notCombat:
         push {r7}
         mov     r5, r0
         ldr     r4, =0x0203e7a8
-        bl      GetRange
-        cmp r0, #0x01
-        beq jumpRange
-        ldr     r0, =0x0000
-        .short 0xE001
-@@@@@@@@直接攻撃
-    jumpRange:
-        bl      GET_RANGE_WORD_ID
+        bl      GetRangeWord
+
+    merge_range:
         bl      $00009fa8
         mov     r3, r0
         mov     r0, r4
@@ -149,10 +144,8 @@ SelcectingCombat:
         ldrb r0, [r0]
         cmp r0, #0
         beq falseThree
-        cmp r0, #1
-        beq falseThree
 
-        sub r0, #2
+        sub r0, #1
         mov r4, r0
         bl GET_WAR_CONFIG
         ldrb r0, [r0, r4]
@@ -161,20 +154,35 @@ SelcectingCombat:
         mov r0, #0
         pop {pc}
 
-GetRange:
-        push {lr}
-
-        bl GET_COMBAT_ARTS_TYPE
-        cmp r0, #3
-        beq AllRange        @奥義ならジャンプ
+GetRangeWord:
+        push {r4, lr}
+        mov r4, r0
+        bl HAS_SHORT_RANGE
         cmp r0, #1
-        beq AllRange        @全距離
-    closeRange:
-        mov r0, #0x01        @てつけん
-        .short 0xE000
-    AllRange:
-        mov r0, #0xA6       @漆黒の悪夢
-        pop {pc}
+        beq jump_short_range
+        mov r0, r4
+        bl HAS_LONG_BOW
+        cmp r0, #1
+        beq jump_long_range
+        mov r0, r4
+        bl HAS_JAVELIN
+        cmp r0, #1
+        beq jump_javelin_range
+        b false_range
+
+    jump_short_range:
+        bl GET_SHORT_RANGE_WORD_ID
+        b end_range
+    jump_long_range:
+        bl GET_LONG_RANGE_WORD_ID
+        b end_range
+    jump_javelin_range:
+        bl GET_JAVELIN_RANGE_WORD_ID
+        b end_range
+    false_range:
+        mov r0, #0
+    end_range:
+        pop {r4, pc}
 
 JudgeMinus:
         cmp r3, #0
@@ -234,9 +242,24 @@ DECODE_SKILL_BOOK:
     ldr r1, ADDR+40
     add r1, #4
     mov pc, r1
-GET_RANGE_WORD_ID:
+GET_SHORT_RANGE_WORD_ID:
     ldr r0, ADDR+44
     bx lr
+GET_JAVELIN_RANGE_WORD_ID:
+    ldr r0, ADDR+48
+    bx lr
+GET_LONG_RANGE_WORD_ID:
+    ldr r0, ADDR+52
+    bx lr
+HAS_SHORT_RANGE:
+    ldr r1, ADDR+56
+    mov pc, r1
+HAS_LONG_BOW:
+    ldr r1, ADDR+60
+    mov pc, r1
+HAS_JAVELIN:
+    ldr r1, ADDR+64
+    mov pc, r1
 .ltorg
 .align
 ADDR:

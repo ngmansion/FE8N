@@ -199,4 +199,6 @@
 #define DuelistBlowID           202 //0xCA 清流の一撃
 #define UncannyBlowID           203 //0xCB 慧眼の一撃
 #define ImpactID                204 //0xCC 瞬撃
+#define ScendscaleID            205 //0xCD 覇神断竜剣
+#define LongearcheID            206 //0xCE ロングアーチ
 

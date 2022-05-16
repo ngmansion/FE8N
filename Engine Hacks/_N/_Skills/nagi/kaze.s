@@ -97,18 +97,6 @@ CombatArts:
         bl HAS_WIND_SWEEP
         cmp r0, #1
         beq trueCombatArts
-
-        ldr r0, =0x0203a4e8
-        mov r1, r5
-        bl HAS_DEAD_EYE
-        cmp r0, #1
-        beq trueCombatArts
-
-        ldr r0, =0x0203a4e8
-        mov r1, r5
-        bl HAS_FALLEN_STAR
-        cmp r0, #1
-        beq trueCombatArts
     falseCombatArts:
         mov r0, #0
         .short 0xE000
@@ -143,17 +131,9 @@ GET_DISTANT_COUNTER_INVALID_WEAPON_TYPE_R1:
 ldr r1, addr+16
 bx lr
 
-HAS_DEAD_EYE:
-ldr r2, addr+20
-mov pc, r2
-
 SET_ENEMY_COMBAT:
 ldr r1, addr+24
 mov pc, r1
-
-HAS_FALLEN_STAR:
-ldr r2, addr+28
-mov pc, r2
 
 .align
 .ltorg

@@ -25,38 +25,69 @@ main:
         
         push {r3}
 
-        bl IsShortRangeCombat
+        bl get_force_range
 
         pop {r3}
         cmp r0, #0
         beq skip
 
-        mov r3, #1  @強制的に射程0x11
-        mov r4, #1
+        mov r3, r1  @ distant
+        mov r4, r0  @ close
     skip:
         pop {pc}
 
-IsShortRangeCombat:
-        push {lr}
+get_force_range:
+@
+@r0=0なら、指定なし
+@それ以外なら、r0とr1に有効値設定
+@
+        push {r4, lr}
 
         bl GetSelectingCombatArt
-        bl GET_COMBAT_ARTS_TYPE
-        cmp r0, #2
-        beq trueRange
+        cmp r0, #0
+        beq falseRange
+        mov r4, r0
+
+        bl HAS_SHORT_RANGE
+        cmp r0, #1
+        beq force_short
+
+        mov r0, r4
+        bl HAS_LONG_BOW
+        cmp r0, #1
+        beq force_long
+
+        mov r0, r4
+        bl HAS_JAVELIN
+        cmp r0, #1
+        beq force_jave
+
+        b falseRange
+
+    force_short:
+        mov r0, #1
+        mov r1, #1
+        b endRange
+    force_long:
+        mov r0, #2
+        mov r1, #3
+        b endRange
+    force_jave:
+        mov r0, #2
+        mov r1, #2
+        b endRange
+
     falseRange:
         mov r0, #0
-        .short 0xE000
-    trueRange:
-        mov r0, #1
-        pop {pc}
+    endRange:
+        pop {r4, pc}
 
 
 GetSelectingCombatArt:
         ldr r0, ARROW_CONFIG
         ldrb r0, [r0]
-        cmp r0, #1
-        ble zeroSelect
-        sub r0, #2
+        sub r0, #1
+        blt zeroSelect
         ldr r1, WAR_CONFIG
         ldrb r0, [r1, r0]
         .short 0xE000
@@ -101,6 +132,15 @@ GET_COMBAT_ART:
     mov pc, r1
 GET_COMBAT_ARTS_TYPE:
     ldr r1, (addr+20)
+    mov pc, r1
+HAS_SHORT_RANGE:
+    ldr r1, addr+24
+    mov pc, r1
+HAS_LONG_BOW:
+    ldr r1, addr+28
+    mov pc, r1
+HAS_JAVELIN:
+    ldr r1, addr+32
     mov pc, r1
 .align
 addr:

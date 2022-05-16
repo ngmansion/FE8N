@@ -8,10 +8,12 @@ main:
         ldrb r0, [r0]
         cmp r0, #0
         beq normal
-        cmp r0, #1
-        beq normal
 
         bl GetSelectiongID
+        cmp r0, #0
+        beq normal
+        
+        bl GET_COMBAT_ARTS_TYPE
         cmp r0, #3
         bne notOracle
         mov r5, #0x6C   @リフ
@@ -36,7 +38,7 @@ main:
 GetSkillHelp:
         ldr r0, GET_COMBAT_INDEX
         ldrb r0, [r0]
-        sub r0, #2
+        sub r0, #1
         ldr r1, GET_COMBAT_ADDR
         ldrb r0, [r0, r1]   @ID取得
         ldr r1, GET_ICON_LIST_SIZE
@@ -50,10 +52,9 @@ GetSkillHelp:
 GetSelectiongID:
         push {r4, lr}
         mov r4, r0
-        sub r4, #2
+        sub r4, #1
         ldr r0, GET_COMBAT_ADDR
         ldrb r0, [r4, r0]
-        bl GET_COMBAT_ARTS_TYPE
         pop {r4, pc}
 
 GET_COMBAT_ADDR = addr+0

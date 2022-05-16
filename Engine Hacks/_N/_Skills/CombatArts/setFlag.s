@@ -33,8 +33,6 @@ DEF = (0x0203a568)
         ldrb r0, [r0]
         cmp r0, #0
         beq end
-        cmp r0, #1
-        beq end
         
         bl GetSkill
         mov r1, r4
@@ -54,7 +52,7 @@ end:
 GetSkill:
         ldr r2, ADDR+4
         ldrb r2, [r2]
-        sub r2, #2
+        sub r2, #1
         ldr r1, ADDR
         ldrb r0, [r1, r2]
         bx lr

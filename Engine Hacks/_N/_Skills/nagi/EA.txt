@@ -7,6 +7,9 @@ ORG 0x02a834
 
 ORG 0x058fe0
 	jumpToHack(counter_effect)
+	
+ORG 0x000585e0
+	jumpToHack(before_effect)
 
 POP
 
@@ -17,13 +20,17 @@ nagi_kaze:
   WORD DISTANT_COUNTER_ITEM_EFFECT_ID
   POIN HAS_DISTANT_COUNTER
   WORD DISTANT_COUNTER_INVALID_WEAPON_TYPE
-  POIN HAS_DEAD_EYE
+  POIN 0
   POIN SET_ENEMY_COMBAT
-  POIN HAS_FALLEN_STAR
+  POIN 0
 
 counter_effect:
   #incbin effect.dmp
   WORD DISTANT_COUNTER_EFFECT_ID
+
+before_effect:
+  #incbin before_effect.dmp
+  POIN GET_COMBAT_ART
 
 HAS_WIND_SWEEP:
  HAS_COMBAT

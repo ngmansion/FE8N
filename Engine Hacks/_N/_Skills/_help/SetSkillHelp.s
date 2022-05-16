@@ -31,11 +31,10 @@ merge:
 
     mov r0, r5
     bl GET_COMBAT_ARTS_TYPE
-    cmp r0, #1
-    beq trueCombat
-    cmp r0, #2
-    beq trueCombat
-    b end
+    cmp r0, #0
+    beq end
+    cmp r0, #3
+    beq end
 trueCombat:
     ldr r0, =0xFD01       @武器ID(ダミー)
     strh r0, [r4, #2]

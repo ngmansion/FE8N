@@ -1,4 +1,5 @@
 .thumb
+TRUE = 1
 b GET_COMBAT_ATK
 nop
 b GET_COMBAT_HIT
@@ -13,6 +14,50 @@ b GET_COMBAT_SPECIES
 nop
 b GET_COMBAT_ARTS_TYPE
 nop
+b HAS_ALL_RANGE
+nop
+b HAS_SHORT_RANGE
+nop
+b HAS_LONG_BOW
+nop
+b HAS_JAVELIN
+nop
+HAS_ALL_RANGE:
+    push {lr}
+    bl GET_COMBAT_ARTS_TYPE
+    mov r1, r0
+    mov r0, #TRUE
+    cmp r1, #0x01
+    .short 0xD000
+    mov r0, #0
+    pop {pc}
+HAS_SHORT_RANGE:
+    push {lr}
+    bl GET_COMBAT_ARTS_TYPE
+    mov r1, r0
+    mov r0, #TRUE
+    cmp r1, #0x02
+    .short 0xD000
+    mov r0, #0
+    pop {pc}
+HAS_LONG_BOW:
+    push {lr}
+    bl GET_COMBAT_ARTS_TYPE
+    mov r1, r0
+    mov r0, #TRUE
+    cmp r1, #0x10
+    .short 0xD000
+    mov r0, #0
+    pop {pc}
+HAS_JAVELIN:
+    push {lr}
+    bl GET_COMBAT_ARTS_TYPE
+    mov r1, r0
+    mov r0, #TRUE
+    cmp r1, #0x20
+    .short 0xD000
+    mov r0, #0
+    pop {pc}
 
 GET_COMBAT_ARTS_TYPE:
         ldr r1, COMBAT_ART_LIST_SIZE
@@ -33,7 +78,7 @@ GET_COMBAT_ARTS_TYPE:
         mov r1, #0x01
         and r1, r0
         bne trueAllRange
-        b falseCombat
+        b endCombat
 
     trueOracle:
         mov r0, #3

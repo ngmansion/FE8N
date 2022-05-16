@@ -11,11 +11,24 @@ POP
 PUSH
 ORG	0x16e7c
 BYTE	$00 $4B $9F $46
-POIN	yumi_myturn
+POIN	GetWeaponRangeMask
 POP
-yumi_myturn:
-#incbin select_player_func.gba
+GetWeaponRangeMask:
+#incbin GetWeaponRangeMask.dmp
+POIN CAN_USE_COMBAT_ARTS
 ALIGN 4
+
+//////////////攻撃選択後のレンジ表示
+
+PUSH
+ORG 0x016f9c
+jumpToHack(GetUnitRangeMask)
+POP
+GetUnitRangeMask:
+#incbin GetUnitRangeMask.dmp
+WORD ARROW_CONFIG
+WORD WAR_CONFIG
+
 
 ////////////////射程の上限と下限・汎用
 PUSH
@@ -24,17 +37,44 @@ ORG	0x17420
 BYTE	$00 $4A $97 $46
 POIN	yumi_new1
 
-ORG	0x1743C
-BYTE	$00 $4A $97 $46
-POIN	yumi_new2
+ORG	0x1742c
+SHORT 0x4900 0x4708
+POIN	GetMaxItemRange+1
 
 POP
 yumi_new1:
 #incbin min_range.gba
 ALIGN 4
-yumi_new2:
-#incbin max_range.gba
+GetMaxItemRange:
+#incbin GetMaxItemRange.dmp
+POIN CAN_USE_COMBAT_ARTS
+POIN GET_COMBAT_ART
 ALIGN 4
+
+///////////////////LongRangeCombat
+
+PUSH
+ORG 0x022c88
+jumpToHack(CanSelectThisWeapon)
+POP
+
+CanSelectThisWeapon:
+#incbin AttackCommandUsability.dmp
+POIN CAN_USE_COMBAT_ARTS
+POIN 0x022cb0 //false_return
+POIN 0x022c96 //true_return
+POIN 0x01631c // USE_SUB_ROUTINE
+
+PUSH
+ORG 0x024998
+jumpToHack(AttackCommandUsability)
+POP
+AttackCommandUsability:
+#incbin AttackCommandUsability.dmp
+POIN CAN_USE_COMBAT_ARTS
+POIN 0x0249b6 //false_return
+POIN 0x0249a6 //true_return
+POIN 0x0164f8 // USE_SUB_ROUTINE
 
 ///////////////////RangePenalty
 PUSH
@@ -45,3 +85,11 @@ POP
 yumi_range:
 #incbin "penalty.gba"
 ALIGN 4
+
+///////////////////
+
+CAN_USE_COMBAT_ARTS:
+#incbin "CanUseCombatArt.dmp"
+POIN judgeSkill
+POIN COMBAT_TABLE_ADDR
+
