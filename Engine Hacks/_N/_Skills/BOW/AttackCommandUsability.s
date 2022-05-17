@@ -29,6 +29,7 @@ $000164f8:
 LONG_BOW_ID = 0x34
 BOW_ID = 0x2D
 JAVELIN_ID = 0x1C
+NIGHTMARE_ID = 0xA6
 
 skill_unit      .req r5
 weapon_id       .req r4
@@ -76,13 +77,23 @@ combat_arts:
         beq javelin_arts
         b end_combat
     long_arts:
-        mov weapon_id, #LONG_BOW_ID
-        b end_combat
-    javelin_arts:
-        ldr r5, [r5]
         mov r0, weapon_id
         bl $00017448
-        cmp r0, #0x11
+        mov r1, #0xF0
+        and r0, r1
+        cmp r0, #0x10
+        beq nightmare_range     @射程1なら漆黒の悪夢レンジ
+        mov weapon_id, #LONG_BOW_ID
+        .short 0xE000
+    nightmare_range:
+        mov weapon_id, #NIGHTMARE_ID
+        b end_combat
+    javelin_arts:
+        mov r0, weapon_id
+        bl $00017448
+        mov r1, #0xF0
+        and r0, r1
+        cmp r0, #0x10
         beq javelin_range       @射程1なら+1で手槍レンジ
         mov weapon_id, #BOW_ID
         .short 0xE000
@@ -105,6 +116,9 @@ TRUE_RETURN = ADDR+8  @ (0x080249b6)
 
 USE_SUB_ROUTINE:
     ldr r3, (ADDR+12) @ = can_unit_use_weapon
+    mov pc, r3
+HAS_POINT_BLANK:
+    ldr r3, (ADDR+16)
     mov pc, r3
 
 .align
