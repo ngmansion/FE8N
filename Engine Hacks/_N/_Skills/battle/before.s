@@ -1159,7 +1159,7 @@ koroshi:
         mov r0, #83
         ldsb r0, [r4, r0]
         cmp r0, #0
-        blt falseKoroshi
+        blt falseKoroshi    @相性不利
 
         bl breaker_impl
         cmp r0, #0
@@ -1173,20 +1173,20 @@ koroshi:
         pop {pc}
         
     setKoroshi:
-        mov r1, #90
-        ldrh r0, [r4, r1]
-        add r0, #3
-        strh r0, [r4, r1] @自分
+        @ mov r1, #90
+        @ ldrh r0, [r4, r1]
+        @ add r0, #3
+        @ strh r0, [r4, r1] @自分
         
-        mov r1, #92
-        ldrh r0, [r4, r1]
-        add r0, #3
-        strh r0, [r4, r1] @自分
+        @ mov r1, #92
+        @ ldrh r0, [r4, r1]
+        @ add r0, #3
+        @ strh r0, [r4, r1] @自分
         
-        mov r1, #94
-        ldrh r0, [r4, r1]
-        add r0, #3
-        strh r0, [r4, r1] @自分
+        @ mov r1, #94
+        @ ldrh r0, [r4, r1]
+        @ add r0, #3
+        @ strh r0, [r4, r1] @自分
         
         mov r1, #96
         ldrh r0, [r4, r1]
