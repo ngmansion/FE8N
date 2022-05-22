@@ -1,6 +1,6 @@
 @ 0802c754
 
-TRIANGLE_ADEPT = (3)
+TRIANGLE_ADEPT_MUL = (2)
 
 .thumb
     bl CancelAffinity
@@ -105,7 +105,7 @@ TriangleAdept:
             ldr r2, adr
             mov lr, r2
             .short 0xF800
-        mov r1, #TRIANGLE_ADEPT
+        mov r1, #TRIANGLE_ADEPT_MUL
         mul r0, r1
         pop {pc}
 
