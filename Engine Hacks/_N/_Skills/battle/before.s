@@ -145,6 +145,7 @@ OtherSideSkill:
         bl UncannyBlow
         bl Charge
         bl BladeSession
+        bl Instant
         pop {pc}
     DefSkill:
         bl DistantDef
@@ -156,6 +157,7 @@ OtherSideSkill:
         bl BracingR
         bl KishinBreath
         bl HienBreath
+        bl Stout
         pop {pc}
 
 CriticalUp:
@@ -401,20 +403,24 @@ BladeSessionOne:
 @@@@@@@@
 
 joint_drive_grants = 4
+allied_grants = 2
 joint_drive_spaces = 2
 joint_drive_limits = 9
 
 joint_count_atk     .req r8
 joint_count_spd     .req r9
+allied_count     .req r10
 
 JointDrive:
         push {r5, r6, r7, lr}
         mov r0, r8
         mov r1, r9
-        push {r0, r1}
+        mov r2, r10
+        push {r0,r1,r2}
         mov r7, #0
         mov joint_count_atk, r7
         mov joint_count_spd, r7
+        mov allied_count, r7
 
         ldrb r6, [r4, #0xB]
         mov r0, #0xC0
@@ -458,11 +464,17 @@ JointDrive:
         beq endJointDrive     @誰も居なかった
 @@@@@@@@
         mov r0, r4
-        bl JointCount
+        bl JointCount       @誰か居たので自分を加算
 @@@@@@@@
         mov r0, joint_count_atk
         mov r2, #joint_drive_grants
         mul r2, r0
+
+        mov r0, allied_count
+        mov r1, #allied_grants
+        mul r1, r0
+        add r2, r1
+
         cmp r2, #joint_drive_limits
         ble limitJointDriveAtk
         mov r2, #joint_drive_limits
@@ -483,10 +495,23 @@ JointDrive:
         ldrh r0, [r4, r1]
         add r0, r2
         strh r0, [r4, r1]
+@@@@@@@@
+        mov r0, allied_count
+        mov r2, #allied_grants
+        mul r2, r0
+        cmp r2, #joint_drive_limits
+        ble limitJointDriveDef
+        mov r2, #joint_drive_limits
+    limitJointDriveDef:
+        mov r1, #92         @防御
+        ldrh r0, [r4, r1]
+        add r0, r2
+        strh r0, [r4, r1]
     endJointDrive:
-        pop {r0, r1}
+        pop {r0,r1,r2}
         mov r8, r0
         mov r9, r1
+        mov r10, r2
         pop {r5, r6, r7, pc}
 
 
@@ -510,6 +535,15 @@ JointCount:
         mov r0, #1
         add joint_count_spd, r0
     skipJointSpd:
+
+        mov r0, r4
+        mov r1, #0
+        bl HAS_ALLIED
+        cmp r0, #0
+        beq skipAllied
+        mov r0, #1
+        add allied_count, r0
+    skipAllied:
         pop {r4, pc}
 
 @@@@@@@@
@@ -747,6 +781,60 @@ Bond:
         strh r0, [r4, r1] @自分
     falseBond:
         pop {r4, r5, r6, r7, pc}
+
+Steadfast:
+        push {r4, r5, r6, r7, lr}
+        ldrb r6, [r4, #0xB]
+        mov r0, #0xC0
+        and r6, r0  @r6に部隊表ID
+        
+        mov r0, r4
+        mov r1, #0
+        bl HAS_STEADFAST
+        cmp r0, #0
+        beq falseSteadfast
+        mov r7, #0
+    loopSteadfast:
+        add r6, #1
+        mov r0, r6
+        bl Get_Status
+        mov r5, r0
+        cmp r0, #0
+        beq falseSteadfast  @リスト末尾
+        ldr r0, [r5]
+        cmp r0, #0
+        beq loopSteadfast  @死亡判定1
+        ldrb r0, [r5, #19]
+        cmp r0, #0
+        beq loopSteadfast  @死亡判定2
+        ldrb r0, [r4, #0xB]
+        ldrb r1, [r5, #0xB]
+        cmp r0, r1
+        beq loopSteadfast  @自分
+        ldr r0, [r5, #0xC]
+        bl GetExistFlagR1
+        and r0, r1
+        bne loopSteadfast
+    
+    jumpSteadfast:
+        mov r0, #2  @2マス指定
+        mov r1, r4
+        mov r2, r5
+        bl CheckXY
+        cmp r0, #0
+        beq loopSteadfast
+
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #3
+        strh r0, [r4, r1] @自分
+        mov r1, #92
+        ldrh r0, [r4, r1]
+        add r0, #3
+        strh r0, [r4, r1] @自分
+    falseSteadfast:
+        pop {r4, r5, r6, r7, pc}
+
 
 Fort:
         push {lr}
@@ -1359,6 +1447,44 @@ HienBreath:
         strh r0, [r4, r1]
         b endHien
 
+Instant:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_INSTANT
+        cmp r0, #0
+        beq endInstant
+        
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #2 @威力
+        strh r0, [r4, r1] @自分
+        mov r1, #92
+        ldrh r0, [r4, r1]
+        add r0, #2
+        strh r0, [r4, r1]
+    endInstant:
+        pop {pc}
+
+Stout:
+        push {lr}
+        mov r0, r4
+        mov r1, #0
+        bl HAS_STOUT
+        cmp r0, #0
+        beq endStout
+        
+        mov r1, #90
+        ldrh r0, [r4, r1]
+        add r0, #2 @威力
+        strh r0, [r4, r1] @自分
+        mov r1, #92
+        ldrh r0, [r4, r1]
+        add r0, #2
+        strh r0, [r4, r1]
+    endStout:
+        pop {pc}
+
 WarMasterBlow:
         push {lr}
         mov r0, r4
@@ -1529,6 +1655,18 @@ GET_DAUNT_NUM:
 GET_HEART_SEEKER_NUM:
     ldr r0, (addr+196)
     bx lr
+HAS_INSTANT:
+    ldr r2, (addr+200)
+    mov pc, r2
+HAS_STEADFAST:
+    ldr r2, (addr+204)
+    mov pc, r2
+HAS_STOUT:
+    ldr r2, (addr+208)
+    mov pc, r2
+HAS_ALLIED:
+    ldr r2, (addr+212)
+    mov pc, r2
 
 
 GetWarList:

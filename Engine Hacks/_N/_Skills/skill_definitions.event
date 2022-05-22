@@ -201,4 +201,9 @@
 #define ImpactID                204 //0xCC 瞬撃
 #define ScendscaleID            205 //0xCD 覇神断竜剣
 #define LongearcheID            206 //0xCE ロングアーチ
+#define InstantID               207 //0xCF 瞬撃B
+#define ReinbID                 208 //0xD0 牽制B
+#define StoutID                 209 //0xD1 堅固
+#define AlliedID                210 //0xD2 共闘
+#define SteadfastID             211 //0xD3 護衛
 

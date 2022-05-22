@@ -508,7 +508,9 @@ GainWarding:
 
 @r4 temp enemy
 @r5 loop count
-Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
+Rein:   
+@牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
+@牽制B   2マス以内の相手ユニットは戦闘中攻速防御耐魔-2
         push {r5, r6, lr}
 
         ldrb r5, [r6, #0xB]
@@ -544,10 +546,16 @@ Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
         mov r0, r6
         mov r1, #0
         bl HAS_REIN
-        cmp r0, #0
-        beq loopRein
+        cmp r0, #1
+        beq trueReinA
+        mov r0, r6
+        mov r1, #0
+        bl HAS_REINB
+        cmp r0, #1
+        beq trueReinB
+        b loopRein
 
-    trueRein:
+    trueReinA:
         mov r1, r4
         add r1, #90
         ldrh r0, [r1]
@@ -556,7 +564,19 @@ Rein:   @牽制   2マス以内の相手ユニットは戦闘中攻撃攻速-2
         mov r0, #0
     jumpAtkRein:
         strh r0, [r1] @威力
-        
+        b mergeRein
+    trueReinB:
+        mov r1, r4
+        add r1, #92
+        ldrh r0, [r1]
+        sub r0, #D_REIN_DOWN_NUM
+        bge jumpDefRein
+        mov r0, #0
+    jumpDefRein:
+        strh r0, [r1] @威力
+        b mergeRein
+        nop
+    mergeRein:
         mov r1, r4
         add r1, #94
         ldrh r0, [r1]
@@ -1350,6 +1370,9 @@ HAS_HEART_SEEKER:
 GET_HEART_SEEKER_NUM:
     ldr r0, (addr+128)
     bx lr
+HAS_REINB:
+    ldr r2, (addr+132)
+    mov pc, r2
 
 .ltorg
 .align

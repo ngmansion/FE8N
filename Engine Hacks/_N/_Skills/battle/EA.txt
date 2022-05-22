@@ -70,6 +70,10 @@ battle_before:
     POIN HAS_UNCANNY_BLOW
     WORD GET_DAUNT_NUM
     WORD GET_HEART_SEEKER_NUM
+    POIN HAS_INSTANT
+    POIN HAS_STEADFAST
+    POIN HAS_STOUT
+    POIN HAS_ALLIED
 
 battle_after:
     #incbin main.dmp
@@ -106,6 +110,7 @@ battle_after:
     WORD GET_DAUNT_NUM
     POIN HAS_HEART_SEEKER
     WORD GET_HEART_SEEKER_NUM
+    POIN HAS_REINB
     
     
 battle_down:
@@ -283,6 +288,9 @@ HAS_CHARGE:
 HAS_REIN:
     HAS_SKILL
     WORD ReinID
+HAS_REINB:
+    HAS_SKILL
+    WORD ReinbID
 HAS_JOINT_DRIVE_ATK:
     HAS_SKILL
     WORD JointDriveAtkID
@@ -322,4 +330,9 @@ HAS_DUELIST_BLOW:
 HAS_UNCANNY_BLOW:
     HAS_NIHIL
     WORD UncannyBlowID
-
+HAS_STEADFAST:
+    HAS_NIHIL
+    WORD SteadfastID
+HAS_ALLIED:
+    HAS_NIHIL
+    WORD AlliedID

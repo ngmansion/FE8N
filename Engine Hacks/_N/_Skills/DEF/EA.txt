@@ -50,6 +50,7 @@ shikkokunori:
  POIN HAS_DEFLECT
  POIN HAS_IMPREGNABLE_WALL
  POIN PrayOld_hasSkill
+ POIN HAS_STOUT
 
 hasInvincible:
  HAS_NIHIL
@@ -83,5 +84,7 @@ HAS_DEFLECT:
  HAS_NIHIL
  WORD DeflectID
  
-
+HAS_STOUT:
+ HAS_NIHIL
+ WORD StoutID
  

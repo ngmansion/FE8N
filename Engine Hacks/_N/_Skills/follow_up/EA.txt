@@ -87,3 +87,7 @@ HAS_IMPACT:
     HAS_NIHIL
     WORD ImpactID
 
+HAS_INSTANT:
+    HAS_NIHIL
+    WORD InstantID
+    

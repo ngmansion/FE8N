@@ -19,5 +19,5 @@ skill_204_item:
 #define COMBAT_ART_204_DUMMY 00 
  
 COMPLEX_SKILL_204:
-   BYTE $00 $00 0 
+   BYTE $CF $00 0 
 

@@ -6,8 +6,8 @@ skill_211_weapon:
    BYTE $00 $00 0 
 skill_211_item:
    BYTE $00 $00 0 
-#define SKL_HELP_211 $0000
-#define SKL_COLOR_211 $00
+#define SKL_HELP_211 $8d
+#define SKL_COLOR_211 $ff
  
 #define COMBAT_ART_211_ATK 00 
 #define COMBAT_ART_211_HIT 00 
