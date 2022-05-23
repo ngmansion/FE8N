@@ -67,7 +67,10 @@ GET_COMBAT_ARTS_TYPE:
         mov r1, #6
         ldrb r0, [r0, r1]
 
-        mov r1, #0x04
+        mov r1, #0b1000
+        and r1, r0
+        bne trueOracle
+        mov r1, #0b0100
         and r1, r0
         bne trueOracle
 

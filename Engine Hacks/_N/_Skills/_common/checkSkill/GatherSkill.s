@@ -335,7 +335,7 @@ JudgeSpecialWeapon:
         mov r0, #0
         pop {pc}
 
-
+@GET_COMBAT_ARTS_TYPE
 JudgeCombatOccult:
         push {lr}
         mov r0, r5  @必要
