@@ -1459,6 +1459,12 @@ Instant:
         ldrh r0, [r4, r1]
         add r0, #2 @威力
         strh r0, [r4, r1] @自分
+
+        mov r0, r5
+        bl IS_MAGIC
+        cmp r0, #1
+        beq endInstant
+
         mov r1, #92
         ldrh r0, [r4, r1]
         add r0, #2
@@ -1478,6 +1484,12 @@ Stout:
         ldrh r0, [r4, r1]
         add r0, #2 @威力
         strh r0, [r4, r1] @自分
+
+        mov r0, r5
+        bl IS_MAGIC
+        cmp r0, #1
+        beq endStout
+
         mov r1, #92
         ldrh r0, [r4, r1]
         add r0, #2
