@@ -6,8 +6,8 @@ skill_196_weapon:
    BYTE $00 $00 0 
 skill_196_item:
    BYTE $00 $00 0 
-#define SKL_HELP_196 $0000
-#define SKL_COLOR_196 $00
+#define SKL_HELP_196 $008f
+#define SKL_COLOR_196 $ff
  
 #define COMBAT_ART_196_ATK 00 
 #define COMBAT_ART_196_HIT 00 
