@@ -1387,7 +1387,7 @@ Meikyou:
     
         mov r1, #92
         ldrh r0, [r4, r1]
-        add r0, #10
+        add r0, #20
         strh r0, [r4, r1]
     endMeikyou:
         pop {pc}
