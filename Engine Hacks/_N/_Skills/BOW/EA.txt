@@ -1,6 +1,11 @@
 
 //////
 
+PUSH    //敵の装備が外れるバグの対症療法
+ORG 0x03E9D6
+SHORT 0xDA92
+POP
+
 PUSH
 //上限と下限
 ORG	0x16938
