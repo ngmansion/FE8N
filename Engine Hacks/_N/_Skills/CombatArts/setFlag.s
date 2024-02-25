@@ -35,6 +35,9 @@ DEF = (0x0203a568)
         beq end
         
         bl GetSkill
+        cmp r0, #0
+        beq end
+
         mov r1, r4
         bl SET_COMBAT_ART
 @サウンド
