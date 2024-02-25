@@ -207,4 +207,4 @@
 #define AlliedID                210 //0xD2 共闘
 #define SteadfastID             211 //0xD3 護衛
 #define GodlikeReflexesID       212 //0xD4 神速回避
-
+#define PotentFollowId          213 //0xD5 神速追撃

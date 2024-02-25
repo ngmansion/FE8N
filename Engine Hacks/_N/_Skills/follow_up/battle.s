@@ -136,9 +136,9 @@ FollowUpBattle:
         ldr r1, [sp]
 
         cmp r0, #0
-        beq nextInitial      @追撃無しなので終了
+        beq PotentFollow      @追撃無しなので終了
         cmp r1, r4
-        bne nextInitial      @相手の追撃なので終了
+        bne PotentFollow      @相手の追撃なので終了
     
         ldr r2, [r6, #0]
         ldr r0, [r2, #0]
@@ -150,9 +150,38 @@ FollowUpBattle:
         mov r0, r4
         mov r1, r5
         bl BattleWrapper
+        cmp r0, #1
+        beq breakFollowUpBattle
+    PotentFollow:
+        mov r0, r4
+        mov r1, r5
+        bl HAS_POTENT_FOLLOW
+        cmp r0, #0
+        beq continueFollowUpBattle
+
+        mov r2, #94
+        ldrh r0, [r4, r2]
+        ldrh r1, [r5, r2]
+        cmp r0, r1
+        ble continueFollowUpBattle              @敵以下なら終了
+
+        ldr r2, [r6, #0]
+        ldr r0, [r2, #0]
+        and r0, r5
+        mov r1, #4          @追撃にチェック
+        orr r0, r1
+        str r0, [r2, #0]
+
+        mov r0, r4
+        mov r1, r5
+        bl BattleWrapper
+        cmp r0, #1
+        beq breakFollowUpBattle
+    continueFollowUpBattle:
+        mov r0, #0      @戦闘継続
         .short 0xE000
-    nextInitial:
-        mov r0, #0
+    breakFollowUpBattle:
+        mov r0, #1      @戦闘終了
         add sp, #8
         pop {r4, r5, pc}
 
@@ -219,6 +248,9 @@ IS_TEMP_SKILL_FLAG:
     mov pc, r2
 TURN_OFF_TEMP_SKILL_FLAG:
     ldr r2, addr+8
+    mov pc, r2
+HAS_POTENT_FOLLOW:
+    ldr r2, addr+12
     mov pc, r2
 
 .align

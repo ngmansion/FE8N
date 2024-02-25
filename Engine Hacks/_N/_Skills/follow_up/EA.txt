@@ -39,6 +39,7 @@ breaker_semetate:
     POIN hasDesperation
     POIN IS_TEMP_SKILL_FLAG
     POIN TURN_OFF_TEMP_SKILL_FLAG
+    POIN HAS_POTENTIAL_FOLLOW
     
 breaker_hasSkill1:
     HAS_SKILL
@@ -90,4 +91,8 @@ HAS_IMPACT:
 HAS_INSTANT:
     HAS_NIHIL
     WORD InstantID
+
+HAS_POTENTIAL_FOLLOW:
+    HAS_NIHIL
+    WORD PotentFollowId
     
