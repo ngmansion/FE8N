@@ -22,7 +22,7 @@ SET_SKILLANIME_DEF_FUNC = (addr+20)
 
     mov r0, r8
     ldrb r0, [r0, #0xB]
-        ldr r1, =0x08019108
+        ldr r1, WALL_CHAECK
         mov lr, r1
         .short 0xF800
     cmp r0, #0
@@ -36,6 +36,7 @@ SET_SKILLANIME_DEF_FUNC = (addr+20)
     bl ImpregnableWall
     bl Deflect
     bl Stout
+    bl GodlikeReflexes
 
     bl Xeno
     cmp r0, #1
@@ -67,6 +68,9 @@ zero:
 end:
     ldr r0, =0x0802b49a
     mov pc, r0
+.align
+WALL_CHAECK:
+.word 0x08019108
 
 checkSkip:
         mov r1, r9
@@ -84,6 +88,35 @@ checkSkip:
     trueSkip:
         mov r0, #1
         bx lr
+
+GodlikeReflexes:
+        push {lr}
+
+        bl checkSkip
+        cmp r0, #1
+        beq falseGodlikeReflexes
+        mov r0, r8
+        mov r1, r7
+        bl HAS_GODLIKE_REFLEXES
+        cmp r0, #0
+        beq falseGodlikeReflexes
+@
+        mov r1, r7
+        add r1, #100
+        ldrh r0, [r1]
+        cmp r0, #50
+        bge falseGodlikeReflexes    @命中50以上なら終了
+
+        ldrh	r0, [r4, #4]
+        bl divide5
+        strh	r0, [r4, #4]
+
+        mov r0, #1
+        b endGodlikeReflexes
+    falseGodlikeReflexes:
+        mov r0, #0
+    endGodlikeReflexes:
+        pop {pc}
 
 ImpregnableWall:
         push {lr}
@@ -663,6 +696,9 @@ ldr r2, (addr+40)
 mov pc, r2
 HAS_STOUT:
     ldr r2, (addr+44)
+    mov pc, r2
+HAS_GODLIKE_REFLEXES:
+    ldr r2, (addr+48)
     mov pc, r2
 
 Get_Status:
