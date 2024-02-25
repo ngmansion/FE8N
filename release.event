@@ -1,0 +1,14 @@
+#define DOWNLOAD	/* ダウンロードデータ有効化 */
+#define LUNATIC_SKILL	/* ランダム習得スキル有効化 */
+#define RANDOM_SKILL /* ボススキル */
+#include "EA.event"
+
+// 聖魔用神器の後付け設定
+ALIGN 4
+skill_030_weapon_extra:
+BYTE $3E $85 $87 $8E $91 $92 $93 $94 0
+ALIGN 4
+PUSH
+ORG skl_table+(24*30)+16
+POIN skill_030_weapon_extra
+POP
